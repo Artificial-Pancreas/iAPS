@@ -20,7 +20,7 @@ enum SpeechRecognitionState: Equatable {
     }
 }
 
-@MainActor final class SpeechRecognitionService: ObservableObject {
+@MainActor final class SpeechRecognitionService: NSObject, ObservableObject {
     @Published var state: SpeechRecognitionState = .idle
     @Published var transcript: String = ""
 
@@ -28,14 +28,17 @@ enum SpeechRecognitionState: Equatable {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
+    private let audioLock = NSLock()
+    private var delegateProxy: SpeechRecognitionTaskDelegateProxy?
 
     /// Stores fully finalized text from completed recognition segments.
     /// Text is only added here when result.isFinal == true, meaning Apple
     /// has finished all revisions (e.g. "clan" → "clam") for that segment.
     private var finalizedSegments: [String] = []
 
-    init() {
+    override init() {
         speechRecognizer = SFSpeechRecognizer(locale: Locale.current)
+        super.init()
     }
 
     // MARK: - Public API
@@ -53,12 +56,21 @@ enum SpeechRecognitionState: Equatable {
     }
 
     func requestPermissions() async -> Bool {
+        if AVAudioSession.sharedInstance().recordPermission == .granted,
+           SFSpeechRecognizer.authorizationStatus() == .authorized
+        {
+            state = .idle
+            return true
+        }
+
         state = .requesting
 
         // Request microphone
         let micGranted: Bool = await withCheckedContinuation { continuation in
             AVAudioSession.sharedInstance().requestRecordPermission { granted in
-                continuation.resume(returning: granted)
+                DispatchQueue.main.async {
+                    continuation.resume(returning: granted)
+                }
             }
         }
 
@@ -70,7 +82,9 @@ enum SpeechRecognitionState: Equatable {
         // Request speech recognition
         let speechGranted: Bool = await withCheckedContinuation { continuation in
             SFSpeechRecognizer.requestAuthorization { status in
-                continuation.resume(returning: status == .authorized)
+                DispatchQueue.main.async {
+                    continuation.resume(returning: status == .authorized)
+                }
             }
         }
 
@@ -95,66 +109,72 @@ enum SpeechRecognitionState: Equatable {
         transcript = ""
         state = .requesting
 
-        DispatchQueue.global().async { [weak self] in
-            guard let strongSelf = self else { return }
+        Task {
             let audioSession = AVAudioSession.sharedInstance()
             do {
-                try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
-                try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+                try await Task.detached(priority: .userInitiated) {
+                    try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
+                    try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+                }.value
             } catch {
-                Task { @MainActor in
-                    strongSelf
-                        .state = .error(
-                            NSLocalizedString("Failed to set up audio session: ", comment: "") + error
-                                .localizedDescription
-                        )
-                }
+                state = .error(
+                    NSLocalizedString("Failed to set up audio session: ", comment: "") + error
+                        .localizedDescription
+                )
                 return
             }
 
-            Task { @MainActor [weak self] in
-                guard let self = self else { return }
-                let inputNode = self.audioEngine.inputNode
-                inputNode.removeTap(onBus: 0)
+            startNewRecognitionTask()
 
-                // Pass nil format — AVAudioEngine will use the input node's native format
-                // and handle any necessary conversion. This is the recommended approach
-                // for speech recognition and works on both real devices and the Simulator.
-                inputNode.installTap(onBus: 0, bufferSize: 1024, format: nil) { [weak self] buffer, _ in
-                    self?.recognitionRequest?.append(buffer)
+            guard let request = recognitionRequest else { return }
+
+            let inputNode = audioEngine.inputNode
+            inputNode.removeTap(onBus: 0)
+
+            let inputFormat = inputNode.outputFormat(forBus: 0)
+            guard let recordingFormat = AVAudioFormat(
+                commonFormat: .pcmFormatFloat32,
+                sampleRate: inputFormat.sampleRate,
+                channels: 1,
+                interleaved: false
+            ) else { return }
+
+            let lock = audioLock
+            inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { @Sendable buffer, _ in
+                lock.withLock {
+                    request.append(buffer)
                 }
+            }
 
-                self.startNewRecognitionTask()
-
-                do {
-                    self.audioEngine.prepare()
-                    try self.audioEngine.start()
-                    self.state = .listening
-                } catch {
-                    self
-                        .state = .error(
-                            NSLocalizedString("Failed to start audio recording: ", comment: "") + error
-                                .localizedDescription
-                        )
-                    self.cleanupAudio()
-                }
+            do {
+                audioEngine.prepare()
+                try audioEngine.start()
+                state = .listening
+            } catch {
+                state = .error(
+                    NSLocalizedString("Failed to start audio recording: ", comment: "") + error
+                        .localizedDescription
+                )
+                cleanupAudio()
             }
         }
     }
 
     func stopListening() {
+        audioEngine.inputNode.removeTap(onBus: 0)
+
         if audioEngine.isRunning {
             audioEngine.stop()
-            recognitionRequest?.endAudio()
+            audioLock.withLock {
+                recognitionRequest?.endAudio()
+            }
         }
 
         recognitionTask?.cancel()
         recognitionTask = nil
         recognitionRequest = nil
 
-        audioEngine.inputNode.removeTap(onBus: 0)
-
-        DispatchQueue.global().async {
+        Task.detached(priority: .background) {
             try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
         }
     }
@@ -183,52 +203,54 @@ enum SpeechRecognitionState: Equatable {
             recognitionRequest.requiresOnDeviceRecognition = true
         }
 
-        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest) { [weak self] result, error in
-            Task { @MainActor [weak self] in
-                guard let self else { return }
-
-                if let result {
-                    // Display the finalized segments + Apple's live partial for the current segment.
-                    // The partial text self-corrects in real time (e.g. "clan" → "clam"),
-                    // so we never stash partial text — only isFinal text goes into finalizedSegments.
-                    let currentPartial = result.bestTranscription.formattedString
+        let proxy = SpeechRecognitionTaskDelegateProxy(
+            onHypothesize: { [weak self] text in
+                Task { @MainActor [weak self] in
+                    guard let self = self else { return }
                     let prefix = self.finalizedSegments.joined(separator: " ")
-                    self.transcript = (prefix.isEmpty ? currentPartial : prefix + " " + currentPartial)
+                    self.transcript = (prefix.isEmpty ? text : prefix + " " + text)
                         .trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+            },
+            onFinish: { [weak self] text in
+                Task { @MainActor [weak self] in
+                    guard let self = self else { return }
+                    let finalText = text.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if !finalText.isEmpty {
+                        self.finalizedSegments.append(finalText)
+                    }
 
-                    if result.isFinal {
-                        // This segment is fully corrected — lock it into the finalized buffer.
-                        let finalText = currentPartial.trimmingCharacters(in: .whitespacesAndNewlines)
-                        if !finalText.isEmpty {
-                            self.finalizedSegments.append(finalText)
-                        }
-
-                        // The recognition task ended naturally (e.g. pause detected).
-                        // Restart it so the user can keep speaking until they tap "Done".
-                        if self.audioEngine.isRunning {
-                            self.startNewRecognitionTask()
-                        }
+                    // The recognition task ended naturally (e.g. pause detected).
+                    // Restart it so the user can keep speaking until they tap "Done".
+                    if self.audioEngine.isRunning {
+                        self.startNewRecognitionTask()
                     }
                 }
-
-                if let error {
-                    let nsError = error as NSError
-                    // Ignore cancellation errors (code 216 = task cancelled by us)
-                    if nsError.domain == "kAFAssistantErrorDomain", nsError.code == 216 { return }
-                    // Code 209 = no speech detected / timed out — restart the task
-                    if nsError.domain == "kAFAssistantErrorDomain", nsError.code == 209 {
-                        if self.audioEngine.isRunning {
-                            self.startNewRecognitionTask()
+            },
+            onComplete: { [weak self] error in
+                Task { @MainActor [weak self] in
+                    guard let self = self else { return }
+                    if let error = error {
+                        let nsError = error as NSError
+                        // Ignore cancellation errors (code 216 = task cancelled by us)
+                        if nsError.domain == "kAFAssistantErrorDomain", nsError.code == 216 { return }
+                        // Code 209 = no speech detected / timed out — restart the task
+                        if nsError.domain == "kAFAssistantErrorDomain", nsError.code == 209 {
+                            if self.audioEngine.isRunning {
+                                self.startNewRecognitionTask()
+                            }
+                            return
                         }
-                        return
-                    }
-                    if self.state == .listening {
-                        self.state = .error(error.localizedDescription)
-                        self.cleanupAudio()
+                        if self.state == .listening {
+                            self.state = .error(error.localizedDescription)
+                            self.cleanupAudio()
+                        }
                     }
                 }
             }
-        }
+        )
+        delegateProxy = proxy
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, delegate: proxy)
     }
 
     private func finishListening() {
@@ -242,18 +264,59 @@ enum SpeechRecognitionState: Equatable {
     }
 
     private func cleanupAudio(deactivateSession: Bool = true) {
+        audioEngine.inputNode.removeTap(onBus: 0)
+
         if audioEngine.isRunning {
             audioEngine.stop()
         }
-        audioEngine.inputNode.removeTap(onBus: 0)
-        recognitionRequest?.endAudio()
+        audioLock.withLock {
+            recognitionRequest?.endAudio()
+        }
         recognitionTask?.cancel()
         recognitionTask = nil
         recognitionRequest = nil
         if deactivateSession {
-            DispatchQueue.global().async {
+            Task.detached(priority: .background) {
                 try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
             }
         }
+    }
+}
+
+final class SpeechRecognitionTaskDelegateProxy: NSObject, SFSpeechRecognitionTaskDelegate {
+    private let onHypothesize: @Sendable(String) -> Void
+    private let onFinish: @Sendable(String) -> Void
+    private let onComplete: @Sendable(Error?) -> Void
+
+    init(
+        onHypothesize: @escaping @Sendable(String) -> Void,
+        onFinish: @escaping @Sendable(String) -> Void,
+        onComplete: @escaping @Sendable(Error?) -> Void
+    ) {
+        self.onHypothesize = onHypothesize
+        self.onFinish = onFinish
+        self.onComplete = onComplete
+        super.init()
+    }
+
+    func speechRecognitionTask(
+        _: SFSpeechRecognitionTask,
+        didHypothesizeTranscription transcription: SFTranscription
+    ) {
+        onHypothesize(transcription.formattedString)
+    }
+
+    func speechRecognitionTask(
+        _: SFSpeechRecognitionTask,
+        didFinishRecognition recognitionResult: SFSpeechRecognitionResult
+    ) {
+        onFinish(recognitionResult.bestTranscription.formattedString)
+    }
+
+    func speechRecognitionTask(
+        _ task: SFSpeechRecognitionTask,
+        didFinishSuccessfully _: Bool
+    ) {
+        onComplete(task.error)
     }
 }

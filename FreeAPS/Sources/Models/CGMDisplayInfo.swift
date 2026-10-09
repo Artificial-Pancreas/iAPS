@@ -1,6 +1,6 @@
 import UIKit
 
-struct CgmDisplayInfo: Equatable, Sendable {
+struct CGMDisplayInfo: Equatable, Sendable {
     let identifier: String
     let identifierForStatistics: String?
     let name: String
@@ -14,7 +14,7 @@ struct CgmDisplayInfo: Equatable, Sendable {
     let glucoseUploadSupported: Bool
 }
 
-struct CgmDisplayStatus: Equatable, Sendable {
+struct CGMDisplayStatus: Equatable, Sendable {
     let statusHighlight: String?
     let sessionStartDate: Date?
     let shouldUploadGlucose: Bool

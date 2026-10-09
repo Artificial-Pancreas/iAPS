@@ -1,4 +1,4 @@
-import ActivityKit
+@preconcurrency import ActivityKit
 import Foundation
 import Swinject
 import UIKit
@@ -146,7 +146,7 @@ private struct ActiveActivity {
     }
 }
 
-actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
+@MainActor final class LiveActivityBridge: Sendable, LifetimeOwner, AppService {
     private let settingsManager: SettingsManager
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator

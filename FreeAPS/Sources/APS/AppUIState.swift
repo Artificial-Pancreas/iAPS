@@ -13,8 +13,8 @@ import Observation
 
     private(set) var pumpInfo: PumpDisplayInfo?
     private(set) var pumpStatus: PumpDisplayStatus?
-    private(set) var cgmInfo: CgmDisplayInfo?
-    private(set) var cgmStatus: CgmDisplayStatus?
+    private(set) var cgmInfo: CGMDisplayInfo?
+    private(set) var cgmStatus: CGMDisplayStatus?
     private(set) var isLooping = false
     private(set) var manualTempBasal = false
     private(set) var pumpReservoir: ReservoirReading?

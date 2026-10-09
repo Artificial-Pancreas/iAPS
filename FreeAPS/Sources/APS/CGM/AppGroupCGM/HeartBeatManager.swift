@@ -1,11 +1,9 @@
 import Foundation
 import UIKit
 
-class HeartBeatManager {
+@MainActor final class HeartBeatManager {
     private let keyForcgmTransmitterDeviceAddress = "cgmTransmitterDeviceAddress"
-
     private let keyForcgmTransmitter_CBUUID_Service = "cgmTransmitter_CBUUID_Service"
-
     private let keycgmTransmitter_CBUUID_Receive = "cgmTransmitter_CBUUID_Receive"
 
     /// to be used as singleton, no instanstation from outside allowed - class to be accessed via shared
@@ -34,17 +32,19 @@ class HeartBeatManager {
             UserDefaults.standard.cgmTransmitterDeviceAddress = nil
         }
 
-        if UserDefaults.standard.cgmTransmitterDeviceAddress != sharedUserDefaults
-            .string(forKey: keyForcgmTransmitterDeviceAddress)
-        {
+        let currentDeviceAddress = UserDefaults.standard.cgmTransmitterDeviceAddress
+        let targetDeviceAddress = sharedUserDefaults.string(forKey: keyForcgmTransmitterDeviceAddress)
+
+        if currentDeviceAddress != targetDeviceAddress {
             // assign local copy of cgmTransmitterDeviceAddress to the value stored in sharedUserDefaults (possibly nil value)
-            UserDefaults.standard.cgmTransmitterDeviceAddress = sharedUserDefaults
-                .string(forKey: keyForcgmTransmitterDeviceAddress)
+            UserDefaults.standard.cgmTransmitterDeviceAddress = targetDeviceAddress
 
             // assign new bluetoothTransmitter. If return value is nil, and if it was not nil before, and if it was currently connected then it will disconnect automatically, because there's no other reference to it, hence deinit will be called
             bluetoothTransmitter = setupBluetoothTransmitter(sharedData: sharedUserDefaults, heartbeat: heartbeat)
         } else {
-            disconnectBluetoothTransmitter()
+            bluetoothTransmitter?.disconnect()
+            UserDefaults.standard.cgmTransmitterDeviceAddress = nil
+            bluetoothTransmitter = nil
         }
         return bluetoothTransmitter?.deviceAddress
     }

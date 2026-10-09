@@ -23,9 +23,9 @@ final class AppCoordinator: @unchecked Sendable {
 
     let pumpStatus = CurrentValueSubject<PumpDisplayStatus?, Never>(nil)
 
-    let cgmInfo = CurrentValueSubject<CgmDisplayInfo?, Never>(nil)
+    let cgmInfo = CurrentValueSubject<CGMDisplayInfo?, Never>(nil)
 
-    let cgmStatus = CurrentValueSubject<CgmDisplayStatus?, Never>(nil)
+    let cgmStatus = CurrentValueSubject<CGMDisplayStatus?, Never>(nil)
 
     // -----
 
@@ -170,11 +170,11 @@ final class AppCoordinator: @unchecked Sendable {
         pumpStatus.send(value)
     }
 
-    func setCgmInfo(_ value: CgmDisplayInfo?) {
+    func setCgmInfo(_ value: CGMDisplayInfo?) {
         cgmInfo.send(value)
     }
 
-    func setCgmStatus(_ value: CgmDisplayStatus?) {
+    func setCgmStatus(_ value: CGMDisplayStatus?) {
         cgmStatus.send(value)
     }
 

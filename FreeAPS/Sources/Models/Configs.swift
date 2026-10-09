@@ -153,7 +153,7 @@ public enum IAPSconfig {
 
 extension Font {
     static let buttonFont = Font.custom("TimeButtonFont", fixedSize: 14) // Same as Eventual BG size
-    static let infoSymbolFont = Font.custom("TimeButtonFont", fixedSize: 16) // Same as Eventual BG size
+    static let infoSymbolFont = Font.custom("InfoSymbolFont", fixedSize: 16) // Same as Eventual BG size
 
     static let loopFont = Font.custom("LoopFont", size: 13) // Loop min ago
     static let statusFont = Font.custom("StatusFont", size: 16) // IOB, COB etc.
@@ -162,7 +162,7 @@ extension Font {
     static let previewSmall = Font.custom("PreviewSmallFont", size: 14)
     static let previewNormal = Font.custom("PreviewNormalFont", size: 16)
     static let previewHeadline = Font.custom("PreviewHeadlineFont", size: 18)
-    static let previewExtraBig = Font.custom("PreviewHeadlineFont", size: 20)
+    static let previewExtraBig = Font.custom("PreviewExtraBig", size: 20)
     static let extraSmall = Font.custom("ExtraSmallFont", size: 12)
 
     static let suggestionHeadline = Font.custom("SuggestionHeadlineFont", fixedSize: 20)
@@ -171,9 +171,11 @@ extension Font {
     static let suggestionSmallParts = Font.custom("SuggestionSmallPartsFont", fixedSize: 16)
 
     static let glucoseFont = Font.custom("SuggestionSmallPartsFont", size: 45)
-    static let glucoseFontMdDl = Font.custom("SuggestionSmallPartsFont", size: 40)
-    static let glucoseSmallFont = Font.custom("SuggestionSmallPartsFont", size: 24)
-    static let glucoseDotFont = Font.custom("SuggestionSmallPartsFont", size: 13)
+    static let glucoseBodyFont = Font.custom("GlucoseBodyFont", size: 36)
+
+    static let glucoseFontMdDl = Font.custom("GlucoseFontMdDl", size: 40)
+    static let glucoseSmallFont = Font.custom("GlucoseSmallFont", size: 24)
+    static let glucoseDotFont = Font.custom("GlucoseDotFont", size: 13)
 
     static let bolusProgressStopFont = Font.custom("BolusProgressStop", fixedSize: 24)
     static let bolusProgressFont = Font.custom("BolusProgress", fixedSize: 20)

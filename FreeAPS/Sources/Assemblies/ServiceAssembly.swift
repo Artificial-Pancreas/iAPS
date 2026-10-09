@@ -105,11 +105,13 @@ final class ServiceAssembly: Assembly {
             let storage = r.resolve(FileStorage.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!
 
-            return LiveActivityBridge(
-                settingsManager: settingsManager,
-                storage: storage,
-                appCoordinator: appCoordinator
-            )
+            return MainActor.assumeIsolated {
+                LiveActivityBridge(
+                    settingsManager: settingsManager,
+                    storage: storage,
+                    appCoordinator: appCoordinator
+                )
+            }
         }
         container.register(CoreDataManager.self) { r in CoreDataManager(resolver: r) }
         container.register(LoopStatRecordStorage.self) { r in LoopStatRecordStorage(resolver: r) }
