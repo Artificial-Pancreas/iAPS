@@ -1,44 +1,39 @@
 import Foundation
 
 enum NightscoutConversions {
-    /// returns events converted to nightscout format, oldest -> newest
+    /// returns events converted to nightscout format, newest -> oldest
     static func treatments(fromPumpHistory events: [PumpHistoryEvent]) -> [NigtscoutTreatment] {
         guard !events.isEmpty else { return [] }
 
-        let temps: [NigtscoutTreatment] = events.reduce([]) { result, event in
-            var result = result
-            switch event.type {
-            case .tempBasal:
-                result.append(NigtscoutTreatment(
-                    duration: nil,
-                    rawDuration: nil,
-                    rawRate: event,
-                    absolute: event.rate,
-                    rate: event.rate,
-                    eventType: .nsTempBasal,
-                    createdAt: event.timestamp.truncatedToSecond,
-                    enteredBy: NigtscoutTreatment.local,
-                    bolus: nil,
-                    insulin: nil,
-                    notes: nil,
-                    carbs: nil,
-                    fat: nil,
-                    protein: nil,
-                    targetTop: nil,
-                    targetBottom: nil
-                ))
-            case .tempBasalDuration:
-                guard var last = result.popLast() else { break }
-                if last.eventType == .nsTempBasal,
-                   last.createdAt == event.timestamp.truncatedToSecond
-                {
-                    last.duration = event.durationMin
-                    last.rawDuration = event
-                }
-                result.append(last)
-            default: break
-            }
-            return result
+        // A temp basal is stored as a pair of events sharing a timestamp: a `.tempBasalDuration` under id `X` and
+        // a `.tempBasal` (rate) under id `_X`. Pair them by id - their order in the history is not defined.
+        let durations = Dictionary(
+            events.filter { $0.type == .tempBasalDuration }.map { ($0.id, $0) },
+            uniquingKeysWith: { first, _ in first }
+        )
+
+        let temps = events.compactMap { event -> NigtscoutTreatment? in
+            guard event.type == .tempBasal else { return nil }
+            let id = event.id.hasPrefix("_") ? String(event.id.dropFirst()) : event.id
+            guard let duration = durations[id], let durationMin = duration.durationMin else { return nil }
+            return NigtscoutTreatment(
+                duration: durationMin,
+                rawDuration: duration,
+                rawRate: event,
+                absolute: event.rate,
+                rate: event.rate,
+                eventType: .nsTempBasal,
+                createdAt: event.timestamp.truncatedToSecond,
+                enteredBy: NigtscoutTreatment.local,
+                bolus: nil,
+                insulin: nil,
+                notes: nil,
+                carbs: nil,
+                fat: nil,
+                protein: nil,
+                targetTop: nil,
+                targetBottom: nil
+            )
         }
 
         let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
@@ -152,7 +147,7 @@ enum NightscoutConversions {
 
         return (
             bolusesAndCarbs +
-                temps.filter { $0.duration != nil } +
+                temps +
                 misc
         ).sorted { $0.createdAt > $1.createdAt }
     }
