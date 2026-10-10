@@ -27,14 +27,30 @@ struct LiveActivity: Widget {
                 DynamicIslandExpandedRegion(.center) {
                     VStack(spacing: 0) {
                         HStack {
-                            iob(context: context, size: .expanded).font(.title2).padding(.leading, 10)
+                            iob(context: context, size: .expanded)
+                                .font(.title2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                                .padding(.leading, 10)
                             Spacer()
-                            cob(context: context, size: .expanded).font(.title2).padding(10)
+                            cob(context: context, size: .expanded)
+                                .font(.title2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                                .padding(10)
                         }
                         HStack {
-                            bgAndTrend(context: context, size: .expanded).0.font(.title2).padding(.leading, 10)
+                            bgAndTrend(context: context, size: .expanded).0
+                                .font(.title2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                                .padding(.leading, 10)
                             Spacer()
-                            changeLabel(context: context).font(.title2).padding(10)
+                            changeLabel(context: context)
+                                .font(.title2)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.75)
+                                .padding(10)
                         }
                     }
                 }
@@ -42,38 +58,36 @@ struct LiveActivity: Widget {
                 DynamicIslandExpandedRegion(.trailing) {
                     TimestampLabel(context: context)
                         .font(.caption)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.75)
                         .padding(.trailing, 10)
                 }
                 DynamicIslandExpandedRegion(.bottom) {}
             } compactLeading: {
-                HStack {
-                    LoopCircle(context: context, compact: true, size: 12)
-                    bgAndTrend(context: context, size: .compact).0.padding(.leading, 4)
+                if #available(iOS 27.0, *) {
+                    DynamicIslandCompactLeadingViewIOS27(context: context)
+                } else {
+                    DynamicIslandCompactGlucoseView(context: context, showsTrend: true)
                 }
             } compactTrailing: {
-                changeLabel(context: context).padding(.trailing, 4)
-            } minimal: {
-                let (_label, characterCount) = bgAndTrend(context: context, size: .minimal)
-
-                let label = _label.padding(.leading, 7).padding(.trailing, 3)
-
-                if characterCount < 4 {
-                    label
-                } else if characterCount < 5 {
-                    label.fontWidth(.condensed)
+                if #available(iOS 27.0, *) {
+                    DynamicIslandCompactTrailingViewIOS27(context: context)
                 } else {
-                    label.fontWidth(.compressed)
+                    changeLabel(context: context)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.7)
+                        .padding(.trailing, 4)
                 }
+            } minimal: {
+                DynamicIslandMinimalGlucoseView(context: context)
             }
             .widgetURL(URL(string: "freeaps-x://"))
             // .keylineTint(Color.purple)
             .contentMargins(.horizontal, 0, for: .minimal)
-            .contentMargins(.trailing, 0, for: .compactLeading)
-            .contentMargins(.leading, 0, for: .compactTrailing)
         }
 
         if #available(iOS 18.0, *) {
-            return config.supplementalActivityFamilies([.small])
+            return config.supplementalActivityFamilies([.small, .medium])
         } else {
             return config
         }
@@ -188,16 +202,127 @@ private struct LiveActivityBannerWrapper: View {
 
 @available(iOS 18.0, *) private struct LiveActivityBannerWrapperIOS18: View {
     @Environment(\.activityFamily) private var activityFamily
+    @Environment(\.isActivityFullscreen) private var isActivityFullscreen
     let context: ActivityViewContext<LiveActivityAttributes>
 
     var body: some View {
         let isWatch = activityFamily == .small
+        let isSupplementalMedium = activityFamily == .medium
         let showChart = context.state.showChart && (!isWatch || context.state.watchChart)
         if showChart {
-            LiveActivityChart(context: context, isWatch: isWatch)
+            LiveActivityChart(
+                context: context,
+                isWatch: isWatch,
+                isFullscreen: isActivityFullscreen || isSupplementalMedium
+            )
         } else {
-            LiveActivityBanner(context: context, isWatch: isWatch)
+            LiveActivityBanner(
+                context: context,
+                isWatch: isWatch,
+                isFullscreen: isActivityFullscreen,
+                isSupplementalMedium: isSupplementalMedium
+            )
         }
+    }
+}
+
+private struct DynamicIslandCompactGlucoseView: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+    let showsTrend: Bool
+    var centersInLimitedWidth: Bool = false
+
+    var body: some View {
+        ZStack {
+            HStack(spacing: 1) {
+                Text(context.state.bg)
+                    .monospacedDigit()
+
+                if showsTrend, let direction = context.state.direction {
+                    Text(String(direction.prefix(1)))
+                        .scaleEffect(x: 0.75, y: 0.75, anchor: .leading)
+                        .foregroundStyle(direction.count > 1 ? .red : .primary)
+                }
+            }
+        }
+        .fontWidth(.compressed)
+        .lineLimit(1)
+        .minimumScaleFactor(0.65)
+        .frame(width: centersInLimitedWidth ? 34 : nil, alignment: .center)
+    }
+}
+
+@available(iOS 27.0, *) private struct DynamicIslandCompactLeadingViewIOS27: View {
+    @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if isLimitedInWidth {
+            DynamicIslandCompactGlucoseView(
+                context: context,
+                showsTrend: false,
+                centersInLimitedWidth: true
+            )
+        } else {
+            HStack(spacing: 4) {
+                LoopCircle(context: context, compact: true, size: 12)
+                DynamicIslandCompactGlucoseView(context: context, showsTrend: true)
+            }
+        }
+    }
+}
+
+@available(iOS 27.0, *) private struct DynamicIslandCompactTrailingViewIOS27: View {
+    @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        if isLimitedInWidth {
+            LoopCircle(context: context, compact: true, size: 12)
+                .frame(width: 34, height: 20, alignment: .center)
+        } else {
+            compactDelta
+        }
+    }
+
+    private var compactDelta: some View {
+        Group {
+            if !context.state.change.isEmpty {
+                if !context.isStale {
+                    Text(context.state.change)
+                } else {
+                    Text("old").foregroundStyle(.secondary)
+                }
+            } else {
+                Text("--")
+            }
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.7)
+        .padding(.trailing, 4)
+    }
+}
+
+private struct DynamicIslandMinimalGlucoseView: View {
+    let context: ActivityViewContext<LiveActivityAttributes>
+
+    var body: some View {
+        let direction = context.state.direction
+        let isLimitedInWidth = context.state.bg.count + (direction?.count ?? 0) > 5
+
+        HStack(spacing: -1) {
+            Text(context.state.bg)
+
+            if let direction {
+                Text(String(direction.prefix(isLimitedInWidth ? 1 : 2)))
+                    .scaleEffect(x: 0.7, y: 0.7, anchor: .leading)
+                    .foregroundStyle(direction.count > (isLimitedInWidth ? 1 : 2) ? .red : .primary)
+            }
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.65)
+        .fontWidth(isLimitedInWidth ? .compressed : .condensed)
+        .padding(.leading, 7)
+        .padding(.trailing, 3)
     }
 }
 
@@ -213,7 +338,7 @@ struct LoopCircle: View {
 
         Circle()
             .stroke(color, lineWidth: compact ? 1.5 : 3)
-            .frame(width: size)
+            .frame(width: size, height: size)
     }
 }
 
@@ -696,5 +821,26 @@ struct SampleData {
     LiveActivityAttributes.ContentState.chart2
     LiveActivityAttributes.ContentState.chart3
     LiveActivityAttributes.ContentState.chart4
+    LiveActivityAttributes.ContentState.chart5
+}
+
+#Preview("Dynamic Island Compact", as: .dynamicIsland(.compact), using: LiveActivityAttributes.preview) {
+    LiveActivity()
+} contentStates: {
+    LiveActivityAttributes.ContentState.testSuperWide
+    LiveActivityAttributes.ContentState.chart5
+}
+
+#Preview("Dynamic Island Minimal", as: .dynamicIsland(.minimal), using: LiveActivityAttributes.preview) {
+    LiveActivity()
+} contentStates: {
+    LiveActivityAttributes.ContentState.testSuperWide
+    LiveActivityAttributes.ContentState.testVeryWide
+}
+
+#Preview("Dynamic Island Expanded", as: .dynamicIsland(.expanded), using: LiveActivityAttributes.preview) {
+    LiveActivity()
+} contentStates: {
+    LiveActivityAttributes.ContentState.testSuperWide
     LiveActivityAttributes.ContentState.chart5
 }

@@ -108,6 +108,7 @@ struct MainChartView: View {
                     MainChartCanvas(geom: geom, data: data, scrollTrigger: $scrollTrigger)
                 }
             }
+            .clipped()
             .onAppear {
                 latestSize = geo.size
                 subscribeToUpdates()
