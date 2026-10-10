@@ -1229,14 +1229,16 @@ extension Home {
         }
 
         private func bottomActionBar(isOverride: Bool, isTarget: Bool) -> some View {
-            HStack(spacing: 40) {
+            HStack(spacing: 20) {
                 actionBarItems(isOverride: isOverride, isTarget: isTarget)
+                    .padding(8)
             }
             .labelStyle(.iconOnly)
             .buttonStyle(.borderless)
             .frame(maxWidth: .infinity)
             .padding(.top, 15)
-            .background(.bar)
+            .padding(.horizontal, 10)
+            .background(.ultraThinMaterial)
         }
 
         private func carbTabItem() -> some View {
