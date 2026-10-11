@@ -2117,6 +2117,7 @@ Ak potrebujete používať skratky na podanie bolusu, uistite sa, že v nastaven
 "Override Max IOB" = "Upraviť Max IOB";
 
 /* */
+"When run to completion schedule a consecutive override preset:" = "When run to completion schedule a consecutive override preset:";
 
 /* */
 "Save as Profile" = "Uložiť ako profil";

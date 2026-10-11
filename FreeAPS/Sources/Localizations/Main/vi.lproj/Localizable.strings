@@ -2116,6 +2116,7 @@ Enact a temp Basal or a temp target */
 "Override Max IOB" = "Ghi đè mức IOB tối đa";
 
 /* */
+"When run to completion schedule a consecutive override preset:" = "Khi hoàn tất, lên lịch cài đặt ghi đè tiếp theo:";
 
 /* */
 "Save as Profile" = "Lưu Hồ sơ";

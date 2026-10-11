@@ -191,22 +191,12 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         guard let overridePreset = overrideStorage.fetchProfilePreset(preset.name ?? "") else {
             return nil
         }
-        let lastActiveOveride = overrideStorage.fetchLatestOverride().first
-        let isActive = lastActiveOveride?.enabled ?? false
 
-        // Cancel the eventual current active override first
-        if isActive {
-            let presetName = overrideStorage.isPresetName()
-            if let duration = overrideStorage.cancelProfile().duration, let last = lastActiveOveride {
-                // let presetName = overrideStorage.isPresetName()
-                let nsString = presetName != nil ? presetName : last.percentage.formatted()
-                nightscoutManager.editOverride(nsString!, duration, last.date ?? Date())
-            }
-        }
-        overrideStorage.overrideFromPreset(overridePreset)
-        let currentActiveOveride = overrideStorage.fetchLatestOverride().first
-        nightscoutManager.uploadOverride(preset.name ?? "", Double(preset.duration ?? 0), currentActiveOveride?.date ?? Date.now)
-        return currentActiveOveride
+        return overrideStorage.activatePresetAndUpload(
+            overridePreset,
+            nightscout: nightscoutManager,
+            uploadName: preset.name
+        )
     }
 
     func cancelOverride() throws {
