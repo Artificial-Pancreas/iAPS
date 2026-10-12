@@ -4098,3 +4098,6 @@ Enact a temp Basal or a temp target */
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
 "Starting iAPS" = "Starting iAPS";
 "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
+
+/* Restore: the typed recovery token is not a UUID */
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
