@@ -4104,3 +4104,6 @@ Enact a temp Basal or a temp target */
 
 /* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
 "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+
+/* Restore: the typed recovery token is not a UUID */
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
