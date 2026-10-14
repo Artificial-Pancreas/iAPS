@@ -35,6 +35,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
+        case noLoopRepeatingNotification = "FreeAPS.noLoopRepeatingNotification"
         case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
         case pumpNotification = "FreeAPS.pumpNotification"
     }
@@ -141,18 +142,37 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
             let firstInterval = 20 // min
             let secondInterval = 40 // min
 
+            let repeatingInterval = 60 // min
+
             let firstContent = UNMutableNotificationContent()
             firstContent.title = title
             firstContent.body = String(format: body, firstInterval)
             if sound { firstContent.sound = .default }
+            // A stopped loop is exactly what Time Sensitive exists for: let the alert
+            // break through Focus / scheduled summaries instead of sitting silently.
+            firstContent.interruptionLevel = .timeSensitive
 
             let secondContent = UNMutableNotificationContent()
             secondContent.title = title
             secondContent.body = String(format: body, secondInterval)
             if sound { secondContent.sound = .default }
+            secondContent.interruptionLevel = .timeSensitive
+
+            // Silence used to end after the 40 min notification — a loop that stays
+            // wedged for hours never re-arms the chain, so nothing fired again. Keep
+            // reminding every hour until looping resumes (which cancels and re-arms).
+            let repeatingContent = UNMutableNotificationContent()
+            repeatingContent.title = title
+            repeatingContent.body = String(format: body, repeatingInterval)
+            if sound { repeatingContent.sound = .default }
+            repeatingContent.interruptionLevel = .timeSensitive
 
             let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
             let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
+            let repeatingTrigger = UNTimeIntervalNotificationTrigger(
+                timeInterval: 60 * TimeInterval(repeatingInterval),
+                repeats: true
+            )
 
             self.addRequest(
                 identifier: .noLoopFirstNotification,
@@ -165,6 +185,12 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 content: secondContent,
                 deleteOld: true,
                 trigger: secondTrigger
+            )
+            self.addRequest(
+                identifier: .noLoopRepeatingNotification,
+                content: repeatingContent,
+                deleteOld: true,
+                trigger: repeatingTrigger
             )
         }
     }
