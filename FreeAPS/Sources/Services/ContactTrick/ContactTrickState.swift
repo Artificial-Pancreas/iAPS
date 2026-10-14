@@ -1,6 +1,6 @@
 import Foundation
 
-struct ContactTrickState: Codable {
+struct ContactTrickState: Codable, Equatable {
     var glucose: String?
     var trend: String?
     var delta: String?
