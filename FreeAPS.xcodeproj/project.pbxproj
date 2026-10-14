@@ -363,6 +363,7 @@
 		B9CAAEFC2AE70836000F68BC /* branch.txt in Resources */ = {isa = PBXBuildFile; fileRef = B9CAAEFB2AE70836000F68BC /* branch.txt */; };
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
 		BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */; };
+		BC548F10306C28B3008A6C1C /* ToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC548F0F306C28AB008A6C1C /* ToolBar.swift */; };
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
 		BD2FF1A02AE29D43005D1C5D /* CheckboxToggleStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2FF19F2AE29D43005D1C5D /* CheckboxToggleStyle.swift */; };
 		BD7DA9A52AE06DFC00601B20 /* BolusCalculatorConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD7DA9A42AE06DFC00601B20 /* BolusCalculatorConfigDataFlow.swift */; };
@@ -1075,6 +1076,7 @@
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
 		B9CAAEFB2AE70836000F68BC /* branch.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = branch.txt; sourceTree = SOURCE_ROOT; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
+		BC548F0F306C28AB008A6C1C /* ToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolBar.swift; sourceTree = "<group>"; };
 		BD2FF19F2AE29D43005D1C5D /* CheckboxToggleStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxToggleStyle.swift; sourceTree = "<group>"; };
 		BD7DA9A42AE06DFC00601B20 /* BolusCalculatorConfigDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusCalculatorConfigDataFlow.swift; sourceTree = "<group>"; };
 		BD7DA9A62AE06E2B00601B20 /* BolusCalculatorConfigProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusCalculatorConfigProvider.swift; sourceTree = "<group>"; };
@@ -1815,10 +1817,11 @@
 		3811DE2C25C9D49500A708ED /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3811DE2E25C9D49500A708ED /* HomeRootView.swift */,
 				3833B51E260264AC003021B3 /* Chart */,
 				3833B51F260264B6003021B3 /* Header */,
+				3811DE2E25C9D49500A708ED /* HomeRootView.swift */,
 				194D7E6C2B974EA4007A38C1 /* Previews */,
+				BC548F0F306C28AB008A6C1C /* ToolBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -3671,6 +3674,7 @@
 				E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */,
 				CE7CA3522A064973004BE681 /* ListTempPresetsIntent.swift in Sources */,
 				448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */,
+				BC548F10306C28B3008A6C1C /* ToolBar.swift in Sources */,
 				38E44536274E411700EC9A94 /* Disk.swift in Sources */,
 				193CA2DC2E1E743500DF9998 /* FunctionScript.swift in Sources */,
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
