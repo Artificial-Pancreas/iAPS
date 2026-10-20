@@ -48,9 +48,19 @@ struct MemoryVersionCounters: JSON, Equatable {
     /// JS call attempts that hit the WebViewScriptExecutor watchdog timeout.
     /// One wedged loop cycle can add up to 3 (initial attempt + retries).
     var js_timeouts: Int
+    /// Crashes proper, fg+bg: MetricKit's abnormal (uncaught exception / abort),
+    /// bad-access (SIGSEGV/SIGBUS) and illegal-instruction exits. Optional so a bucket
+    /// written by a build that did not count them reads as "unknown", not zero.
+    var crash_exits: Int?
+    /// Clean exits, fg+bg: the user swiped the app away, or iOS ended a suspended
+    /// process normally. The control group for `crash_exits`: a relaunch seen in the
+    /// log with neither a crash nor a kill behind it was one of these.
+    var normal_exits: Int?
 
     init() {
         peak_mb = nil
+        crash_exits = nil
+        normal_exits = nil
         pressure_warnings = 0
         jetsam_exits = 0
         pressure_exits = 0
@@ -154,12 +164,18 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                 let jetsam = fg.cumulativeMemoryResourceLimitExitCount + bg.cumulativeMemoryResourceLimitExitCount
                 let pressure = bg.cumulativeMemoryPressureExitCount
                 let watchdog = fg.cumulativeAppWatchdogExitCount + bg.cumulativeAppWatchdogExitCount
-                if jetsam + pressure + watchdog > 0 {
-                    Self.mutateBucket(key: key) { bucket in
-                        bucket.jetsam_exits += jetsam
-                        bucket.pressure_exits += pressure
-                        bucket.watchdog_exits += watchdog
-                    }
+                let crashes = fg.cumulativeAbnormalExitCount + bg.cumulativeAbnormalExitCount
+                    + fg.cumulativeBadAccessExitCount + bg.cumulativeBadAccessExitCount
+                    + fg.cumulativeIllegalInstructionExitCount + bg.cumulativeIllegalInstructionExitCount
+                let normal = fg.cumulativeNormalAppExitCount + bg.cumulativeNormalAppExitCount
+                // Always file, even all-zero: once an exit payload has been seen for the
+                // build, crash/normal read 0 ("counted, none") instead of nil ("not counted").
+                Self.mutateBucket(key: key) { bucket in
+                    bucket.jetsam_exits += jetsam
+                    bucket.pressure_exits += pressure
+                    bucket.watchdog_exits += watchdog
+                    bucket.crash_exits = (bucket.crash_exits ?? 0) + crashes
+                    bucket.normal_exits = (bucket.normal_exits ?? 0) + normal
                 }
             }
             if let memory = payload.memoryMetrics {
