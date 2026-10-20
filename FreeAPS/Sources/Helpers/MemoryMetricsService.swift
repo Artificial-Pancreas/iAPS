@@ -56,11 +56,17 @@ struct MemoryVersionCounters: JSON, Equatable {
     /// process normally. The control group for `crash_exits`: a relaunch seen in the
     /// log with neither a crash nor a kill behind it was one of these.
     var normal_exits: Int?
+    /// The remaining ways iOS ends a process, which are neither a crash nor a memory
+    /// kill: CPU-limit kills (fg+bg), background-task-assertion timeouts and
+    /// suspended-with-locked-file kills (bg). With crash/normal/jetsam/pressure/watchdog
+    /// this accounts for every MXAppExitMetric class.
+    var other_exits: Int?
 
     init() {
         peak_mb = nil
         crash_exits = nil
         normal_exits = nil
+        other_exits = nil
         pressure_warnings = 0
         jetsam_exits = 0
         pressure_exits = 0
@@ -168,6 +174,9 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                     + fg.cumulativeBadAccessExitCount + bg.cumulativeBadAccessExitCount
                     + fg.cumulativeIllegalInstructionExitCount + bg.cumulativeIllegalInstructionExitCount
                 let normal = fg.cumulativeNormalAppExitCount + bg.cumulativeNormalAppExitCount
+                let other = fg.cumulativeCPUResourceLimitExitCount + bg.cumulativeCPUResourceLimitExitCount
+                    + bg.cumulativeBackgroundTaskAssertionTimeoutExitCount
+                    + bg.cumulativeSuspendedWithLockedFileExitCount
                 // Always file, even all-zero: once an exit payload has been seen for the
                 // build, crash/normal read 0 ("counted, none") instead of nil ("not counted").
                 Self.mutateBucket(key: key) { bucket in
@@ -176,6 +185,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                     bucket.watchdog_exits += watchdog
                     bucket.crash_exits = (bucket.crash_exits ?? 0) + crashes
                     bucket.normal_exits = (bucket.normal_exits ?? 0) + normal
+                    bucket.other_exits = (bucket.other_exits ?? 0) + other
                 }
             }
             if let memory = payload.memoryMetrics {
