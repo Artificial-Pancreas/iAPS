@@ -4135,3 +4135,6 @@ Enact a temp Basal or a temp target */
 "Crash" = "Crash";
 "Simulate a crash?" = "Simulate a crash?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
+
+/* Add Carbs: placeholder for the free-text note row */
+"Optional" = "Optional";
