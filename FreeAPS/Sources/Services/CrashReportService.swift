@@ -58,6 +58,16 @@ final class CrashReportService {
 
     // MARK: - Harvest + upload (call once the app's services exist)
 
+    // MARK: - Test hook (Settings → Debug options)
+
+    /// A real crash through the installed handlers rather than a call into KSCrash, so
+    /// the whole path is exercised: report written while dying, found at the next
+    /// launch, uploaded if the Sharing toggle is on. fatalError traps (EXC_BREAKPOINT /
+    /// SIGTRAP), which is the same class as a Swift runtime failure in the field.
+    static func simulateCrash() -> Never {
+        fatalError("Simulated crash from Settings → Debug options")
+    }
+
     /// Looks for reports written by a previous run. With the Sharing toggle off they are
     /// deleted; with it on they are uploaded if this build is a current release, and
     /// deleted on success. Failed uploads stay for the next launch. Runs off the main
