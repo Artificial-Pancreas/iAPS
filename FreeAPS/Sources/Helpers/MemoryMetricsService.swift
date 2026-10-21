@@ -174,7 +174,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
                     + fg.cumulativeBadAccessExitCount + bg.cumulativeBadAccessExitCount
                     + fg.cumulativeIllegalInstructionExitCount + bg.cumulativeIllegalInstructionExitCount
                 let normal = fg.cumulativeNormalAppExitCount + bg.cumulativeNormalAppExitCount
-                let other = fg.cumulativeCPUResourceLimitExitCount + bg.cumulativeCPUResourceLimitExitCount
+                let other = bg.cumulativeCPUResourceLimitExitCount // background-only in MetricKit: no fg counterpart
                     + bg.cumulativeBackgroundTaskAssertionTimeoutExitCount
                     + bg.cumulativeSuspendedWithLockedFileExitCount
                 // Always file, even all-zero: once an exit payload has been seen for the
