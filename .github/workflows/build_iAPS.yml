@@ -185,11 +185,15 @@ jobs:
         continue-on-error: true
         env:
           BRANCH_NAME: ${{ github.ref_name }}
-          BUILD_NUMBER: ${{ github.run_number }}
         run: |
           set -u
           sha=$(git rev-parse --short=7 HEAD)
           version=$(sed -n 's/^APP_VERSION *= *//p' Config.xcconfig | tr -d '[:space:]')
+          # The archive's CFBundleVersion: fastlane's increment_build_number wrote the
+          # TestFlight number into the project, which is what the app reports in crash
+          # reports and statistics. Fall back to the run number for non-TestFlight lanes.
+          BUILD_NUMBER=$(sed -n 's/.*CURRENT_PROJECT_VERSION = \([0-9][0-9]*\);.*/\1/p' FreeAPS.xcodeproj/project.pbxproj | head -1)
+          BUILD_NUMBER=${BUILD_NUMBER:-${{ github.run_number }}}
           tmp=$(mktemp -d)
           shopt -s nullglob # macOS /bin/bash is 3.2: no globstar, so find(1) below
           for z in artifacts/*.dSYM.zip; do unzip -q -o "$z" -d "$tmp"; done
