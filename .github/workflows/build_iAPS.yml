@@ -191,10 +191,10 @@ jobs:
           sha=$(git rev-parse --short=7 HEAD)
           version=$(sed -n 's/^APP_VERSION *= *//p' Config.xcconfig | tr -d '[:space:]')
           tmp=$(mktemp -d)
-          shopt -s nullglob globstar
+          shopt -s nullglob # macOS /bin/bash is 3.2: no globstar, so find(1) below
           for z in artifacts/*.dSYM.zip; do unzip -q -o "$z" -d "$tmp"; done
           n=0
-          for dsym in "$tmp"/**/*.dSYM; do
+          while IFS= read -r dsym; do
             bin=$(ls "$dsym/Contents/Resources/DWARF/" 2>/dev/null | head -1)
             [ -n "$bin" ] || continue
             path="$dsym/Contents/Resources/DWARF/$bin"
@@ -208,7 +208,7 @@ jobs:
               -H 'Content-Encoding: gzip' --data-binary @"$tmp/$bin.sym.gz" || echo "curl-failed")
             echo "$bin $uuid -> $code"
             n=$((n + 1))
-          done
+          done < <(find "$tmp" -type d -name '*.dSYM')
           echo "uploaded $n symbol table(s) for $BRANCH_NAME $sha ($version)"
 
       # Upload to TestFlight
