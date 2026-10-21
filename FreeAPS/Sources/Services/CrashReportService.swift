@@ -78,7 +78,7 @@ final class CrashReportService {
         }
     }
 
-    private func upload(from store: KSCrashReportStore) async {
+    private func upload(from store: CrashReportStore) async {
         let version = Bundle.main.releaseVersionNumber ?? ""
         guard await isCurrentRelease(version) else {
             debug(

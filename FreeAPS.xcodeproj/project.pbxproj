@@ -4607,7 +4607,7 @@
 			repositoryURL = "https://github.com/kstenerud/KSCrash";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.6.0;
 			};
 		};
 		D8DA5CCF2B49EEF000C54E6C /* XCRemoteSwiftPackageReference "SlideButton" */ = {
