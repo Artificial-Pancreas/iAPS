@@ -62,9 +62,19 @@ final class CrashReportService {
 
     /// A real crash through the installed handlers rather than a call into KSCrash, so
     /// the whole path is exercised: report written while dying, found at the next
-    /// launch, uploaded if the Sharing toggle is on. fatalError traps (EXC_BREAKPOINT /
-    /// SIGTRAP), which is the same class as a Swift runtime failure in the field.
+    /// launch, uploaded if the Sharing toggle is on.
+    ///
+    /// Trips a Swift runtime bounds check rather than calling fatalError: the optimiser
+    /// tail-calls fatalError and inlines small callers, so the first such test crash
+    /// reported no app frame at all. A `brk` inside this function puts it at the top of
+    /// the stack, which is also what a real force-unwrap or index failure looks like
+    /// (EXC_BREAKPOINT / SIGTRAP). The index is opaque to the compiler so the check
+    /// cannot be folded away.
+    @inline(never)
     static func simulateCrash() -> Never {
+        let empty: [Int] = []
+        let index = Int(Date().timeIntervalSince1970) & 0xFFFF
+        _ = empty[index]
         fatalError("Simulated crash from Settings → Debug options")
     }
 

@@ -56,6 +56,14 @@ import UIKit
         var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
         userDefaults.set(false, forKey: IAPSconfig.inBolusView)
 
+        // Existing users who have never been shown the crash-report option get the Sharing
+        // step once more (after the upgrade notice, if there is one). Deliberately not tied
+        // to the version check below: dev keeps one marketing version for months, so most
+        // users receive this feature without the version number moving.
+        if version.count > 1, !userDefaults.bool(forKey: IAPSconfig.hasSeenCrashReportOption) {
+            userDefaults.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
+        }
+
         guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
             let hadPriorVersion = version.count > 1 // distinguishes an upgrade from a fresh install
             version = Bundle.main.releaseVersionNumber ?? ""
@@ -65,11 +73,6 @@ import UIKit
             // installs go through WelcomeView instead, so don't flag them here.
             if hadPriorVersion {
                 userDefaults.set(true, forKey: IAPSconfig.showUpgradeNotice)
-                // Users upgrading from a build without crash reporting get the Sharing
-                // step once more after the notice, so they know the option exists.
-                if !userDefaults.bool(forKey: IAPSconfig.hasSeenCrashReportOption) {
-                    userDefaults.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
-                }
                 // An upgrade is definitively an existing user, so skip the New-vs-Existing
                 // WelcomeView (its flag is new this version and would otherwise read false
                 // and pre-empt the upgrade notice). Fresh installs leave this false → Welcome.
