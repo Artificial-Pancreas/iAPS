@@ -1182,6 +1182,7 @@ extension Home {
                     VStack(spacing: 0) {
                         // Header View
                         headerView(geo)
+                        versionBanner
                         ScrollView {
                             VStack {
                                 // Main Chart
@@ -1281,6 +1282,28 @@ extension Home {
             } message: {
                 Text(BuildExpirationManager.shared.alertMessage)
             }
+            .alert(
+                NSLocalizedString("Update available", comment: "Title of the newer-release alert on Home"),
+                isPresented: $state.showVersionAlert
+            ) {
+                Button(NSLocalizedString("Later", comment: "Dismiss the newer-release alert"), role: .cancel) {
+                    state.acknowledgeVersionAlert()
+                }
+                Button(NSLocalizedString("What's new", comment: "Open the release highlights page")) {
+                    state.acknowledgeVersionAlert()
+                    if let url = URL(string: "https://open-iaps.app/whats-new") {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } message: {
+                Text(String(
+                    format: NSLocalizedString(
+                        "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.",
+                        comment: "Body of the newer-release alert, %1$@ new version, %2$@ running version"
+                    ),
+                    state.newerVersion ?? "", state.versionNumber
+                ))
+            }
             .navigationTitle("Home")
             .navigationBarHidden(true)
             .ignoresSafeArea(.keyboard)
@@ -1310,6 +1333,36 @@ extension Home {
                                 }
                             }
                     )
+            }
+        }
+
+        /// A thin strip under the header while a newer release is published: tap to open
+        /// Settings (where the version line lives), × to hide it until the next release.
+        @ViewBuilder private var versionBanner: some View {
+            if state.showVersionBanner, let newer = state.newerVersion {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.up.circle.fill")
+                    Text(String(
+                        format: NSLocalizedString(
+                            "iAPS %@ is available. You are running %@.",
+                            comment: "Home banner, %1$@ new version, %2$@ running version"
+                        ),
+                        newer, state.versionNumber
+                    ))
+                    .font(.footnote)
+                    .lineLimit(2)
+                    Spacer()
+                    Button { state.dismissVersionBanner() } label: {
+                        Image(systemName: "xmark").font(.footnote.bold())
+                    }
+                    .accessibilityLabel(NSLocalizedString("Dismiss", comment: "Hide the newer-release banner"))
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.orange.opacity(0.9))
+                .foregroundColor(.white)
+                .contentShape(Rectangle())
+                .onTapGesture { state.showModal(for: .settings) }
             }
         }
 

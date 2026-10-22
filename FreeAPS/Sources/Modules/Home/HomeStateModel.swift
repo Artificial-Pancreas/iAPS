@@ -40,6 +40,11 @@ extension Home {
         @Published var errorMessage: String? = nil
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
+        /// A published release newer than this build (from the daily version check), if any.
+        @Published var newerVersion: String?
+        @Published var showVersionBanner = false
+        @Published var showVersionAlert = false
+        let versionNumber = Bundle.main.releaseVersionNumber ?? ""
         @Published var bolusAmount: Decimal?
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
@@ -148,6 +153,42 @@ extension Home {
             timer.suspend()
         }
 
+        /// Compare the stored version check against this build; a stale check is refreshed
+        /// right away rather than waiting for the loop's daily slot.
+        func refreshVersionNotice() {
+            let stored = CoreDataStorage().fetchVNr()
+            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+                nightscoutManager.fetchVersion()
+            }
+            guard let main = stored?.nr, !main.isEmpty else {
+                newerVersion = nil
+                showVersionBanner = false
+                return
+            }
+            let onDev = (Bundle.main.gitBranch ?? "").hasPrefix("dev")
+            let offered = Version(main: main, dev: stored?.dev ?? "").newer(than: versionNumber, onDevBranch: onDev)
+            newerVersion = offered
+            let defaults = UserDefaults.standard
+            showVersionBanner = offered != nil && defaults.string(forKey: IAPSconfig.versionBannerDismissed) != offered
+            if let offered, defaults.string(forKey: IAPSconfig.versionAlertShown) != offered {
+                showVersionAlert = true
+            }
+        }
+
+        func acknowledgeVersionAlert() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionAlertShown)
+            }
+            showVersionAlert = false
+        }
+
+        func dismissVersionBanner() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionBannerDismissed)
+            }
+            showVersionBanner = false
+        }
+
         override func subscribe() {
             setupGlucose()
             setupBasals()
@@ -182,6 +223,7 @@ extension Home {
             manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
+            refreshVersionNotice()
             data.smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
             data.lowGlucose = settingsManager.settings.low
@@ -863,6 +905,7 @@ extension Home.StateModel:
         setupOverrideHistory()
         setupLoopStats()
         setupData()
+        refreshVersionNotice()
     }
 
     func pumpBatteryDidChange(_: Battery) {

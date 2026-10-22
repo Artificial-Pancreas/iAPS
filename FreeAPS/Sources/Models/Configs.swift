@@ -128,6 +128,10 @@ public enum IAPSconfig {
     /// Defaults false so every existing user is walked through sharing once after upgrading.
     static let hasSeenSharingSetup = "iAPS.hasSeenSharingSetup"
     static let inBolusView = "iAPS.inBolusView"
+    /// The newest published version the launch alert has already been shown for.
+    static let versionAlertShown = "iAPS.versionAlertShown"
+    /// The newest published version whose Home banner the user has dismissed.
+    static let versionBannerDismissed = "iAPS.versionBannerDismissed"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
     /// Colors
     static let headerBackgroundLight = Color.gray.opacity(IAPSconfig.backgroundOpacity)
