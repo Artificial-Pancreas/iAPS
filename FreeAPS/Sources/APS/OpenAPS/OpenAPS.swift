@@ -320,7 +320,7 @@ actor OpenAPS: Sendable {
         // newest->oldest
         appCoordinator.glucoseFrequencyFiltered.value.map { g in
             GlucoseEntry0(
-                date: nil,
+                date: Int(g.dateString.timeIntervalSince1970 * 1000),
                 displayTime: nil,
                 dateString: g.dateString.ISO8601Format(),
                 sgv: g.glucose,
