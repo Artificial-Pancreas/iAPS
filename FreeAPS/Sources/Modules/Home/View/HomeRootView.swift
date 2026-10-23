@@ -1245,7 +1245,6 @@ extension Home {
                                             .homeViewBackgrundDark
                                     )
                                     .frame(maxWidth: 320, maxHeight: 90)
-                                glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
                                 bolusProgressView(progress: progress, amount: amount)
                             }
                             .frame(maxWidth: .infinity, alignment: .center)
