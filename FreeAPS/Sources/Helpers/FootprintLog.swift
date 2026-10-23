@@ -15,7 +15,8 @@ enum FootprintLog {
         debug(.apsManager, "MEMORY: footprint \(mb) MB [\(tag)]")
     }
 
-    private static func currentFootprintMB() -> Int? {
+    /// The app's physical memory footprint (what jetsam limits are measured against), MB.
+    static func currentFootprintMB() -> Int? {
         var info = task_vm_info_data_t()
         var count = mach_msg_type_number_t(MemoryLayout<task_vm_info_data_t>.size / MemoryLayout<integer_t>.size)
         let result = withUnsafeMutablePointer(to: &info) {
