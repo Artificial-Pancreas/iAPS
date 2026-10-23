@@ -7,9 +7,15 @@ import WidgetKit
 struct LiveActivityChart: View {
     let context: ActivityViewContext<LiveActivityAttributes>
     var isWatch: Bool = false
+    var isFullscreen: Bool = false
 
-    private let dropWidth = CGFloat(80)
-    private let dropHeight = CGFloat(80)
+    private var dropWidth: CGFloat {
+        isFullscreen ? 96 : 80
+    }
+
+    private var dropHeight: CGFloat {
+        dropWidth
+    }
 
     private let decimalString: String = Locale.current.decimalSeparator ?? "."
 
@@ -24,24 +30,37 @@ struct LiveActivityChart: View {
     }
 
     private var standardBody: some View {
-        HStack(alignment: .top) {
-            chartView
-                .padding(.bottom, 10)
-                .padding(.top, 30)
-                .padding(.leading, 15)
-                .padding(.trailing, 10)
-                .background(.black.opacity(0.30))
+        ViewThatFits(in: .horizontal) {
+            ZStack {
+                HStack(alignment: .top) {
+                    chartView
+                        .padding(.bottom, 10)
+                        .padding(.top, 30)
+                        .padding(.leading, 15)
+                        .padding(.trailing, 10)
+                        .background(.black.opacity(0.30))
 
-            VStack(alignment: .trailing, spacing: 0) {
-                chartRightHandView
+                    VStack(alignment: .trailing, spacing: 0) {
+                        chartRightHandView
+                    }
+                    .fixedSize(horizontal: true, vertical: false)
+                    .frame(maxHeight: .infinity)
+                    .padding(.vertical, 15)
+                    .padding(.trailing, 15)
+                }
+
+                timeAndEventualOverlay
             }
-            .fixedSize(horizontal: true, vertical: false)
-            .frame(maxHeight: .infinity)
-            .padding(.vertical, 15)
-            .padding(.trailing, 15)
-        }
-        .overlay {
-            timeAndEventualOverlay
+
+            VStack(alignment: .leading, spacing: 0) {
+                chartHeader
+                    .padding(.horizontal, 12)
+                    .padding(.top, 10)
+
+                chartView
+                    .padding(.horizontal, 12)
+                    .padding(.bottom, 10)
+            }
         }
         .foregroundStyle(.white)
         .privacySensitive()
@@ -347,13 +366,57 @@ struct LiveActivityChart: View {
         .frame(width: dropWidth)
     }
 
+    private var chartHeader: some View {
+        HStack(alignment: .center, spacing: 10) {
+            glucoseDrop
+                .frame(width: 54, height: 54)
+
+            VStack(alignment: .leading, spacing: 2) {
+                BannerEventualGlucose(context: context)
+                    .font(.system(size: 16))
+                BannerTimestampLabel(context: context)
+                    .font(.caption2)
+                    .foregroundStyle(context.isStale ? Color(.loopRed) : .white.opacity(0.7))
+            }
+
+            Spacer(minLength: 8)
+
+            chartInlineMetrics
+        }
+        .lineLimit(1)
+        .minimumScaleFactor(0.75)
+    }
+
+    private var chartInlineMetrics: some View {
+        VStack(alignment: .trailing, spacing: 1) {
+            HStack(alignment: .firstTextBaseline, spacing: 0.5) {
+                Text(context.state.iob)
+                    .foregroundStyle(Color(.insulin))
+                Text("U")
+                    .font(.caption.smallCaps())
+                    .foregroundStyle(Color(.insulin))
+            }
+
+            HStack(alignment: .firstTextBaseline, spacing: 0.5) {
+                Text(context.state.cob)
+                    .foregroundStyle(Color(.loopYellow))
+                Text("g")
+                    .font(.caption)
+                    .foregroundStyle(Color(.loopYellow))
+            }
+        }
+        .font(.system(size: 16))
+        .fontWidth(.condensed)
+        .monospacedDigit()
+    }
+
     @ViewBuilder private var timeAndEventualOverlay: some View {
         BannerEventualGlucose(context: context)
             .font(.system(size: 16))
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding(.top, 10)
-            .padding(.trailing, 110)
+            .padding(.trailing, dropWidth + 30)
 
         BannerTimestampLabel(context: context)
             .font(.system(size: 11))
