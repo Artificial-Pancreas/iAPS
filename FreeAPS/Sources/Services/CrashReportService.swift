@@ -30,11 +30,14 @@ final class CrashReportService {
 
     private init() {}
 
-    // MARK: - Install (call first thing in the App initialiser)
+    // MARK: - Install
 
+    /// Call first thing in the App initialiser, and again once protected data is
+    /// available. Before the first unlock after a reboot KSCrash may not be able to
+    /// create its report directory; a failed install is retried at that point rather
+    /// than leaving the process without crash handlers for its whole lifetime.
     func install() {
         guard !installed else { return }
-        installed = true
 
         let config = KSCrashConfiguration()
         config.monitors = [.machException, .signal, .cppException, .nsException, .system, .applicationState, .userInfo]
@@ -44,13 +47,14 @@ final class CrashReportService {
         config.enableSwiftAsyncStackTraces = false
         // Stamped into every report: the commit is the identity of the code that crashed.
         config.userInfoJSON = [
-            "branch": Self.gitBranch() ?? "",
+            "branch": Bundle.main.gitBranch ?? "",
             "app_version": Bundle.main.releaseVersionNumber ?? "",
             "build_number": Bundle.main.buildVersionNumber ?? ""
         ]
 
         do {
             try KSCrash.shared.install(with: config)
+            installed = true
         } catch {
             warning(.default, "Crash reporter did not install: \(error.localizedDescription)")
         }
@@ -85,27 +89,32 @@ final class CrashReportService {
     func processPendingReports(enabled: Bool) {
         guard installed, !processed else { return }
         processed = true
-        guard let store = KSCrash.shared.reportStore, store.reportCount > 0 else { return }
-
-        guard enabled else {
-            debug(.default, "Crash reports found (\(store.reportCount)) but crash reporting is off — discarding")
-            store.deleteAllReports()
-            return
-        }
 
         Task.detached(priority: .utility) { [weak self] in
+            guard let store = KSCrash.shared.reportStore, store.reportCount > 0 else { return }
+            guard enabled else {
+                debug(.default, "Crash reports found (\(store.reportCount)) but crash reporting is off — discarding")
+                store.deleteAllReports()
+                return
+            }
             await self?.upload(from: store)
         }
     }
 
     private func upload(from store: CrashReportStore) async {
         let version = Bundle.main.releaseVersionNumber ?? ""
-        guard await isCurrentRelease(version) else {
+        switch await releaseStatus(of: version) {
+        case .current:
+            break
+        case .outdated:
             debug(
                 .default,
                 "Crash reports not uploaded: \(version) is not the latest main or dev release — discarding"
             )
             store.deleteAllReports()
+            return
+        case .unknown:
+            debug(.default, "Crash reports kept for the next launch: the release check did not answer")
             return
         }
 
@@ -146,36 +155,29 @@ final class CrashReportService {
         }
     }
 
-    /// Latest main / dev release per open-iaps.app. Network failure → not current: better
-    /// to keep the report for the next launch than to upload one nobody will read.
-    private func isCurrentRelease(_ version: String) async -> Bool {
-        struct Versions: Decodable { let main: String; let dev: String }
-        guard !version.isEmpty else { return false }
-        var request = URLRequest(url: Self.endpoint("/api/v1/version_check"), timeoutInterval: 20)
-        request.allowsConstrainedNetworkAccess = true
-        do {
-            let (data, _) = try await URLSession.shared.data(for: request)
-            let latest = try JSONDecoder().decode(Versions.self, from: data)
-            return version == latest.main || version == latest.dev
-        } catch {
-            warning(.default, "Crash report version check failed: \(error.localizedDescription)")
-            return false
-        }
+    private enum ReleaseStatus {
+        case current
+        case outdated
+        case unknown
     }
 
-    /// "<branch-or-tag> <short sha>" from branch.txt, written by the build phase (same
-    /// value the statistics upload reports as `Branch`). Nil when missing or malformed.
-    private static func gitBranch() -> String? {
-        guard let url = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-              let content = try? String(contentsOf: url)
-        else { return nil }
-        for line in content.components(separatedBy: .newlines) {
-            let parts = line.components(separatedBy: "=")
-            guard parts.count == 2, parts[0].trimmingCharacters(in: .whitespaces) == "BRANCH" else { continue }
-            let value = parts[1].trimmingCharacters(in: .whitespaces)
-            return value.isEmpty ? nil : value
+    /// Whether `version` is the latest main or dev release per open-iaps.app. Only a
+    /// definite "outdated" discards reports; when the check gets no answer (offline,
+    /// server down) they stay for the next launch — the upload would fail the same way.
+    private func releaseStatus(of version: String) async -> ReleaseStatus {
+        guard !version.isEmpty else { return .outdated }
+        var latest: Version?
+        // fetchVersion turns failures into an empty Version rather than an error.
+        do {
+            for try await value in NightscoutAPI(url: IAPSconfig.statURL).fetchVersion().values {
+                latest = value
+                break
+            }
+        } catch {
+            latest = nil
         }
-        return nil
+        guard let latest, !latest.main.isEmpty || !latest.dev.isEmpty else { return .unknown }
+        return version == latest.main || version == latest.dev ? .current : .outdated
     }
 
     private static func endpoint(_ path: String) -> URL {

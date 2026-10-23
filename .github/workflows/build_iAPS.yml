@@ -188,15 +188,23 @@ jobs:
         run: |
           set -u
           sha=$(git rev-parse --short=7 HEAD)
-          version=$(sed -n 's/^APP_VERSION *= *//p' Config.xcconfig | tr -d '[:space:]')
-          # The archive's CFBundleVersion: fastlane's increment_build_number wrote the
-          # TestFlight number into the project, which is what the app reports in crash
-          # reports and statistics. Fall back to the run number for non-TestFlight lanes.
-          BUILD_NUMBER=$(sed -n 's/.*CURRENT_PROJECT_VERSION = \([0-9][0-9]*\);.*/\1/p' FreeAPS.xcodeproj/project.pbxproj | head -1)
-          BUILD_NUMBER=${BUILD_NUMBER:-${{ github.run_number }}}
           tmp=$(mktemp -d)
           shopt -s nullglob # macOS /bin/bash is 3.2: no globstar, so find(1) below
           for z in artifacts/*.dSYM.zip; do unzip -q -o "$z" -d "$tmp"; done
+          # Version and build number as the app reports them, read from the app's own
+          # dSYM (dsymutil copies the app's Info.plist values into it), so the labels
+          # match the binary. Fallbacks: Config.xcconfig for the version, and the project
+          # file, where fastlane's increment_build_number wrote the TestFlight number.
+          # Never a made-up number: an unknown build number is sent empty.
+          app_plist=$(find "$tmp" -type d -name '*.app.dSYM' | head -1)/Contents/Info.plist
+          version="" BUILD_NUMBER=""
+          if [ -f "$app_plist" ]; then
+            version=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$app_plist" 2>/dev/null) || version=""
+            BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$app_plist" 2>/dev/null) || BUILD_NUMBER=""
+          fi
+          version=${version:-$(sed -n 's/^APP_VERSION *= *//p' Config.xcconfig | tr -d '[:space:]')}
+          BUILD_NUMBER=${BUILD_NUMBER:-$(sed -n 's/.*CURRENT_PROJECT_VERSION = \([0-9][0-9]*\);.*/\1/p' FreeAPS.xcodeproj/project.pbxproj | head -1)}
+          echo "symbols for version $version build ${BUILD_NUMBER:-unknown}"
           n=0
           while IFS= read -r dsym; do
             bin=$(ls "$dsym/Contents/Resources/DWARF/" 2>/dev/null | head -1)
