@@ -16,6 +16,7 @@ struct GlassEffectWhenAvailable: ViewModifier {
     }
 }
 
+/*
 @available(iOS 27.1, *) struct ToolbarEdgeAwareButton<Icon: View>: View {
     @Environment(\.toolbarVerticalEdge) private var toolbarVerticalEdge
 
@@ -33,6 +34,7 @@ struct GlassEffectWhenAvailable: ViewModifier {
         .labelStyle(.iconOnly)
     }
 }
+ */
 
 struct BoolTag: ViewModifier {
     let bool: Bool
