@@ -821,6 +821,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         rawCGMManager = manager.rawValue
         appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
+        // The G7 session length (10 vs 15 days) is only known after the sensor has connected.
+        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(manager))
     }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {

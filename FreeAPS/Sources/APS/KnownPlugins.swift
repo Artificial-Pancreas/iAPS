@@ -29,7 +29,9 @@ enum KnownPlugins {
 
         return switch cgmManager.pluginIdentifier {
         case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
-        case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
+        case G7CGMManager.pluginIdentifier:
+            // Session length comes from the sensor once connected (10- or 15-day G7); 12 h grace on top.
+            ((cgmManager as? G7CGMManager)?.lifetime ?? G7Sensor.defaultLifetime) + G7Sensor.gracePeriod
         case LibreTransmitterManagerV3.pluginIdentifier: libreExpirationSeconds
         case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
         case EversenseCGMManager
