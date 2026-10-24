@@ -31,7 +31,6 @@ import UIKit
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         AppearanceManager.setupGlobalAppearance()
-        MemoryMetricsService.shared.start()
     }
 
     var body: some Scene {
@@ -97,6 +96,9 @@ final class AppLauncher: ObservableObject {
         defer { isBuilding = false }
 
         FreeAPSApp.runVersionCheckOnce()
+        // Behind the gate: its counters live in UserDefaults, which reads back empty before
+        // the first unlock after a reboot.
+        MemoryMetricsService.shared.start()
         services = AppServices(assembler: FreeAPSApp.assembler)
     }
 }
@@ -145,6 +147,7 @@ private struct LaunchedAppView: View {
             .environmentObject(appServices)
             .onChange(of: scenePhase) {
                 debug(.default, "APPLICATION PHASE: \(scenePhase)")
+                FootprintLog.log("app \(scenePhase)")
                 if scenePhase == .active {
                     appServices.deviceManager.didBecomeActive()
                 }
