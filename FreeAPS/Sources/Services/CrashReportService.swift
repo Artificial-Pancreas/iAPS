@@ -3,11 +3,17 @@ import KSCrashRecording
 
 /// Opt-in crash reporting to open-iaps.app.
 ///
-/// KSCrash is installed at launch with the smallest useful monitor set — Mach exceptions,
-/// signals, C++ and NSException — and nothing that runs between crashes: no deadlock
-/// watchdog (polls the main thread, false positives), no zombie tracking (swizzles
-/// dealloc), no memory/termination monitors. At rest that is one thread parked in a
-/// Mach wait plus ~1 MB of pre-allocated buffers; nothing executes on the loop path.
+/// KSCrash is installed at launch with the smallest monitor set it allows: Mach
+/// exceptions, signals, C++ and NSException as crash detectors, with the deadlock
+/// watchdog (polls the main thread, false positives), zombie tracking (swizzles
+/// dealloc) and memory-termination monitors off. KSCrash 2.6 force-enables its
+/// "infrastructure" monitors on top of that — System, ApplicationState, UserInfo and
+/// Resource — and the Resource one does run between crashes: a 1 Hz memory-footprint
+/// read, a CPU-time poll (`proc_pidinfo`) every 5 s and a thread-list refresh every
+/// 60 s, each a single syscall on its own queue. Nothing of this touches the loop
+/// path, and the Resource monitor's own report type (non-fatal CPU-limit reports) is
+/// disabled so every stored report is a real crash. At rest that is one thread parked
+/// in a Mach wait plus ~1 MB of pre-allocated buffers.
 ///
 /// Reports are written to disk by KSCrash while the process is dying and picked up on
 /// the next launch, once the app's services are up. They leave the phone only when
@@ -42,6 +48,7 @@ final class CrashReportService {
         let config = KSCrashConfiguration()
         config.monitors = [.machException, .signal, .cppException, .nsException, .system, .applicationState, .userInfo]
         config.enableQueueNameSearch = true // dispatch queue labels are the key iAPS diagnostic
+        config.enableCPUExceptionReporting = false // the forced Resource monitor must not write reports
         config.enableMemoryIntrospection = false
         config.addConsoleLogToReport = false
         config.enableSwiftAsyncStackTraces = false
@@ -54,6 +61,10 @@ final class CrashReportService {
 
         do {
             try KSCrash.shared.install(with: config)
+            // KSCrash 2.6 applies enableQueueNameSearch and then starts its thread cache,
+            // whose init resets the flag to false (kstc_init runs after the configuration
+            // is handled). Set it again afterwards or no report carries a queue label.
+            kstc_setSearchQueueNames(true)
             installed = true
         } catch {
             warning(.default, "Crash reporter did not install: \(error.localizedDescription)")
@@ -84,8 +95,9 @@ final class CrashReportService {
 
     /// Looks for reports written by a previous run. With the Sharing toggle off they are
     /// deleted; with it on they are uploaded if this build is a current release, and
-    /// deleted on success. Failed uploads stay for the next launch. Runs off the main
-    /// thread; the only main-thread work is reading the setting.
+    /// deleted on success. Failed uploads, and anything beyond the per-launch cap, stay
+    /// for the next launch; KSCrash itself keeps at most 5 reports on disk (oldest
+    /// pruned). Runs off the main thread; the only main-thread work is reading the setting.
     func processPendingReports(enabled: Bool) {
         guard installed, !processed else { return }
         processed = true
@@ -118,11 +130,8 @@ final class CrashReportService {
             return
         }
 
-        let ids = store.reportIDs.map(\.int64Value).sorted()
-        let toSend = ids.suffix(Self.maxReportsPerLaunch)
-        for id in ids where !toSend.contains(id) {
-            store.deleteReport(with: id)
-        }
+        // Newest first, at most maxReportsPerLaunch; the rest wait for the next launch.
+        let toSend = store.reportIDs.map(\.int64Value).sorted().suffix(Self.maxReportsPerLaunch)
 
         let appId = Token().getIdentifier()
         for id in toSend {
