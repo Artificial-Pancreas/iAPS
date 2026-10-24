@@ -7,21 +7,34 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         case noDurationDefined
     }
 
+    /// The "Cancel" entry is not a stored preset, so it needs a fixed identifier: Shortcuts persists the
+    /// chosen entity's ID and resolves it again on every run. A fresh UUID per call (the previous
+    /// behaviour) never resolved, which made the "Apply or cancel" action prompt for a preset each time.
+    static let cancelPresetID = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
+
+    private var cancelPreset: tempPreset {
+        tempPreset(id: Self.cancelPresetID, name: TempTarget.cancel, targetTop: 0, targetBottom: 0, duration: 0)
+    }
+
     private func convert(tt: [TempTarget]) -> [tempPreset] {
-        let presets = tt + [TempTarget.cancel(at: Date())]
-        return presets.map { tempPreset.convert($0) }
+        tt.map { tempPreset.convert($0) }
     }
 
     func fetchAll() -> [tempPreset] {
-        convert(tt: tempTargetsStorage.presets())
+        convert(tt: tempTargetsStorage.presets()) + [cancelPreset]
     }
 
     func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
         let UUIDTempTarget = tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
-        return convert(tt: UUIDTempTarget)
+        var found = convert(tt: UUIDTempTarget)
+        if uuid.contains(Self.cancelPresetID) {
+            found.append(cancelPreset)
+        }
+        return found
     }
 
     func fetchOne(_ uuid: tempPreset.ID) -> tempPreset? {
+        if uuid == Self.cancelPresetID { return cancelPreset }
         let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
         guard let OneTempTarget = UUIDTempTarget.first else { return nil }
         return tempPreset.convert(OneTempTarget)
