@@ -210,8 +210,7 @@ extension Home {
                 return nil
             }
             // Name plus the time it ends, so the remaining duration is visible without opening it.
-            let endsAt = tempTarget.createdAt.addingTimeInterval(Double(tempTarget.duration) * 60)
-            return tempTarget.displayName + " · " + dateFormatter.string(from: endsAt)
+            return tempTarget.displayName + " · " + dateFormatter.string(from: tempTarget.endsAt)
         }
 
         var info: some View {
@@ -235,6 +234,7 @@ extension Home {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
+                        .lineLimit(1)
                 } else {
                     profileView
                 }

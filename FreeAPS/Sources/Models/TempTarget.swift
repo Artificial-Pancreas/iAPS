@@ -18,6 +18,11 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
         name ?? reason ?? TempTarget.custom
     }
 
+    /// `duration` is in minutes.
+    var endsAt: Date {
+        createdAt.addingTimeInterval(Int(duration).minutes.timeInterval)
+    }
+
     static func == (lhs: TempTarget, rhs: TempTarget) -> Bool {
         lhs.createdAt == rhs.createdAt
     }
