@@ -21,6 +21,10 @@ import Swinject
         // Nothing below may run while our own files are unreadable.
         await ProtectedData.waitUntilFilesAreReadable()
 
+        // The launch-time install is skipped before the first unlock after a reboot;
+        // the files are readable now, so install for real if that happened.
+        CrashReportService.shared.install()
+
         try await startService(resolver.resolve(DataMigrations.self))
 
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
@@ -42,6 +46,14 @@ import Swinject
 
         try await startService(resolver.resolve(CoreDataManager.self))
         try await startService(resolver.resolve(DatabaseManager.self))
+
+        // Crash reports from a previous run, now that the Sharing setting is readable.
+        let settings = await resolver.resolve(SettingsManager.self)!.settings
+        CrashReportService.shared.processPendingReports(
+            enabled: settings.uploadCrashReports,
+            appId: resolver.resolve(UserToken.self)!.getIdentifier(),
+            database: resolver.resolve(Database.self)!
+        )
         try await startService(resolver.resolve(LoopStatRecordStorage.self))
 
         try await startService(resolver.resolve(NightscoutAPIProvider.self))

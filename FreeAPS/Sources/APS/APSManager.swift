@@ -211,6 +211,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
             appCoordinator.setIsLooping(true)
 
             debug(.apsManager, "starting loop")
+            FootprintLog.log("loop start")
             let loopSpan = Signpost.begin("loop", poi: true)
 
             let lastStartLoopDate = Date()
@@ -273,6 +274,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
             await self.updateIOB(pumpHistory: appCoordinator.pumpHistory.value)
 
+            FootprintLog.log("loop end")
             appCoordinator.setIsLooping(false)
 
             appCoordinator.sendLoopCompleted(loopOutcome)
@@ -561,6 +563,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     func autotune() async -> Profile? {
+        FootprintLog.log("autotune start")
+        defer { FootprintLog.log("autotune end") }
         guard let profiles = try? await makeProfiles() else { return nil }
         let autotune = try? await openAPS.autotune(
             profile: profiles.profile,

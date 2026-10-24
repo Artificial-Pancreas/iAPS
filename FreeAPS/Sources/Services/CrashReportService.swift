@@ -30,11 +30,14 @@ import KSCrashRecording
 /// app's container path, time zone — and those are removed before serialisation.
 /// Symbolication needs only the frames' addresses and the images' UUIDs and load
 /// addresses, all of which stay.
-final class CrashReportService {
+///
+/// Main-actor: `install` and `processPendingReports` are called from the App initialiser
+/// and from `AppServices`; the upload itself runs detached.
+@MainActor final class CrashReportService {
     static let shared = CrashReportService()
 
     /// Most reports uploaded per launch; a crash loop must not turn into an upload storm.
-    private static let maxReportsPerLaunch = 3
+    nonisolated private static let maxReportsPerLaunch = 3
 
     private var installed = false
     private var processed = false
@@ -43,18 +46,18 @@ final class CrashReportService {
 
     // MARK: - Install
 
-    /// Call first thing in the App initialiser, and again from the launcher once
+    /// Call first thing in the App initialiser, and again from `AppServices` once
     /// protected data is available. Before the first unlock after a reboot the app
     /// cannot open its own files: KSCrash's `install` still succeeds then (it only
     /// fails when it cannot create its directories, and directories are not under
     /// data protection), but every file it sets up for the run — run id, console log,
     /// the System and Resource sidecars — fails silently, and a crash hours later in
     /// that background-launched process would be written without its system section.
-    /// So the install waits for the same gate the launcher uses; on a normal launch
+    /// So the install waits for the same gate `AppServices` uses; on a normal launch
     /// the phone is unlocked and this still runs before anything else.
     func install() {
         guard !installed else { return }
-        guard ProtectedDataGate.isAvailable() else {
+        guard ProtectedData.canReadOwnFiles() else {
             debug(.default, "Crash reporter install deferred: protected data is not available yet")
             return
         }
@@ -99,7 +102,7 @@ final class CrashReportService {
     /// the stack, which is also what a real force-unwrap or index failure looks like
     /// (EXC_BREAKPOINT / SIGTRAP). The index is opaque to the compiler so the check
     /// cannot be folded away.
-    @inline(never) static func simulateCrash() -> Never {
+    @inline(never) nonisolated static func simulateCrash() -> Never {
         let empty: [Int] = []
         let index = Int(Date().timeIntervalSince1970) & 0xFFFF
         _ = empty[index]
@@ -110,8 +113,9 @@ final class CrashReportService {
     /// deleted; with it on they are uploaded if this build is a current release, and
     /// deleted on success. Failed uploads, and anything beyond the per-launch cap, stay
     /// for the next launch; KSCrash itself keeps at most 5 reports on disk (oldest
-    /// pruned). Runs off the main thread; the only main-thread work is reading the setting.
-    func processPendingReports(enabled: Bool) {
+    /// pruned). Runs off the main thread; the caller reads the setting and resolves the
+    /// anonymous statistics id and the open-iaps.app client.
+    func processPendingReports(enabled: Bool, appId: String, database: Database) {
         guard installed, !processed else { return }
         processed = true
 
@@ -122,13 +126,13 @@ final class CrashReportService {
                 store.deleteAllReports()
                 return
             }
-            await self?.upload(from: store)
+            await self?.upload(from: store, appId: appId, database: database)
         }
     }
 
-    private func upload(from store: CrashReportStore) async {
+    nonisolated private func upload(from store: CrashReportStore, appId: String, database: Database) async {
         let version = Bundle.main.releaseVersionNumber ?? ""
-        switch await releaseStatus(of: version) {
+        switch await releaseStatus(of: version, database: database) {
         case .current:
             break
         case .outdated:
@@ -146,7 +150,6 @@ final class CrashReportService {
         // Newest first, at most maxReportsPerLaunch; the rest wait for the next launch.
         let toSend = store.reportIDs.map(\.int64Value).sorted().suffix(Self.maxReportsPerLaunch)
 
-        let appId = Token().getIdentifier()
         for id in toSend {
             guard let report = store.report(for: id),
                   let body = try? JSONSerialization.data(withJSONObject: Self.scrubbed(report.value))
@@ -164,7 +167,7 @@ final class CrashReportService {
 
     /// Binary images under these prefixes are Apple's; their paths say nothing about the
     /// user and the server tells system images from app images by them.
-    private static let systemImagePrefixes = ["/usr/lib/", "/System/", "/Developer/", "/private/preboot/"]
+    nonisolated private static let systemImagePrefixes = ["/usr/lib/", "/System/", "/Developer/", "/private/preboot/"]
 
     /// Removes what the consent text does not cover, before the report is serialised:
     /// - `crash.threads[].stack` — KSCrash dumps a raw window of the crashed thread's
@@ -179,7 +182,7 @@ final class CrashReportService {
     ///   per-install UUID. System image paths are kept.
     /// Kept: backtraces (addresses, binary names and UUIDs), registers, queue labels,
     /// the exception type and its message, model, OS and app version.
-    static func scrubbed(_ report: [String: Any]) -> [String: Any] {
+    nonisolated static func scrubbed(_ report: [String: Any]) -> [String: Any] {
         var out = report
 
         if var crash = out["crash"] as? [String: Any] {
@@ -219,7 +222,7 @@ final class CrashReportService {
     }
 
     /// `dict` without `keys`, at any depth.
-    private static func removing(keys: Set<String>, from dict: [String: Any]) -> [String: Any] {
+    nonisolated private static func removing(keys: Set<String>, from dict: [String: Any]) -> [String: Any] {
         var out: [String: Any] = [:]
         for (key, value) in dict where !keys.contains(key) {
             if let nested = value as? [String: Any] {
@@ -231,7 +234,7 @@ final class CrashReportService {
         return out
     }
 
-    private func send(_ body: Data, appId: String) async -> Bool {
+    nonisolated private func send(_ body: Data, appId: String) async -> Bool {
         var request = URLRequest(url: Self.endpoint("/api/v1/upload/crash"), timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -257,23 +260,14 @@ final class CrashReportService {
     /// Whether `version` is the latest main or dev release per open-iaps.app. Only a
     /// definite "outdated" discards reports; when the check gets no answer (offline,
     /// server down) they stay for the next launch — the upload would fail the same way.
-    private func releaseStatus(of version: String) async -> ReleaseStatus {
+    nonisolated private func releaseStatus(of version: String, database: Database) async -> ReleaseStatus {
         guard !version.isEmpty else { return .outdated }
-        var latest: Version?
-        // fetchVersion turns failures into an empty Version rather than an error.
-        do {
-            for try await value in NightscoutAPI(url: IAPSconfig.statURL).fetchVersion().values {
-                latest = value
-                break
-            }
-        } catch {
-            latest = nil
-        }
+        let latest = try? await database.fetchVersion()
         guard let latest, !latest.main.isEmpty || !latest.dev.isEmpty else { return .unknown }
         return version == latest.main || version == latest.dev ? .current : .outdated
     }
 
-    private static func endpoint(_ path: String) -> URL {
+    nonisolated private static func endpoint(_ path: String) -> URL {
         var components = URLComponents()
         components.scheme = IAPSconfig.statURL.scheme
         components.host = IAPSconfig.statURL.host
