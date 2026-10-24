@@ -17,7 +17,7 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     private func convert(tt: [TempTarget]) -> [tempPreset] {
-        tt.map { tempPreset.convert($0) }
+        tt.compactMap { tempPreset.convert($0) }
     }
 
     func fetchAll() -> [tempPreset] {
@@ -25,7 +25,7 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
+        let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id).map(uuid.contains) ?? false }
         var found = convert(tt: UUIDTempTarget)
         if uuid.contains(Self.cancelPresetID) {
             found.append(cancelPreset)
