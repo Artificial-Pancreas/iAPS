@@ -209,7 +209,9 @@ extension Home {
             guard let tempTarget = state.tempTarget else {
                 return nil
             }
-            return tempTarget.displayName
+            // Name plus the time it ends, so the remaining duration is visible without opening it.
+            let endsAt = tempTarget.createdAt.addingTimeInterval(Double(tempTarget.duration) * 60)
+            return tempTarget.displayName + " · " + dateFormatter.string(from: endsAt)
         }
 
         var info: some View {
