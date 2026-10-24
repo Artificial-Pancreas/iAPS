@@ -10,6 +10,14 @@ extension Settings {
         @State private var showShareSheet = false
         @State private var entity: String = "Readings"
         @State private var deletionAlert = false
+        @State private var searchText = ""
+
+        private var searchResults: [SettingsSearchEntry] {
+            let query = searchText.trimmingCharacters(in: .whitespaces)
+            guard !query.isEmpty else { return [] }
+            return SettingsCatalogue.entries.filter { $0.matches(query) }
+        }
+
         @State private var simulateCrashAlert = false
 
         @FetchRequest(
@@ -33,6 +41,24 @@ extension Settings {
 
         var body: some View {
             Form {
+                if !searchText.isEmpty {
+                    Section {
+                        if searchResults.isEmpty {
+                            Text(String(
+                                format: NSLocalizedString("No results for \"%@\"", comment: "Settings search, nothing matched"),
+                                searchText
+                            ))
+                            .foregroundColor(.secondary)
+                        } else {
+                            ForEach(searchResults) { entry in
+                                searchResultRow(entry)
+                            }
+                        }
+                    } header: {
+                        Text(searchResults.isEmpty ? "" : "Results")
+                    }
+                }
+
                 Section {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
@@ -276,6 +302,11 @@ extension Settings {
                     }
                 }
             }
+            .searchable(
+                text: $searchText,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text(NSLocalizedString("Search settings…", comment: "Settings search field placeholder"))
+            )
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
             }
@@ -287,6 +318,19 @@ extension Settings {
             .navigationBarItems(trailing: Button("Close", action: state.hideSettingsModal))
             .navigationBarTitleDisplayMode(.inline)
             .onDisappear(perform: { state.uploadProfileAndSettings(false) })
+        }
+
+        private func searchResultRow(_ entry: SettingsSearchEntry) -> some View {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(entry.localizedName)
+                    Text(entry.localizedSection)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+                Spacer()
+            }
+            .navigationLink(to: entry.destination, from: self)
         }
 
         private func clearEntity(entity: String) {
