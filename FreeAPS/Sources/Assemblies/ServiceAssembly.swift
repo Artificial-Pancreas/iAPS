@@ -66,7 +66,6 @@ final class ServiceAssembly: Assembly {
             let carbsStorage = r.resolve(CarbsStorage.self)!
             let tempTargetsStorage = r.resolve(TempTargetsStorage.self)!
             let garmin = r.resolve(GarminManager.self)!
-            let nightscout = r.resolve(NightscoutManager.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!
 
             return BaseWatchManager(
@@ -76,7 +75,6 @@ final class ServiceAssembly: Assembly {
                 carbsStorage: carbsStorage,
                 tempTargetsStorage: tempTargetsStorage,
                 garmin: garmin,
-                nightscout: nightscout,
                 appCoordinator: appCoordinator,
                 overrideStorage: r.resolve(OverrideStorage.self)!,
                 overrideManager: r.resolve(OverrideManager.self)!

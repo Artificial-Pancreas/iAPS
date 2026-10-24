@@ -93,12 +93,26 @@ final actor NightscoutOverridesUploader: LifetimeOwner, AppService {
     private let context: NightscoutUploadContext
     private let gate: UploadScheduleGate
     private let outbox: UploadOutbox<NigtscoutExercise, Date>
+    private let deletions: UploadOutbox<NightscoutOverrideDeletion, Date>
+    private let flushSerializer = TaskSerializer()
 
     init(context: NightscoutUploadContext) {
         self.context = context
         gate = context.makeGate(name: "overrides", group: .treatmentsAndLoops)
 
         let apiProvider = context.apiProvider
+        deletions = UploadOutbox(
+            file: OpenAPS.Nightscout.notUploadedOverrideDeletions,
+            retention: .days(2),
+            uniqueBy: \.createdAt,
+            dateBy: \.createdAt,
+            storage: context.storage,
+            category: .nightscout,
+            send: { deletion in
+                guard let nightscout = apiProvider.api else { throw DataSyncError.sinkUnavailable }
+                try await nightscout.deleteOverride(at: deletion.createdAt)
+            }
+        )
         outbox = UploadOutbox(
             file: OpenAPS.Nightscout.notUploadedOverrides,
             retention: .days(2),
@@ -108,7 +122,7 @@ final actor NightscoutOverridesUploader: LifetimeOwner, AppService {
             category: .nightscout,
             send: { override in
                 guard let nightscout = apiProvider.api else { throw DataSyncError.sinkUnavailable }
-                try await nightscout.deleteOverride(at: override.createdAt)
+                // NS upserts treatments on created_at + eventType: this replaces an earlier upload of the same override
                 try await nightscout.uploadEcercises([override])
             }
         )
@@ -123,7 +137,8 @@ final actor NightscoutOverridesUploader: LifetimeOwner, AppService {
     }
 
     func uploadOverride(_ profile: String, _ duration: Double, _ date: Date) async {
-        let duration = Int(duration == 0 ? 2880 : duration)
+        // 0 = indefinite; a cancelled override's fractional duration is rounded up (never to 0)
+        let duration = duration == 0 ? 2880 : max(1, Int(duration.rounded(.up)))
 
         let exercise = NigtscoutExercise(
             duration: duration,
@@ -133,17 +148,50 @@ final actor NightscoutOverridesUploader: LifetimeOwner, AppService {
             notes: profile
         )
 
+        // its upload replaces whatever is in NS at this second: a pending deletion there would delete it afterwards
+        await deletions.discard([exercise.createdAt])
         await outbox.enqueue([exercise])
-        await flushPending()
+        scheduleFlush()
+    }
+
+    /// Removes an override entry that was uploaded ahead of time (a scheduled successor that won't run as projected).
+    func deleteOverride(at date: Date) async {
+        let date = date.truncatedToSecond
+        // not uploaded yet - nothing to delete in NS
+        await outbox.discard([date])
+        await deletions.enqueue([NightscoutOverrideDeletion(createdAt: date)])
+        scheduleFlush()
+    }
+
+    /// Enqueuing is awaited (keeps the order of the changes), the network isn't: callers include the loop.
+    private func scheduleFlush() {
+        Task {
+            await withBackgroundTask("nightscout upload - overrides") {
+                await self.flushPending()
+            }
+        }
     }
 
     private func flushPending() async {
+        await flushSerializer.run {
+            await self.performFlush()
+        }
+    }
+
+    private func performFlush() async {
         guard context.canUpload(), await gate.allows() else { return }
-        let result = await outbox.sendPending()
-        if result.sent > 0 {
+        // A deletion only targets an entry uploaded earlier: a still-queued one is discarded instead, and a newer
+        // upload at the same second discards the deletion - so a pending deletion and upload never share a date.
+        let deleted = await deletions.sendPending()
+        let uploaded = await outbox.sendPending()
+        if uploaded.sent > 0 || deleted.sent > 0 {
             gate.recordUpload()
         }
     }
+}
+
+struct NightscoutOverrideDeletion: JSON {
+    let createdAt: Date
 }
 
 final actor NightscoutPumpStatusUploader: LifetimeOwner, AppService {

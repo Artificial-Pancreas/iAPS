@@ -2,7 +2,6 @@ import SwiftUI
 
 extension OverrideProfilesConfig {
     final class StateModel: BaseStateModel<Provider> {
-        @Injected() private var ns: NightscoutManager!
         @Injected() private var overrideStorage: OverrideStorage!
         @Injected() private var overrideManager: OverrideManager!
 
@@ -46,6 +45,7 @@ extension OverrideProfilesConfig {
             if let activeOverride = await overrideStorage.fetchCurrentActiveOverride() {
                 isOverrideActive = true
                 form = OverrideForm(from: activeOverride.toOverridePreset, context: context)
+                form.dropDanglingSucceeding(candidates: profiles)
 
                 // The active override stores its original duration; show the remaining time instead.
                 if !activeOverride.indefinite, let start = activeOverride.date, let originalDuration = activeOverride.duration {
@@ -70,32 +70,18 @@ extension OverrideProfilesConfig {
             let draft = draftForm.snapshot(id: UUID().uuidString, name: nil, emoji: nil, context: context)
 
             Task {
-                await overrideManager.cancelActiveOverride()
-                guard let activated = await overrideStorage.activateOverrideFromPreset(
-                    preset: draft,
-                    fromSavedPreset: false
-                ) else { return }
+                guard await overrideManager.activateOverride(preset: draft, fromSavedPreset: false) != nil else { return }
                 isOverrideActive = true
-
-                let duration = activated.duration == 0 ? 2880 : (activated.duration ?? 0)
-                await ns.uploadOverride(activated.percentage.formatted(), Double(duration), Date.now)
             }
         }
 
         /// Activate a saved preset directly (tapping it in the list).
         func activateOverrideFromPreset(_ preset: OverridePresetsSnapshot) {
             Task {
-                await overrideManager.cancelActiveOverride()
-                guard let saved = await overrideStorage.activateOverrideFromPreset(
+                await overrideManager.activateOverride(
                     preset: preset,
                     fromSavedPreset: true,
                     defaultMaxIOB: defaultmaxIOB
-                ) else { return }
-
-                await ns.uploadOverride(
-                    preset.name ?? "",
-                    Double(preset.duration ?? 0),
-                    saved.date ?? Date()
                 )
             }
         }
@@ -121,7 +107,7 @@ extension OverrideProfilesConfig {
         func updatePreset(id: String, name: String, emoji: String?, form presetForm: OverrideForm) {
             let draft = presetForm.snapshot(id: id, name: name, emoji: emoji, context: context)
             Task {
-                await overrideStorage.updateOverridePreset(draft)
+                await overrideManager.updateOverridePreset(draft)
                 await fetchOverridePresets()
             }
         }
@@ -131,8 +117,9 @@ extension OverrideProfilesConfig {
             // We should remove the item from the list synchronously for the `role: .destructive` swipe actions to work correctly
             // If the deletion from storage fails for some reason - the next fetch will restore the correct state.
             profiles.remove(atOffsets: offsets)
+            form.dropDanglingSucceeding(candidates: profiles)
             Task {
-                await overrideStorage.deleteOverridePresets(ids: idsToDelete)
+                await overrideManager.deleteOverridePresets(ids: idsToDelete)
                 await fetchOverridePresets()
             }
         }

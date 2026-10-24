@@ -202,17 +202,7 @@ final class OverrideIntentRequest: BaseIntentsRequest {
         guard let overridePreset = await overrideStorage.fetchOverridePreset(name: preset.name ?? "") else {
             return nil
         }
-        // Cancel the eventual current active override first
-        await overrideManager.cancelActiveOverride()
-
-        guard let saved = await overrideStorage.activateOverrideFromPreset(preset: overridePreset, fromSavedPreset: true)
-        else { return nil }
-        await nightscoutManager.uploadOverride(
-            preset.name ?? "",
-            Double(preset.duration ?? 0),
-            saved.date ?? Date.now
-        )
-        return saved
+        return await overrideManager.activateOverride(preset: overridePreset, fromSavedPreset: true)
     }
 
     func cancelOverride() async {

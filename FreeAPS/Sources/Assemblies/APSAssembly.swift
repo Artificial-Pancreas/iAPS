@@ -51,7 +51,6 @@ final class APSAssembly: Assembly {
                 carbsStorage: r.resolve(CarbsStorage.self)!,
                 announcementsStorage: r.resolve(AnnouncementsStorage.self)!,
                 deviceDataManager: r.resolve(DeviceDataManager.self)!,
-                nightscout: r.resolve(NightscoutManager.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
                 autotuneStorage: r.resolve(AutotuneStorage.self)!,
                 openAPS: r.resolve(OpenAPS.self)!,

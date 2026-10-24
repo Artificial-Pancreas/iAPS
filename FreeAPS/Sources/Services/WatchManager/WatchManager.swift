@@ -21,7 +21,6 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
     private let carbsStorage: CarbsStorage
     private let tempTargetsStorage: TempTargetsStorage
     private let garmin: GarminManager
-    private let nightscout: NightscoutManager
     private let appCoordinator: AppCoordinator
 
     private let overrideStorage: OverrideStorage
@@ -41,7 +40,6 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         carbsStorage: CarbsStorage,
         tempTargetsStorage: TempTargetsStorage,
         garmin: GarminManager,
-        nightscout: NightscoutManager,
         appCoordinator: AppCoordinator,
         overrideStorage: OverrideStorage,
         overrideManager: OverrideManager,
@@ -53,7 +51,6 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         self.carbsStorage = carbsStorage
         self.tempTargetsStorage = tempTargetsStorage
         self.garmin = garmin
-        self.nightscout = nightscout
         self.appCoordinator = appCoordinator
         self.overrideStorage = overrideStorage
         self.overrideManager = overrideManager
@@ -576,17 +573,8 @@ private extension BaseWatchManager {
 
         if let overrideID = message.override {
             if let preset = await overrideStorage.fetchOverridePreset(id: overrideID) {
-                // Cancel an active override first, if any
-                await overrideManager.cancelActiveOverride()
-
-                // Activate the new override and uplad the new ovderride to NS. Some duplicate code now.
-                guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
+                guard await overrideManager.activateOverride(preset: preset, fromSavedPreset: true) != nil
                 else { return .denied }
-                await nightscout.uploadOverride(
-                    preset.name ?? "",
-                    Double(preset.duration ?? 0),
-                    saved.date ?? Date.now
-                )
                 await configureState()
                 return .confirmed
             } else if overrideID == "cancel" {

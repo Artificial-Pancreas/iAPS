@@ -31,6 +31,8 @@ struct OverrideSnapshot: Sendable, Equatable {
     let start: Decimal?
     let target: Decimal?
     let uamMinutes: Decimal?
+    /// id of the preset to activate when this override runs to completion
+    let succeeding: String?
 
     let aisf: AutoISFsettings?
 }
@@ -66,6 +68,7 @@ extension OverrideSnapshot {
             start: override.start?.decimalValue,
             target: override.target?.decimalValue,
             uamMinutes: override.uamMinutes?.decimalValue,
+            succeeding: override.succeeding,
             aisf: aisf
         )
     }
@@ -101,7 +104,29 @@ extension OverrideSnapshot {
             uamMinutes: uamMinutes,
             overrideAutoISF: overrideAutoISF,
             date: date,
+            succeeding: succeeding,
             aisf: aisf
         )
+    }
+}
+
+extension OverrideSnapshot {
+    /// When the `succeeding` preset is scheduled to start: once this override runs to completion. Nil when there is no
+    /// successor, the override never completes (indefinite), or it can also be ended by carbs or glucose.
+    var succeedingStart: Date? {
+        guard succeeding != nil,
+              !indefinite,
+              let duration, duration > 0,
+              let date,
+              !endWIthNewCarbs,
+              !glucoseOverrideThresholdActive,
+              !glucoseOverrideThresholdActiveDown
+        else { return nil }
+        return date.addingTimeInterval(.minutes(duration))
+    }
+
+    /// The same activation of an override (an id can be activated again, from a preset).
+    func isSameOverride(as other: OverrideSnapshot) -> Bool {
+        id == other.id && date == other.date
     }
 }

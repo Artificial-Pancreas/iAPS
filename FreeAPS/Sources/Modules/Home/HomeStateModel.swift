@@ -61,6 +61,8 @@ extension Home {
         @Published private(set) var latestOverride: OverrideSnapshot?
         // preset of the active override (nil when the override is not an existing named preset)
         @Published private(set) var overridePreset: OverridePresetsSnapshot?
+        // preset scheduled to start when the active override runs to completion
+        @Published private(set) var succeedingPreset: OverridePresetsSnapshot?
         // autoisf flag of the active override's Auto_ISF record (nil when no active override / no record)
         @Published private(set) var overrideAutoISF: Bool?
         @Published var alwaysUseColors: Bool = false
@@ -459,6 +461,13 @@ extension Home {
                 overridePreset = nil
                 overrideAutoISF = nil
             }
+
+            if let latestOverride, latestOverride.succeedingStart != nil, let id = latestOverride.succeeding {
+                succeedingPreset = await overrideStorage.fetchOverridePreset(id: id)
+            } else {
+                succeedingPreset = nil
+            }
+            data.succeedingOverride = succeedingPreset
         }
 
         private func setupLoopStatsBackground() {

@@ -66,7 +66,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     private let carbsStorage: CarbsStorage
     private let announcementsStorage: AnnouncementsStorage
     private let deviceDataManager: DeviceDataManager
-    private let nightscout: NightscoutManager
     private let settingsManager: SettingsManager
     private let autotuneStorage: AutotuneStorage
     private let dynamicStateManager: DynamicStateManager
@@ -102,7 +101,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         carbsStorage: CarbsStorage,
         announcementsStorage: AnnouncementsStorage,
         deviceDataManager: DeviceDataManager,
-        nightscout: NightscoutManager,
         settingsManager: SettingsManager,
         autotuneStorage: AutotuneStorage,
         openAPS: OpenAPS,
@@ -120,7 +118,6 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         self.carbsStorage = carbsStorage
         self.announcementsStorage = announcementsStorage
         self.deviceDataManager = deviceDataManager
-        self.nightscout = nightscout
         self.settingsManager = settingsManager
         self.autotuneStorage = autotuneStorage
         self.openAPS = openAPS
@@ -724,11 +721,8 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
         case let .override(name):
             guard !name.isEmpty else { return }
 
-            // Cancel eventual current active override first
-            let currentOverrideCancelled = await overrideManager.cancelActiveOverride()
-
             if name.lowercased() == "cancel" {
-                if currentOverrideCancelled {
+                if await overrideManager.cancelActiveOverride() {
                     debug(.apsManager, "ative override canceled by announcement")
                     await announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 } else {
@@ -738,15 +732,13 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 return
             }
 
-            // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            guard let preset = await overrideStorage.fetchOverridePreset(name: name) else { return }
-            guard let saved = await overrideStorage.activateOverrideFromPreset(preset: preset, fromSavedPreset: true)
-            else { return }
-            await nightscout.uploadOverride(
-                name,
-                Double(preset.duration ?? 0),
-                saved.date ?? Date.now
-            )
+            // an unknown preset name leaves the active override running
+            guard let preset = await overrideStorage.fetchOverridePreset(name: name) else {
+                debug(.apsManager, "Remote Override by Announcement: no preset named \(name)")
+                return
+            }
+            // replaces the active override, if any
+            guard await overrideManager.activateOverride(preset: preset, fromSavedPreset: true) != nil else { return }
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }

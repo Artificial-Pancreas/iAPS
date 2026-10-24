@@ -12,6 +12,8 @@ extension OverrideProfilesConfig {
     struct OverrideSettingsForm: View {
         @Binding var form: OverrideForm
         let context: OverrideForm.Context
+        /// Presets that can be scheduled to start when this override runs to completion.
+        var succeedingCandidates: [OverridePresetsSnapshot] = []
 
         @State private var isEditing = false
 
@@ -66,6 +68,17 @@ extension OverrideProfilesConfig {
             return formatter
         }()
 
+        /// The succeeding preset can be deleted while the form is open - show it as "No".
+        private var succeedingSelection: Binding<String?> {
+            Binding(
+                get: {
+                    guard let id = form.succeeding, succeedingCandidates.contains(where: { $0.id == id }) else { return nil }
+                    return id
+                },
+                set: { form.succeeding = $0 }
+            )
+        }
+
         var body: some View {
             // Insulin Slider
             Section {
@@ -110,6 +123,18 @@ extension OverrideProfilesConfig {
                         Text("Duration")
                         DecimalTextField("0", value: $form.duration, formatter: Self.formatter, liveEditing: true)
                         Text("minutes").foregroundColor(.secondary)
+                    }
+                }
+                if form.canHaveSucceeding, !succeedingCandidates.isEmpty {
+                    VStack(alignment: .leading) {
+                        Text("When run to completion schedule a consecutive override preset:")
+                        Picker("", selection: succeedingSelection) {
+                            Text("No").tag(String?.none)
+                            ForEach(succeedingCandidates) { preset in
+                                Text(preset.name ?? "").tag(String?.some(preset.id))
+                            }
+                        }
+                        .pickerStyle(.menu)
                     }
                 }
             } header: { Text("Duration") }

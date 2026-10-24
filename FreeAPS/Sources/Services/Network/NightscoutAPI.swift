@@ -226,9 +226,12 @@ extension NightscoutAPI {
         try await sendDeleteRequest(Config.treatmentsPath, query: queryItems, allowsConstrainedNetworkAccess: false)
     }
 
+    /// Deletes the iAPS override entry created at `date` (override dates are uploaded truncated to seconds; NS
+    /// normalizes `created_at` the same way when storing and when querying).
     func deleteOverride(at date: Date) async throws {
         let queryItems = [
-            URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
+            URLQueryItem(name: "find[eventType]", value: EventType.nsExercise.rawValue),
+            URLQueryItem(name: "find[enteredBy]", value: NigtscoutExercise.local),
             URLQueryItem(
                 name: "find[created_at][$eq]",
                 value: date.truncatedToSecond.formatted(.iso8601WithFractionalSeconds)

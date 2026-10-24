@@ -31,6 +31,7 @@ class ChartModel: ObservableObject {
     @Published var displayYgridLines: Bool
     @Published var thresholdLines: Bool
     @Published var latestOverride: OverrideSnapshot?
+    @Published var succeedingOverride: OverridePresetsSnapshot?
     @Published var overrideHistory: [OverrideHistorySnapshot]
     @Published var minimumSMB: Decimal
     @Published var insulinDIA: Decimal

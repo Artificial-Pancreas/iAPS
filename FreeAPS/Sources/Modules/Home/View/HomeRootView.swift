@@ -586,6 +586,10 @@ extension Home {
                         } else {
                             Text("Override").font(.statusFont).foregroundStyle(.secondary)
                         }
+                        if state.succeedingPreset != nil {
+                            Image(systemName: "person.2.fill").symbolRenderingMode(.palette).foregroundStyle(.blue, .purple)
+                                .padding(.horizontal, 2)
+                        }
                     }
                 }
             }

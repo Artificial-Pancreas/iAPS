@@ -3,7 +3,7 @@ import Foundation
 
 // a snapshot (DTO) of a CoreData OverridePresets entity
 // entities are not safe to send across actor/thread boundaries (not Sendable), this snapshot is
-struct OverridePresetsSnapshot: Sendable {
+struct OverridePresetsSnapshot: Sendable, Equatable {
     let id: String
 
     let name: String?
@@ -44,6 +44,9 @@ struct OverridePresetsSnapshot: Sendable {
 
     let date: Date?
 
+    /// id of the preset to activate when an override from this preset runs to completion
+    let succeeding: String?
+
     let aisf: AutoISFsettings?
 
     init(
@@ -74,6 +77,7 @@ struct OverridePresetsSnapshot: Sendable {
         uamMinutes: Decimal? = nil,
         overrideAutoISF: Bool = false,
         date: Date? = nil,
+        succeeding: String? = nil,
         aisf: AutoISFsettings? = nil
     ) {
         self.advancedSettings = advancedSettings
@@ -103,6 +107,7 @@ struct OverridePresetsSnapshot: Sendable {
         self.start = start
         self.target = target
         self.uamMinutes = uamMinutes
+        self.succeeding = succeeding
         self.aisf = aisf
     }
 }
@@ -138,6 +143,7 @@ extension OverridePresetsSnapshot {
             uamMinutes: record.uamMinutes?.decimalValue,
             overrideAutoISF: record.overrideAutoISF,
             date: record.date,
+            succeeding: record.succeeding,
             aisf: aisf
         )
     }

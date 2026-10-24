@@ -241,10 +241,13 @@ extension RestoreCoreDataStatusView {
         private func saveOverridePresets(_ presets: [MigratedOverridePresets]) async -> Int {
             guard !presets.isEmpty else { return 0 }
 
+            // ids are kept: the Auto ISF block and the succeeding preset reference presets by id
+            let restoredIds = Set(presets.map(\.id))
             for p in presets {
+                let id = p.id.isEmpty ? UUID().uuidString : p.id
                 await overrideStorage.storeOverridePreset(
                     .init(
-                        id: UUID().uuidString,
+                        id: id,
                         name: p.name,
                         emoji: p.emoji,
                         percentage: p.percentage,
@@ -254,13 +257,14 @@ extension RestoreCoreDataStatusView {
                         basal: p.basal,
                         cr: p.cr,
                         isf: p.isf,
-                        isfAndCr: false, // TODO: missing
+                        isfAndCr: p.isndAndCr,
                         advancedSettings: p.advancedSettings,
-                        endWIthNewCarbs: false, // TODO: missing
-                        glucoseOverrideThreshold: nil, // TODO: missing
-                        glucoseOverrideThresholdActive: false, // TODO: missing
-                        glucoseOverrideThresholdActiveDown: false, // TODO: missing
-                        glucoseOverrideThresholdDown: nil, // TODO: missing
+                        // Absent from older backups: entity defaults
+                        endWIthNewCarbs: p.endWIthNewCarbs ?? false,
+                        glucoseOverrideThreshold: p.glucoseOverrideThreshold,
+                        glucoseOverrideThresholdActive: p.glucoseOverrideThresholdActive ?? false,
+                        glucoseOverrideThresholdActiveDown: p.glucoseOverrideThresholdActiveDown ?? false,
+                        glucoseOverrideThresholdDown: p.glucoseOverrideThresholdDown,
                         overrideMaxIOB: p.overrideMaxIOB,
                         maxIOB: p.maxIOB,
                         smbIsAlwaysOff: p.smbAlwaysOff,
@@ -269,9 +273,11 @@ extension RestoreCoreDataStatusView {
                         end: p.end,
                         smbMinutes: p.smbMinutes,
                         uamMinutes: p.uamMinutes,
-                        overrideAutoISF: p.overrideMaxIOB,
+                        overrideAutoISF: p.overrideAutoISF ?? false,
                         date: p.date,
-                        aisf: p.autoISF.map { $0.asSettings(id: p.id) }
+                        // drop a dangling reference to a preset that isn't part of the backup
+                        succeeding: p.succeeding.flatMap { restoredIds.contains($0) ? $0 : nil },
+                        aisf: p.autoISF.map { $0.asSettings(id: id) }
                     )
                 )
             }

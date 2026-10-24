@@ -915,7 +915,7 @@ private final class GeometriesBuilder {
             let targetRaw = last.target ?? 0
             let target = Int(targetRaw) < 6 ? 6 : targetRaw
 
-            if duration > 0 {
+            if duration > 0, !last.indefinite {
                 let x1 = timeToXCoordinate((latest?.date ?? Date.now).timeIntervalSince1970)
                 let plusNow = (last.date ?? Date.now)
                     .addingTimeInterval(.minutes(Int(latest?.duration ?? 0)))
@@ -927,6 +927,24 @@ private final class GeometriesBuilder {
                     height: 6
                 )
                 old.append(oneMore)
+
+                // The scheduled succeeding override, drawn after a 1 minute gap (there is no real gap)
+                if let succeeding = data.succeedingOverride {
+                    let succeedingTarget = max(Int(succeeding.target ?? 0), 6)
+                    // indefinite: illustrated as 48 hours
+                    let succeedingDuration = succeeding.indefinite || (succeeding.duration ?? 0) == 0 ?
+                        2880 : Int(succeeding.duration ?? 0)
+                    let start = plusNow.addingTimeInterval(.minutes(1))
+                    let x1 = timeToXCoordinate(start.timeIntervalSince1970)
+                    let x2 = timeToXCoordinate(start.addingTimeInterval(.minutes(succeedingDuration)).timeIntervalSince1970)
+                    old.append(CGRect(
+                        x: x1,
+                        y: glucoseToYCoordinate(succeedingTarget) - 3,
+                        width: x2 - x1,
+                        height: 6
+                    ))
+                }
+
                 let path = Path { path in
                     path.addRects(old)
                 }
