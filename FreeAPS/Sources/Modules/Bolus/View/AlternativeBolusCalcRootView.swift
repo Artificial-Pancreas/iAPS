@@ -22,7 +22,6 @@ extension Bolus {
         }
 
         @Environment(\.colorScheme) var colorScheme
-        @FocusState private var isFocused: Bool
 
         let meal: FetchedResults<Meals>
         let mealEntries: any View
@@ -167,11 +166,11 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
+                            autofocus: true,
                             liveEditing: true
                         )
                         Text(exceededMaxBolus ? "😵" : " U").foregroundColor(.secondary)
                     }
-                    .focused($isFocused)
                     .onChange(of: state.amount) {
                         if state.amount > state.maxBolus {
                             exceededMaxBolus = true
