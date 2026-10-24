@@ -34,36 +34,42 @@ final class BuildExpirationManager {
         Bundle.main.profileProvisionsSpecificDevices ? .provisioningProfile : .testFlight
     }
 
-    var expirationDate: Date {
+    /// Nil when the expiry cannot be known: a TestFlight build whose build date is missing. Guessing
+    /// "now" there would silently keep the countdown at 90 days and the warning would never fire.
+    var expirationDate: Date? {
         // No embedded profile at all means the Simulator — nothing expires there.
         guard let profileExpiry = Bundle.main.profileExpirationDate else { return .distantFuture }
         switch lifetime {
         case .provisioningProfile:
             return profileExpiry
         case .testFlight:
-            return Calendar.current.date(byAdding: .day, value: Self.testFlightLifespanDays, to: Bundle.main.buildDate)
-                ?? .distantFuture
+            guard let buildDate = Bundle.main.buildDate else { return nil }
+            return Calendar.current.date(byAdding: .day, value: Self.testFlightLifespanDays, to: buildDate)
         }
     }
 
     /// "yyyy-MM-dd", for the Settings header.
     var expirationDateText: String {
+        guard let expirationDate else { return NSLocalizedString("Unknown", comment: "") }
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.string(from: expirationDate)
     }
 
     var daysRemaining: Int {
-        Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day ?? 0
+        guard let expirationDate else { return 0 }
+        return Calendar.current.dateComponents([.day], from: Date(), to: expirationDate).day ?? 0
     }
 
     var hoursRemaining: Int {
-        max(0, Calendar.current.dateComponents([.hour], from: Date(), to: expirationDate).hour ?? 0)
+        guard let expirationDate else { return 0 }
+        return max(0, Calendar.current.dateComponents([.hour], from: Date(), to: expirationDate).hour ?? 0)
     }
 
     // MARK: - Alert gating
 
     var shouldShowAlert: Bool {
+        guard expirationDate != nil else { return false }
         let days = daysRemaining
         guard days >= 0, days <= Self.warningDays else { return false }
         let minInterval: TimeInterval = hoursRemaining < 24 ? 3600 : 2 * 86400
@@ -104,7 +110,7 @@ final class BuildExpirationManager {
                 )
             return String(format: format, h)
         }
-        let dateStr = expirationDate.formatted(date: .abbreviated, time: .omitted)
+        let dateStr = expirationDate?.formatted(date: .abbreviated, time: .omitted) ?? ""
         let format: String
         switch (lifetime, daysRemaining == 1) {
         case (.testFlight, true):

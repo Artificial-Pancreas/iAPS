@@ -21,9 +21,13 @@ extension Bundle {
     /// branch.txt. Older builds have no such key; for those the Info.plist modification time is
     /// used when it is plausible. TestFlight / App Store installs stamp bundle files with a
     /// sentinel mtime (1697-10-17, −2^33 s), which is what used to show up as Build_Date in the
-    /// statistics and would push the TestFlight expiry countdown into the past.
-    var buildDate: Date {
-        if let raw = branchFileValue("BUILD_DATE"),
+    /// statistics and would push the TestFlight expiry countdown into the past. Nil when neither
+    /// source is usable, so callers can say "unknown" instead of guessing.
+    var buildDate: Date? { Self.mainBuildDate }
+
+    /// Constant for the life of the process; read once rather than re-parsing branch.txt per access.
+    private static let mainBuildDate: Date? = {
+        if let raw = Bundle.main.branchFileValue("BUILD_DATE"),
            let date = ISO8601DateFormatter().date(from: raw)
         {
             return date
@@ -35,8 +39,8 @@ extension Bundle {
         {
             return infoDate
         }
-        return Date()
-    }
+        return nil
+    }()
 
     /// "KEY = value" lookup in branch.txt (written by the "get branch name and commit ID" build
     /// phase). Nil when the file or key is missing, or the value is empty.
