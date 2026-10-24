@@ -13,12 +13,9 @@ extension Settings {
         @State private var searchText = ""
 
         private var searchResults: [SettingsSearchEntry] {
-            guard !searchText.isEmpty else { return [] }
-            let query = searchText.lowercased()
-            return SettingsCatalogue.entries.filter {
-                $0.name.lowercased().contains(query) ||
-                    $0.section.lowercased().contains(query)
-            }
+            let query = searchText.trimmingCharacters(in: .whitespaces)
+            guard !query.isEmpty else { return [] }
+            return SettingsCatalogue.entries.filter { $0.matches(query) }
         }
 
         @FetchRequest(
@@ -45,8 +42,11 @@ extension Settings {
                 if !searchText.isEmpty {
                     Section {
                         if searchResults.isEmpty {
-                            Text("No results for \"\(searchText)\"")
-                                .foregroundColor(.secondary)
+                            Text(String(
+                                format: NSLocalizedString("No results for \"%@\"", comment: "Settings search, nothing matched"),
+                                searchText
+                            ))
+                            .foregroundColor(.secondary)
                         } else {
                             ForEach(searchResults) { entry in
                                 searchResultRow(entry)
@@ -287,7 +287,7 @@ extension Settings {
             .searchable(
                 text: $searchText,
                 placement: .navigationBarDrawer(displayMode: .always),
-                prompt: "Search settings…"
+                prompt: Text(NSLocalizedString("Search settings…", comment: "Settings search field placeholder"))
             )
             .sheet(isPresented: $showShareSheet) {
                 ShareSheet(activityItems: state.logItems())
@@ -305,8 +305,8 @@ extension Settings {
         private func searchResultRow(_ entry: SettingsSearchEntry) -> some View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(entry.name)
-                    Text(entry.section)
+                    Text(entry.localizedName)
+                    Text(entry.localizedSection)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }
