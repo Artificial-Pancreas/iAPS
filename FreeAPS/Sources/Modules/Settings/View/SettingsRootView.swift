@@ -37,10 +37,12 @@ extension Settings {
                 }
                 header: {
                     VStack(alignment: .leading) {
-                        if let expirationDate = Bundle.main.profileExpiration {
+                        // Same date the expiry alert counts down to: the profile's for Xcode installs,
+                        // build date + 90 days for TestFlight (whose profile outlives the build by months).
+                        if Bundle.main.profileExpirationDate != nil {
                             Text(
                                 "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
-                                    "\nBuild Expires: " + expirationDate
+                                    "\nBuild Expires: " + BuildExpirationManager.shared.expirationDateText
                             ).textCase(nil)
                         } else {
                             Text(
