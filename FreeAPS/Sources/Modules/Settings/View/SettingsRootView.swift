@@ -10,6 +10,7 @@ extension Settings {
         @State private var showShareSheet = false
         @State private var entity: String = "Readings"
         @State private var deletionAlert = false
+        @State private var simulateCrashAlert = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -37,10 +38,12 @@ extension Settings {
                 }
                 header: {
                     VStack(alignment: .leading) {
-                        if let expirationDate = Bundle.main.profileExpiration {
+                        // Same date the expiry alert counts down to: the profile's for Xcode installs,
+                        // build date + 90 days for TestFlight (whose profile outlives the build by months).
+                        if Bundle.main.profileExpirationDate != nil {
                             Text(
                                 "iAPS v\(state.versionNumber) (\(state.buildNumber))\nBranch: \(state.branch) \(state.copyrightNotice)" +
-                                    "\nBuild Expires: " + expirationDate
+                                    "\nBuild Expires: " + BuildExpirationManager.shared.expirationDateText
                             ).textCase(nil)
                         } else {
                             Text(
@@ -136,6 +139,22 @@ extension Settings {
 
                                 HStack {
                                     Toggle("Max Override 400%", isOn: $state.extended_overrides)
+                                }
+
+                                HStack {
+                                    Text("Simulate a crash")
+                                    Button("Crash") { simulateCrashAlert = true }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                }
+                                .alert("Simulate a crash?", isPresented: $simulateCrashAlert) {
+                                    Button("Crash", role: .destructive) { CrashReportService.simulateCrash() }
+                                    Button("Cancel", role: .cancel) {}
+                                } message: {
+                                    Text(
+                                        "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start."
+                                    )
                                 }
                             }
                             Group {

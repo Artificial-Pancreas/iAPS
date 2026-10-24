@@ -166,12 +166,19 @@ extension ContactTrick {
 
         var body: some View {
             HStack {
-                Text(
-                    NSLocalizedString("Contact", comment: "") + ": " + "iAPS \(index + 1)"
-                )
-                .font(.body)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
+                VStack(alignment: .leading) {
+                    Text(
+                        NSLocalizedString("Contact", comment: "") + ": " + "iAPS \(index + 1)"
+                    )
+                    .font(.body)
+                    .minimumScaleFactor(0.5)
+                    .lineLimit(1)
+                    if !entry.enabled {
+                        Text("Disabled")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                }
 
                 Spacer()
 
@@ -193,6 +200,7 @@ extension ContactTrick {
                         .frame(width: geometry.size.height, height: geometry.size.height)
                     }
                 }
+                .opacity(entry.enabled ? 1 : 0.4)
                 .fixedSize(horizontal: true, vertical: false)
                 .padding(.horizontal, 30)
             }
@@ -229,6 +237,9 @@ extension ContactTrick {
                 }
             }
             Form {
+                Section {
+                    Toggle("Enabled", isOn: $entry.enabled)
+                }
                 Section {
                     Picker(
                         selection: $entry.layout,
