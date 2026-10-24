@@ -235,7 +235,25 @@ struct PumpView: View {
                     }
                 }
             } else {
-                Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
+                // Expired: show the time since expiry (into the grace period) under "Replace".
+                let overdue = -time
+                let hours = Int(overdue / 1.hours.timeInterval)
+                let minutes = Int(overdue / 1.minutes.timeInterval) - hours * 60
+                VStack(spacing: 0) {
+                    Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
+                    HStack(spacing: 0) {
+                        Text("-")
+                        if hours >= 1 {
+                            Text("\(hours)")
+                            Text(NSLocalizedString("h", comment: "abbreviation for hours"))
+                            Text(" ")
+                        }
+                        Text("\(minutes)")
+                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
+                    }
+                    .font(.caption2)
+                }
+                .foregroundStyle(.red)
             }
         }
     }
