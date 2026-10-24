@@ -99,8 +99,7 @@ final class CrashReportService {
     /// the stack, which is also what a real force-unwrap or index failure looks like
     /// (EXC_BREAKPOINT / SIGTRAP). The index is opaque to the compiler so the check
     /// cannot be folded away.
-    @inline(never)
-    static func simulateCrash() -> Never {
+    @inline(never) static func simulateCrash() -> Never {
         let empty: [Int] = []
         let index = Int(Date().timeIntervalSince1970) & 0xFFFF
         _ = empty[index]

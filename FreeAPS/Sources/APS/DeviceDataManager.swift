@@ -698,9 +698,9 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         // uploaded logs can place pod changes, set changes and refills on every pump type.
         for event in events {
             switch event.type {
-            case .rewind,
-                 .prime,
-                 .replaceComponent:
+            case .prime,
+                 .replaceComponent,
+                 .rewind:
                 debug(
                     .deviceManager,
                     "Pump lifecycle: \(event.type!.rawValue) at \(Self.lifecycleDateFormatter.string(from: event.date)) title=\(event.title)"
