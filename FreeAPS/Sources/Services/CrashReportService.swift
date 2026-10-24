@@ -22,9 +22,14 @@ import KSCrashRecording
 /// older builds may already be fixed and are not worth anyone's time. Nothing is ever
 /// prompted: with the toggle off, pending reports are discarded silently.
 ///
-/// A report contains thread stacks, register state, binary names and UUIDs, device
-/// model, OS and app version. No glucose, no settings, no identifiers beyond the
-/// anonymous statistics id the upload is filed under.
+/// What leaves the phone is a scrubbed copy of KSCrash's report (see `scrubbed`):
+/// backtraces, register state, queue labels, the exception and its message, binary
+/// names and UUIDs, device model, OS and app version. KSCrash also records things
+/// the consent text does not cover — a raw window of the crashed thread's stack, the
+/// object an NSException reason points at and its userInfo, a per-device hash, the
+/// app's container path, time zone — and those are removed before serialisation.
+/// Symbolication needs only the frames' addresses and the images' UUIDs and load
+/// addresses, all of which stay.
 final class CrashReportService {
     static let shared = CrashReportService()
 
@@ -38,12 +43,21 @@ final class CrashReportService {
 
     // MARK: - Install
 
-    /// Call first thing in the App initialiser, and again once protected data is
-    /// available. Before the first unlock after a reboot KSCrash may not be able to
-    /// create its report directory; a failed install is retried at that point rather
-    /// than leaving the process without crash handlers for its whole lifetime.
+    /// Call first thing in the App initialiser, and again from the launcher once
+    /// protected data is available. Before the first unlock after a reboot the app
+    /// cannot open its own files: KSCrash's `install` still succeeds then (it only
+    /// fails when it cannot create its directories, and directories are not under
+    /// data protection), but every file it sets up for the run — run id, console log,
+    /// the System and Resource sidecars — fails silently, and a crash hours later in
+    /// that background-launched process would be written without its system section.
+    /// So the install waits for the same gate the launcher uses; on a normal launch
+    /// the phone is unlocked and this still runs before anything else.
     func install() {
         guard !installed else { return }
+        guard ProtectedDataGate.isAvailable() else {
+            debug(.default, "Crash reporter install deferred: protected data is not available yet")
+            return
+        }
 
         let config = KSCrashConfiguration()
         config.monitors = [.machException, .signal, .cppException, .nsException, .system, .applicationState, .userInfo]
@@ -136,7 +150,7 @@ final class CrashReportService {
         let appId = Token().getIdentifier()
         for id in toSend {
             guard let report = store.report(for: id),
-                  let body = try? JSONSerialization.data(withJSONObject: report.value)
+                  let body = try? JSONSerialization.data(withJSONObject: Self.scrubbed(report.value))
             else {
                 store.deleteReport(with: id)
                 continue
@@ -145,6 +159,77 @@ final class CrashReportService {
                 store.deleteReport(with: id)
             }
         }
+    }
+
+    // MARK: - Scrub
+
+    /// Binary images under these prefixes are Apple's; their paths say nothing about the
+    /// user and the server tells system images from app images by them.
+    private static let systemImagePrefixes = ["/usr/lib/", "/System/", "/Developer/", "/private/preboot/"]
+
+    /// Removes what the consent text does not cover, before the report is serialised:
+    /// - `crash.threads[].stack` — KSCrash dumps a raw window of the crashed thread's
+    ///   stack memory regardless of the introspection flag; `notable_addresses` likewise.
+    /// - `crash.error.*.referenced_object` and `userInfo` — for an NSException KSCrash
+    ///   dereferences any hex address in the reason string and dumps that object, and
+    ///   stringifies the exception's userInfo (Core Data fills it with field values).
+    /// - `system.device_app_hash` (a stable per-device identifier distinct from the
+    ///   statistics id), `CFBundleExecutablePath`, `time_zone`, `boot_time`, `storage`,
+    ///   `freeStorage`.
+    /// - app binary paths reduced to their file name; the container path carries a
+    ///   per-install UUID. System image paths are kept.
+    /// Kept: backtraces (addresses, binary names and UUIDs), registers, queue labels,
+    /// the exception type and its message, model, OS and app version.
+    static func scrubbed(_ report: [String: Any]) -> [String: Any] {
+        var out = report
+
+        if var crash = out["crash"] as? [String: Any] {
+            if let threads = crash["threads"] as? [[String: Any]] {
+                crash["threads"] = threads.map { thread -> [String: Any] in
+                    var t = thread
+                    t.removeValue(forKey: "stack")
+                    t.removeValue(forKey: "notable_addresses")
+                    return t
+                }
+            }
+            if let error = crash["error"] as? [String: Any] {
+                crash["error"] = removing(keys: ["referenced_object", "userInfo"], from: error)
+            }
+            out["crash"] = crash
+        }
+
+        if var system = out["system"] as? [String: Any] {
+            for key in ["device_app_hash", "CFBundleExecutablePath", "time_zone", "boot_time", "storage", "freeStorage"] {
+                system.removeValue(forKey: key)
+            }
+            out["system"] = system
+        }
+
+        if let images = out["binary_images"] as? [[String: Any]] {
+            out["binary_images"] = images.map { image -> [String: Any] in
+                guard let name = image["name"] as? String,
+                      !systemImagePrefixes.contains(where: { name.hasPrefix($0) })
+                else { return image }
+                var i = image
+                i["name"] = (name as NSString).lastPathComponent
+                return i
+            }
+        }
+
+        return out
+    }
+
+    /// `dict` without `keys`, at any depth.
+    private static func removing(keys: Set<String>, from dict: [String: Any]) -> [String: Any] {
+        var out: [String: Any] = [:]
+        for (key, value) in dict where !keys.contains(key) {
+            if let nested = value as? [String: Any] {
+                out[key] = removing(keys: keys, from: nested)
+            } else {
+                out[key] = value
+            }
+        }
+        return out
     }
 
     private func send(_ body: Data, appId: String) async -> Bool {

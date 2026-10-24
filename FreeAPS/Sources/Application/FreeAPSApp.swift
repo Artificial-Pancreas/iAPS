@@ -26,8 +26,10 @@ import UIKit
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
     init() {
-        // Crash handlers first, so a crash anywhere in startup is captured. Whether a
-        // report ever leaves the phone is decided later, from the Sharing setting.
+        // Crash handlers first, so a crash anywhere in startup is captured. On a launch
+        // before the first unlock after a reboot this is a no-op (the app cannot open its
+        // files yet) and AppLauncher installs them once it can. Whether a report ever
+        // leaves the phone is decided later, from the Sharing setting.
         CrashReportService.shared.install()
         debug(
             .default,
@@ -115,8 +117,8 @@ final class AppLauncher: ObservableObject {
         FreeAPSApp.runVersionCheckOnce()
         services = AppServices(assembler: FreeAPSApp.assembler)
 
-        // Reports from a previous run, now that settings are readable. The install is
-        // retried first in case the launch-time attempt ran before the first unlock.
+        // Reports from a previous run, now that settings are readable. The install comes
+        // first in case the launch-time attempt was skipped for want of protected data.
         CrashReportService.shared.install()
         let settings = FreeAPSApp.resolver.resolve(SettingsManager.self)?.settings
         CrashReportService.shared.processPendingReports(enabled: settings?.uploadCrashReports ?? false)

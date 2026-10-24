@@ -161,7 +161,7 @@ extension Sharing {
                 Button("Got it", role: .cancel) {}
             } message: {
                 Text(
-                    "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin, settings or anything about you. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help."
+                    "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help."
                 )
             }
             .alert("Why we ask about sex", isPresented: $showSexInfo) {
