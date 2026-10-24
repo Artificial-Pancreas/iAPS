@@ -1240,11 +1240,7 @@ extension Home {
                         if let progress = state.bolusProgress, let amount = state.bolusAmount {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 15)
-                                    .fill(
-                                        colorScheme == .light ? IAPSconfig
-                                            .homeViewBackgroundLight : IAPSconfig
-                                            .homeViewBackgrundDark
-                                    )
+                                    .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
                                     .frame(maxWidth: 320, maxHeight: 90)
                                 bolusProgressView(progress: progress, amount: amount)
                             }
