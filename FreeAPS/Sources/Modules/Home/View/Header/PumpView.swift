@@ -205,55 +205,47 @@ struct PumpView: View {
     private func remainingTime(time: TimeInterval) -> some View {
         HStack {
             if time > 0 {
-                let days = Int(time / 1.days.timeInterval)
-                let hours = Int(time / 1.hours.timeInterval)
-                let minutes = Int(time / 1.minutes.timeInterval)
-                let adjustedHours = Int(hours - days * 24)
-
-                if days >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(days)")
-                        Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.secondary)
-                        if adjustedHours >= 0 {
-                            Text(" ")
-                            Text("\(adjustedHours)")
-                            // spacer
-                            Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.secondary)
-                        }
-                    }
-                } else if hours >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(hours)")
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
-                    }
-                } else {
-                    HStack(spacing: 0) {
-                        Text(" \(minutes)")
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
-                    }
-                }
+                durationLabel(time, prefix: " ", unitColor: time < 4 * 60 * 60 ? .red : .secondary)
             } else {
-                // Expired: show the time since expiry (into the grace period) under "Replace".
-                let overdue = -time
-                let hours = Int(overdue / 1.hours.timeInterval)
-                let minutes = Int(overdue / 1.minutes.timeInterval) - hours * 60
+                // Expired: show how far into the grace period the pod is, under "Replace".
                 VStack(spacing: 0) {
                     Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
-                    HStack(spacing: 0) {
-                        Text("-")
-                        if hours >= 1 {
-                            Text("\(hours)")
-                            Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            Text(" ")
-                        }
-                        Text("\(minutes)")
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                    }
-                    .font(.caption2)
+                    durationLabel(-time, prefix: "-", unitColor: .red, minutesUnderADay: true)
+                        .font(.caption2)
                 }
                 .foregroundStyle(.red)
+            }
+        }
+    }
+
+    /// "2d 5h", "17h" (or "17h 23m" with `minutesUnderADay`) and "42m" for a non-negative interval,
+    /// with `prefix` in front of the first number.
+    @ViewBuilder private func durationLabel(
+        _ interval: TimeInterval,
+        prefix: String,
+        unitColor: Color,
+        minutesUnderADay: Bool = false
+    ) -> some View {
+        let totalMinutes = Int(interval / 1.minutes.timeInterval)
+        let days = totalMinutes / (24 * 60)
+        let hours = totalMinutes / 60 % 24
+        let minutes = totalMinutes % 60
+        HStack(spacing: 0) {
+            if days >= 1 {
+                Text("\(prefix)\(days)")
+                Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(unitColor)
+                Text(" \(hours)")
+                Text(NSLocalizedString("h", comment: "abbreviation for hours")).foregroundStyle(unitColor)
+            } else if hours >= 1 {
+                Text("\(prefix)\(hours)")
+                Text(NSLocalizedString("h", comment: "abbreviation for hours")).foregroundStyle(unitColor)
+                if minutesUnderADay {
+                    Text(" \(minutes)")
+                    Text(NSLocalizedString("m", comment: "abbreviation for minutes")).foregroundStyle(unitColor)
+                }
+            } else {
+                Text("\(prefix)\(minutes)")
+                Text(NSLocalizedString("m", comment: "abbreviation for minutes")).foregroundStyle(unitColor)
             }
         }
     }
