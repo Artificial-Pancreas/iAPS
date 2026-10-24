@@ -26,6 +26,11 @@ import UIKit
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
     init() {
+        // Crash handlers first, so a crash anywhere in startup is captured. On a launch
+        // before the first unlock after a reboot this is a no-op (the app cannot open its
+        // files yet) and AppLauncher installs them once it can. Whether a report ever
+        // leaves the phone is decided later, from the Sharing setting.
+        CrashReportService.shared.install()
         debug(
             .default,
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
@@ -52,6 +57,14 @@ import UIKit
         var version = userDefaults.string(forKey: IAPSconfig.version) ?? ""
         userDefaults.set(false, forKey: IAPSconfig.inBolusView)
 
+        // Existing users who have never been shown the crash-report option get the Sharing
+        // step once more (after the upgrade notice, if there is one). Deliberately not tied
+        // to the version check below: dev keeps one marketing version for months, so most
+        // users receive this feature without the version number moving.
+        if version.count > 1, !userDefaults.bool(forKey: IAPSconfig.hasSeenCrashReportOption) {
+            userDefaults.set(false, forKey: IAPSconfig.hasSeenSharingSetup)
+        }
+
         guard version.count > 1, version == (Bundle.main.releaseVersionNumber ?? "") else {
             let hadPriorVersion = version.count > 1 // distinguishes an upgrade from a fresh install
             version = Bundle.main.releaseVersionNumber ?? ""
@@ -65,6 +78,11 @@ import UIKit
                 // WelcomeView (its flag is new this version and would otherwise read false
                 // and pre-empt the upgrade notice). Fresh installs leave this false → Welcome.
                 userDefaults.set(true, forKey: IAPSconfig.hasSeenWelcome)
+            }
+            if !hadPriorVersion {
+                // A fresh install is offered crash reporting by its own setup flow (or chose
+                // Skip on Welcome); the one-time re-show above is only for users who predate it.
+                userDefaults.set(true, forKey: IAPSconfig.hasSeenCrashReportOption)
             }
             debug(.default, "Running new version: \(version)")
             return
@@ -100,6 +118,12 @@ final class AppLauncher: ObservableObject {
         // the first unlock after a reboot.
         MemoryMetricsService.shared.start()
         services = AppServices(assembler: FreeAPSApp.assembler)
+
+        // Reports from a previous run, now that settings are readable. The install comes
+        // first in case the launch-time attempt was skipped for want of protected data.
+        CrashReportService.shared.install()
+        let settings = FreeAPSApp.resolver.resolve(SettingsManager.self)?.settings
+        CrashReportService.shared.processPendingReports(enabled: settings?.uploadCrashReports ?? false)
     }
 }
 
