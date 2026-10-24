@@ -115,6 +115,16 @@ extension AddCarbs {
         }
 
         func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) {
+            // With "Display and allow Fat and Protein entries" off the rows are hidden, but presets, the
+            // food database and edit mode still fill fat/protein — and CarbsStorage converts any
+            // fat/protein it is handed into future carb equivalents. Drop them so nothing invisible is stored.
+            let carbsToStore = useFPUconversion ? carbsToStore : carbsToStore.map { entry in
+                CarbsEntry(
+                    id: entry.id, createdAt: entry.createdAt, actualDate: entry.actualDate, carbs: entry.carbs,
+                    fat: nil, protein: nil, fiber: entry.fiber, note: entry.note, enteredBy: entry.enteredBy,
+                    isFPU: entry.isFPU, micronutrient: entry.micronutrient
+                )
+            }
             if hypoTreatment { hypo() }
             let carbs = carbsToStore.map(\.carbs).reduce(0, +)
             let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
