@@ -1291,7 +1291,10 @@ extension Home {
                 }
                 Button(NSLocalizedString("What's new", comment: "Open the release highlights page")) {
                     state.acknowledgeVersionAlert()
-                    if let url = URL(string: "https://open-iaps.app/whats-new") {
+                    // The page leads with the releases this build has not run yet.
+                    var components = URLComponents(string: "https://open-iaps.app/whats-new")
+                    components?.queryItems = [URLQueryItem(name: "from", value: state.versionNumber)]
+                    if let url = components?.url {
                         UIApplication.shared.open(url)
                     }
                 }
