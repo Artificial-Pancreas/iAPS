@@ -275,6 +275,10 @@ struct StatsView: View {
         let sumReadings = justGlucoseArray.reduce(0, +)
         let countReadings = justGlucoseArray.count
 
+        guard countReadings > 0 else {
+            return (ifcc: 0, ngsp: 0, average: 0, median: 0, sd: 0, cv: 0, readings: 0)
+        }
+
         let glucoseAverage = Double(sumReadings) / Double(countReadings)
         let medianGlucose = medianCalculation(array: justGlucoseArray)
 
@@ -316,6 +320,14 @@ struct StatsView: View {
         let glucose = fetchRequestReadings
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
+
+        guard totalReadings > 0 else {
+            return [
+                (decimal: 0, string: "Low"),
+                (decimal: 0, string: "NormaL"),
+                (decimal: 0, string: "High")
+            ]
+        }
 
         let hyperArray = glucose.filter({ $0.glucose >= Int(highLimit) })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count

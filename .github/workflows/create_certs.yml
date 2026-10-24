@@ -35,9 +35,14 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Set special variables
+        env:
+          # APP_IDENTIFIER may be set as a secret (preferred) or a repository variable (fallback).
+          APP_IDENTIFIER_SECRET: ${{ secrets.APP_IDENTIFIER }}
+          APP_IDENTIFIER_VAR: ${{ vars.APP_IDENTIFIER }}
         run: |
-          if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
-            echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+          APP_ID="${APP_IDENTIFIER_SECRET:-$APP_IDENTIFIER_VAR}"
+          if [ -n "$APP_ID" ]; then
+            echo "APP_IDENTIFIER=$APP_ID" >> "$GITHUB_ENV"
           fi
 
       # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
@@ -116,9 +121,14 @@ jobs:
           uses: actions/checkout@v5
 
         - name: Set special variables
+          env:
+            # APP_IDENTIFIER may be set as a secret (preferred) or a repository variable (fallback).
+            APP_IDENTIFIER_SECRET: ${{ secrets.APP_IDENTIFIER }}
+            APP_IDENTIFIER_VAR: ${{ vars.APP_IDENTIFIER }}
           run: |
-            if [ ! -z ${{ vars.APP_IDENTIFIER }}  ]; then
-              echo "APP_IDENTIFIER=${{ vars.APP_IDENTIFIER }}" >> $GITHUB_ENV
+            APP_ID="${APP_IDENTIFIER_SECRET:-$APP_IDENTIFIER_VAR}"
+            if [ -n "$APP_ID" ]; then
+              echo "APP_IDENTIFIER=$APP_ID" >> "$GITHUB_ENV"
             fi
 
         # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)

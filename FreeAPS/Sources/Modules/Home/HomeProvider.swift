@@ -23,20 +23,27 @@ extension Home {
             storage.retrieve(OpenAPS.Monitor.dynamicVariables, as: DynamicVariables.self)
         }
 
-        var fetchedMeals: [Carbohydrates] {
-            coreDateStorage.fetchMealData(interval: DateFilter().today)
+        func fetchedMeals(_ interval: NSDate) -> [Meals] {
+            coreDateStorage.fetchMealData(
+                interval: interval
+            )
         }
 
         func overrides() -> [Override] {
-            overrideStorage.fetchOverrides(interval: DateFilter().day)
+            overrideStorage.fetchOverrides(interval: DateFilter.day.startDate)
         }
 
         func latestOverride() -> Override? {
             overrideStorage.fetchLatestOverride().first
         }
 
+        func consecutiveOverride(_ id: String) -> OverridePresets? {
+            guard let preset = overrideStorage.fetchPreset(id: id) else { return nil }
+            return preset
+        }
+
         func overrideHistory() -> [OverrideHistory] {
-            overrideStorage.fetchOverrideHistory(interval: DateFilter().day)
+            overrideStorage.fetchOverrideHistory(interval: DateFilter.day.startDate)
         }
 
         var enactedSuggestion: Suggestion? {
@@ -48,7 +55,7 @@ extension Home {
         }
 
         func reasons() -> [IOBData]? {
-            let reasons = coreDateStorage.fetchReasons(interval: DateFilter().day)
+            let reasons = coreDateStorage.fetchReasons(interval: DateFilter.day.startDate)
 
             guard reasons.count > 3 else {
                 return nil

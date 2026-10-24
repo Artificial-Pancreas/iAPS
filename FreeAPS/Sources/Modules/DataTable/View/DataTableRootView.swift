@@ -20,12 +20,18 @@ extension DataTable {
         @State private var showManualGlucose: Bool = false
         @State private var editIsPresented: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
+        @State private var displayMicronutrients: Bool = false
 
         @FetchRequest(
-            entity: Carbohydrates.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)],
-            predicate: NSPredicate(format: "date > %@", DateFilter().day)
-        ) private var meals: FetchedResults<Carbohydrates>
+            entity: Meals.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "actualDate", ascending: false)],
+            predicate: NSCompoundPredicate(
+                andPredicateWithSubpredicates: [
+                    NSPredicate(format: "actualDate > %@", DateFilter.day.startDate),
+                    NSPredicate(format: "actualDate < %@", Date.now as NSDate)
+                ]
+            )
+        ) private var meals: FetchedResults<Meals>
 
         private var insulinFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -230,11 +236,18 @@ extension DataTable {
 
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             VStack {
-                if item.type == .carbs, let meal = filtered(date: item.creationDate) {
+                if item.type == .carbs, let meal = filtered(id: item.id) {
                     HStack {
                         Image(systemName: "fork.knife.circle.fill").foregroundStyle(Color.loopYellow)
-                        Text("Meal")
+
+                        if let note = meal.note, !note.isEmpty {
+                            Text(note)
+                        } else {
+                            Text("Meal")
+                        }
+
                         Spacer()
+
                         Text(dateFormatter.string(from: item.date))
                             .moveDisabled(true)
                     }.padding(.bottom, 1)
@@ -247,7 +260,8 @@ extension DataTable {
                     if meal.carbs != 0 {
                         HStack(spacing: 0) {
                             Text("Carbs").frame(maxWidth: .infinity, alignment: .leading)
-                            Text(item.amountText).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
+                            Text(item.amountText + NSLocalizedString(" g", comment: ""))
+                                .frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
                         }
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
@@ -265,6 +279,7 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
+                        .font(.callout)
                     }
 
                     if meal.protein != 0 {
@@ -278,6 +293,57 @@ extension DataTable {
                         .frame(maxHeight: height)
                         .padding(.leading, leading)
                         .foregroundStyle(.secondary)
+                        .font(.callout)
+                    }
+
+                    if meal.fiber != 0 {
+                        HStack(spacing: 0) {
+                            Text("Fiber").frame(maxWidth: .infinity, alignment: .leading)
+                            Text(
+                                (hourFormatter.string(from: (meal.fiber ?? 0) as NSNumber) ?? "") +
+                                    NSLocalizedString(" g", comment: "")
+                            ).frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
+                        }
+                        .frame(maxHeight: height)
+                        .padding(.leading, leading)
+                        .foregroundStyle(.secondary)
+                        .font(.callout)
+                    }
+
+                    // MARK: Micronutrients
+
+                    if !meal.micronutrientTotals.isEmpty {
+                        Button {
+                            displayMicronutrients.toggle()
+                        } label: {
+                            Label(
+                                micronutrientTitle(meal.micronutrientTotals),
+                                systemImage: "pills.fill"
+                            )
+                            .font(.caption.weight(.semibold))
+                            .labelStyle(.titleAndIcon)
+                            .padding(.vertical, 4)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .buttonStyle(.borderless)
+                        .foregroundStyle(.blue)
+
+                        if displayMicronutrients {
+                            let micros = typed(meals: meal.micronutrientTotals)
+                            ForEach(micros, id: \.id) { micronutrient in
+                                HStack(spacing: 0) {
+                                    Text(NSLocalizedString(micronutrient.nutrient.displayName, comment: ""))
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    Text(
+                                        (hourFormatter.string(from: micronutrient.value as NSNumber) ?? "") +
+                                            micronutrient.unit
+                                    )
+                                    .frame(maxWidth: .infinity, alignment: .trailing).offset(x: trailing)
+                                }
+                                .padding(.leading, leading)
+                                .font(.callout).foregroundStyle(.secondary)
+                            }
+                        }
                     }
 
                 } else if item.type == .carbs {
@@ -311,7 +377,7 @@ extension DataTable {
             }.padding(.vertical, (item.type == .carbs || item.type == .bolus) ? 10 : 0)
                 .swipeActions(edge: .leading) {
                     Button {
-                        state.updateVariables(mealItem: item, complex: filtered(date: item.creationDate))
+                        state.updateVariables(mealItem: item, complex: filtered(id: item.id))
                         editIsPresented.toggle()
                     }
                     label: { Label("Edit", systemImage: "pencil.line") }
@@ -354,7 +420,7 @@ extension DataTable {
                         }
 
                         if treatmentToDelete.type == .carbs {
-                            state.deleteCarbs(treatmentToDelete, storage: filtered(date: treatmentToDelete.creationDate))
+                            state.deleteCarbs(treatmentToDelete, storage: filtered(id: treatmentToDelete.id))
                         } else {
                             state.deleteInsulin(treatmentToDelete)
                         }
@@ -483,15 +549,28 @@ extension DataTable {
             }
         }
 
+        private func micronutrientTitle(_ micros: [MicroNutrient: Decimal]) -> String {
+            let count = micros.count
+            guard count > 1 else {
+                return "\(count) " + NSLocalizedString("Micronutrient", comment: "")
+            }
+            return "\(count) " + NSLocalizedString("Micronutrients", comment: "")
+        }
+
         private var edit: some View {
             VStack(spacing: 0) {
                 if let item = state.treatment {
                     Button { editIsPresented = false }
                     label: { Text("Cancel") }.frame(maxWidth: .infinity, alignment: .trailing)
-                        .tint(.blue).buttonStyle(.borderless).padding(.top, 20).padding(.trailing, 20)
+                        .tint(.blue).buttonStyle(.borderless).padding(.top, 20).padding(.trailing, 20).padding(.bottom, 10)
+                        .background(Color(.systemGroupedBackground))
                     Form {
-                        // Edit a meal
                         Section {
+                            TextField(
+                                "Meal",
+                                text: $state.meal.note,
+                            )
+
                             HStack {
                                 Text("Carbs")
                                 Spacer()
@@ -517,6 +596,7 @@ extension DataTable {
                                 )
                                 Text("grams").foregroundColor(.secondary)
                             }
+
                             HStack {
                                 Text("Protein").foregroundColor(.red)
                                 Spacer()
@@ -526,33 +606,102 @@ extension DataTable {
                                     formatter: hourFormatter,
                                     autofocus: false,
                                     liveEditing: true
-                                ).foregroundColor(.loopRed)
+                                )
+                                .foregroundColor(.loopRed)
 
                                 Text("grams").foregroundColor(.secondary)
                             }
-                        } header: { Text("Meal") }
+
+                            HStack {
+                                Text("Fiber")
+                                Spacer()
+                                DecimalTextField(
+                                    "0",
+                                    value: $state.meal.fiber,
+                                    formatter: hourFormatter,
+                                    autofocus: false,
+                                    liveEditing: true
+                                )
+
+                                Text("grams")
+                            }
+                            .foregroundColor(.secondary)
+                        } header: {
+                            Text("Meal")
+                        }
+
+                        // MARK: Micronutrients
+
+                        if !state.meal.micronutrient.isEmpty {
+                            Section {
+                                ForEach(Array(state.meal.micronutrient.enumerated()), id: \.offset) { index, nutrient in
+                                    HStack {
+                                        Text(NSLocalizedString(nutrient.substance.displayName, comment: ""))
+
+                                        Spacer()
+
+                                        DecimalTextField(
+                                            "0",
+                                            value: Binding(
+                                                get: {
+                                                    state.meal.micronutrient[index].amount
+                                                },
+                                                set: { newValue in
+                                                    state.meal.micronutrient[index].amount = newValue
+                                                }
+                                            ),
+                                            formatter: hourFormatter,
+                                            autofocus: false,
+                                            liveEditing: true
+                                        )
+
+                                        Text(nutrient.substance.unit)
+                                            .foregroundColor(.secondary)
+                                    }
+                                }
+                            } header: {
+                                Text("Micronutrients")
+                            }
+                        }
 
                         Section {
                             Button {
                                 editIsPresented.toggle()
-                                state.updateCarbs(treatment: item, computed: filtered(date: item.creationDate))
+
+                                /// To Do: Fix the saving. Not working properly
+                                state.updateCarbs(
+                                    treatment: item,
+                                    computed: filtered(id: item.id)
+                                )
                             }
-                            label: { Text("Save") }
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .listRowBackground(Color(.systemBlue))
-                                .tint(.white)
+                            label: {
+                                Text("Save")
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .listRowBackground(Color(.systemBlue))
+                            .tint(.white)
                         }
                     }
                 }
             }
         }
 
-        private func filtered(date: Date) -> Carbohydrates? {
-            meals
-                .first(where: {
-                    ($0.date ?? .distantPast).timeIntervalSince(date) > -1.0 && ($0.date ?? .distantPast)
-                        .timeIntervalSince(date) < 1
-                })
+        private func filtered(id: String?) -> Meals? {
+            guard let id else { return nil }
+
+            return meals.first {
+                $0.id == id
+            }
+        }
+
+        private func typed(meals: [MicroNutrient: Decimal]) -> [MicroData] {
+            meals.map { micro -> MicroData in
+                MicroData(
+                    nutrient: micro.key,
+                    value: micro.value,
+                    unit: micro.key.unit
+                )
+            }.sorted(by: { $0.value > $1.value })
         }
     }
 }

@@ -46,6 +46,10 @@ extension PumpConfig {
             pumpSetupPresented = identifier != nil
         }
 
+        func removePump() {
+            deviceManager.removePump()
+        }
+
         func ack() {
             provider.deviceManager.alertHistoryStorage.forceNotification()
         }

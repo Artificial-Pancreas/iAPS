@@ -116,6 +116,15 @@ struct PreviewChart: View {
         let glucose = readings
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
+        guard totalReadings > 0 else {
+            return [
+                (double: 0, string: "Low"),
+                (double: 0, string: "NormaL"),
+                (double: 0, string: "High"),
+                (double: 0, string: "Very High"),
+                (double: 0, string: "Very Low")
+            ]
+        }
         let hyperArray = glucose.filter({ $0.glucose >= hyperLimit })
         let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
         var hyperPercentage = round(Double(hyperReadings) / Double(totalReadings) * 100)

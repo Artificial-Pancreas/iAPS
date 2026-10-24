@@ -1,16 +1,12 @@
 import Algorithms
 import Combine
-import DanaKit
 import Foundation
 import HealthKit
 import LoopKit
 import LoopKitUI
-@preconcurrency import MinimedKit
 import MockKit
-import OmniBLE
-import OmniKit
+import MockKitUI
 import os.log
-import ShareClient
 import SwiftDate
 import Swinject
 import UserNotifications
@@ -35,6 +31,8 @@ protocol DeviceDataManager {
     func createBolusProgressReporter() -> DoseProgressReporter?
 
     func removePumpAsCGM()
+
+    func removePump()
 
     var alertHistoryStorage: AlertHistoryStorage! { get }
 
@@ -124,6 +122,8 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
     let pumpExpiresAtDate = CurrentValueSubject<Date?, Never>(nil)
     let pumpName = CurrentValueSubject<String, Never>("Pump")
 
+    @Protected private var lastSavedPumpActivationDate: Date? = nil
+
     // MARK: - CGM
 
     @PersistedProperty(key: "CGMManagerState") var rawCGMManager: CGMManager.RawValue?
@@ -187,6 +187,7 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         setupCGM()
 
         appCoordinator.heartbeat
+            .receive(on: processQueue)
             .sink { [weak self] _ in
                 self?.heartbeat(forceRecommendLoop: true)
             }
@@ -263,12 +264,25 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         pluginManager.getPumpManagerTypeByIdentifier(identifier) ?? staticPumpManagersByIdentifier[identifier]
     }
 
-    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
+    private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI.Type? {
         guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
             return nil
         }
 
-        return pumpManagerTypeByIdentifier(managerIdentifier)
+        if let pumpManager = pumpManagerTypeByIdentifier(managerIdentifier) {
+            return pumpManager
+        }
+
+        // see: https://github.com/LoopKit/Loop/pull/2426/changes
+
+        /// The pumpManager was not found for managerIdentifier. If this was for an "Omnipod" (OmniKit) or
+        /// "Omnipod-DASH" (OmniBLE), have the universal "Omni" pumpManager (OmnipodKit) handle instead.
+        let OmniStr = "Omni"
+        if managerIdentifier.hasPrefix(OmniStr) {
+            return pumpManagerTypeByIdentifier(OmniStr)
+        }
+
+        return nil
     }
 
     func pumpManagerFromRawValue(_ rawValue: [String: Any]) -> PumpManagerUI? {
@@ -427,6 +441,12 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
         }
     }
 
+    func removePump() {
+        DispatchQueue.main.async {
+            self.pumpManager = nil
+        }
+    }
+
     struct UnknownCGMManagerIdentifierError: Error {}
 
     fileprivate func setupCGMManagerUI(withIdentifier identifier: String, prefersToSkipUserInteraction: Bool) -> Swift
@@ -568,6 +588,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             self.pumpManager = newPumpManager
         }
         pumpName.send(pumpManager.localizedTitle)
+        refreshPumpExpirationInfo(from: pumpManager)
     }
 
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
@@ -625,12 +646,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             manualTempBasal.send(false)
         }
 
-        let endTime = KnownPlugins.pumpExpirationDate(pumpManager)
-        pumpExpiresAtDate.send(endTime)
-
-        if let startTime = KnownPlugins.pumpActivationDate(pumpManager) {
-            storage.save(startTime, as: OpenAPS.Monitor.podAge)
-        }
+        refreshPumpExpirationInfo(from: pumpManager)
 
         pumpManagerStatus.value = status
         if status.deliveryIsUncertain != oldStatus.deliveryIsUncertain {
@@ -670,14 +686,6 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
 
-        // TODO: [loopkit] is this filtering still needed?
-        // filter buggy TBRs > maxBasal from MDT
-        let pumpMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
-        let events = events.filter {
-            // type is optional...
-            guard let type = $0.type, type == .tempBasal else { return true }
-            return $0.dose?.unitsPerHour ?? 0 <= pumpMaxBasal
-        }
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)
@@ -739,6 +747,13 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
 
 extension BaseDeviceDataManager: DeviceManagerDelegate {
     func issueAlert(_ alert: Alert) {
+        // Device alerts (pod faults, expiry, occlusion, CGM alarms) otherwise
+        // never reach the log files — only the alert-history UI storage.
+        debug(
+            .deviceManager,
+            "Device alert [\(alert.identifier.managerIdentifier)/\(alert.identifier.alertIdentifier)]: " +
+                "\(alert.backgroundContent.title) — \(alert.backgroundContent.body)"
+        )
         alertHistoryStorage.storeAlert(
             AlertEntry(from: alert)
         )
@@ -754,11 +769,11 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier deviceIdentifier: String?,
-        type _: LoopKit.DeviceLogEntryType,
+        type: LoopKit.DeviceLogEntryType,
         message: String,
         completion: ((Error?) -> Void)?
     ) {
-        debug(.deviceManager, "device Manager for \(String(describing: deviceIdentifier)) : \(message)")
+        debug(.deviceManager, "Device \(deviceIdentifier ?? "?") [\(type.rawValue)]: \(message)")
         completion?(nil)
     }
 }
@@ -1013,6 +1028,20 @@ private extension BaseDeviceDataManager {
             pumpManagerStatus.value = nil
             pumpExpiresAtDate.send(nil)
             pumpName.send("")
+        }
+    }
+
+    // Not guaranteed to be on `processQueue` - some pump managers call `pumpManagerDidUpdateState`
+    // directly - so this must not touch anything that requires it (e.g. `broadcaster`).
+    private func refreshPumpExpirationInfo(from pumpManager: PumpManager) {
+        let expiresAt = KnownPlugins.pumpExpirationDate(pumpManager)
+        if pumpExpiresAtDate.value != expiresAt {
+            pumpExpiresAtDate.send(expiresAt)
+        }
+
+        if let activatedAt = KnownPlugins.pumpActivationDate(pumpManager), lastSavedPumpActivationDate != activatedAt {
+            lastSavedPumpActivationDate = activatedAt
+            storage.save(activatedAt, as: OpenAPS.Monitor.podAge)
         }
     }
 }

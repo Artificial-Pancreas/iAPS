@@ -55,15 +55,18 @@ This is also a common step for all "browser builds", do this step only once
 
 ## Create App Group
 
-If you have already built iAPS via Xcode using this Apple ID, you can skip on to [Create iAPS App in App Store Connect](#create-FreeAPS-X-app-in-app-store-connect).
+If you have already built iAPS (or Loop) via Xcode using this Apple ID, the "Loop App Group" likely already exists in your account. In that case skip ahead to [Add App Group to Bundle Identifiers](#add-app-group-to-bundle-identifiers) — **do not** skip past it. The App Group existing in your account is not the same as it being assigned to the iAPS bundle identifiers, and the identifiers created by "2. Add Identifiers" start out with no group assigned. Skipping that section is the most common cause of a build failing with `Provisioning profile ... doesn't support the ... LoopGroup App Group`.
 _Please note that in default builds of iAPS, the app group is actually identical to the one used with Loop, so please enter these details exactly as described below. This is to ease the setup of apps such as Xdrip4iOS. It may require some caution if transfering between iAPS and Loop._
 
 1. Go to [Register an App Group](https://developer.apple.com/account/resources/identifiers/applicationGroup/add/) on the apple developer site.
 1. For Description, use "Loop App Group".
 1. For Identifier, enter "group.com.TEAMID.loopkit.LoopGroup", substituting your team id for `TEAMID`.
 1. Click "Continue" and then "Register".
+1. If you are told the group already exists, that is fine — continue to the next section to assign it.
 
 ## Add App Group to Bundle Identifiers
+
+> This section is required even if the App Group already existed. The identifiers created by "2. Add Identifiers" have the App Groups capability enabled but no group assigned yet, so you must assign it here.
 
 1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the Apple developer site.
 1. For each of the following identifier names:

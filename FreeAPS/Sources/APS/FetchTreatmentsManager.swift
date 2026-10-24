@@ -36,6 +36,7 @@ final class BaseFetchTreatmentsManager: FetchTreatmentsManager, Injectable {
             .sink { carbs, targets in
                 let filteredCarbs = carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
                 if filteredCarbs.isNotEmpty {
+                    CoreDataStorage().saveMeals(filteredCarbs)
                     self.carbsStorage.storeCarbs(filteredCarbs)
                 }
                 let filteredTargets = targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }

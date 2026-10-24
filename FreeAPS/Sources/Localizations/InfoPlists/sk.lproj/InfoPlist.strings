@@ -1,20 +1,23 @@
 /* Privacy - NFC Scan Usage Description */
-"NFCReaderUsageDescription" = "NFC sa používa na skenovanie snímačov Libre.";
+"NFCReaderUsageDescription" = "NFC sa používa na skenovanie senzorov Libre.";
 
 /* Privacy - Bluetooth Always Usage Description */
-"NSBluetoothAlwaysUsageDescription" = "Bluetooth sa používa pre komunikáciu s inzulínovou pumpou a zariadeniami na kontinuálne monitorovanie krvného cukru";
+"NSBluetoothAlwaysUsageDescription" = "Bluetooth sa používa na komunikáciu so zariadeniami inzulínovej pumpy a kontinuálneho monitorovania glukózy";
 
 /* Privacy - Bluetooth Peripheral Usage Description */
-"NSBluetoothPeripheralUsageDescription" = "Bluetooth sa používa pre komunikáciu s inzulínovou pumpou a zariadeniami na kontinuálne monitorovanie krvného cukru";
+"NSBluetoothPeripheralUsageDescription" = "Bluetooth sa používa na komunikáciu so zariadeniami inzulínovej pumpy a kontinuálneho monitorovania glukózy";
 
 /* Privacy - Face ID Usage Description */
-"NSFaceIDUsageDescription" = "Pre autorizovaný prístup k bolusu";
+"NSFaceIDUsageDescription" = "Na autorizovaný prístup k bolusu";
 
 /* Privacy - Calendars Usage Description */
-"NSCalendarsUsageDescription" = "Kalendár slúži na vytvorenie novej udalosti s glukózou.";
+"NSCalendarsUsageDescription" = "Kalendár sa používa na vytváranie nových udalostí glykémie.";
 
 /* Privacy - Health Update Usage Description */
-"NSHealthUpdateUsageDescription" = "Aplikácia Zdravie sa používa na meranie glukózy v krvi, inzulínu a ukladanie sacharidov";
+"NSHealthUpdateUsageDescription" = "Aplikácia Zdravie sa používa na ukladanie glykémie, inzulínu a sacharidov";
 
 /* Privacy - Health Share Usage Description */
-"NSHealthShareUsageDescription" = "Aplikácia Zdravie sa používa na meranie glukózy v krvi, inzulínu a ukladanie sacharidov";
+"NSHealthShareUsageDescription" = "Aplikácia Zdravie sa používa na ukladanie glykémie, inzulínu a sacharidov";
+
+/* Privacy - Contacts Usage Description */
+"NSContactsUsageDescription" = "Na povolenie funkcie Obrázok kontaktu: získavajte aktuálne údaje z iAPS do komplikácie Kontakty na Apple Watch";

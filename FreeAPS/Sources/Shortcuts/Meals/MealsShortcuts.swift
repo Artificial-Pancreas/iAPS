@@ -131,6 +131,7 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
         let quantityCarbs = (mealPreset.carbs ?? 0) as Decimal
         let quantityFat = (mealPreset.fat ?? 0) as Decimal
         let quantityProtein = (mealPreset.protein ?? 0) as Decimal
+        let quantityFiber = (mealPreset.fiber ?? 0) as Decimal
 
         guard quantityCarbs >= 0.0 || quantityFat >= 0.0 || quantityProtein >= 0.0 else {
             return nil
@@ -147,6 +148,7 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
                 carbs: carbs,
                 fat: quantityFat,
                 protein: quantityProtein,
+                fiber: quantityFiber,
                 note: mealPreset.dish ?? "",
                 enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false

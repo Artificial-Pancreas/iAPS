@@ -20,9 +20,21 @@ extension AIAnalysisResult {
             if let fiber = item.fiberPer100 { nutritionValues[.fiber] = fiber }
             if let sugars = item.sugarsPer100 { nutritionValues[.sugars] = sugars }
 
+            let micros: [MicronutrientValue] = item.micronutrient.map {
+                MicronutrientValue(
+                    substance: $0.substance,
+                    amount: $0.amount,
+                    amountPer100: $0.amountPer100
+                )
+            }
+
             return FoodItemDetailed(
                 name: item.name,
-                nutrition: .per100(values: nutritionValues, portionSize: item.portionEstimateSize ?? 100),
+                nutrition: .per100(
+                    values: nutritionValues,
+                    portionSize: item.portionEstimateSize ?? 100
+                ),
+                micronutrient: micros,
                 confidence: confidence,
                 brand: item.brand,
                 standardServing: item.standardServing,

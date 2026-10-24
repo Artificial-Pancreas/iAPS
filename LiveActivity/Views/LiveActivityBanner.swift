@@ -85,6 +85,12 @@ struct LiveActivityBanner: View {
 
                 Spacer()
 
+                if context.state.watchDelta, !context.state.change.isEmpty, !context.isStale {
+                    Text(context.state.change)
+                        .font(.system(size: 16))
+                        .opacity(0.7)
+                }
+
                 BannerEventualGlucose(context: context)
                     .font(.system(size: 16))
             }

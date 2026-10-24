@@ -18,7 +18,7 @@ extension Bolus {
         }
 
         func fetchGlucose() -> [Readings] {
-            let fetchGlucose = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let fetchGlucose = coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             return fetchGlucose
         }
 

@@ -6,7 +6,7 @@ struct AppShortcuts: AppShortcutsProvider {
         AppShortcut(intent: ApplyTempPresetIntent(), phrases: [
             "\(.applicationName) temporary target",
             "\(.applicationName) apply or cancel a temporary target"
-        ], shortTitle: "Temorary Target", systemImageName: "scope")
+        ], shortTitle: "Temporary Target", systemImageName: "scope")
         AppShortcut(
             intent: ListStateIntent(),
             phrases: [
@@ -31,7 +31,7 @@ struct AppShortcuts: AppShortcutsProvider {
         AppShortcut(
             intent: CancelOverrideIntent(),
             phrases: [
-                "Cancel \(.applicationName) Overide",
+                "Cancel \(.applicationName) Override",
                 "Cancels an active \(.applicationName) override"
             ], shortTitle: "Cancel override", systemImageName: "figure.stand"
         )

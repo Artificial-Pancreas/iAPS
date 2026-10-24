@@ -193,10 +193,31 @@ final class OpenFoodFactsService {
                 throw OpenFoodFactsError.rateLimitExceeded
             case 500 ... 599:
                 print("OpenFoodFacts server error \(httpResponse.statusCode)")
+
                 if retryCount < maxRetries {
-                    try await Task.sleep(nanoseconds: UInt64((retryCount + 1) * 1_000_000_000))
-                    return try await performRequest(request, retryCount: retryCount + 1)
+                    let delay = UInt64(pow(2.0, Double(retryCount)) * 1_000_000_000)
+
+                    try await Task.sleep(nanoseconds: delay)
+
+                    return try await performRequest(
+                        request,
+                        retryCount: retryCount + 1
+                    )
                 }
+
+                // Return empty response instead of hard failure for search endpoints
+                if request.url?.absoluteString.contains("/cgi/search.pl") == true {
+                    return (Data("""
+                    {
+                        "products": [],
+                        "count": 0,
+                        "page": 1,
+                        "page_count": 0,
+                        "page_size": 0
+                    }
+                    """.utf8), httpResponse)
+                }
+
                 throw OpenFoodFactsError.serverError(httpResponse.statusCode)
             default:
                 print("OpenFoodFacts unexpected HTTP status \(httpResponse.statusCode)")

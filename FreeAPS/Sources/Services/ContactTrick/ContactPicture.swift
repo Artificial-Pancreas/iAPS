@@ -30,10 +30,20 @@ struct ContactPicture: View {
             Color(red: 40 / 256, green: 40 / 256, blue: 40 / 256)
         let fontWeight = contact.fontWeight.toUI()
 
-        UIGraphicsBeginImageContext(rect.size)
+        // Use an opaque context with a fixed, explicit background color so the exported
+        // PNG never carries transparency. Previously this context was non-opaque and no
+        // background was ever drawn, so the "background" seen by anything that consumed
+        // the image (Contacts framework, watch complication renderer) depended on how that
+        // consumer happened to flatten the alpha channel - which was inconsistent, especially
+        // when the image was generated/flattened outside an active foreground UI context.
+        UIGraphicsBeginImageContextWithOptions(rect.size, true, 1.0)
         if let context = UIGraphicsGetCurrentContext() {
             context.setShouldAntialias(true)
             context.setAllowsAntialiasing(true)
+
+            let backgroundColor: UIColor = contact.darkMode ? .black : .white
+            context.setFillColor(backgroundColor.cgColor)
+            context.fill(CGRect(x: 0, y: 0, width: width, height: height))
         }
 
         let ringWidth = Double(contact.ringWidth) / 100.0
@@ -580,6 +590,63 @@ struct ContactPicture: View {
         context.strokePath()
 
         context.restoreGState()
+    }
+
+    /// Everything the picture for a contact is drawn from. Equal inputs draw identical pictures.
+    struct Input: Equatable {
+        let contact: ContactTrickEntry
+        /// only the parts of the state that the picture shows, the rest is cleared
+        let state: ContactTrickState
+        /// the loop status color depends on the current time, not only on the state; nil when not shown
+        let loopColor: Color?
+    }
+
+    /// must match what getImage draws
+    static func input(contact: ContactTrickEntry, state: ContactTrickState) -> Input {
+        let values: [ContactTrickValue] = switch contact.layout {
+        case .single: [contact.primary, contact.top, contact.bottom]
+        case .split: [contact.top, contact.bottom]
+        }
+        let ringShowsIOB = contact.ring1 == .iob || contact.ring1 == .iobcob
+        let ringShowsCOB = contact.ring1 == .cob || contact.ring1 == .iobcob
+        let loopShown = contact.ring1 == .loop || values.contains(.ring)
+
+        var shown = state
+        if !values.contains(.glucose) {
+            shown.glucose = nil
+        }
+        if !values.contains(.eventualBG) {
+            shown.eventualBG = nil
+        }
+        if !values.contains(.delta) {
+            shown.delta = nil
+        }
+        if !values.contains(.trend) {
+            shown.trend = nil
+        }
+        if !values.contains(.lastLoopDate) {
+            shown.lastLoopDate = nil
+        }
+        if !values.contains(.iob) {
+            shown.iobText = nil
+        }
+        if !values.contains(.cob) {
+            shown.cobText = nil
+        }
+        if !ringShowsIOB {
+            shown.iob = nil
+            shown.maxIOB = 0
+        }
+        if !ringShowsCOB {
+            shown.cob = nil
+            shown.maxCOB = 0
+        }
+
+        return Input(
+            contact: contact,
+            state: shown,
+            loopColor: loopShown ? ringColor(contact: contact, state: state) : nil
+        )
     }
 
     private static func ringColor(

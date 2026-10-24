@@ -92,7 +92,7 @@ final class BolusIntentRequest: BaseIntentsRequest {
     }
 
     func currentGlucose() -> String? {
-        if let fetchedReading = coreDataStorage.fetchGlucose(interval: DateFilter().today).first {
+        if let fetchedReading = coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate).first {
             let fetchedGlucose = Decimal(fetchedReading.glucose)
             let convertedString = settingsManager.settings.units == .mmolL ? fetchedGlucose.asMmolL
                 .formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) : fetchedGlucose

@@ -13,7 +13,8 @@ extension UserDefaults: Cache {
             return decoded.v
         } catch {
             if reportError {
-                assertionFailure("Failed to get persisted value for key: \(key), error: \(error.localizedDescription)")
+                print("Failed to decode \(key): \(error)")
+                removeObject(forKey: key)
             }
         }
         return defaultValue

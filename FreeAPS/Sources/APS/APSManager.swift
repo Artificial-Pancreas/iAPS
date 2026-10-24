@@ -140,6 +140,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     init(resolver: Resolver) {
         injectServices(resolver)
+        debug(.apsManager, "BaseAPSManager created: \(ObjectIdentifier(self))")
         openAPS = OpenAPS(
             storage: storage,
             glucoseStorage: glucoseStorage,
@@ -516,11 +517,14 @@ final class BaseAPSManager: APSManager, Injectable {
             return
         }
 
+        let maxBasal = Double(settingsManager.pumpSettings.maxBasal)
+        let rate = duration > 0 ? min(rate, maxBasal) : rate
+
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
-        let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
-        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate * concentration.concentration)
-        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
+        let concentration = self.concentration
+        let deviceRate = pump.roundToSupportedBasalRate(unitsPerHour: rate / concentration.concentration)
+        pump.enactTempBasal(unitsPerHour: deviceRate, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
@@ -528,7 +532,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(
                     duration: Int(duration / 60),
-                    rate: Decimal(adjusted),
+                    rate: Decimal(deviceRate * concentration.concentration),
                     temp: .absolute,
                     timestamp: Date()
                 )
@@ -676,24 +680,29 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                 }
             }
-        case let .meal(carbs, fat, protein):
+        case let .meal(carbs, fat, protein, fiber):
             let date = announcement.createdAt.date
+            let fibers = fiber != nil ? fiber : 0
 
-            guard carbs > 0 || fat > 0 || protein > 0 else {
+            guard carbs > 0 || fat > 0 || protein > 0 || (fibers! > 0) else {
                 return
             }
 
-            carbsStorage.storeCarbs([CarbsEntry(
+            let item = [CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: date,
                 actualDate: date,
                 carbs: carbs,
                 fat: fat,
                 protein: protein,
+                fiber: fiber,
                 note: "Remote",
                 enteredBy: "Nightscout operator",
                 isFPU: false
-            )])
+            )]
+
+            CoreDataStorage().saveMeal(item, now: date, savedToFile: true)
+            carbsStorage.storeCarbs(item)
 
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(
@@ -712,7 +721,7 @@ final class BaseAPSManager: APSManager, Injectable {
                     let presetName = storage.isPresetName()
                     let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile() {
+                    if let duration = storage.cancelProfile().duration {
                         nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
                     }
                     announcementsStorage.storeAnnouncements([announcement], enacted: true)
@@ -721,25 +730,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
 
-            // Cancel eventual current active override first
-            if isActive {
-                if let duration = OverrideStorage().cancelProfile(), let last = lastActiveOveride {
-                    let presetName = storage.isPresetName()
-                    let nsString = presetName != nil ? presetName : last.percentage.formatted()
-                    nightscout.editOverride(nsString!, duration, last.date ?? Date())
-                }
-            }
-
-            // Activate the new override and uplad the new ovderride to NS. Some duplicate code now. Needs refactoring.
-            let preset = storage.fetchPreset(name)
-            guard let id = preset.id, let preset_ = preset.preset else { return }
-            storage.overrideFromPreset(preset_, id)
-            let currentActiveOveride = storage.fetchLatestOverride().first
-            nightscout.uploadOverride(
-                name,
-                Double(truncating: preset.preset?.duration ?? 0),
-                currentActiveOveride?.date ?? Date.now
-            )
+            guard storage.activatePresetAndUpload(named: name, nightscout: nightscout) != nil else { return }
             announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(.apsManager, "Remote Override by Announcement succeeded.")
         }
@@ -1059,12 +1050,12 @@ final class BaseAPSManager: APSManager, Injectable {
             let preferences = settingsManager.preferences
 
             // Carbs
-            let carbs = CoreDataStorage().fetcarbs(interval: DateFilter().day)
+            let carbs = CoreDataStorage().fetchMealData(interval: DateFilter.day.startDate)
             var carbTotal: Decimal = 0
             carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
 
             // TDD
-            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter().fourteen)
+            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter.fourteenDays.startDate)
             var currentTDD: Decimal = 0
             var tddTotalAverage: Decimal = 0
             if !tdds.isEmpty {
@@ -1108,10 +1099,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 iPa = 50
             }
             // CGM Readings
-            let glucose_24 = CoreDataStorage().fetchGlucose(interval: DateFilter().day) // Day
-            let glucose_7 = CoreDataStorage().fetchGlucose(interval: DateFilter().week) // Week
-            let glucose_30 = CoreDataStorage().fetchGlucose(interval: DateFilter().month) // Month
-            let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter().total) // Total
+            let glucose_24 = CoreDataStorage().fetchGlucose(interval: DateFilter.day.startDate) // Day
+            let glucose_7 = CoreDataStorage().fetchGlucose(interval: DateFilter.week.startDate) // Week
+            let glucose_30 = CoreDataStorage().fetchGlucose(interval: DateFilter.month.startDate) // Month
+            let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter.total.startDate) // Total
 
             // First date
             let previous = glucose.last?.date ?? Date()
@@ -1293,7 +1284,8 @@ final class BaseAPSManager: APSManager, Injectable {
                 ),
                 id: getIdentifier(),
                 dob: settings.birthDate,
-                sex: settings.sexSetting
+                sex: settings.sexSetting,
+                Memory: MemoryMetricsService.shared.snapshot(full: true)
             )
             storage.save(dailystat, as: file)
             nightscout.uploadStatistics(dailystat: dailystat)
@@ -1301,7 +1293,8 @@ final class BaseAPSManager: APSManager, Injectable {
             let json = BareMinimum(
                 id: getIdentifier(),
                 created_at: Date.now,
-                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch()
+                Build_Version: Bundle.main.releaseVersionNumber ?? "UnKnown", Branch: branch(),
+                Memory: MemoryMetricsService.shared.snapshot(full: false)
             )
             nightscout.uploadVersion(json: json)
         }

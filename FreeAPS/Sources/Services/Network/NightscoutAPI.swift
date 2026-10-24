@@ -111,6 +111,7 @@ extension NightscoutAPI {
                     .map {
                         var reading = $0
                         reading.glucose = $0.sgv
+                        reading.unfiltered = $0.sgv.map { sgv in Decimal(sgv) }
                         return reading
                     }
             }
@@ -396,16 +397,25 @@ extension NightscoutAPI {
     }
 
     func deleteOverride(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        deleteOverride(around: date, tolerance: 2)
+    }
+
+    func deleteOverride(around date: Date, tolerance: TimeInterval = 2) -> AnyPublisher<Void, Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
         components.queryItems = [
-            URLQueryItem(name: "find[Exercise][$exists]", value: "true"),
+            URLQueryItem(name: "find[eventType]", value: EventType.nsExercise.rawValue),
+            URLQueryItem(name: "find[enteredBy]", value: NigtscoutExercise.local),
             URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-tolerance))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(tolerance))
             )
         ]
         var request = URLRequest(url: components.url!)
@@ -510,7 +520,13 @@ extension NightscoutAPI {
             request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
         debug(.nightscout, "NS Client: uploading \(glucose.count) glucose entries")
-        request.httpBody = try! JSONCoding.encoder.encode(glucose)
+        request.httpBody = try! JSONCoding.encoder.encode(
+            glucose.map {
+                var entry = $0
+                entry.unfiltered = nil
+                return entry
+            }
+        )
         request.httpMethod = "POST"
 
         return service.run(request)

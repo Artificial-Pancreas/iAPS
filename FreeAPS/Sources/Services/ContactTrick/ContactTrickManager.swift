@@ -9,8 +9,11 @@ protocol ContactTrickManager {
     var currentContacts: [ContactTrickEntry] { get }
 }
 
+/// all rendering happens on the main queue (observers are notified there, and the glucose readings
+/// come from the main Core Data context), so renders never overlap
 final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
-    private let processQueue = DispatchQueue(label: "BaseContactTrickManager.processQueue")
+    private static let organizationName = "Created and managed by iAPS"
+
     private let contactStore = CNContactStore()
     private var workItem: DispatchWorkItem?
 
@@ -20,6 +23,16 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     private var knownIds: [String] = []
     private var contacts: [ContactTrickEntry] = []
+
+    /// what each contact was last saved from, by contact id. Not persisted: every contact is saved once
+    /// after launch, and after that only when its name or picture would change. Every save is synced
+    /// through iCloud to all the user's devices, so saving an unchanged contact is not free.
+    private var renderedFrom: [String: RenderInput] = [:]
+
+    private struct RenderInput: Equatable {
+        let index: Int
+        let picture: ContactPicture.Input
+    }
 
     var currentContacts: [ContactTrickEntry] {
         contacts
@@ -40,21 +53,22 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
         knownIds = contacts.compactMap(\.contactId)
 
-        processQueue.async {
+        DispatchQueue.main.async {
             self.renderContacts(forceSave: false)
         }
     }
 
     func updateContacts(contacts: [ContactTrickEntry], completion: @escaping (Result<[ContactTrickEntry], Error>) -> Void) {
-        self.contacts = contacts
-        let newIds = contacts.compactMap(\.contactId)
+        DispatchQueue.main.async {
+            self.contacts = contacts
+            let newIds = contacts.compactMap(\.contactId)
 
-        let knownSet = Set(knownIds)
-        let newSet = Set(newIds)
-        let removedIds = knownSet.subtracting(newSet)
+            let knownSet = Set(self.knownIds)
+            let newSet = Set(newIds)
+            let removedIds = knownSet.subtracting(newSet)
 
-        processQueue.async {
-            removedIds.forEach { contactId in
+            for contactId in removedIds {
+                self.renderedFrom[contactId] = nil
                 if !self.deleteContact(contactId) {
                     print("contacts cleanup, failed to delete contact \(contactId)")
                 }
@@ -70,8 +84,10 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             workItem.cancel()
         }
 
+        var newContacts = contacts
+
         if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
-            let readings = coreDataStorage.fetchGlucose(interval: DateFilter().twoHours)
+            let readings = coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
             let glucoseValues = glucoseText(readings)
 
             let suggestion: Suggestion? = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
@@ -94,14 +110,20 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
                 maxCOB: settingsManager.preferences.maxCOB
             )
 
-            let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
-
-            if forceSave || newContacts != contacts {
-                // when we create new contacts we store the IDs, in that case we need to write into the settings storage
-                storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
+            // a disabled contact is kept (so a watch face pointing at it still works when it is enabled again),
+            // but drawn without any values, so that it doesn't show stale data as if it were live.
+            // Its picture doesn't change after that, so it is saved only once.
+            newContacts = contacts.enumerated().map { index, entry in
+                renderContact(entry, index + 1, entry.enabled ? state : ContactTrickState())
             }
-            contacts = newContacts
         }
+
+        // this is outside of the check above so that an empty list (the last entry deleted) is persisted too
+        if forceSave || newContacts != contacts {
+            // when we create new contacts we store the IDs, in that case we need to write into the settings storage
+            storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
+        }
+        contacts = newContacts
 
         workItem = DispatchWorkItem(block: {
             print("in renderContacts, no updates received for more than 5 minutes")
@@ -118,6 +140,13 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
 
     private func renderContact(_ _entry: ContactTrickEntry, _ index: Int, _ state: ContactTrickState) -> ContactTrickEntry {
         var entry = _entry
+
+        if let contactId = entry.contactId,
+           renderedFrom[contactId] == RenderInput(index: index, picture: ContactPicture.input(contact: entry, state: state))
+        {
+            return entry
+        }
+
         let mutableContact: CNMutableContact
         let saveRequest = CNSaveRequest()
 
@@ -156,9 +185,17 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
             )
         }
 
-        saveUpdatedContact(saveRequest)
+        let saved = saveUpdatedContact(saveRequest)
 
         entry.contactId = mutableContact.identifier
+
+        if saved {
+            // built from the entry with its contact id set, which is how it comes in next time
+            renderedFrom[mutableContact.identifier] = RenderInput(
+                index: index,
+                picture: ContactPicture.input(contact: entry, state: state)
+            )
+        }
 
         return entry
     }
@@ -185,9 +222,7 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         mutableContact: CNMutableContact
     ) {
         mutableContact.givenName = "iAPS \(index)"
-        mutableContact
-            .organizationName =
-            "Created and managed by iAPS - \(Date().formatted(date: .abbreviated, time: .shortened))"
+        mutableContact.organizationName = Self.organizationName
 
         mutableContact.imageData = ContactPicture.getImage(
             contact: entry,
@@ -223,13 +258,16 @@ final class BaseContactTrickManager: NSObject, ContactTrickManager, Injectable {
         }
     }
 
-    private func saveUpdatedContact(_ saveRequest: CNSaveRequest) {
+    private func saveUpdatedContact(_ saveRequest: CNSaveRequest) -> Bool {
         do {
             try contactStore.execute(saveRequest)
+            return true
         } catch let error as NSError {
             print("in updateContact, failed to update the contact - \(getContactsErrorDetails(error))")
+            return false
         } catch {
             print("in updateContact, failed to update the contact: \(error.localizedDescription)")
+            return false
         }
     }
 

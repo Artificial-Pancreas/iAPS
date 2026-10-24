@@ -1,13 +1,6 @@
 import DanaKit
 import LoopKit
 import LoopKitUI
-import MinimedKit
-import MinimedKitUI
-import MockKit
-import MockKitUI
-import OmniBLE
-import OmniKit
-import OmniKitUI
 import SwiftUI
 import UIKit
 

@@ -38,9 +38,11 @@ struct Announcement: JSON, Equatable, Hashable {
             let carbsArg = String(mealComponents[0])
             let fatArg = String(mealComponents[1])
             let proteinArg = String(mealComponents[2])
+            let fiber = mealComponents.count == 4 ? Decimal(from: String(mealComponents[3])) : nil
+
             guard let carbs = Decimal(from: carbsArg), let fat = Decimal(from: fatArg),
                   let protein = Decimal(from: proteinArg) else { return nil }
-            return .meal(carbs: carbs, fat: fat, protein: protein)
+            return .meal(carbs: carbs, fat: fat, protein: protein, fiber: fiber)
         case "override":
             guard !name.isEmpty else { return nil }
             if name.prefix(1) == " " { name = String(name.dropFirst()) }
@@ -63,7 +65,7 @@ enum AnnouncementAction {
     case pump(PumpAction)
     case looping(Bool)
     case tempbasal(rate: Decimal, duration: Decimal)
-    case meal(carbs: Decimal, fat: Decimal, protein: Decimal)
+    case meal(carbs: Decimal, fat: Decimal, protein: Decimal, fiber: Decimal?)
     case override(name: String)
 }
 

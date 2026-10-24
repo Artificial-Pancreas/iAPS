@@ -5,6 +5,7 @@ extension ManualTempBasal {
         @Injected() var apsManager: APSManager!
         @Published var rate: Decimal = 0
         @Published var durationIndex = 0
+        @Published var maxBasalExceeded = false
 
         let durationValues = stride(from: 30.0, to: 720.1, by: 30.0).map { $0 }
 
@@ -16,6 +17,10 @@ extension ManualTempBasal {
         }
 
         func enact() {
+            guard rate <= settingsManager.pumpSettings.maxBasal else {
+                maxBasalExceeded = true
+                return
+            }
             let duration = durationValues[durationIndex]
             apsManager.enactTempBasal(rate: Double(rate), duration: duration * 60)
             showModal(for: nil)

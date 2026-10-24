@@ -43,11 +43,11 @@ extension Stat {
         @ViewBuilder func stats() -> some View {
             ZStack {
                 Color.gray.opacity(0.05).ignoresSafeArea(.all)
-                let filter = DateFilter()
+                let filter = DateFilter.self
                 switch selectedDuration {
                 case .Today:
                     StatsView(
-                        filter: filter.today,
+                        filter: filter.today.startDate,
                         $state.highLimit,
                         $state.lowLimit,
                         $state.units,
@@ -55,7 +55,7 @@ extension Stat {
                     )
                 case .Day:
                     StatsView(
-                        filter: filter.day,
+                        filter: filter.day.startDate,
                         $state.highLimit,
                         $state.lowLimit,
                         $state.units,
@@ -63,7 +63,7 @@ extension Stat {
                     )
                 case .Week:
                     StatsView(
-                        filter: filter.week,
+                        filter: filter.week.startDate,
                         $state.highLimit,
                         $state.lowLimit,
                         $state.units,
@@ -71,7 +71,7 @@ extension Stat {
                     )
                 case .Month:
                     StatsView(
-                        filter: filter.month,
+                        filter: filter.month.startDate,
                         $state.highLimit,
                         $state.lowLimit,
                         $state.units,
@@ -79,7 +79,7 @@ extension Stat {
                     )
                 case .Total:
                     StatsView(
-                        filter: filter.total,
+                        filter: filter.total.startDate,
                         $state.highLimit,
                         $state.lowLimit,
                         $state.units,
@@ -90,11 +90,11 @@ extension Stat {
         }
 
         @ViewBuilder func chart() -> some View {
-            let filter = DateFilter()
+            let filter = DateFilter.self
             switch selectedDuration {
             case .Today:
                 ChartsView(
-                    filter: filter.today,
+                    filter: filter.today.startDate,
                     $state.highLimit,
                     $state.lowLimit,
                     $state.units,
@@ -103,7 +103,7 @@ extension Stat {
                 )
             case .Day:
                 ChartsView(
-                    filter: filter.day,
+                    filter: filter.day.startDate,
                     $state.highLimit,
                     $state.lowLimit,
                     $state.units,
@@ -112,7 +112,7 @@ extension Stat {
                 )
             case .Week:
                 ChartsView(
-                    filter: filter.week,
+                    filter: filter.week.startDate,
                     $state.highLimit,
                     $state.lowLimit,
                     $state.units,
@@ -121,7 +121,7 @@ extension Stat {
                 )
             case .Month:
                 ChartsView(
-                    filter: filter.month,
+                    filter: filter.month.startDate,
                     $state.highLimit,
                     $state.lowLimit,
                     $state.units,
@@ -130,7 +130,7 @@ extension Stat {
                 )
             case .Total:
                 ChartsView(
-                    filter: filter.total,
+                    filter: filter.total.startDate,
                     $state.highLimit,
                     $state.lowLimit,
                     $state.units,
