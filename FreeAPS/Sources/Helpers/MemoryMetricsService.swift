@@ -222,9 +222,10 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     // MARK: - Bucket storage
 
     /// The running build's identity, read once: "<branch> <sha>" from branch.txt, and the
-    /// bundle's build date, which tells builds apart when branch.txt is missing.
+    /// bundle's build date, which tells builds apart when branch.txt is missing. Both are nil
+    /// when the bundle carries neither (then every build shares the plain version bucket).
     private static let runningBranch = Bundle.main.gitBranch
-    private static let runningBuilt = Bundle.main.buildDate
+    private static let runningBuilt: Date? = Bundle.main.buildDate
 
     /// Mutate the bucket for the build that is running right now, creating it if needed.
     private static func mutateCurrentBucket(_ change: (inout MemoryVersionCounters) -> Void) {
@@ -291,6 +292,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         if let runningBranch {
             return "\(base) \(sha(of: runningBranch))"
         }
+        guard let runningBuilt else { return base }
         return "\(base) built-\(Int(runningBuilt.timeIntervalSince1970))"
     }
 
@@ -302,7 +304,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         if let owner = bucket.branch, let runningBranch {
             return sha(of: owner) == sha(of: runningBranch)
         }
-        if let built = bucket.built {
+        if let built = bucket.built, let runningBuilt {
             // Stored dates round-trip through ISO 8601, so allow for lost sub-second precision.
             return abs(built.timeIntervalSince(runningBuilt)) < 1
         }
