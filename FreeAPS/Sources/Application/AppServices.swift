@@ -59,12 +59,13 @@ import Swinject
         try await startService(resolver.resolve(APSManager.self)!)
 
         try await startService(resolver.resolve(DeviceDataManager.self))
+        try await startService(resolver.resolve(UserNotificationsManager.self))
+        try await startService(resolver.resolve(DeviceAlertManager.self))
 
         try await startService(resolver.resolve(AppUIState.self))
 
         try await startService(resolver.resolve(FetchTreatmentsManager.self))
         try await startService(resolver.resolve(FetchAnnouncementsManager.self))
-        try await startService(resolver.resolve(UserNotificationsManager.self))
         try await startService(resolver.resolve(CalendarManager.self))
         try await startService(resolver.resolve(WatchManager.self))
         try await startService(resolver.resolve(HealthKitManager.self))
