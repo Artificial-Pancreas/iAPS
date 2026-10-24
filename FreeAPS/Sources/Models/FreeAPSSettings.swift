@@ -35,6 +35,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var low: Decimal = 70
     var uploadStats: Bool = false
     var uploadLogs: Bool = false
+    /// Opt-in crash reports to open-iaps.app (Sharing screen). Independent of the other
+    /// sharing toggles: a crash report needs nothing else to be useful.
+    var uploadCrashReports: Bool = false
     var hours: Int = 6
     var xGridLines: Bool = true
     var yGridLines: Bool = true
@@ -777,6 +780,10 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadLogs = try? container.decode(Bool.self, forKey: .uploadLogs) {
             settings.uploadLogs = uploadLogs
+        }
+
+        if let uploadCrashReports = try? container.decode(Bool.self, forKey: .uploadCrashReports) {
+            settings.uploadCrashReports = uploadCrashReports
         }
 
         if let nightTime = try? container.decode(NightTimeConfiguration.self, forKey: .nightTime) {
