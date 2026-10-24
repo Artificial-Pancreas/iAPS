@@ -31,22 +31,55 @@ import KSCrashRecording
 /// Symbolication needs only the frames' addresses and the images' UUIDs and load
 /// addresses, all of which stay.
 ///
-/// Main-actor: `install` and `processPendingReports` are called from the App initialiser
-/// and from `AppServices`; the upload itself runs detached.
-@MainActor final class CrashReportService {
-    static let shared = CrashReportService()
-
+/// KSCrash is process-global, so the install is a static (`install()`), attempted from the
+/// App initialiser before anything else exists. The service instance started by `AppServices`
+/// repeats the install (a no-op if the first one succeeded) and then handles the reports
+/// of the previous run; the upload itself runs detached.
+@MainActor final class CrashReportService: AppService {
     /// Most reports uploaded per launch; a crash loop must not turn into an upload storm.
     nonisolated private static let maxReportsPerLaunch = 3
 
-    private var installed = false
+    private static var installed = false
+
+    private let settingsManager: SettingsManager
+    private let userToken: UserToken
+    private let database: Database
+
     private var processed = false
 
-    private init() {}
+    nonisolated init(settingsManager: SettingsManager, userToken: UserToken, database: Database) {
+        self.settingsManager = settingsManager
+        self.userToken = userToken
+        self.database = database
+    }
+
+    /// Installs the crash handlers if not done yet, then looks for reports written by a
+    /// previous run. With the Sharing toggle off they are deleted; with it on they are
+    /// uploaded if this build is a current release, and deleted on success. Failed uploads,
+    /// and anything beyond the per-launch cap, stay for the next launch; KSCrash itself keeps
+    /// at most 5 reports on disk (oldest pruned). The upload runs off the main thread.
+    func start() async {
+        Self.install()
+        guard Self.installed, !processed else { return }
+        processed = true
+
+        let enabled = await settingsManager.settings.uploadCrashReports
+        let userToken = userToken
+        let database = database
+        Task.detached(priority: .utility) {
+            guard let store = KSCrash.shared.reportStore, store.reportCount > 0 else { return }
+            guard enabled else {
+                debug(.default, "Crash reports found (\(store.reportCount)) but crash reporting is off — discarding")
+                store.deleteAllReports()
+                return
+            }
+            await Self.upload(from: store, appId: userToken.getIdentifier(), database: database)
+        }
+    }
 
     // MARK: - Install
 
-    /// Call first thing in the App initialiser, and again from `AppServices` once
+    /// Called first thing in the App initialiser, and again from `start()` once
     /// protected data is available. Before the first unlock after a reboot the app
     /// cannot open its own files: KSCrash's `install` still succeeds then (it only
     /// fails when it cannot create its directories, and directories are not under
@@ -55,7 +88,7 @@ import KSCrashRecording
     /// that background-launched process would be written without its system section.
     /// So the install waits for the same gate `AppServices` uses; on a normal launch
     /// the phone is unlocked and this still runs before anything else.
-    func install() {
+    static func install() {
         guard !installed else { return }
         guard ProtectedData.canReadOwnFiles() else {
             debug(.default, "Crash reporter install deferred: protected data is not available yet")
@@ -109,28 +142,7 @@ import KSCrashRecording
         fatalError("Simulated crash from Settings → Debug options")
     }
 
-    /// Looks for reports written by a previous run. With the Sharing toggle off they are
-    /// deleted; with it on they are uploaded if this build is a current release, and
-    /// deleted on success. Failed uploads, and anything beyond the per-launch cap, stay
-    /// for the next launch; KSCrash itself keeps at most 5 reports on disk (oldest
-    /// pruned). Runs off the main thread; the caller reads the setting and resolves the
-    /// anonymous statistics id and the open-iaps.app client.
-    func processPendingReports(enabled: Bool, appId: String, database: Database) {
-        guard installed, !processed else { return }
-        processed = true
-
-        Task.detached(priority: .utility) { [weak self] in
-            guard let store = KSCrash.shared.reportStore, store.reportCount > 0 else { return }
-            guard enabled else {
-                debug(.default, "Crash reports found (\(store.reportCount)) but crash reporting is off — discarding")
-                store.deleteAllReports()
-                return
-            }
-            await self?.upload(from: store, appId: appId, database: database)
-        }
-    }
-
-    nonisolated private func upload(from store: CrashReportStore, appId: String, database: Database) async {
+    nonisolated private static func upload(from store: CrashReportStore, appId: String, database: Database) async {
         let version = Bundle.main.releaseVersionNumber ?? ""
         switch await releaseStatus(of: version, database: database) {
         case .current:
@@ -148,11 +160,11 @@ import KSCrashRecording
         }
 
         // Newest first, at most maxReportsPerLaunch; the rest wait for the next launch.
-        let toSend = store.reportIDs.map(\.int64Value).sorted().suffix(Self.maxReportsPerLaunch)
+        let toSend = store.reportIDs.map(\.int64Value).sorted().suffix(maxReportsPerLaunch)
 
         for id in toSend {
             guard let report = store.report(for: id),
-                  let body = try? JSONSerialization.data(withJSONObject: Self.scrubbed(report.value))
+                  let body = try? JSONSerialization.data(withJSONObject: scrubbed(report.value))
             else {
                 store.deleteReport(with: id)
                 continue
@@ -234,8 +246,8 @@ import KSCrashRecording
         return out
     }
 
-    nonisolated private func send(_ body: Data, appId: String) async -> Bool {
-        var request = URLRequest(url: Self.endpoint("/api/v1/upload/crash"), timeoutInterval: 60)
+    nonisolated private static func send(_ body: Data, appId: String) async -> Bool {
+        var request = URLRequest(url: endpoint("/api/v1/upload/crash"), timeoutInterval: 60)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(appId, forHTTPHeaderField: "X-App-Id")
@@ -260,7 +272,7 @@ import KSCrashRecording
     /// Whether `version` is the latest main or dev release per open-iaps.app. Only a
     /// definite "outdated" discards reports; when the check gets no answer (offline,
     /// server down) they stay for the next launch — the upload would fail the same way.
-    nonisolated private func releaseStatus(of version: String, database: Database) async -> ReleaseStatus {
+    nonisolated private static func releaseStatus(of version: String, database: Database) async -> ReleaseStatus {
         guard !version.isEmpty else { return .outdated }
         let latest = try? await database.fetchVersion()
         guard let latest, !latest.main.isEmpty || !latest.dev.isEmpty else { return .unknown }

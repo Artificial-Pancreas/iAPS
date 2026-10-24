@@ -9,7 +9,7 @@ import Swinject
 
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    @StateObject var dataController = CoreDataStack.shared
+    @StateObject var dataController: CoreDataStack
 
     // Dependencies Assembler
     // contain all dependencies Assemblies
@@ -28,16 +28,21 @@ import Swinject
     // TODO: Remove var after update "Use Dependencies" logic in Logger
     static let resolver: Resolver = FreeAPSApp.assembler.resolver
 
-    private let appServices = Self.resolver.resolve(AppServices.self)!
+    private let appServices: AppServices
 
-    private let appUIState = Self.resolver.resolve(AppUIState.self)!
+    private let appUIState: AppUIState
 
     init() {
-        // Crash handlers first, so a crash anywhere in startup is captured. On a launch
+        // Crash handlers first, so a crash anywhere in startup is captured - this is why the
+        // dependency container and the Core Data stack are only built below. On a launch
         // before the first unlock after a reboot this is a no-op (the app cannot open its
-        // files yet) and AppServices installs them once it can. Whether a report ever
-        // leaves the phone is decided later, from the Sharing setting.
-        CrashReportService.shared.install()
+        // files yet) and CrashReportService installs them once it can, when started by
+        // AppServices. Whether a report ever leaves the phone is decided later, from the
+        // Sharing setting.
+        CrashReportService.install()
+        _dataController = StateObject(wrappedValue: CoreDataStack.shared)
+        appServices = Self.resolver.resolve(AppServices.self)!
+        appUIState = Self.resolver.resolve(AppUIState.self)!
         debug(
             .default,
             "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"

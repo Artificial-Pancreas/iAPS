@@ -7,6 +7,14 @@ final class ServiceAssembly: Assembly {
     func assemble(container: Container) {
         container.register(DataMigrations.self) { _ in DataMigrations() }
 
+        container.register(CrashReportService.self) { r in
+            CrashReportService(
+                settingsManager: r.resolve(SettingsManager.self)!,
+                userToken: r.resolve(UserToken.self)!,
+                database: r.resolve(Database.self)!
+            )
+        }
+
         container.register(MetricKitService.self) { r in
             MetricKitService(
                 storage: r.resolve(FileStorage.self)!,

@@ -1216,7 +1216,6 @@ private struct BolusProgressOverlay: View {
     let cancel: () -> Void
 
     @Environment(AppUIState.self) private var appUIState
-    @Environment(\.colorScheme) private var colorScheme
 
     private static let formatter = {
         let formatter = NumberFormatter()

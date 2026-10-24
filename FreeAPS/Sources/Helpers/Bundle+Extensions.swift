@@ -42,7 +42,8 @@ extension Bundle {
 
     /// The embedded provisioning profile as ASCII text. It is a CMS-wrapped plist, so the XML is
     /// read with regexes rather than a plist decoder. Nil on the Simulator (no profile).
-    private static let embeddedProvisioningProfile: String? = {
+    /// Read on demand by the two cached values below; the text itself is not kept.
+    private static func embeddedProvisioningProfile() -> NSString? {
         guard
             let profilePath = Bundle.main.path(forResource: "embedded", ofType: "mobileprovision"),
             let profileData = try? Data(contentsOf: URL(fileURLWithPath: profilePath)),
@@ -54,13 +55,13 @@ extension Bundle {
             )
             return nil
         }
-        return profile as String
-    }()
+        return profile
+    }
 
     /// When the embedded provisioning profile stops being valid. Nil without a profile.
     /// Read once: the profile does not change while the process runs.
     private static let cachedProfileExpirationDate: Date? = {
-        guard let profile = embeddedProvisioningProfile.map({ $0 as NSString }),
+        guard let profile = embeddedProvisioningProfile(),
               // `[\W]*?` absorbs whatever whitespace sits between the key and its value.
               let regex = try? NSRegularExpression(pattern: "<key>ExpirationDate</key>[\\W]*?<date>(.*?)</date>", options: [])
         else { return nil }
@@ -96,7 +97,7 @@ extension Bundle {
     }
 
     private static let cachedProfileProvisionsSpecificDevices: Bool = {
-        guard let profile = embeddedProvisioningProfile.map({ $0 as NSString }) else { return false }
+        guard let profile = embeddedProvisioningProfile() else { return false }
         if profile.range(of: "<key>ProvisionedDevices</key>").location != NSNotFound {
             return true
         }

@@ -1005,8 +1005,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
             "pumpManager hasNewPumpEvents, replacePendingEvents: \(replacePendingEvents):\n\(events.map(\.rawValue.description).joined(separator: "\n"))"
         )
 
-        // The titles above are localized and carry no event date. Log the site / reservoir
-        // lifecycle events once more in a locale-free form with the pump-side date, so the
+        // Log the site / reservoir lifecycle events once more in a short, locale-free form with
+        // the pump-side date (the dump above is verbose and its titles are localized), so the
         // uploaded logs can place pod changes, set changes and refills on every pump type.
         for event in events {
             switch event.type {
