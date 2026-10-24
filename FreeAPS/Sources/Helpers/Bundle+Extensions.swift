@@ -14,28 +14,44 @@ extension Bundle {
     /// build numbers are per-builder counters and version alone spans many commits.
     /// Nil when branch.txt is missing or malformed.
     var gitBranch: String? {
-        guard let url = url(forResource: "branch", withExtension: "txt"),
-              let content = try? String(contentsOf: url)
-        else { return nil }
-        for line in content.components(separatedBy: .newlines) {
-            let parts = line.components(separatedBy: "=")
-            guard parts.count == 2,
-                  parts[0].trimmingCharacters(in: .whitespaces) == "BRANCH"
-            else { continue }
-            let value = parts[1].trimmingCharacters(in: .whitespaces)
-            return value.isEmpty ? nil : value
-        }
-        return nil
+        branchFileValue("BRANCH")
     }
 
+    /// When the running build was produced, from the BUILD_DATE the build phase writes into
+    /// branch.txt. Older builds have no such key; for those the Info.plist modification time is
+    /// used when it is plausible. TestFlight / App Store installs stamp bundle files with a
+    /// sentinel mtime (1697-10-17, −2^33 s), which is what used to show up as Build_Date in the
+    /// statistics and would push the TestFlight expiry countdown into the past.
     var buildDate: Date {
+        if let raw = branchFileValue("BUILD_DATE"),
+           let date = ISO8601DateFormatter().date(from: raw)
+        {
+            return date
+        }
         if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
            let infoAttr = try? FileManager.default.attributesOfItem(atPath: infoPath),
-           let infoDate = infoAttr[.modificationDate] as? Date
+           let infoDate = infoAttr[.modificationDate] as? Date,
+           infoDate.timeIntervalSince1970 > 946_684_800 // 2000-01-01: rejects the sentinel
         {
             return infoDate
         }
         return Date()
+    }
+
+    /// "KEY = value" lookup in branch.txt (written by the "get branch name and commit ID" build
+    /// phase). Nil when the file or key is missing, or the value is empty.
+    private func branchFileValue(_ key: String) -> String? {
+        guard let url = url(forResource: "branch", withExtension: "txt"),
+              let content = try? String(contentsOf: url)
+        else { return nil }
+        for line in content.components(separatedBy: .newlines) {
+            guard let eq = line.firstIndex(of: "="),
+                  line[..<eq].trimmingCharacters(in: .whitespaces) == key
+            else { continue }
+            let value = line[line.index(after: eq)...].trimmingCharacters(in: .whitespaces)
+            return value.isEmpty ? nil : value
+        }
+        return nil
     }
 
     // MARK: - Embedded provisioning profile
