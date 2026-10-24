@@ -240,7 +240,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         if bucket.built == nil { bucket.built = runningBuilt }
         change(&bucket)
         map[key] = bucket
-        prune(&map, keeping: key)
+        prune(&map, keeping: [key])
         store(map)
     }
 
@@ -269,7 +269,7 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
         var bucket = map[key] ?? MemoryVersionCounters()
         change(&bucket)
         map[key] = bucket
-        prune(&map, keeping: currentKey(in: map))
+        prune(&map, keeping: [currentKey(in: map), key])
         store(map)
     }
 
@@ -277,10 +277,17 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     /// run counter increments), but a local Xcode build keeps build number 1 across commits,
     /// so when that key already belongs to different code the running build gets
     /// "version(build) <sha>" instead — or "version(build) built-<unix time>" when there is
-    /// no branch.txt to name the commit.
+    /// no branch.txt to name the commit. A bucket the running build already owns, under
+    /// either form of key, is always reused: once the older bucket holding the base key
+    /// has been pruned, the base key must not look free again, or the running build's
+    /// counts would split over two buckets.
     private static func currentKey(in map: [String: MemoryVersionCounters]) -> String {
         let base = currentBucketKey()
-        guard let existing = map[base], !isRunningBuild(existing) else { return base }
+        if let existing = map[base], isRunningBuild(existing) { return base }
+        if let owned = map.first(where: { $0.key.hasPrefix(base + " ") && isRunningBuild($0.value) }) {
+            return owned.key
+        }
+        guard map[base] != nil else { return base }
         if let runningBranch {
             return "\(base) \(sha(of: runningBranch))"
         }
@@ -308,13 +315,15 @@ final class MemoryMetricsService: NSObject, MXMetricManagerSubscriber {
     }
 
     /// Drop the oldest buckets beyond the cap, oldest-created first, and never the running
-    /// build's. Sorting by release order instead would evict the running build after a
-    /// downgrade, or for a local build (build number 1) among Actions builds of the same
-    /// version. Buckets without `since` (legacy, or older builds seen only via MetricKit)
-    /// go first, earliest release first. Caller holds `lock`.
-    private static func prune(_ map: inout [String: MemoryVersionCounters], keeping current: String) {
+    /// build's nor the bucket just written. Sorting by release order instead would evict the
+    /// running build after a downgrade, or for a local build (build number 1) among Actions
+    /// builds of the same version. Buckets without `since` (legacy, or older builds seen
+    /// only via MetricKit) go first, earliest release first — which is why a bucket a late
+    /// MetricKit payload has just created is exempt: it has no `since` and would otherwise
+    /// be evicted in the same call that filed its counts. Caller holds `lock`.
+    private static func prune(_ map: inout [String: MemoryVersionCounters], keeping kept: Set<String>) {
         guard map.count > maxBuckets else { return }
-        let sorted = map.filter { $0.key != current }.sorted { a, b in
+        let sorted = map.filter { !kept.contains($0.key) }.sorted { a, b in
             let sa = a.value.since ?? .distantPast, sb = b.value.since ?? .distantPast
             if sa != sb { return sa < sb }
             return releaseOrder(a.key).lexicographicallyPrecedes(releaseOrder(b.key))
