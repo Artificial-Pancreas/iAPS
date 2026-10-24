@@ -22,6 +22,8 @@ final class AppCoordinator {
     }
 
     func setSensorDays(_ sensorDays: Double?) {
+        // Called from every CGM state update (G7 mutates state on each reading); only a change is worth publishing.
+        guard self.sensorDays != sensorDays else { return }
         self.sensorDays = sensorDays
     }
 }
