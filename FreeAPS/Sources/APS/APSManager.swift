@@ -524,9 +524,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
-        let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
-        let adjusted = pump.roundToSupportedBasalRate(unitsPerHour: rate / concentration.concentration)
-        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
+        let concentration = self.concentration
+        let deviceRate = pump.roundToSupportedBasalRate(unitsPerHour: rate / concentration.concentration)
+        pump.enactTempBasal(unitsPerHour: deviceRate, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
@@ -534,7 +534,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(
                     duration: Int(duration / 60),
-                    rate: Decimal(adjusted),
+                    rate: Decimal(deviceRate * concentration.concentration),
                     temp: .absolute,
                     timestamp: Date()
                 )
