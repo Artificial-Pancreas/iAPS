@@ -8,6 +8,8 @@ struct Statistics: JSON, Equatable {
     var Build_Number: String
     var Branch: String
     var CopyRightNotice: String
+    /// nil when the build date is unknown (no BUILD_DATE in branch.txt and an implausible bundle
+    /// mtime). The synthesized encoder then omits the key; open-iaps.app does not read it.
     var Build_Date: Date?
     var Algorithm: String
     var AdjustmentFactor: Decimal
