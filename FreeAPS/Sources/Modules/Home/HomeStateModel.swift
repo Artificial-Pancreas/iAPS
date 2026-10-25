@@ -234,7 +234,8 @@ extension Home {
             manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
-            refreshVersionNotice()
+            // refreshVersionNotice() runs from the view's onAppear, after the build-expiration check,
+            // so on a cold launch the version alert is never flagged ahead of the expiration alert.
             data.smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
             data.lowGlucose = settingsManager.settings.low

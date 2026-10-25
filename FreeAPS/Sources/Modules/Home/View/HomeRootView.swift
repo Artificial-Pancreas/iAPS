@@ -1274,6 +1274,8 @@ extension Home {
             }
             .onAppear {
                 checkBuildExpiration()
+                // After the expiration check, so the chained alert binding below sees it first.
+                state.refreshVersionNotice()
             }
             .alert(
                 BuildExpirationManager.shared.alertTitle,
@@ -1295,7 +1297,9 @@ extension Home {
                 // alert is dismissed this binding turns true and the version alert follows.
                 isPresented: Binding(
                     get: { state.showVersionAlert && !showExpirationAlert },
-                    set: { if !$0 { state.acknowledgeVersionAlert() } }
+                    // Acknowledged only by the buttons: SwiftUI also writes false when it tears the alert
+                    // down because the getter turned false, and that must not count as seen.
+                    set: { _ in }
                 )
             ) {
                 Button(NSLocalizedString("Later", comment: "Dismiss the newer-release alert"), role: .cancel) {
