@@ -51,8 +51,9 @@ extension Settings {
                             )
                         }
 
-                        if let latest = fetchedVersionNumber.first, let nr = latest.nr,
-                           Version.isNewer(nr, than: state.versionNumber)
+                        if let latest = fetchedVersionNumber.first,
+                           let nr = Version(main: latest.nr ?? "", dev: latest.dev ?? "")
+                           .offered(for: state.versionNumber, branch: Version.runningBranchName)
                         {
                             Text("Newer release availabe at GitHub: " + nr)
                                 .foregroundStyle(.orange).bold()

@@ -155,23 +155,40 @@ extension Home {
 
         /// Compare the stored version check against this build; a stale check is refreshed
         /// right away rather than waiting for the loop's daily slot.
+        /// Recomputes the banner/alert from the stored version check. Called when Home comes
+        /// up, when the app returns to the foreground and whenever a new check is stored (the
+        /// view observes the VNr table), so it does not depend on a loop being enacted.
+        ///
+        /// A stored check older than 23 h is refreshed right away rather than waiting for the
+        /// loop's even-hour slot — at most once an hour, counted from the last *attempt*: a
+        /// failed fetch stores nothing, so without that an unreachable server would mean a
+        /// request (with retries) on every Home appear.
         func refreshVersionNotice() {
+            let defaults = UserDefaults.standard
             let stored = CoreDataStorage().fetchVNr()
-            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval),
+               (defaults.object(forKey: IAPSconfig.versionCheckAttempted) as? Date ?? .distantPast) <
+               Date.now.addingTimeInterval(-1.hours.timeInterval)
+            {
+                defaults.set(Date.now, forKey: IAPSconfig.versionCheckAttempted)
                 nightscoutManager.fetchVersion()
             }
             guard let main = stored?.nr, !main.isEmpty else {
                 newerVersion = nil
                 showVersionBanner = false
+                showVersionAlert = false
                 return
             }
-            let onDev = (Bundle.main.gitBranch ?? "").hasPrefix("dev")
-            let offered = Version(main: main, dev: stored?.dev ?? "").newer(than: versionNumber, onDevBranch: onDev)
+            let offered = Version(main: main, dev: stored?.dev ?? "")
+                .offered(for: versionNumber, branch: Version.runningBranchName)
             newerVersion = offered
-            let defaults = UserDefaults.standard
             showVersionBanner = offered != nil && defaults.string(forKey: IAPSconfig.versionBannerDismissed) != offered
-            if let offered, defaults.string(forKey: IAPSconfig.versionAlertShown) != offered {
-                showVersionAlert = true
+            if let offered {
+                if defaults.string(forKey: IAPSconfig.versionAlertShown) != offered {
+                    showVersionAlert = true
+                }
+            } else {
+                showVersionAlert = false
             }
         }
 
@@ -905,7 +922,6 @@ extension Home.StateModel:
         setupOverrideHistory()
         setupLoopStats()
         setupData()
-        refreshVersionNotice()
     }
 
     func pumpBatteryDidChange(_: Battery) {

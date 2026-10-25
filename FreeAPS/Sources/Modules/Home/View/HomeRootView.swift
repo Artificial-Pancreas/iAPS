@@ -63,6 +63,12 @@ extension Home {
             sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
         ) var onboarded: FetchedResults<Onboarding>
 
+        /// The stored version checks; a new row means the notice must be recomputed.
+        @FetchRequest(
+            entity: VNr.entity(),
+            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
+        ) var storedVersionChecks: FetchedResults<VNr>
+
         private let numberFormatter: NumberFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -1248,11 +1254,15 @@ extension Home {
                             .offset(y: -100)
                         }
                     }
+                    .onChange(of: storedVersionChecks.first?.date) {
+                        state.refreshVersionNotice()
+                    }
                     .onChange(of: scenePhase) {
                         switch scenePhase {
                         case .active:
                             state.startTimer()
                             checkBuildExpiration()
+                            state.refreshVersionNotice()
                         case .background,
                              .inactive:
                             state.stopTimer()
@@ -1280,7 +1290,13 @@ extension Home {
             }
             .alert(
                 NSLocalizedString("Update available", comment: "Title of the newer-release alert on Home"),
-                isPresented: $state.showVersionAlert
+                // Held back while the build-expiration alert is up: two alerts flagged in the same
+                // cycle would leave one unpresented with its binding still true. Once the expiration
+                // alert is dismissed this binding turns true and the version alert follows.
+                isPresented: Binding(
+                    get: { state.showVersionAlert && !showExpirationAlert },
+                    set: { if !$0 { state.acknowledgeVersionAlert() } }
+                )
             ) {
                 Button(NSLocalizedString("Later", comment: "Dismiss the newer-release alert"), role: .cancel) {
                     state.acknowledgeVersionAlert()

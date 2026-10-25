@@ -4123,9 +4123,6 @@ Enact a temp Basal or a temp target */
 /* Home banner, %1$@ new version, %2$@ running version */
 "iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
 
-/* Hide the newer-release banner */
-"Dismiss" = "Dismiss";
-
 /* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
 "Crash Reports" = "Crash Reports";
 "Send crash reports" = "Send crash reports";
