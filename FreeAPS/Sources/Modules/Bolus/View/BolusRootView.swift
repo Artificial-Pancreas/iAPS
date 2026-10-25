@@ -128,6 +128,11 @@ extension Bolus {
                     }
                 }
             }
+            .onAppear {
+                if !state.useCalc {
+                    state.viewActive()
+                }
+            }
             .onDisappear {
                 if !state.useCalc {
                     state.notActive()

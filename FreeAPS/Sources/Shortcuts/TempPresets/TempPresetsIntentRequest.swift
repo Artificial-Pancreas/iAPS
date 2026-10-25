@@ -37,7 +37,8 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     func findTempTarget(_ tempPreset: tempPreset) throws -> TempTarget {
-        let tempTargetFound = tempTargetsStorage.presets().filter { $0.id == tempPreset.id.uuidString }
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        let tempTargetFound = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == tempPreset.id }
         guard let tempOneTarget = tempTargetFound.first else { throw TempPresetsError.noTempTargetFound }
         return tempOneTarget
     }
