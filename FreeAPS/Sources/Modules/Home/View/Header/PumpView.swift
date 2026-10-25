@@ -214,6 +214,8 @@ struct PumpView: View {
                         .font(.caption2)
                 }
                 .foregroundStyle(.red)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
             }
         }
     }
