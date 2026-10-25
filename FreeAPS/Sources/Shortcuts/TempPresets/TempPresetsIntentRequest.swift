@@ -24,13 +24,9 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         convert(tt: tempTargetsStorage.presets()) + [cancelPreset]
     }
 
+    /// In the requested order, as the entity query contract expects; `fetchOne` knows the Cancel entry.
     func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id).map(uuid.contains) ?? false }
-        var found = convert(tt: UUIDTempTarget)
-        if uuid.contains(Self.cancelPresetID) {
-            found.append(cancelPreset)
-        }
-        return found
+        uuid.compactMap { fetchOne($0) }
     }
 
     func fetchOne(_ uuid: tempPreset.ID) -> tempPreset? {
