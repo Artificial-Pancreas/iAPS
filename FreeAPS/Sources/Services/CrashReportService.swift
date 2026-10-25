@@ -43,6 +43,21 @@ final class CrashReportService {
 
     // MARK: - Install
 
+    /// False on the simulator. KSCrash 2.6's binary-image cache learns about image loads by
+    /// replacing the debugger-notification pointer in dyld's `dyld_all_image_infos`. In a
+    /// simulator process that struct belongs to the host dyld and is shared with dyld_sim,
+    /// and the first dlopen after the install (Metal's driver, on the Home chart's first
+    /// draw) dies in the ObjC runtime's `map_images_nolock` with a protection fault.
+    /// Devices are unaffected, and simulator crash reports are of no use anyway. KSCrash 2.5
+    /// did not hook dyld.
+    private static let supportedHere: Bool = {
+        #if targetEnvironment(simulator)
+            return false
+        #else
+            return true
+        #endif
+    }()
+
     /// Call first thing in the App initialiser, and again from the launcher once
     /// protected data is available. Before the first unlock after a reboot the app
     /// cannot open its own files: KSCrash's `install` still succeeds then (it only
@@ -54,6 +69,10 @@ final class CrashReportService {
     /// the phone is unlocked and this still runs before anything else.
     func install() {
         guard !installed else { return }
+        guard Self.supportedHere else {
+            debug(.default, "Crash reporter not installed on the simulator")
+            return
+        }
         guard ProtectedDataGate.isAvailable() else {
             debug(.default, "Crash reporter install deferred: protected data is not available yet")
             return
