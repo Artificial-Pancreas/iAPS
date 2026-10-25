@@ -23,6 +23,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var useFPUconversion: Bool = true
+    /// Convert a meal's fat and protein into future carb equivalents (Warsaw method). Off, the
+    /// macros are still saved with the meal but no carb-equivalent entries are created from them.
+    var fatProteinConversion: Bool = true
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
     var minuteInterval: Int = 30
@@ -274,6 +277,10 @@ extension FreeAPSSettings: Decodable {
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
             settings.useFPUconversion = useFPUconversion
+        }
+
+        if let fatProteinConversion = try? container.decode(Bool.self, forKey: .fatProteinConversion) {
+            settings.fatProteinConversion = fatProteinConversion
         }
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
