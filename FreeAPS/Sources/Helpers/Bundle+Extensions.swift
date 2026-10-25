@@ -23,16 +23,18 @@ extension Bundle {
     /// sentinel mtime (1697-10-17, −2^33 s), which is what used to show up as Build_Date in the
     /// statistics and would push the TestFlight expiry countdown into the past. Nil when neither
     /// source is usable, so callers can say "unknown" instead of guessing.
-    var buildDate: Date? { Self.mainBuildDate }
+    var buildDate: Date? { self === Bundle.main ? Self.mainBuildDate : Self.buildDate(of: self) }
 
     /// Constant for the life of the process; read once rather than re-parsing branch.txt per access.
-    private static let mainBuildDate: Date? = {
-        if let raw = Bundle.main.branchFileValue("BUILD_DATE"),
+    private static let mainBuildDate: Date? = buildDate(of: .main)
+
+    private static func buildDate(of bundle: Bundle) -> Date? {
+        if let raw = bundle.branchFileValue("BUILD_DATE"),
            let date = ISO8601DateFormatter().date(from: raw)
         {
             return date
         }
-        if let infoPath = Bundle.main.path(forResource: "Info", ofType: "plist"),
+        if let infoPath = bundle.path(forResource: "Info", ofType: "plist"),
            let infoAttr = try? FileManager.default.attributesOfItem(atPath: infoPath),
            let infoDate = infoAttr[.modificationDate] as? Date,
            infoDate.timeIntervalSince1970 > 946_684_800 // 2000-01-01: rejects the sentinel
@@ -40,7 +42,7 @@ extension Bundle {
             return infoDate
         }
         return nil
-    }()
+    }
 
     /// "KEY = value" lookup in branch.txt (written by the "get branch name and commit ID" build
     /// phase). Nil when the file or key is missing, or the value is empty.
@@ -61,10 +63,18 @@ extension Bundle {
     // MARK: - Embedded provisioning profile
 
     /// The embedded provisioning profile as ASCII text. It is a CMS-wrapped plist, so the XML is
-    /// read with regexes rather than a plist decoder. Nil on the Simulator (no profile).
-    private var embeddedProvisioningProfile: NSString? {
+    /// read with regexes rather than a plist decoder. Nil on the Simulator (no profile). The main
+    /// bundle's profile and what is derived from it are read once: BuildExpirationManager asks
+    /// for the expiry several times per check, and re-reading the file each time flooded the
+    /// Simulator log with the warning below.
+    private static let mainProvisioningProfile: NSString? = provisioningProfile(of: .main)
+    private static let mainProfileExpirationDate: Date? = profileExpirationDate(in: mainProvisioningProfile)
+    private static let mainProfileProvisionsSpecificDevices: Bool =
+        profileProvisionsSpecificDevices(in: mainProvisioningProfile)
+
+    private static func provisioningProfile(of bundle: Bundle) -> NSString? {
         guard
-            let profilePath = Bundle.main.path(forResource: "embedded", ofType: "mobileprovision"),
+            let profilePath = bundle.path(forResource: "embedded", ofType: "mobileprovision"),
             let profileData = try? Data(contentsOf: URL(fileURLWithPath: profilePath)),
             // `NSString` makes the regex / range / substring work below straightforward.
             let profile = NSString(data: profileData, encoding: String.Encoding.ascii.rawValue)
@@ -79,7 +89,13 @@ extension Bundle {
 
     /// When the embedded provisioning profile stops being valid. Nil without a profile.
     var profileExpirationDate: Date? {
-        guard let profile = embeddedProvisioningProfile,
+        self === Bundle.main
+            ? Self.mainProfileExpirationDate
+            : Self.profileExpirationDate(in: Self.provisioningProfile(of: self))
+    }
+
+    private static func profileExpirationDate(in profile: NSString?) -> Date? {
+        guard let profile,
               // `[\W]*?` absorbs whatever whitespace sits between the key and its value.
               let regex = try? NSRegularExpression(pattern: "<key>ExpirationDate</key>[\\W]*?<date>(.*?)</date>", options: [])
         else { return nil }
@@ -107,7 +123,13 @@ extension Bundle {
     /// build — installed by Xcode or sideloaded — runs exactly as long as its profile. App Store and
     /// TestFlight profiles list no devices; their lifetime is TestFlight's 90 days instead.
     var profileProvisionsSpecificDevices: Bool {
-        guard let profile = embeddedProvisioningProfile else { return false }
+        self === Bundle.main
+            ? Self.mainProfileProvisionsSpecificDevices
+            : Self.profileProvisionsSpecificDevices(in: Self.provisioningProfile(of: self))
+    }
+
+    private static func profileProvisionsSpecificDevices(in profile: NSString?) -> Bool {
+        guard let profile else { return false }
         if profile.range(of: "<key>ProvisionedDevices</key>").location != NSNotFound {
             return true
         }
