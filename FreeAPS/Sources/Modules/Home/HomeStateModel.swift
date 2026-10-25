@@ -160,17 +160,11 @@ extension Home {
         /// view observes the VNr table), so it does not depend on a loop being enacted.
         ///
         /// A stored check older than 23 h is refreshed right away rather than waiting for the
-        /// loop's even-hour slot — at most once an hour, counted from the last *attempt*: a
-        /// failed fetch stores nothing, so without that an unreachable server would mean a
-        /// request (with retries) on every Home appear.
+        /// loop's slot; fetchVersion itself allows one attempt an hour, success or not.
         func refreshVersionNotice() {
             let defaults = UserDefaults.standard
             let stored = CoreDataStorage().fetchVNr()
-            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval),
-               (defaults.object(forKey: IAPSconfig.versionCheckAttempted) as? Date ?? .distantPast) <
-               Date.now.addingTimeInterval(-1.hours.timeInterval)
-            {
-                defaults.set(Date.now, forKey: IAPSconfig.versionCheckAttempted)
+            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
                 nightscoutManager.fetchVersion()
             }
             guard let main = stored?.nr, !main.isEmpty else {

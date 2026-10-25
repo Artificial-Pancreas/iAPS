@@ -135,8 +135,9 @@ public enum IAPSconfig {
     static let versionAlertShown = "iAPS.versionAlertShown"
     /// The newest published version whose Home banner the user has dismissed.
     static let versionBannerDismissed = "iAPS.versionBannerDismissed"
-    /// When Home last asked open-iaps.app for the published versions (success or not), so an
-    /// unreachable server does not turn every Home appear into another request.
+    /// When the app last asked open-iaps.app for the published versions (success or not);
+    /// NightscoutManager.fetchVersion allows one attempt an hour, so an unreachable server does
+    /// not turn every Home appear or loop into another request.
     static let versionCheckAttempted = "iAPS.versionCheckAttempted"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
     /// Colors
