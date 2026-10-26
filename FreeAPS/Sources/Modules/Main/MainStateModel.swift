@@ -118,14 +118,23 @@ extension Main {
                 buttonTapHandler: nil
             )
 
+            // Not SwiftMessages' `.warning` / `.error` themes: those put white text on a light amber (1.6:1)
+            // and a light red (3.6:1). Same layout and icons, but palette fills with AA-contrast text, and a
+            // card that follows dark mode for info (the nib's card is a fixed white with black text).
             switch message.type {
             case .info:
-                view.backgroundColor = .secondarySystemGroupedBackground
+                view.backgroundView.backgroundColor = .secondarySystemGroupedBackground
+                view.titleLabel?.textColor = .label
+                view.bodyLabel?.textColor = .label
                 config.duration = .automatic
 
                 titleContent = NSLocalizedString("Info", comment: "Info title")
             case .warning:
-                view.configureTheme(.warning, iconStyle: .subtle)
+                view.configureTheme(
+                    backgroundColor: UIColor(resource: .loopYellow),
+                    foregroundColor: .black,
+                    iconImage: Icon.warningSubtle.image
+                )
                 config.duration = .forever
                 view.button?.setImage(Icon.warningSubtle.image, for: .normal)
                 titleContent = NSLocalizedString("Warning", comment: "Warning title")
@@ -134,7 +143,11 @@ extension Main {
                     self?.acknowledgeAlert(for: message)
                 }
             case .errorPump:
-                view.configureTheme(.error, iconStyle: .subtle)
+                view.configureTheme(
+                    backgroundColor: UIColor(resource: .darkRed),
+                    foregroundColor: .white,
+                    iconImage: Icon.errorSubtle.image
+                )
                 config.duration = .forever
                 view.button?.setImage(Icon.errorSubtle.image, for: .normal)
                 titleContent = NSLocalizedString("Error", comment: "Error title")
