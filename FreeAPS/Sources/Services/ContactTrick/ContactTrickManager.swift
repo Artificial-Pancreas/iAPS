@@ -7,6 +7,8 @@ protocol ContactTrickManager: Sendable {
 }
 
 actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, AppService {
+    private static let organizationName = "Created and managed by iAPS"
+
     private let contactStore = CNContactStore()
 
     private var staleRenderTask: Task<Void, Never>?
@@ -16,6 +18,16 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
 
     private var knownIds: [String] = []
     private var contacts: [ContactTrickEntry] = []
+
+    /// what each contact was last saved from, by contact id. Not persisted: every contact is saved once
+    /// after launch, and after that only when its name or picture would change. Every save is synced
+    /// through iCloud to all the user's devices, so saving an unchanged contact is not free.
+    private var renderedFrom: [String: RenderInput] = [:]
+
+    private struct RenderInput: Equatable {
+        let index: Int
+        let picture: ContactPicture.Input
+    }
 
     var currentContacts: [ContactTrickEntry] {
         contacts
@@ -65,6 +77,7 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         let removedIds = knownSet.subtracting(newSet)
 
         removedIds.forEach { contactId in
+            self.renderedFrom[contactId] = nil
             if !self.deleteContact(contactId) {
                 debug(.service, "contacts cleanup, failed to delete contact \(contactId)")
             }
@@ -80,36 +93,42 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         let settings = appCoordinator.settings.value
         let preferences = appCoordinator.preferences.value
 
-        guard contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized else {
-            return
+        var newContacts = contacts
+
+        if contacts.isNotEmpty, CNContactStore.authorizationStatus(for: .contacts) == .authorized {
+            let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
+
+            let readings = await coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
+            let glucoseValues = glucoseText(readings, settings: settings)
+
+            let iob = appCoordinator.iobTicks.value?.first?.iob ?? suggestion?.iob
+            let state = ContactTrickState(
+                glucose: glucoseValues.glucose,
+                trend: glucoseValues.trend,
+                delta: glucoseValues.delta,
+                lastLoopDate: appCoordinator.lastLoopDate.value,
+                iob: iob,
+                iobText: iob.map { iob in
+                    Self.iobFormatter.string(from: iob as NSNumber)!
+                },
+                cob: suggestion?.cob,
+                cobText: suggestion?.cob.map { cob in
+                    Self.cobFormatter.string(from: cob as NSNumber)!
+                },
+                eventualBG: eventualBGString(suggestion, settings: settings),
+                maxIOB: preferences.maxIOB,
+                maxCOB: preferences.maxCOB
+            )
+
+            // a disabled contact is kept (so a watch face pointing at it still works when it is enabled again),
+            // but drawn without any values, so that it doesn't show stale data as if it were live.
+            // Its picture doesn't change after that, so it is saved only once.
+            newContacts = contacts.enumerated().map { index, entry in
+                renderContact(entry, index + 1, entry.enabled ? state : ContactTrickState())
+            }
         }
 
-        let suggestion = appCoordinator.latestLoopOutcome.value?.suggestion
-
-        let readings = await coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
-        let glucoseValues = glucoseText(readings, settings: settings)
-
-        let iob = appCoordinator.iobTicks.value?.first?.iob ?? suggestion?.iob
-        let state = ContactTrickState(
-            glucose: glucoseValues.glucose,
-            trend: glucoseValues.trend,
-            delta: glucoseValues.delta,
-            lastLoopDate: appCoordinator.lastLoopDate.value,
-            iob: iob,
-            iobText: iob.map { iob in
-                Self.iobFormatter.string(from: iob as NSNumber)!
-            },
-            cob: suggestion?.cob,
-            cobText: suggestion?.cob.map { cob in
-                Self.cobFormatter.string(from: cob as NSNumber)!
-            },
-            eventualBG: eventualBGString(suggestion, settings: settings),
-            maxIOB: preferences.maxIOB,
-            maxCOB: preferences.maxCOB
-        )
-
-        let newContacts = contacts.enumerated().map { index, entry in renderContact(entry, index + 1, state) }
-
+        // this is outside of the check above so that an empty list (the last entry deleted) is persisted too
         if forceSave || newContacts != contacts {
             // when we create new contacts we store the IDs, in that case we need to write into the settings storage
             await storage.save(newContacts, as: OpenAPS.Settings.contactTrick)
@@ -132,6 +151,13 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
 
     private func renderContact(_ _entry: ContactTrickEntry, _ index: Int, _ state: ContactTrickState) -> ContactTrickEntry {
         var entry = _entry
+
+        if let contactId = entry.contactId,
+           renderedFrom[contactId] == RenderInput(index: index, picture: ContactPicture.input(contact: entry, state: state))
+        {
+            return entry
+        }
+
         let mutableContact: CNMutableContact
         let saveRequest = CNSaveRequest()
 
@@ -170,9 +196,17 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
             )
         }
 
-        saveUpdatedContact(saveRequest)
+        let saved = saveUpdatedContact(saveRequest)
 
         entry.contactId = mutableContact.identifier
+
+        if saved {
+            // built from the entry with its contact id set, which is how it comes in next time
+            renderedFrom[mutableContact.identifier] = RenderInput(
+                index: index,
+                picture: ContactPicture.input(contact: entry, state: state)
+            )
+        }
 
         return entry
     }
@@ -199,9 +233,7 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         mutableContact: CNMutableContact
     ) {
         mutableContact.givenName = "iAPS \(index)"
-        mutableContact
-            .organizationName =
-            "Created and managed by iAPS - \(Date().formatted(date: .abbreviated, time: .shortened))"
+        mutableContact.organizationName = Self.organizationName
 
         mutableContact.imageData = ContactPicture.getImage(
             contact: entry,
@@ -237,13 +269,16 @@ actor BaseContactTrickManager: ContactTrickManager, Injectable, LifetimeOwner, A
         }
     }
 
-    private func saveUpdatedContact(_ saveRequest: CNSaveRequest) {
+    private func saveUpdatedContact(_ saveRequest: CNSaveRequest) -> Bool {
         do {
             try contactStore.execute(saveRequest)
+            return true
         } catch let error as NSError {
             debug(.service, "in updateContact, failed to update the contact - \(getContactsErrorDetails(error))")
+            return false
         } catch {
             debug(.service, "in updateContact, failed to update the contact: \(error.localizedDescription)")
+            return false
         }
     }
 

@@ -23,23 +23,10 @@ extension Settings {
 
         private(set) var buildNumber = Bundle.main.buildVersionNumber ?? "Unknown"
         private(set) var versionNumber = Bundle.main.releaseVersionNumber ?? "Unknown"
-        private(set) var branch = StateModel.readBranch()
+        private(set) var branch = Bundle.main.gitBranch ?? "Unknown"
         private(set) var copyrightNotice = Bundle.main.infoDictionary?["NSHumanReadableCopyright"] as? String ?? ""
 
         override func subscribe() async {}
-
-        private static func readBranch() -> String {
-            guard let url = Bundle.main.url(forResource: "branch", withExtension: "txt"),
-                  let content = try? String(contentsOf: url)
-            else { return "Unknown" }
-            for line in content.components(separatedBy: .newlines) {
-                let components = line.components(separatedBy: "=")
-                if components.count == 2, components[0].trimmingCharacters(in: .whitespaces) == "BRANCH" {
-                    return components[1].trimmingCharacters(in: .whitespaces)
-                }
-            }
-            return "Unknown"
-        }
 
         func logItems() -> [URL] {
             var items: [URL] = []

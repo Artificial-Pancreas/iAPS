@@ -23,6 +23,7 @@ final class MetricKitService: NSObject, MXMetricManagerSubscriber, AppServiceSyn
 
     func start() {
         MXMetricManager.shared.add(self)
+        MemoryMetricsService.start()
 
         Foundation.NotificationCenter.default.addObserver(
             forName: UIApplication.didReceiveMemoryWarningNotification,

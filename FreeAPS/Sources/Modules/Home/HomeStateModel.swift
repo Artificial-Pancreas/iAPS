@@ -14,6 +14,7 @@ extension Home {
         @Injected() private var deviceManager: DeviceDataManager!
         @Injected() private var overrideManager: OverrideManager!
         @Injected() private var appUIState: AppUIState!
+        @Injected() private var databaseManager: DatabaseManager!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -47,6 +48,11 @@ extension Home {
         @Published var maxValue: Decimal = 1.2
         @Published var totalBolus: Decimal = 0
         @Published var isStatusPopupPresented: Bool = false
+        /// A published release newer than this build (from the daily version check), if any.
+        @Published var newerVersion: String?
+        @Published var showVersionBanner = false
+        @Published var showVersionAlert = false
+        let versionNumber = Bundle.main.releaseVersionNumber ?? ""
         @Published var readings: [ReadingsSnapshot] = []
         @Published var loopStatistics: (loops: Int, readings: Int, percentage: Double, averageInterval: String) = (
             loops: 0,
@@ -186,6 +192,13 @@ extension Home {
 
             observeUI(appCoordinator.cgmInfo, map: { $0?.sensorDays }) { me, sensorDays in
                 await me.cgmCensorDaysUpdated(sensorDays)
+            }
+
+            // refreshVersionNotice() runs from the view's onAppear, after the build-expiration check,
+            // so on a cold launch the version alert is never flagged ahead of the expiration alert.
+            // A check stored later (the loop path's daily slot) comes back through this subject.
+            observeUI(appCoordinator.versionCheckStored, dropInitial: true) { me, _ in
+                await me.versionCheckDidStore()
             }
 
             observeUI(
@@ -344,6 +357,62 @@ extension Home {
             Task {
                 await apsManager.cancelBolus()
             }
+        }
+
+        /// Recomputes the banner/alert from the stored version check. Called when Home comes up
+        /// and when the app returns to the foreground; a check stored by the loop path arrives
+        /// through `appCoordinator.versionCheckStored`, so nothing here runs on the loop path.
+        ///
+        /// A stored check older than 23 h is refreshed right away rather than waiting for the
+        /// loop's slot; DatabaseManager.fetchVersion allows one attempt an hour, success or not.
+        func refreshVersionNotice() {
+            Task {
+                let stored = await coreDataStorage.fetchVersion()
+                applyVersionNotice(stored)
+                if (stored?.date ?? .distantPast) < Date.now.subtractingTimeInterval(.hours(23)) {
+                    // A new row, if the fetch succeeds, comes back through versionCheckStored.
+                    await databaseManager.fetchVersion()
+                }
+            }
+        }
+
+        private func versionCheckDidStore() async {
+            applyVersionNotice(await coreDataStorage.fetchVersion())
+        }
+
+        private func applyVersionNotice(_ stored: VNrSnapshot?) {
+            let defaults = UserDefaults.standard
+            guard let main = stored?.nr, !main.isEmpty else {
+                newerVersion = nil
+                showVersionBanner = false
+                showVersionAlert = false
+                return
+            }
+            let offered = Version(main: main, dev: stored?.dev ?? "")
+                .offered(for: versionNumber, branch: Version.runningBranchName)
+            newerVersion = offered
+            showVersionBanner = offered != nil && defaults.string(forKey: IAPSconfig.versionBannerDismissed) != offered
+            if let offered {
+                if defaults.string(forKey: IAPSconfig.versionAlertShown) != offered {
+                    showVersionAlert = true
+                }
+            } else {
+                showVersionAlert = false
+            }
+        }
+
+        func acknowledgeVersionAlert() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionAlertShown)
+            }
+            showVersionAlert = false
+        }
+
+        func dismissVersionBanner() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionBannerDismissed)
+            }
+            showVersionBanner = false
         }
 
         func cancelActiveOverride() {

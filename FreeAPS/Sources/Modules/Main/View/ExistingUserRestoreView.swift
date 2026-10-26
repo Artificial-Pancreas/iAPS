@@ -275,6 +275,15 @@ extension ExistingUserRestoreView {
                     state = .failed(NSLocalizedString("Enter your recovery token.", comment: ""))
                     return
                 }
+                // Tokens are device UUIDs. Anything else cannot match a backup, so don't make the
+                // round trip (and don't hand the server "t" or "login" to choke on).
+                guard UUID(uuidString: token) != nil else {
+                    state = .failed(NSLocalizedString(
+                        "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.",
+                        comment: "Restore: the typed recovery token is not a UUID"
+                    ))
+                    return
+                }
                 await runRestore(token: token)
             }
         }

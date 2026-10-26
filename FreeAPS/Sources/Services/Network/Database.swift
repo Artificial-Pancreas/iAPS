@@ -449,6 +449,11 @@ extension Database {
         do {
             return try await sendGetRequest(
                 Config.versionPath,
+                // Which build is asking, so the server can answer per version and count stale builds.
+                query: [
+                    URLQueryItem(name: "version", value: Bundle.main.releaseVersionNumber ?? ""),
+                    URLQueryItem(name: "branch", value: Bundle.main.gitBranch ?? "")
+                ],
                 as: Version.self
             )
         } catch {
@@ -480,6 +485,7 @@ extension Database {
 extension Database {
     private func makeRequest(
         _ path: String,
+        query: [URLQueryItem]? = nil,
         allowsConstrainedNetworkAccess: Bool = false
     ) -> URLRequest {
         var components = URLComponents()
@@ -487,6 +493,7 @@ extension Database {
         components.host = url.host
         components.port = url.port
         components.path = path
+        components.queryItems = query
 
         var request = URLRequest(url: components.url!)
         request.timeoutInterval = Config.timeout
@@ -509,10 +516,11 @@ extension Database {
 
     private func sendGetRequest<Resp: Decodable>(
         _ path: String,
+        query: [URLQueryItem]? = nil,
         as type: Resp.Type,
         allowsConstrainedNetworkAccess: Bool = false
     ) async throws -> Resp {
-        let request = makeRequest(path, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
+        let request = makeRequest(path, query: query, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess)
         let data = try await service.runAsync(request, retries: Config.retryCount)
         return try JSONCoding.decoder.decode(type, from: data)
     }

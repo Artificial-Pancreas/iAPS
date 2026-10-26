@@ -83,6 +83,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
 
         let settings = await settingsManager.settings
 
+        FootprintLog.log("statistics start")
         if settings.uploadStats {
             let dailystat = await statisticsFactory.buildStats(settings: settings)
             await storage.save(dailystat, as: OpenAPS.Monitor.statistics)
@@ -92,6 +93,7 @@ actor BaseProfileAndSettingsUploadManager: ProfileAndSettingsUploadManager, Life
             let version = await statisticsFactory.buildVersion()
             await databaseManager.uploadVersion(version: version)
         }
+        FootprintLog.log("statistics end")
         latestUploadedStats = await coreDataStorage.fetchStats()
     }
 

@@ -29,6 +29,9 @@ import Swinject
         }
 
         try await startService(resolver.resolve(SettingsManager.self))
+        // installs the crash handlers if the launch-time attempt ran before the first unlock,
+        // and handles the reports of the previous run (needs the Sharing setting)
+        try await startService(resolver.resolve(CrashReportService.self))
         try await startService(resolver.resolve(BasalProfileStorage.self))
         try await startService(resolver.resolve(AutotuneStorage.self))
         try await startService(resolver.resolve(IsfScheduleStorage.self))
