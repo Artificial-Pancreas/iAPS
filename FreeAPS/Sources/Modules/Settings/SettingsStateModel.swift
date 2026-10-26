@@ -29,6 +29,9 @@ extension Settings {
         override func subscribe() async {}
 
         func logItems() -> [URL] {
+            // Lines are written asynchronously; get everything logged so far into the files (bounded wait).
+            LogFileWriter.shared.flush()
+
             var items: [URL] = []
 
             if fileManager.fileExists(atPath: SimpleLogReporter.logFile) {

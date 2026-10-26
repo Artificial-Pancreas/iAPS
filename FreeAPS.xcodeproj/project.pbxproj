@@ -450,6 +450,7 @@
 		F22A7A8C2FF948FB0019BDC5 /* NightscoutAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */; };
 		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
 		F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A8858300058D30019BDC5 /* UIBindingOwner.swift */; };
+		F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233892D3090A9B300D6581E /* LogFileWriterTests.swift */; };
 		F23C83E030099D7D0026B83F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C83DF30099D790026B83F /* Profile.swift */; };
 		F23C876030099DD20026B83F /* GlucoseEntry0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */; };
 		F23C876330099E020026B83F /* AutoIsfInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876230099E000026B83F /* AutoIsfInput.swift */; };
@@ -1238,6 +1239,7 @@
 		F22A7A8B2FF948FB0019BDC5 /* NightscoutAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutAPIProvider.swift; sourceTree = "<group>"; };
 		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
 		F22A8858300058D30019BDC5 /* UIBindingOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindingOwner.swift; sourceTree = "<group>"; };
+		F233892D3090A9B300D6581E /* LogFileWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileWriterTests.swift; sourceTree = "<group>"; };
 		F23C83DF30099D790026B83F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry0.swift; sourceTree = "<group>"; };
 		F23C876230099E000026B83F /* AutoIsfInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoIsfInput.swift; sourceTree = "<group>"; };
@@ -2604,6 +2606,7 @@
 			children = (
 				38FCF3F125E9028E0078B0D1 /* Info.plist */,
 				38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */,
+				F233892D3090A9B300D6581E /* LogFileWriterTests.swift */,
 			);
 			path = FreeAPSTests;
 			sourceTree = "<group>";
@@ -4226,6 +4229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				056EB47F2B4C8B3D00CDE36E /* SystemSoundsManager.swift in Sources */,
+				F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */,
 				38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4715,7 +4719,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4736,7 +4740,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

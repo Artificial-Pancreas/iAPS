@@ -396,6 +396,9 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date()) ?? Date()
         let dateString = Self.dateFmt.string(from: yesterday)
 
+        // A rotation still waiting in the log writer's buffer would leave the day before's log_prev.txt.
+        await LogFileWriter.shared.flushAsync()
+
         guard let logData = try? Data(contentsOf: URL(fileURLWithPath: SimpleLogReporter.logFilePrev)),
               !logData.isEmpty
         else {
