@@ -1318,13 +1318,14 @@ final class BaseAPSManager: APSManager, Injectable {
         return identfier
     }
 
+    /// Daily version check: refresh when the stored one is older than 23 h, or when there is
+    /// none yet (a fresh install used to wait for Settings to ask). fetchVersion allows one
+    /// attempt an hour, so this cannot repeat on every loop while the server is unreachable,
+    /// which the old "any loop in an even hour" gate did.
     private func versionCheack() {
-        if Date.now.hour % 2 == 0 {
-            if let last = CoreDataStorage().fetchVNr(),
-               (last.date ?? .distantFuture) < Date.now.addingTimeInterval(-23.hours.timeInterval)
-            {
-                nightscout.fetchVersion()
-            }
+        let last = CoreDataStorage().fetchVNr()
+        if (last?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+            nightscout.fetchVersion()
         }
     }
 

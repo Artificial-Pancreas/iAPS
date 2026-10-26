@@ -4108,6 +4108,21 @@ Enact a temp Basal or a temp target */
 /* Restore: the typed recovery token is not a UUID */
 "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
 
+/* Title of the newer-release alert on Home */
+"Update available" = "Update available";
+
+/* Dismiss the newer-release alert */
+"Later" = "Later";
+
+/* Open the release highlights page */
+"What's new" = "What's new";
+
+/* Body of the newer-release alert, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.";
+
+/* Home banner, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
+
 /* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
 "Crash Reports" = "Crash Reports";
 "Send crash reports" = "Send crash reports";
