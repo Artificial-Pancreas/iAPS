@@ -212,12 +212,14 @@ jobs:
             uuid=$(dwarfdump --uuid "$path" | awk '/arm64/ {print $2; exit}')
             [ -n "$uuid" ] || continue
             nm -n --defined-only -arch arm64 "$path" | xcrun swift-demangle | gzip -6 > "$tmp/$bin.sym.gz"
-            code=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 120 -X POST \
+            code=$(curl -sS -o "$tmp/response.json" -w '%{http_code}' --max-time 120 -X POST \
               https://submit.open-iaps.app/api/v1/upload/symbols \
               -H "X-Binary-UUID: $uuid" -H "X-Binary-Name: $bin" \
               -H "X-Branch: $BRANCH_NAME $sha" -H "X-App-Version: $version" -H "X-Build-Number: $BUILD_NUMBER" \
               -H 'Content-Encoding: gzip' --data-binary @"$tmp/$bin.sym.gz" || echo "curl-failed")
             echo "$bin $uuid -> $code"
+            # The server's reason for a rejection, so a 4xx in this log is diagnosable.
+            case "$code" in 2*) ;; *) cat "$tmp/response.json" 2>/dev/null; echo ;; esac
             n=$((n + 1))
           done < <(find "$tmp" -type f -path '*.dSYM/Contents/Resources/DWARF/*')
           echo "uploaded $n symbol table(s) for $BRANCH_NAME $sha ($version)"
