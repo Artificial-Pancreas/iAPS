@@ -4114,6 +4114,21 @@ Enact a temp Basal or a temp target */
 /* Settings search, nothing matched */
 "No results for \"%@\"" = "No results for \"%@\"";
 
+/* Title of the newer-release alert on Home */
+"Update available" = "Update available";
+
+/* Dismiss the newer-release alert */
+"Later" = "Later";
+
+/* Open the release highlights page */
+"What's new" = "What's new";
+
+/* Body of the newer-release alert, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.";
+
+/* Home banner, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
+
 /* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
 "Crash Reports" = "Crash Reports";
 "Send crash reports" = "Send crash reports";

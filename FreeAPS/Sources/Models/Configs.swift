@@ -131,6 +131,14 @@ public enum IAPSconfig {
     /// reporting. Upgrading users who never saw the option get the Sharing step once more.
     static let hasSeenCrashReportOption = "iAPS.hasSeenCrashReportOption"
     static let inBolusView = "iAPS.inBolusView"
+    /// The newest published version the launch alert has already been shown for.
+    static let versionAlertShown = "iAPS.versionAlertShown"
+    /// The newest published version whose Home banner the user has dismissed.
+    static let versionBannerDismissed = "iAPS.versionBannerDismissed"
+    /// When the app last asked open-iaps.app for the published versions (success or not);
+    /// NightscoutManager.fetchVersion allows one attempt an hour, so an unreachable server does
+    /// not turn every Home appear or loop into another request.
+    static let versionCheckAttempted = "iAPS.versionCheckAttempted"
     static let statURL = URL(string: "https://submit.open-iaps.app")!
     /// Colors
     static let headerBackgroundLight = Color.gray.opacity(IAPSconfig.backgroundOpacity)
