@@ -1073,6 +1073,7 @@ extension Home {
                 VStack(spacing: 0) {
                     // Header View
                     headerView(geo)
+                    versionBanner
                     ScrollView {
                         VStack {
                             // Main Chart
@@ -1134,11 +1135,14 @@ extension Home {
                 .onChange(of: scenePhase) {
                     if scenePhase == .active {
                         checkBuildExpiration()
+                        state.refreshVersionNotice()
                     }
                 }
             }
             .onAppear {
                 checkBuildExpiration()
+                // After the expiration check, so the chained alert binding below sees it first.
+                state.refreshVersionNotice()
             }
             .alert(
                 expirationAlertTitle,
@@ -1152,6 +1156,39 @@ extension Home {
                 }
             } message: {
                 Text(expirationAlertMessage)
+            }
+            .alert(
+                NSLocalizedString("Update available", comment: "Title of the newer-release alert on Home"),
+                // Held back while the build-expiration alert is up: two alerts flagged in the same
+                // cycle would leave one unpresented with its binding still true. Once the expiration
+                // alert is dismissed this binding turns true and the version alert follows.
+                isPresented: Binding(
+                    get: { state.showVersionAlert && !showExpirationAlert },
+                    // Acknowledged only by the buttons: SwiftUI also writes false when it tears the alert
+                    // down because the getter turned false, and that must not count as seen.
+                    set: { _ in }
+                )
+            ) {
+                Button(NSLocalizedString("Later", comment: "Dismiss the newer-release alert"), role: .cancel) {
+                    state.acknowledgeVersionAlert()
+                }
+                Button(NSLocalizedString("What's new", comment: "Open the release highlights page")) {
+                    state.acknowledgeVersionAlert()
+                    // The page leads with the releases this build has not run yet.
+                    var components = URLComponents(string: "https://open-iaps.app/whats-new")
+                    components?.queryItems = [URLQueryItem(name: "from", value: state.versionNumber)]
+                    if let url = components?.url {
+                        UIApplication.shared.open(url)
+                    }
+                }
+            } message: {
+                Text(String(
+                    format: NSLocalizedString(
+                        "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.",
+                        comment: "Body of the newer-release alert, %1$@ new version, %2$@ running version"
+                    ),
+                    state.newerVersion ?? "", state.versionNumber
+                ))
             }
             .navigationTitle("Home")
             .navigationBarHidden(true)
@@ -1182,6 +1219,36 @@ extension Home {
                                 }
                             }
                     )
+            }
+        }
+
+        /// A thin strip under the header while a newer release is published: tap to open
+        /// Settings (where the version line lives), × to hide it until the next release.
+        @ViewBuilder private var versionBanner: some View {
+            if state.showVersionBanner, let newer = state.newerVersion {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.up.circle.fill")
+                    Text(String(
+                        format: NSLocalizedString(
+                            "iAPS %@ is available. You are running %@.",
+                            comment: "Home banner, %1$@ new version, %2$@ running version"
+                        ),
+                        newer, state.versionNumber
+                    ))
+                        .font(.footnote)
+                        .lineLimit(2)
+                    Spacer()
+                    Button { state.dismissVersionBanner() } label: {
+                        Image(systemName: "xmark").font(.footnote.bold())
+                    }
+                    .accessibilityLabel(NSLocalizedString("Dismiss", comment: "Hide the newer-release banner"))
+                }
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Color.orange.opacity(0.9))
+                .foregroundColor(.white)
+                .contentShape(Rectangle())
+                .onTapGesture { state.showModal(for: .settings) }
             }
         }
 

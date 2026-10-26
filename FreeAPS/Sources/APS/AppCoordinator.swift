@@ -138,6 +138,10 @@ final class AppCoordinator: @unchecked Sendable {
     // bumped whenever override-related CoreData entities change
     let overridesChanged = CurrentValueSubject<Date, Never>(.distantPast)
 
+    /// Fires when DatabaseManager stores a published-versions check (the VNr table); Home
+    /// recomputes its newer-release notice from it instead of polling on the loop path.
+    let versionCheckStored = CurrentValueSubject<Date, Never>(.distantPast)
+
     // --------------
 
     private let loopPendingBackgroundTask = TaskIDBox()
@@ -190,6 +194,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func overridesDidChange() {
         overridesChanged.send(Date())
+    }
+
+    func versionCheckDidStore() {
+        versionCheckStored.send(Date())
     }
 
     func setLastLoopError(_ value: (String, date: Date)?) {
