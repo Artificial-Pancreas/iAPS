@@ -359,6 +359,12 @@ extension Home {
             }
         }
 
+        /// Asks the pump manager, not the published pump status: time-based pump managers (Omnipod, Minimed)
+        /// don't report the end of a bolus, so the published status can stay "bolusing" until the next pump command.
+        func pumpIsBolusing() -> Bool {
+            deviceManager.currentPumpStatus()?.isBolusing ?? false
+        }
+
         /// Recomputes the banner/alert from the stored version check. Called when Home comes up
         /// and when the app returns to the foreground; a check stored by the loop path arrives
         /// through `appCoordinator.versionCheckStored`, so nothing here runs on the loop path.

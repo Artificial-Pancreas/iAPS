@@ -48,6 +48,16 @@ protocol DeviceDataManager: Sendable {
 
     func cancelBolus() async throws
 
+    /// a bolus cancel (numbered by the caller, increasing) goes to the pump: earlier cancels' outcomes go away
+    func bolusCancelStarted(_ cancel: Int)
+
+    /// shows a failed / unconfirmed cancel on the bolus bar - only if it's the latest cancel's,
+    /// and the bar still shows the bolus that was being canceled
+    func showBolusCancelOutcome(_ kind: BolusCancelOutcome.Kind, cancel: Int, cancelStartedAt: Date)
+
+    /// a cancel succeeded after all (after its timeout): its outcome, or an earlier cancel's, goes away
+    func bolusCancelSucceeded(_ cancel: Int)
+
     func suspendDelivery() async throws
 
     func resumeDelivery() async throws
@@ -205,8 +215,11 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 
     private let bolusReporter: SendableVar<DoseProgressReporter?> = SendableVar(nil)
+    private let bolusBarDoseStart: SendableVar<Date?> = SendableVar(nil) // the dose the bar shows (until its clear)
     private let bolusObserver: SendableVar<DoseProgressObserver?> = SendableVar(nil)
-    private let bolusProgressClear: SendableVar<DispatchWorkItem?> = SendableVar(nil) // 0.5s delayed progress reset
+    private let bolusProgressClear: SendableVar<DispatchWorkItem?> = SendableVar(nil) // the bar's delayed (lingered) clear
+    private let bolusCancelLatest: SendableVar<Int> = SendableVar(0) // the latest cancel's number
+    private let bolusCancelOutcomeOf: SendableVar<Int?> = SendableVar(nil) // the cancel the shown outcome is for
 
     // This value is updated before each bolus is started.
     // It's only used to set appCoordinator.setBolusAmount in standard units instead of pump (adjusted) units (UI-only)
@@ -215,6 +228,11 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     // * the user issues a bolus from the pump (device) BEFORE iAPS issues a bolus/SMB with current concentration setting
     // * the bolus progress bar will show the amount in adjusted units not in standard units
     private let lastBolusConcentration = Locked<Double>(1.0)
+
+    // The amount (standard units) of the bolus iAPS is asking the pump for, shown while the pump reports .initiating
+    // (there's no dose yet). Set only until the pump answers the enactBolus call: other .initiating states
+    // (a DanaKit prime) show no "Starting bolus" label.
+    private let lastRequestedBolusAmount = Locked<Decimal?>(nil)
 
     init(
         pumpHistoryStorage: PumpHistoryStorage,
@@ -280,6 +298,11 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
         oldValue?.pumpManagerDelegate = nil
         oldValue?.delegateQueue = nil
+
+        // the reporter belongs to the old manager, and the new one could report .initiating/.canceling (kept as is)
+        if oldValue !== pumpManager, bolusReporter.value != nil {
+            finishBolusReporter()
+        }
 
         // If the current CGMManager is a PumpManager, we clear it out.
         if cgmManager is PumpManagerUI {
@@ -782,45 +805,98 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 // MARK: bolus reporters
 
 extension BaseDeviceDataManager {
-    private func updateBolusReporter(isBolusing: Bool, pumpManager: PumpManager?) {
+    private func updateBolusReporter(_ bolusState: PumpManagerStatus.BolusState, pumpManager: PumpManager?) {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        if isBolusing {
-            guard bolusReporter.value == nil, let pumpManager else {
-                // already tracking
+        switch bolusState {
+        case let .inProgress(dose):
+            // not (or no longer: a failed cancel) canceling
+            appCoordinator.setBolusCanceling(false)
+            if bolusReporter.value != nil {
+                // already tracking this dose
+                guard bolusBarDoseStart.value != dose.startDate else { return }
+                // a different dose (the next bolus before the previous reporter completed, a pump switch)
+                finishBolusReporter()
+            }
+            guard let pumpManager else { return }
+            startBolusReporter(pumpManager, dose: dose)
+        case .canceling:
+            // still bolusing (a cancel can fail): keep the current reporter until the pump reports .noBolus,
+            // but don't start one - there's no dose (and no amount) to report on.
+            // The label goes only on a bar of the bolus being canceled, not on a previous bolus's lingering one
+            if bolusReporter.value != nil {
+                appCoordinator.setBolusCanceling(true)
+            }
+        case .initiating:
+            // no dose yet ("Starting bolus" is published from dispatchPumpStatus): reporting starts on .inProgress,
+            // where a different dose replaces a kept reporter.
+            // A previous bolus's lingering bar goes now: "Starting bolus" takes its place, and a tap on it can't
+            // cancel the new bolus
+            if bolusReporter.value == nil, bolusProgressClear.value != nil {
+                clearBolusBar()
+            }
+        case .noBolus:
+            guard let reporter = bolusReporter.value else {
+                // with a bar still lingering, its clear resets the label (a canceled bolus stays "Cancelling" until then)
+                if bolusProgressClear.value == nil {
+                    appCoordinator.setBolusCanceling(false)
+                }
                 return
             }
-            startBolusReporter(pumpManager)
-        } else if bolusReporter.value != nil {
-            // bolus ended / pump gone
+            // bolus ended / pump gone: the status can arrive before the reporter's final progress
+            // (e.g. a reporter following pump-reported delivery), publish it before the lingered clear
+            appCoordinator.setBolusProgress(Decimal(reporter.progress.percentComplete))
+            // a cancel from iAPS whose .canceling never got here (DanaKit's connected path blocks processQueue for the
+            // whole cancel, so the live status reads .noBolus by then): keep "Cancelling" through the linger
+            if appCoordinator.bolusCancelInFlight.value {
+                appCoordinator.setBolusCanceling(true)
+            }
             finishBolusReporter()
         }
     }
 
-    private func startBolusReporter(_ pumpManager: PumpManager) {
+    private func startBolusReporter(_ pumpManager: PumpManager, dose: DoseEntry) {
         dispatchPrecondition(condition: .onQueue(processQueue))
+        // the pump can still report .inProgress after the reporter's progress is complete
+        // (e.g. a time-based estimate running ahead of the actual delivery):
+        // nothing to show then, and the pending clear of the previous reporter must be left alone
+        guard let reporter = pumpManager.createBolusProgressReporter(reportingOn: processQueue),
+              !reporter.progress.isComplete
+        else { return }
+
         bolusProgressClear.value?.cancel()
         bolusProgressClear.value = nil
+        if bolusBarDoseStart.value != dose.startDate {
+            // a cancel outcome belongs to the bolus it was for, never to another bolus's bar
+            setBolusCancelOutcome(nil)
+        }
 
-        guard let reporter = pumpManager.createBolusProgressReporter(reportingOn: processQueue) else { return }
-        let observer = BolusObserver { [weak self] percent, isComplete in
-            // invoked on processQueue (reportingOn: processQueue)
-            self?.handleBolusProgress(percent: percent, isComplete: isComplete)
+        let reporterID = ObjectIdentifier(reporter)
+        let observer = BolusObserver { [weak self] in
+            guard let self else { return }
+            // not every reporter honours reportingOn (DanaKit notifies on main): always hop to processQueue
+            self.processQueue.async { [weak self] in self?.handleBolusProgress(of: reporterID) }
         }
         bolusReporter.value = reporter
+        bolusBarDoseStart.value = dose.startDate
         bolusObserver.value = observer
 
-        if case let .inProgress(dose) = pumpManager.status.bolusState {
-            let enactedAmount = DoseEntry.fromDeviceUnits(dose.programmedUnits, concentration: lastBolusConcentration.value)
-            self.appCoordinator.setBolusAmount(enactedAmount)
-        }
+        let enactedAmount = DoseEntry.fromDeviceUnits(dose.programmedUnits, concentration: lastBolusConcentration.value)
+        appCoordinator.setBolusAmount(enactedAmount)
 
-        appCoordinator.setBolusProgress(Decimal(reporter.progress.percentComplete))
-        if reporter.progress.isComplete {
-            // bolus reporter won't call us back if we add an observer after the bolus is already done
-            finishBolusReporter()
-        } else {
-            reporter.addObserver(observer)
-        }
+        reporter.addObserver(observer)
+        // progress may have completed since the guard above, and the reporter won't call us back
+        // if the observer is added after the bolus is already done - publish (and finish) ourselves
+        let progress = reporter.progress
+        handleBolusProgress(percent: progress.percentComplete, isComplete: progress.isComplete)
+    }
+
+    private func handleBolusProgress(of reporterID: ObjectIdentifier) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        // an update hopped before the reporter was finished or replaced must not republish after the clear;
+        // the progress is read from the current reporter, so a reused address can't publish a stale value
+        guard let reporter = bolusReporter.value, ObjectIdentifier(reporter) == reporterID else { return }
+        let progress = reporter.progress
+        handleBolusProgress(percent: progress.percentComplete, isComplete: progress.isComplete)
     }
 
     private func handleBolusProgress(percent: Double, isComplete: Bool) {
@@ -838,28 +914,78 @@ extension BaseDeviceDataManager {
         bolusReporter.value = nil
         bolusObserver.value = nil
 
-        bolusProgressClear.value?.cancel()
-        let work = DispatchWorkItem { [weak self] in
-            guard let self, self.bolusReporter.value == nil else {
-                // a new bolus reported was started, don't clear
-                return
-            }
-            self.appCoordinator.setBolusProgress(nil)
-            self.appCoordinator.setBolusAmount(nil)
-            self.bolusProgressClear.value = nil
+        if let outcome = appCoordinator.bolusCancelOutcome.value {
+            // the bolus has ended: nothing to retry any more
+            appCoordinator.setBolusCancelOutcome(BolusCancelOutcome(kind: outcome.kind, bolusEnded: true))
         }
+        // a failed / unconfirmed cancel at the end of a bolus: long enough to be seen
+        scheduleBolusBarClear(after: appCoordinator.bolusCancelOutcome.value != nil ? 3 : 0.5)
+    }
+
+    private func scheduleBolusBarClear(after delay: TimeInterval) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        bolusProgressClear.value?.cancel()
+        let work = DispatchWorkItem { [weak self] in self?.clearBolusBar() }
         bolusProgressClear.value = work
-        processQueue.asyncAfter(deadline: .now() + 0.5, execute: work)
+        processQueue.asyncAfter(deadline: .now() + delay, execute: work)
+    }
+
+    private func clearBolusBar() {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        // a new bolus reported was started, don't clear
+        guard bolusReporter.value == nil else { return }
+        bolusProgressClear.value?.cancel()
+        bolusProgressClear.value = nil
+        appCoordinator.setBolusProgress(nil)
+        appCoordinator.setBolusAmount(nil)
+        appCoordinator.setBolusCanceling(false)
+        setBolusCancelOutcome(nil)
+        bolusBarDoseStart.value = nil
+    }
+
+    private func setBolusCancelOutcome(_ outcome: BolusCancelOutcome?, of cancel: Int? = nil) {
+        dispatchPrecondition(condition: .onQueue(processQueue))
+        bolusCancelOutcomeOf.value = outcome == nil ? nil : cancel
+        appCoordinator.setBolusCancelOutcome(outcome)
+    }
+
+    func bolusCancelStarted(_ cancel: Int) {
+        processQueue.async {
+            self.bolusCancelLatest.value = cancel
+            self.setBolusCancelOutcome(nil)
+        }
+    }
+
+    func showBolusCancelOutcome(_ kind: BolusCancelOutcome.Kind, cancel: Int, cancelStartedAt: Date) {
+        processQueue.async {
+            // an earlier cancel's outcome, posted late: the newer cancel owns the bar
+            guard cancel == self.bolusCancelLatest.value else { return }
+            // no bar, or the bar of a bolus started since the cancel: nothing to show it on
+            guard let doseStart = self.bolusBarDoseStart.value, doseStart <= cancelStartedAt else { return }
+            let lingering = self.bolusReporter.value == nil
+            self.setBolusCancelOutcome(BolusCancelOutcome(kind: kind, bolusEnded: lingering), of: cancel)
+            if lingering, self.bolusProgressClear.value != nil {
+                // the bar is already lingering: let it linger long enough to be seen
+                self.scheduleBolusBarClear(after: 3)
+            }
+        }
+    }
+
+    func bolusCancelSucceeded(_ cancel: Int) {
+        processQueue.async {
+            guard let shownFor = self.bolusCancelOutcomeOf.value, shownFor <= cancel else { return }
+            self.setBolusCancelOutcome(nil)
+        }
     }
 }
 
 private final class BolusObserver: DoseProgressObserver {
-    let onUpdate: (Double, Bool) -> Void
+    let onUpdate: () -> Void
 
-    init(onUpdate: @escaping (Double, Bool) -> Void) { self.onUpdate = onUpdate }
+    init(onUpdate: @escaping () -> Void) { self.onUpdate = onUpdate }
 
-    func doseProgressReporterDidUpdate(_ reporter: DoseProgressReporter) {
-        onUpdate(reporter.progress.percentComplete, reporter.progress.isComplete)
+    func doseProgressReporterDidUpdate(_: DoseProgressReporter) {
+        onUpdate()
     }
 }
 
@@ -1387,19 +1513,21 @@ private extension BaseDeviceDataManager {
     private func dispatchPumpStatus() {
         guard let pumpManager = self.pumpManager else {
             appCoordinator.setPumpStatus(nil)
-            updateBolusReporter(isBolusing: false, pumpManager: nil)
+            appCoordinator.setBolusStarting(nil)
+            updateBolusReporter(.noBolus, pumpManager: nil)
             appCoordinator.setManualTempBasal(false)
             return
         }
 
-        let status = pumpStatus(for: pumpManager)
+        // one read: the published isBolusing and the reporter must agree on the bolus state
+        let pumpManagerStatus = pumpManager.status
+        let status = pumpStatus(for: pumpManager, status: pumpManagerStatus)
         appCoordinator.setPumpStatus(status)
 
-        if case .inProgress = pumpManager.status.bolusState {
-            updateBolusReporter(isBolusing: true, pumpManager: pumpManager)
-        } else {
-            updateBolusReporter(isBolusing: false, pumpManager: pumpManager)
-        }
+        let bolusState = pumpManagerStatus.bolusState
+        updateBolusReporter(bolusState, pumpManager: pumpManager)
+        // after the reporter's progress and amount: "Starting bolus" goes when the bar can take its place
+        appCoordinator.setBolusStarting(bolusState == .initiating ? lastRequestedBolusAmount.value : nil)
 
         appCoordinator.setManualTempBasal(KnownPlugins.isManualTempBasalActive(pumpManager) ?? false)
     }
@@ -1531,8 +1659,15 @@ extension BaseDeviceDataManager {
         // convert automatic
         let automaticValue = automatic ? BolusActivationType.automatic : BolusActivationType.manualRecommendationAccepted
 
+        lastRequestedBolusAmount.value = DoseEntry.fromDeviceUnits(
+            unitsAdjustedForConcentrationAndRounded,
+            concentration: concentration
+        )
+
         return try await withCheckedThrowingContinuation { continuation in
             pump.enactBolus(units: unitsAdjustedForConcentrationAndRounded, activationType: automaticValue) { error in
+                // the pump has answered: .initiating is over for this request
+                self.lastRequestedBolusAmount.value = nil
                 if let error = error {
                     debug(
                         .apsManager,
@@ -1696,14 +1831,13 @@ extension BaseDeviceDataManager {
         }
     }
 
-    private func pumpStatus(for pumpManager: PumpManagerUI) -> PumpDisplayStatus? {
-        let pumpManagerStatus = pumpManager.status
+    private func pumpStatus(for pumpManager: PumpManagerUI, status pumpManagerStatus: PumpManagerStatus) -> PumpDisplayStatus? {
         let batteryPercent = Int((pumpManagerStatus.pumpBatteryChargeRemaining ?? 1) * 100)
         let battery = Battery(
             percent: batteryPercent,
             voltage: nil,
             string: batteryPercent >= 10 ? .normal : .low,
-            display: pumpManager.status.pumpBatteryChargeRemaining != nil
+            display: pumpManagerStatus.pumpBatteryChargeRemaining != nil
         )
 
         let isBolusing = pumpManagerStatus.bolusState != .noBolus
@@ -1728,7 +1862,7 @@ extension BaseDeviceDataManager {
 
     func currentPumpStatus() -> PumpDisplayStatus? {
         guard let pumpManager else { return nil }
-        return pumpStatus(for: pumpManager)
+        return pumpStatus(for: pumpManager, status: pumpManager.status)
     }
 }
 

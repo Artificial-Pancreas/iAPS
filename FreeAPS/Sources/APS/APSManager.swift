@@ -86,6 +86,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
 
     private var wasManualTempBasal = false
 
+    // one bolus cancel at a time: pump managers don't cope with overlapping cancels (DanaKit restores a captured
+    // .canceling on failure), and a second cancel never buys anything while the first one is still running
+    private var bolusCancelInFlight = false
+    // numbers the cancels sent to the pump, so a late outcome can't override a newer cancel's
+    private var bolusCancelNumber = 0
+
     private var concentration: (concentration: Double, increment: Double) {
         get async {
             await coreDataStorage.insulinConcentration()
@@ -488,21 +494,56 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     }
 
     func cancelBolus() async {
+        guard !bolusCancelInFlight else {
+            debug(.apsManager, "Cancel bolus: already in flight")
+            return
+        }
+        bolusCancelInFlight = true
+        defer {
+            bolusCancelInFlight = false
+            appCoordinator.setBolusCancelInFlight(false)
+        }
+
         await withBackgroundTask("cancel bolus") {
+            // no pump, or nothing running: nothing to cancel, and nothing to tell
+            guard let pumpStatus = deviceDataManager.currentPumpStatus(), pumpStatus.isBolusing else { return }
+            debug(.apsManager, "Cancel bolus")
+            // only now, going to the pump: "Cancelling" + a disabled stop button
+            appCoordinator.setBolusCancelInFlight(true)
+            bolusCancelNumber &+= 1
+            let number = bolusCancelNumber
+            let startedAt = Date.now
+            // the "... - tap to retry" of an earlier cancel goes away
+            deviceDataManager.bolusCancelStarted(number)
+            let cancel = Task { [deviceDataManager] in try await deviceDataManager.cancelBolus() }
             do {
-                guard let pumpStatus = deviceDataManager.currentPumpStatus() else {
-                    throw APSError.invalidPumpState(message: "Pump not set")
-                }
-                guard pumpStatus.isBolusing else { return }
-                debug(.apsManager, "Cancel bolus")
-                try await deviceDataManager.cancelBolus()
+                // Bounded for the stop button only: a cancel can take longer (Medtrum waits up to 3 min for its
+                // command lock, Omnipod/Minimed queue behind a running session), or never complete (DanaKit's
+                // ensureConnected replaces a pending connection callback). The call keeps running; a late success
+                // takes back the "not confirmed", a late failure is only logged - the bar and the pump state stay the
+                // source of truth.
+                try await withTimeout("Cancel bolus", Self.cancelBolusTimeout) { try await cancel.value }
                 debug(.apsManager, "Bolus cancelled")
+            } catch is TimeoutError {
+                debug(.apsManager, "Bolus cancellation not confirmed after \(Self.cancelBolusTimeout)")
+                deviceDataManager.showBolusCancelOutcome(.notConfirmed, cancel: number, cancelStartedAt: startedAt)
+                Task { [deviceDataManager] in
+                    let result = await cancel.result
+                    debug(.apsManager, "Bolus cancellation finished after the timeout: \(result)")
+                    if case .success = result {
+                        // its "not confirmed" (or an earlier cancel's outcome) no longer holds
+                        deviceDataManager.bolusCancelSucceeded(number)
+                    }
+                }
             } catch {
                 debug(.apsManager, "Bolus cancellation failed with error: \(error.localizedDescription)")
                 processError(APSError.pumpError(error))
+                deviceDataManager.showBolusCancelOutcome(.failed, cancel: number, cancelStartedAt: startedAt)
             }
         }
     }
+
+    private static let cancelBolusTimeout: Duration = .seconds(60)
 
     func enactTempBasal(rate: Double, duration: TimeInterval) async {
         await withBackgroundTask("enact temp basal") {

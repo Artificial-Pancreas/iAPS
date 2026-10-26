@@ -21,6 +21,10 @@ import Observation
     private(set) var lastLoopDate: Date?
     private(set) var bolusProgress: Decimal?
     private(set) var bolusAmount: Decimal?
+    private(set) var bolusCanceling = false
+    private(set) var bolusCancelInFlight = false
+    private(set) var bolusStarting: Decimal?
+    private(set) var bolusCancelOutcome: BolusCancelOutcome?
     private(set) var alertNotAck: Bool = false
     private(set) var lastLoopError: (error: String, date: Date)?
     private(set) var latestIOB: Decimal?
@@ -61,6 +65,10 @@ import Observation
         observeUI(appCoordinator.lastLoopDate) { me, value in me.lastLoopDate = value }
         observeUI(appCoordinator.bolusProgress) { me, value in me.bolusProgress = value }
         observeUI(appCoordinator.bolusAmount) { me, value in me.bolusAmount = value }
+        observeUI(appCoordinator.bolusCanceling) { me, value in me.bolusCanceling = value }
+        observeUI(appCoordinator.bolusCancelInFlight) { me, value in me.bolusCancelInFlight = value }
+        observeUI(appCoordinator.bolusStarting) { me, value in me.bolusStarting = value }
+        observeUI(appCoordinator.bolusCancelOutcome) { me, value in me.bolusCancelOutcome = value }
         observeUI(appCoordinator.lastLoopError) { me, value in me.lastLoopError = value }
         observeUI(appCoordinator.alertNotAckUpdates) { me, value in me.alertNotAck = value }
         observeUI(appCoordinator.glucoseAlarm) { me, value in me.glucoseAlarm = value }
