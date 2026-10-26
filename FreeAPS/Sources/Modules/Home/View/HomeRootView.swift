@@ -277,11 +277,11 @@ extension Home {
                             Spacer()
                         }
                         Button {
-                            (appUIState.bolusProgress != nil) ? showBolusActiveAlert = true :
-                                state.showModal(for: .bolus(
-                                    waitForSuggestion: state.useCalc ? true : false,
-                                    fetch: false
-                                ))
+                            if state.pumpIsBolusing() {
+                                showBolusActiveAlert = true
+                            } else {
+                                state.showModal(for: .bolus(waitForSuggestion: state.useCalc, fetch: false))
+                            }
                         }
                         label: {
                             Image(systemName: "syringe")
@@ -1296,8 +1296,24 @@ private struct BolusProgressOverlay: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 15)
                     .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
-                    .frame(maxWidth: 320, maxHeight: 90)
+                    .frame(maxWidth: 320, maxHeight: cancelOutcome == nil ? 90 : 110)
                 bolusProgressView(progress: progress, amount: amount)
+            }
+            .frame(maxWidth: .infinity, alignment: .center)
+            .offset(y: -100)
+        } else if let amount = appUIState.bolusStarting {
+            // the pump reports .initiating: no dose and no progress yet
+            ZStack {
+                RoundedRectangle(cornerRadius: 15)
+                    .glassEffectWhenAvailable(.clear, in: RoundedRectangle(cornerRadius: 15))
+                    .frame(maxWidth: 320, maxHeight: 50)
+                HStack {
+                    Text(NSLocalizedString("Starting bolus", comment: "Bolus progress bar title while the pump starts the bolus"))
+                    Text(amount.formatted() + NSLocalizedString(" U", comment: ""))
+                    ProgressView()
+                }
+                .frame(width: 250, height: 25).font(.bolusProgressBarFont)
+                .dynamicTypeSize(...DynamicTypeSize.large)
             }
             .frame(maxWidth: .infinity, alignment: .center)
             .offset(y: -100)
@@ -1305,29 +1321,76 @@ private struct BolusProgressOverlay: View {
     }
 
     private func bolusProgressView(progress: Decimal, amount: Decimal) -> some View {
-        ZStack {
+        // the pump is canceling this bolus, or a cancel from iAPS is running (shown at once, before the pump reports it)
+        let canceling = appUIState.bolusCanceling || appUIState.bolusCancelInFlight
+        let outcome = cancelOutcome
+        return ZStack {
             VStack {
                 HStack {
                     let bolused = Self.formatter.string(from: (amount * progress) as NSNumber) ?? ""
-                    Text("Bolusing")
+                    if canceling {
+                        Text(NSLocalizedString(
+                            "Cancelling",
+                            comment: "Bolus progress bar title while the pump cancels the bolus"
+                        ))
+                    } else {
+                        Text("Bolusing")
+                    }
                     Text(
                         bolused + " " + NSLocalizedString("of", comment: "") + " " + amount
                             .formatted() + NSLocalizedString(" U", comment: "")
                     )
                 }.frame(width: 250, height: 25).font(.bolusProgressBarFont)
-                HStack(alignment: .bottom, spacing: 5) {
-                    ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
-                        .overlay {
-                            Image(systemName: "pause.fill")
-                                .symbolRenderingMode(.palette)
-                                .foregroundStyle(.white, .blue)
-                                .font(.bolusProgressStopFont)
-                        }
+                VStack(spacing: 4) {
+                    HStack(alignment: .bottom, spacing: 5) {
+                        ProgressView(value: Double(progress)).progressViewStyle(BolusProgressViewStyle())
+                            .overlay {
+                                Image(systemName: "pause.fill")
+                                    .symbolRenderingMode(.palette)
+                                    .foregroundStyle(.white, .blue)
+                                    .font(.bolusProgressStopFont)
+                                    .opacity(appUIState.bolusCancelInFlight ? 0.4 : 1)
+                            }
+                    }
+                    if let outcome {
+                        Text(cancelOutcomeText(outcome)).font(.caption).foregroundStyle(.orange)
+                    }
                 }
+                // a tap (also on the message) clears the message and sends a fresh cancel
                 .onTapGesture { cancel() }
+                // one cancel at a time: tappable again once it has failed (APSManager drops a tap while one is running);
+                // not on a bar whose bolus has ended (only lingering): nothing to retry
+                .allowsHitTesting(!appUIState.bolusCancelInFlight && outcome?.bolusEnded != true)
             }
             .dynamicTypeSize(...DynamicTypeSize.large)
             .padding(.bottom, 8)
+        }
+    }
+
+    // never next to a newer cancel in flight (its "Cancelling" says what's going on)
+    private var cancelOutcome: BolusCancelOutcome? {
+        appUIState.bolusCancelInFlight ? nil : appUIState.bolusCancelOutcome
+    }
+
+    private func cancelOutcomeText(_ outcome: BolusCancelOutcome) -> String {
+        switch (outcome.kind, outcome.bolusEnded) {
+        case (.failed, false):
+            return NSLocalizedString("Cancel failed - tap to retry", comment: "Bolus progress bar: the bolus cancel failed")
+        case (.notConfirmed, false):
+            return NSLocalizedString(
+                "Cancel not confirmed - tap to retry",
+                comment: "Bolus progress bar: the pump didn't confirm the bolus cancel in time"
+            )
+        case (.failed, true):
+            return NSLocalizedString(
+                "Cancel failed - check the pump",
+                comment: "Bolus progress bar: the bolus cancel failed, and the bolus has ended since"
+            )
+        case (.notConfirmed, true):
+            return NSLocalizedString(
+                "Cancel not confirmed - check the pump",
+                comment: "Bolus progress bar: the pump didn't confirm the bolus cancel in time, and the bolus has ended since"
+            )
         }
     }
 }

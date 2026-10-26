@@ -125,6 +125,18 @@ final class AppCoordinator: @unchecked Sendable {
 
     let bolusAmount = CurrentValueSubject<Decimal?, Never>(nil)
 
+    // the pump reports .canceling for the bolus the progress bar shows (kept through the bar's linger)
+    let bolusCanceling = CurrentValueSubject<Bool, Never>(false)
+
+    // a cancel requested from iAPS is running (APSManager.cancelBolus)
+    let bolusCancelInFlight = CurrentValueSubject<Bool, Never>(false)
+
+    // the pump reports .initiating for a bolus iAPS enacted: the requested amount (standard units)
+    let bolusStarting = CurrentValueSubject<Decimal?, Never>(nil)
+
+    // how the last cancel of the bolus the bar shows went wrong (nil: nothing to tell)
+    let bolusCancelOutcome = CurrentValueSubject<BolusCancelOutcome?, Never>(nil)
+
     let newSensorDetectedEvents = PassthroughSubject<Void, Never>()
 
     let liveActivitiesSystemEnabled = CurrentValueSubject<Bool, Never>(false)
@@ -364,6 +376,22 @@ final class AppCoordinator: @unchecked Sendable {
         bolusAmount.send(value)
     }
 
+    func setBolusCanceling(_ value: Bool) {
+        bolusCanceling.send(value)
+    }
+
+    func setBolusCancelInFlight(_ value: Bool) {
+        bolusCancelInFlight.send(value)
+    }
+
+    func setBolusStarting(_ value: Decimal?) {
+        bolusStarting.send(value)
+    }
+
+    func setBolusCancelOutcome(_ value: BolusCancelOutcome?) {
+        bolusCancelOutcome.send(value)
+    }
+
     func restorePersistedLoopOutcome(_ value: LoopOutcome) {
         // set the current value subject, but don't publish the event
         latestLoopOutcome.send(value)
@@ -405,4 +433,16 @@ final class AppCoordinator: @unchecked Sendable {
     func sendNightscoutConfigChanged() {
         nightscoutConfigChanged.send()
     }
+}
+
+/// a bolus cancel that didn't go through, shown on the bolus bar until a new cancel, another bolus or the bar's clear
+struct BolusCancelOutcome: Sendable, Equatable {
+    enum Kind: Sendable, Equatable {
+        case failed // the pump refused it or the command failed
+        case notConfirmed // no answer within the timeout (the call may still complete)
+    }
+
+    let kind: Kind
+    // the bolus has ended and the bar only lingers: nothing to retry
+    let bolusEnded: Bool
 }

@@ -660,6 +660,24 @@ Enact a temp Basal or a temp target */
 /* When bolusing */
 "Bolusing" = "Bolusing";
 
+/* Bolus progress bar title while the pump cancels the bolus */
+"Cancelling" = "Cancelling";
+
+/* Bolus progress bar title while the pump starts the bolus */
+"Starting bolus" = "Starting bolus";
+
+/* Bolus progress bar: the bolus cancel failed */
+"Cancel failed - tap to retry" = "Cancel failed - tap to retry";
+
+/* Bolus progress bar: the pump didn't confirm the bolus cancel in time */
+"Cancel not confirmed - tap to retry" = "Cancel not confirmed - tap to retry";
+
+/* Bolus progress bar: the bolus cancel failed, and the bolus has ended since */
+"Cancel failed - check the pump" = "Cancel failed - check the pump";
+
+/* Bolus progress bar: the pump didn't confirm the bolus cancel in time, and the bolus has ended since */
+"Cancel not confirmed - check the pump" = "Cancel not confirmed - check the pump";
+
 /* */
 "Pump suspended" = "Pump suspended";
 
