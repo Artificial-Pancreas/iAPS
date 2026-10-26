@@ -10,34 +10,30 @@ final class CollectionIssueReporter: GroupedIssueReporter {
     private let reportersLock = NSRecursiveLock(label: "CollectionIssueReporter.reportersLock")
     private var reporters: [IssueReporter] = []
 
+    /// A copy taken under the lock; the reporters run outside it, so a slow reporter never makes
+    /// other threads wait to log.
+    private var currentReporters: [IssueReporter] {
+        reportersLock.perform { reporters }
+    }
+
     func setup() {
-        reportersLock.perform {
-            reporters.forEach { $0.setup() }
-        }
+        currentReporters.forEach { $0.setup() }
     }
 
     func setUserIdentifier(_ identifier: String?) {
-        reportersLock.perform {
-            reporters.forEach { $0.setUserIdentifier(identifier) }
-        }
+        currentReporters.forEach { $0.setUserIdentifier(identifier) }
     }
 
     func reportNonFatalIssue(withName name: String, attributes: [String: String]) {
-        reportersLock.perform {
-            reporters.forEach { $0.reportNonFatalIssue(withName: name, attributes: attributes) }
-        }
+        currentReporters.forEach { $0.reportNonFatalIssue(withName: name, attributes: attributes) }
     }
 
     func reportNonFatalIssue(withError error: NSError) {
-        reportersLock.perform {
-            reporters.forEach { $0.reportNonFatalIssue(withError: error) }
-        }
+        currentReporters.forEach { $0.reportNonFatalIssue(withError: error) }
     }
 
     func log(_ category: String, _ message: String, file: String, function: String, line: UInt) {
-        reportersLock.perform {
-            reporters.forEach { $0.log(category, message, file: file, function: function, line: line) }
-        }
+        currentReporters.forEach { $0.log(category, message, file: file, function: function, line: line) }
     }
 
     func add(reporters: [IssueReporter]) {

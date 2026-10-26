@@ -3,8 +3,6 @@ import os.log
 import os.signpost
 import UIKit
 
-let loggerLock = NSRecursiveLock()
-
 func debug(
     _ category: Logger.Category,
     _ message: @autoclosure () -> String,
@@ -13,12 +11,7 @@ func debug(
     function: String = #function,
     line: UInt = #line
 ) {
-    let msg = message()
-    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
-        loggerLock.perform {
-            category.logger.debug(msg, printToConsole: printToConsole, file: file, function: function, line: line)
-        }
-    }.perform()
+    category.logger.debug(message(), printToConsole: printToConsole, file: file, function: function, line: line)
 }
 
 func info(
@@ -29,11 +22,7 @@ func info(
     function: String = #function,
     line: UInt = #line
 ) {
-    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
-        loggerLock.perform {
-            category.logger.info(message, type: type, file: file, function: function, line: line)
-        }
-    }.perform()
+    category.logger.info(message, type: type, file: file, function: function, line: line)
 }
 
 func warning(
@@ -45,18 +34,14 @@ func warning(
     function: String = #function,
     line: UInt = #line
 ) {
-    DispatchWorkItem(qos: .background, flags: .enforceQoS) {
-        loggerLock.perform {
-            category.logger.warning(
-                message,
-                description: description,
-                error: maybeError,
-                file: file,
-                function: function,
-                line: line
-            )
-        }
-    }.perform()
+    category.logger.warning(
+        message,
+        description: description,
+        error: maybeError,
+        file: file,
+        function: function,
+        line: line
+    )
 }
 
 func error(
@@ -68,20 +53,20 @@ func error(
     function: String = #function,
     line: UInt = #line
 ) -> Never {
-    loggerLock.perform {
-        category.logger.errorWithoutFatalError(
-            message,
-            description: description,
-            error: maybeError,
-            file: file,
-            function: function,
-            line: line
-        )
+    category.logger.errorWithoutFatalError(
+        message,
+        description: description,
+        error: maybeError,
+        file: file,
+        function: function,
+        line: line
+    )
+    // Get the ERR line into log.txt before the process dies (bounded, see LogFileWriter.flush).
+    LogFileWriter.shared.flush()
 
-        fatalError(
-            "\(message) @ \(String(describing: description)) @ \(String(describing: maybeError)) @ \(file) @ \(function) @ \(line)"
-        )
-    }
+    fatalError(
+        "\(message) @ \(String(describing: description)) @ \(String(describing: maybeError)) @ \(file) @ \(function) @ \(line)"
+    )
 }
 
 func check(
@@ -95,9 +80,7 @@ func check(
     guard !condition() else { return }
     let msg = message()
     let descr = description()
-    loggerLock.perform {
-        warning(.default, msg, description: descr, file: file.file, function: function, line: line)
-    }
+    warning(.default, msg, description: descr, file: file.file, function: function, line: line)
 }
 
 final class Logger {
@@ -223,9 +206,7 @@ final class Logger {
     }
 
     static func setup() {
-        loggerLock.perform {
-            baseReporter.setup()
-        }
+        baseReporter.setup()
     }
 
     func debug(
@@ -283,6 +264,8 @@ final class Logger {
         line: UInt = #line
     ) -> Never {
         errorWithoutFatalError(message, description: description, error: maybeError, file: file, function: function, line: line)
+        // Get the ERR line into log.txt before the process dies (bounded, see LogFileWriter.flush).
+        LogFileWriter.shared.flush()
 
         fatalError(
             "\(message) @ \(String(describing: description)) @ \(String(describing: maybeError)) @ \(file) @ \(function) @ \(line)"
