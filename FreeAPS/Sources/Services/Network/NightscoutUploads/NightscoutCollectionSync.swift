@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink: SyncSink>: LifetimeOwner, AppService
+final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink: SyncSink>: LifetimeOwner, NightscoutUploadEntity
     where Sink.Record == Record
 {
     let lifetime = Lifetime()
@@ -14,14 +14,18 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
     private let isEnabled: @Sendable(AppCoordinator) -> Bool
     private let prepare: (@Sendable(Source) async -> Bool)?
     private let records: @Sendable(Source) async -> [Record]
+    private let isUrgent: (@Sendable(_ previous: Source, _ current: Source) -> Bool)?
+    /// the previous source value, for `isUrgent`
+    private var previous: Source?
+    private let flushSerializer = TaskSerializer()
 
     /// - Parameters:
-    ///   - source: the app coordinator subject that both pushes changes and serves the current value for retries
-    ///   - isEnabled: extra per-entity condition; when false the entity is silent (no upload, no pending work)
-    ///   - prepare: runs on every source emission, before any checks; returns whether it produced
-    ///     new data to upload. When set, a reconcile only happens for pending work, so emissions
-    ///     that carry nothing new are cheap.
+    ///   - source: the app coordinator subject that both pushes changes and serves the current value for uploads
+    ///   - isEnabled: extra per-entity condition; when false the entity doesn't upload (its work stays pending)
+    ///   - prepare: runs on every source emission; returns whether it produced new data to upload.
+    ///     When set, only emissions that do mark the work pending.
     ///   - records: converts the source value into the records to sync
+    ///   - isUrgent: whether a change should be uploaded right away, instead of with the next loop's burst
     init(
         name: String,
         group: UploadScheduleGroup,
@@ -33,7 +37,8 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
         source: KeyPath<AppCoordinator, CurrentValueSubject<Source, Never>> & Sendable,
         isEnabled: @escaping @Sendable(AppCoordinator) -> Bool = { _ in true },
         prepare: (@Sendable(Source) async -> Bool)? = nil,
-        records: @escaping @Sendable(Source) async -> [Record]
+        records: @escaping @Sendable(Source) async -> [Record],
+        isUrgent: (@Sendable(_ previous: Source, _ current: Source) -> Bool)? = nil
     ) {
         self.name = name
         self.context = context
@@ -51,50 +56,53 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
         self.isEnabled = isEnabled
         self.prepare = prepare
         self.records = records
+        self.isUrgent = isUrgent
     }
 
     func start() async {
         observe(context.appCoordinator[keyPath: source]) { me, value in
-            await withBackgroundTask("nightscout upload - \(me.name)") {
-                await me.sourceUpdated(value)
-            }
-        }
-
-        observe(context.appCoordinator.loopCompleted) { me, _ in
-            await withBackgroundTask("nightscout upload retry - \(me.name)") {
-                await me.retryPending()
-            }
+            await me.sourceUpdated(value)
         }
     }
 
+    /// only marks the work pending: the next burst uploads it
     private func sourceUpdated(_ value: Source) async {
-        var trigger: SyncTrigger = .dataChanged
+        let previous = self.previous
+        if isUrgent != nil {
+            self.previous = value
+        }
+
         if let prepare {
-            if await prepare(value) {
-                await sync.markPending()
-            }
-            trigger = .retry
+            guard await prepare(value) else { return }
         }
+        await sync.markPending()
 
-        guard isEnabled(context.appCoordinator) else { return }
-        guard context.canUpload(), await gate.allows() else {
-            if trigger == .dataChanged {
-                await sync.markPending()
-            }
-            return
-        }
+        guard let isUrgent, let previous, isEnabled(context.appCoordinator), isUrgent(previous, value) else { return }
+        await context.burst.requestImmediate()
+    }
 
-        if await sync.reconcile(trigger: trigger, current: { [records] in await records(value) }) == .synced {
-            gate.recordUpload()
+    func flush(startedAt: Date) async {
+        // bursts can overlap: one flush at a time, so the gate check can't race
+        await flushSerializer.run {
+            await self.performFlush(startedAt: startedAt)
         }
     }
 
-    /// runs every loop: flushes deferred work (schedule or failure) once the schedule allows uploading again
-    private func retryPending() async {
+    private func performFlush(startedAt: Date) async {
         guard isEnabled(context.appCoordinator), context.canUpload(), await gate.allows() else { return }
-        let value = context.appCoordinator[keyPath: source].value
-        if await sync.reconcile(trigger: .retry, current: { [records] in await records(value) }) == .synced {
-            gate.recordUpload()
+        // the latest value, read only when there is work pending
+        let current: @Sendable() async -> [Record] = { [context, source, records] in
+            await records(context.appCoordinator[keyPath: source].value)
         }
+        if await sync.reconcile(trigger: .retry, current: current) == .synced {
+            gate.recordUpload(at: startedAt)
+        }
+    }
+}
+
+extension Array where Element: SyncRecord {
+    /// what a sync compares: arrays with equal states upload the same
+    var syncState: [Element.SyncID: Element.SyncSignature] {
+        Dictionary(map { ($0.syncID, $0.syncSignature) }, uniquingKeysWith: { first, _ in first })
     }
 }

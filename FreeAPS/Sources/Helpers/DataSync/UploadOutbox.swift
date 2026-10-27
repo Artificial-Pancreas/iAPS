@@ -73,24 +73,43 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
 
     /// Send queued items; remove the ones that succeed, keep failures for the next attempt.
     @discardableResult func sendPending() async -> (sent: Int, failed: Int) {
+        let result = await sendPending(using: send)
+        return (result.sent, result.failed)
+    }
+
+    /// `sendPending` with a sender for this call only (e.g. one that adds data to some of the items)
+    /// - Parameter stopWhen: ends the pass at a failure it matches (the network is down: the rest would only time out)
+    @discardableResult func sendPending(
+        using send: @Sendable(Item) async throws -> Void,
+        stopWhen: (@Sendable(Error) -> Bool)? = nil
+    ) async -> (sent: Int, failed: Int, stopped: Bool) {
         await serializer.run {
-            await self.performSendPending()
+            await self.performSendPending(send: send, stopWhen: stopWhen)
         }
     }
 
-    private func performSendPending() async -> (sent: Int, failed: Int) {
+    /// the queued items, in queue order
+    func pending() async -> [Item] {
         let cutoff = Date.now.subtractingTimeInterval(retention)
         let date = self.date
-        let queued = (await storage.retrieve(file, as: [Item].self) ?? [])
+        return (await storage.retrieve(file, as: [Item].self) ?? [])
             .filter { item in
                 guard let date = date(item) else { return false } // nil date -> ignored
                 return date >= cutoff
             }
-        guard queued.isNotEmpty else { return (0, 0) }
+    }
+
+    private func performSendPending(
+        send: @Sendable(Item) async throws -> Void,
+        stopWhen: (@Sendable(Error) -> Bool)?
+    ) async -> (sent: Int, failed: Int, stopped: Bool) {
+        let queued = await pending()
+        guard queued.isNotEmpty else { return (0, 0, false) }
 
         // the sent revision of each key: an item replaced (same key) while its send was in flight stays queued
         var sentRevisions: [Key: Data] = [:]
         var failedCount = 0
+        var stopped = false
         for item in queued {
             do {
                 try await send(item)
@@ -98,10 +117,14 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
             } catch {
                 failedCount += 1
                 debug(category, "outbox [\(file)]: send failed: \(error.localizedDescription)")
+                if stopWhen?(error) == true {
+                    stopped = true
+                    break
+                }
             }
         }
 
-        guard sentRevisions.isNotEmpty else { return (0, failedCount) }
+        guard sentRevisions.isNotEmpty else { return (0, failedCount, stopped) }
         let uniqueBy = self.uniqueBy
         let sent = sentRevisions
         await storage.modify(file: file, as: Item.self) { queued in
@@ -111,7 +134,7 @@ actor UploadOutbox<Item: JSON, Key: Hashable & Sendable> {
             }
         }
         debug(category, "outbox [\(file)]: sent \(sent.count)")
-        return (sent.count, failedCount)
+        return (sent.count, failedCount, stopped)
     }
 
     /// (an item that can't be encoded acts as unchanged - removed by key, as before)
