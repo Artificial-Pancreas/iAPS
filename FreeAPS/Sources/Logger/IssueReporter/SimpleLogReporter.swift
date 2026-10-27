@@ -46,10 +46,10 @@ final class SimpleLogReporter: IssueReporter {
 /// Callers only append to an in-memory buffer under a short lock and never touch the file
 /// system: one serial `.utility` queue drains everything pending into one `write(2)` on a
 /// kept-open `O_APPEND` descriptor. The line's timestamp is the caller's. The buffer is
-/// bounded (`maxPendingBytes`); past it new lines are dropped and counted, and one
-/// "dropped N lines" line is written on the next drain. A failed open or write closes the
-/// descriptor, counts that batch as dropped and retries on the next drain; the file is
-/// never truncated or replaced.
+/// bounded (`maxPendingBytes`); past it new lines are dropped and counted. A failed open or
+/// write closes the descriptor, counts that batch as dropped and retries on the next drain;
+/// the file is never truncated or replaced. Once a drain can write again, one line
+/// "dropped N log lines since <first dropped line's date> (<causes>)" accounts for the gap.
 ///
 /// Rotation is decided per line by the line's own date: when it is on a later day than the
 /// open file's `creationDate`, `log.txt` becomes `log_prev.txt` and a new `log.txt` is
@@ -65,8 +65,95 @@ final class LogFileWriter: @unchecked Sendable {
     private struct Pending {
         var lines: [(date: Date, text: String)] = []
         var bytes = 0
-        var dropped = 0
+        var dropped = DropWindow()
         var scheduled = false
+    }
+
+    /// Why lines were dropped.
+    private enum DropCause: Equatable {
+        case bufferFull
+        case openFailed(Int32)
+        case writeFailed(Int32)
+
+        var text: String {
+            switch self {
+            case .bufferFull: return "buffer full"
+            case let .openFailed(code): return "open failed: \(Self.describe(code))"
+            case let .writeFailed(code): return "write failed: \(Self.describe(code))"
+            }
+        }
+
+        /// `errno 28 ENOSPC`; just the number for codes not listed.
+        private static func describe(_ code: Int32) -> String {
+            let name: String
+            switch code {
+            case EPERM: name = "EPERM"
+            case ENOENT: name = "ENOENT"
+            case EINTR: name = "EINTR"
+            case EIO: name = "EIO"
+            case EBADF: name = "EBADF"
+            case EACCES: name = "EACCES"
+            case ENOTDIR: name = "ENOTDIR"
+            case EISDIR: name = "EISDIR"
+            case EINVAL: name = "EINVAL"
+            case ENFILE: name = "ENFILE"
+            case EMFILE: name = "EMFILE"
+            case EFBIG: name = "EFBIG"
+            case ENOSPC: name = "ENOSPC"
+            case EROFS: name = "EROFS"
+            case EAGAIN: name = "EAGAIN"
+            case EDQUOT: name = "EDQUOT"
+            default: return "errno \(code)"
+            }
+            return "errno \(code) \(name)"
+        }
+    }
+
+    /// The lines lost since the last marker that made it to the file.
+    ///
+    /// Several causes in one window are all kept: each distinct cause once, in the order the
+    /// writer recorded them.
+    private struct DropWindow {
+        var count = 0
+        /// The caller's timestamp of the earliest dropped line; nil while nothing was dropped.
+        var since: Date?
+        var causes: [DropCause] = []
+
+        mutating func add(_ lines: Int, since date: Date, cause: DropCause? = nil) {
+            if let cause {
+                note(cause)
+            }
+            guard lines > 0 else { return }
+            count += lines
+            since = min(since ?? date, date)
+        }
+
+        mutating func add(_ other: DropWindow) {
+            if let otherSince = other.since {
+                add(other.count, since: otherSince)
+            }
+            other.causes.forEach { note($0) }
+        }
+
+        /// Records a cause without lines: a failed write that held only the marker.
+        mutating func note(_ cause: DropCause) {
+            if !causes.contains(cause) {
+                causes.append(cause)
+            }
+        }
+
+        /// `WARN: dropped 90 log lines since 2026-10-27T03:12:40+0100 (write failed: errno 28 ENOSPC)`.
+        /// The date uses the formatter of the line prefix, so the two compare directly.
+        func marker(_ formatter: DateFormatter) -> String {
+            var text = "WARN: dropped \(count) log lines"
+            if let since {
+                text += " since \(formatter.string(from: since))"
+            }
+            if !causes.isEmpty {
+                text += " (\(causes.map(\.text).joined(separator: ", ")))"
+            }
+            return text
+        }
     }
 
     private struct OpenFile {
@@ -83,6 +170,9 @@ final class LogFileWriter: @unchecked Sendable {
     private let logFile: URL
     private let logFilePrev: URL
     private let notificationCenter: Foundation.NotificationCenter
+    /// The marker line's date. Injectable (as is `write`) only for tests.
+    private let now: @Sendable () -> Date
+    private let systemWrite: @Sendable (Int32, UnsafeRawPointer, Int) -> Int
 
     /// The writer queue. Internal (not private) only so tests can hold it to simulate a stalled disk.
     let queue = DispatchQueue(label: "iAPS.LogFileWriter", qos: .utility)
@@ -93,22 +183,34 @@ final class LogFileWriter: @unchecked Sendable {
     private var openAttempted = false
     private var buffer: [UInt8] = []
     private var bufferedLines = 0
-    private var droppedByWriter = 0
+    /// The earliest date among `bufferedLines`.
+    private var bufferedSince: Date?
+    private var droppedByWriter = DropWindow()
     /// A failed write left an unterminated line at the end of the open file.
     private var partialLine = false
     /// A rotation's rename failed; the file is reopened (and the rotation retried) on the next drain.
     private var rotationPending = false
     private var openFailing = false
+    /// Why `file` is nil: the failed open, or the failed write that closed it.
+    private var fileFailure: DropCause?
     private var formatter = DateFormatter()
     private var formatterLocale: Locale?
     private var formatterTimeZone: TimeZone?
 
-    init(directory: URL, maxPendingBytes: Int = 4 << 20, notificationCenter: Foundation.NotificationCenter = .default) {
+    init(
+        directory: URL,
+        maxPendingBytes: Int = 4 << 20,
+        notificationCenter: Foundation.NotificationCenter = .default,
+        now: @escaping @Sendable () -> Date = { Date() },
+        write: @escaping @Sendable (Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
+    ) {
         self.directory = directory
         logFile = directory.appendingPathComponent("log.txt")
         logFilePrev = directory.appendingPathComponent("log_prev.txt")
         self.maxPendingBytes = maxPendingBytes
         self.notificationCenter = notificationCenter
+        self.now = now
+        systemWrite = write
         queue.setSpecific(key: onWriterQueue, value: true)
     }
 
@@ -123,7 +225,7 @@ final class LogFileWriter: @unchecked Sendable {
     func append(_ text: String, at date: Date = Date()) {
         let schedule = pending.write { p -> Bool in
             guard p.bytes < maxPendingBytes else {
-                p.dropped += 1
+                p.dropped.add(1, since: date, cause: .bufferFull)
                 return false
             }
             p.lines.append((date: date, text: text))
@@ -168,9 +270,11 @@ final class LogFileWriter: @unchecked Sendable {
             p = Pending()
             return taken
         }
-        let dropped = batch.dropped + droppedByWriter
-        droppedByWriter = 0
-        guard !batch.lines.isEmpty || dropped > 0 else { return }
+        // Earlier drains' losses happened before this batch's buffer-full drops.
+        var dropped = droppedByWriter
+        dropped.add(batch.dropped)
+        droppedByWriter = DropWindow()
+        guard !batch.lines.isEmpty || dropped.count > 0 else { return }
 
         refreshFormatterIfNeeded()
         // Documents is visible in the Files app: if log.txt was deleted or moved under the open
@@ -182,10 +286,12 @@ final class LogFileWriter: @unchecked Sendable {
         for line in batch.lines {
             add(line.text, at: line.date)
         }
-        if dropped > 0 {
-            add("[Default] LogFileWriter - drain() - 0 - WARN: dropped \(dropped) log lines", at: Date(), isLogLine: false)
+        if dropped.count > 0 {
+            add("[Default] LogFileWriter - drain() - 0 - \(dropped.marker(formatter))", at: now(), isLogLine: false)
             if !commit() {
-                droppedByWriter += dropped
+                // The marker was lost with this batch: carry its window, ahead of this failure.
+                dropped.add(droppedByWriter)
+                droppedByWriter = dropped
             }
         } else {
             commit()
@@ -205,6 +311,7 @@ final class LogFileWriter: @unchecked Sendable {
         buffer.append(contentsOf: "\(formatter.string(from: date)) \(text)\n".utf8)
         if isLogLine {
             bufferedLines += 1
+            bufferedSince = min(bufferedSince ?? date, date)
         }
     }
 
@@ -214,6 +321,7 @@ final class LogFileWriter: @unchecked Sendable {
         defer {
             buffer = []
             bufferedLines = 0
+            bufferedSince = nil
         }
         guard !buffer.isEmpty else { return true }
         if let file {
@@ -221,7 +329,7 @@ final class LogFileWriter: @unchecked Sendable {
                 // Terminate the fragment a failed write left, so it doesn't glue onto this batch's first line.
                 buffer.insert(UInt8(ascii: "\n"), at: 0)
             }
-            let written = writeAll(buffer, to: file.fd)
+            let (written, code) = writeAll(buffer, to: file.fd)
             if written == buffer.count {
                 partialLine = false
                 return true
@@ -229,30 +337,38 @@ final class LogFileWriter: @unchecked Sendable {
             if written > 0 {
                 partialLine = buffer[written - 1] != UInt8(ascii: "\n")
             }
+            fileFailure = .writeFailed(code)
         }
         closeLogFile()
-        droppedByWriter += bufferedLines
+        // Noted even when only the marker was lost, so a change of cause between drains shows up.
+        if let fileFailure {
+            droppedByWriter.note(fileFailure)
+        }
+        if let bufferedSince {
+            droppedByWriter.add(bufferedLines, since: bufferedSince)
+        }
         return false
     }
 
-    /// Returns the number of bytes written: all of them unless a write failed.
-    private func writeAll(_ bytes: [UInt8], to fd: Int32) -> Int {
-        bytes.withUnsafeBytes { raw -> Int in
-            guard var pointer = raw.baseAddress else { return 0 }
+    /// Returns the number of bytes written (all of them unless a write failed) and the failed write's errno.
+    private func writeAll(_ bytes: [UInt8], to fd: Int32) -> (written: Int, code: Int32) {
+        bytes.withUnsafeBytes { raw -> (written: Int, code: Int32) in
+            guard var pointer = raw.baseAddress else { return (0, 0) }
             var remaining = raw.count
             while remaining > 0 {
-                let written = Darwin.write(fd, pointer, remaining)
+                let written = systemWrite(fd, pointer, remaining)
                 if written > 0 {
                     pointer = pointer.advanced(by: written)
                     remaining -= written
                     continue
                 }
-                let code = errno
-                if written < 0, code == EINTR { continue }
+                // A 0 return sets no errno; report it as EIO rather than whatever errno held.
+                let code = written < 0 ? errno : EIO
+                if code == EINTR { continue }
                 os_log("LogFileWriter: write failed, errno %d", log: .default, type: .error, code)
-                return raw.count - remaining
+                return (raw.count - remaining, code)
             }
-            return raw.count
+            return (raw.count, 0)
         }
     }
 
@@ -295,6 +411,7 @@ final class LogFileWriter: @unchecked Sendable {
         let fd = Darwin.open(logFile.path, O_WRONLY | O_APPEND | O_CREAT | O_CLOEXEC, 0o644)
         guard fd >= 0 else {
             let code = errno
+            fileFailure = .openFailed(code)
             if !openFailing {
                 // Logged on the transition only: while the phone is locked after a reboot this fails every drain.
                 openFailing = true
@@ -306,6 +423,7 @@ final class LogFileWriter: @unchecked Sendable {
             openFailing = false
             os_log("LogFileWriter: open recovered", log: .default, type: .default)
         }
+        fileFailure = nil
         file = OpenFile(fd: fd, created: created)
     }
 
