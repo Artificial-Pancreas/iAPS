@@ -3,7 +3,8 @@ import Foundation
 final class NightscoutUploads: AppService, Sendable {
     let overridesUploader: NightscoutOverridesUploader
 
-    private let entities: [any AppService]
+    private let burst: NightscoutUploadBurst
+    private let entities: [any NightscoutUploadEntity]
 
     init(
         apiProvider: NightscoutAPIProvider,
@@ -17,6 +18,7 @@ final class NightscoutUploads: AppService, Sendable {
             reachabilityManager: reachabilityManager,
             storage: storage
         )
+        burst = context.burst
 
         func treatmentSink() -> NightscoutTreatmentSink {
             NightscoutTreatmentSink(apiProvider: { apiProvider.api })
@@ -31,7 +33,12 @@ final class NightscoutUploads: AppService, Sendable {
             deletionWindow: .hours(8),
             context: context,
             source: \.pumpHistory,
-            records: { NightscoutConversions.treatments(fromPumpHistory: $0) }
+            records: { NightscoutConversions.treatments(fromPumpHistory: $0) },
+            // a manual bolus (it runs no loop), a suspend/resume
+            isUrgent: { previous, current in
+                let known = Set(previous.filter(\.isUrgentUpload).map(\.identity))
+                return current.contains { $0.isUrgentUpload && !known.contains($0.identity) }
+            }
         )
 
         let glucose = NightscoutCollectionSync(
@@ -56,7 +63,12 @@ final class NightscoutUploads: AppService, Sendable {
             deletionWindow: .hours(8),
             context: context,
             source: \.carbHistory,
-            records: { NightscoutConversions.treatments(fromCarbHistory: $0) }
+            records: { NightscoutConversions.treatments(fromCarbHistory: $0) },
+            // by the records: the 1-minute NS fetch re-publishes the history unchanged
+            isUrgent: {
+                NightscoutConversions.treatments(fromCarbHistory: $0).syncState !=
+                    NightscoutConversions.treatments(fromCarbHistory: $1).syncState
+            }
         )
 
         let tempTargets = NightscoutCollectionSync(
@@ -68,7 +80,11 @@ final class NightscoutUploads: AppService, Sendable {
             deletionWindow: 0, // append-only
             context: context,
             source: \.tempTargets,
-            records: { NightscoutConversions.treatments(fromTempTargets: $0) }
+            records: { NightscoutConversions.treatments(fromTempTargets: $0) },
+            isUrgent: {
+                NightscoutConversions.treatments(fromTempTargets: $0).syncState !=
+                    NightscoutConversions.treatments(fromTempTargets: $1).syncState
+            }
         )
 
         let podAge = NightscoutCollectionSync(
@@ -110,16 +126,26 @@ final class NightscoutUploads: AppService, Sendable {
             tempTargets,
             podAge,
             cgmState,
-            NightscoutLoopStatusUploader(context: context),
-            overrides,
-            NightscoutPumpStatusUploader(context: context),
-            NightscoutIOBUploader(context: context)
+            NightscoutDeviceStatusUploader(context: context),
+            overrides
         ]
     }
 
     func start() async throws {
+        await burst.start(entities: entities)
         for entity in entities {
             try await entity.start()
+        }
+    }
+}
+
+private extension PumpHistoryEvent {
+    var isUrgentUpload: Bool {
+        switch type {
+        case .bolus: return isSMB != true
+        case .pumpResume,
+             .pumpSuspend: return true
+        default: return false
         }
     }
 }

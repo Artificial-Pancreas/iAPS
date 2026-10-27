@@ -62,6 +62,8 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
     private let serializer = TaskSerializer()
     private var snapshot: [Record.SyncID: Record]?
     private var hasPendingWork = true
+    /// counts `markPending` calls: a mark made while a reconcile runs (it may have read `current` already) survives it
+    private var pendingMarks = 0
 
     init(
         name: String,
@@ -85,6 +87,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
     /// next `.retry` picks it up
     func markPending() {
         hasPendingWork = true
+        pendingMarks &+= 1
     }
 
     /// `.retry` can skip the source read entirely when there is nothing to retry.
@@ -104,6 +107,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
         let span = Signpost.begin("dataSync", name)
         defer { span.end() }
 
+        let marks = pendingMarks
         let resolved = await current()
 
         let now = Date()
@@ -164,7 +168,7 @@ actor DataSynchronizer<Record: SyncRecord, Sink: SyncSink> where Sink.Record == 
             await saveSnapshot(working)
             debug(category, "data sync [\(name)]: +\(upserts.count) -\(toDelete.count)")
         }
-        hasPendingWork = failed
+        hasPendingWork = failed || pendingMarks != marks
 
         if failed { return .failed }
         return changed ? .synced : .noChanges
