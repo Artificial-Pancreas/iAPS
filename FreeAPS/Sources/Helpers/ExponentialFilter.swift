@@ -41,6 +41,13 @@ struct ExponentialFilter: GlucoseSmoother {
 
     private static let minimumSamples = 4
 
+    /// Coincident or out-of-order timestamps are treated as this far apart (0.1 minute, in reference
+    /// intervals), as the Kalman smoother does, so the reading still gets a smoothed value.
+    private static let minimumStep = 0.1 / referenceInterval
+
+    /// A first interval at least this long (in reference intervals) is a 5-minute sensor's.
+    private static let referenceCadenceStep = 0.8
+
     /// xDrip reports this instead of a reading when calibration fails.
     private static let errorValue: Double = 38
 
@@ -55,12 +62,10 @@ struct ExponentialFilter: GlucoseSmoother {
 
         var level = values[start]
         var holtLevel = values[start]
-        var holtTrend = values[start + 1] - values[start]
+        var holtTrend = Self.initialTrend(Array(samples[start...]))
 
         for index in (start + 1) ..< values.count {
-            let step = samples[index].date
-                .timeIntervalSince(samples[index - 1].date) / 60 / Self.referenceInterval
-            guard step > 0 else { continue }
+            let step = max(Self.step(from: samples[index - 1], to: samples[index]), Self.minimumStep)
 
             // `1 - alpha` is what survives one reference interval, so it compounds over the real one.
             let alpha1 = 1 - pow(1 - Self.firstOrderAlpha, step)
@@ -87,5 +92,25 @@ struct ExponentialFilter: GlucoseSmoother {
         }
 
         return smoothed
+    }
+
+    /// Elapsed time in reference intervals.
+    private static func step(from previous: GlucoseSample, to next: GlucoseSample) -> Double {
+        next.date.timeIntervalSince(previous.date) / 60 / referenceInterval
+    }
+
+    /// Holt's trend is held per reference interval.
+    ///
+    /// On a 5-minute sensor this is AndroidAPS's first difference, so its output is unchanged. On a
+    /// faster one the first difference, scaled up to 5 minutes, is a minute of noise multiplied by five,
+    /// and `beta`'s cap keeps it around for many readings: in simulation the newest value then came out
+    /// several times noisier than the raw readings for the first 10-15 minutes of a segment. A slope
+    /// fitted over the first minutes does not.
+    private static func initialTrend(_ samples: [GlucoseSample]) -> Double {
+        let firstStep = step(from: samples[0], to: samples[1])
+        if firstStep >= referenceCadenceStep {
+            return (samples[1].value - samples[0].value) / firstStep
+        }
+        return (GlucoseSmoothing.initialSlope(of: samples) ?? 0) * referenceInterval
     }
 }

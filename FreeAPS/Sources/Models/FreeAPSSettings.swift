@@ -943,13 +943,16 @@ struct GlucoseSmoothingSettings: JSON, Equatable {
 }
 
 extension GlucoseSmoothingSettings {
+    /// Field by field: a value this version does not know (an unknown algorithm, an out-of-range number
+    /// of passes) falls back to that field's default instead of turning smoothing off altogether.
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.init()
 
-        algorithm = try container.decodeIfPresent(GlucoseSmoothingAlgorithm.self, forKey: .algorithm) ?? algorithm
-        savitzkyGolay = try container.decodeIfPresent(SavitzkyGolaySettings.self, forKey: .savitzkyGolay) ?? savitzkyGolay
-        kalman = try container.decodeIfPresent(KalmanSettings.self, forKey: .kalman) ?? kalman
+        algorithm = (try? container.decodeIfPresent(GlucoseSmoothingAlgorithm.self, forKey: .algorithm)) ?? algorithm
+        savitzkyGolay = (try? container.decodeIfPresent(SavitzkyGolaySettings.self, forKey: .savitzkyGolay)) ??
+            savitzkyGolay
+        kalman = (try? container.decodeIfPresent(KalmanSettings.self, forKey: .kalman)) ?? kalman
     }
 
     private enum CodingKeys: String, CodingKey {
@@ -985,17 +988,17 @@ enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
             )
         case .savitzkyGolay:
             return NSLocalizedString(
-                "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a 30 minute window around each reading.",
+                "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a window of about 30 minutes around each reading.",
                 comment: "Glucose smoothing algorithm description"
             )
         case .kalman:
             return NSLocalizedString(
-                "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls. Same design as AndroidAPS.",
+                "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls.",
                 comment: "Glucose smoothing algorithm description"
             )
         case .exponential:
             return NSLocalizedString(
-                "The AndroidAPS algorithm: each reading is blended into a running average, half of it weighted towards the current trend. The simplest option, and the only one that never revises an earlier reading - so older values on the chart lag behind the raw ones.",
+                "Each reading is blended into two running averages, a plain one and one that follows the current trend, which counts for 60 percent of the result. The simplest option, and the only one that never revises an earlier reading - so older values on the chart lag behind the raw ones.",
                 comment: "Glucose smoothing algorithm description"
             )
         }
@@ -1024,6 +1027,19 @@ struct SavitzkyGolaySettings: JSON, Equatable {
     var passes: SavitzkyGolayPasses = .three
 }
 
+extension SavitzkyGolaySettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        passes = (try? container.decodeIfPresent(SavitzkyGolayPasses.self, forKey: .passes)) ?? passes
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case passes
+    }
+}
+
 enum SavitzkyGolayPasses: Int, JSON, Identifiable, CaseIterable {
     case one = 1
     case two = 2
@@ -1036,6 +1052,20 @@ enum SavitzkyGolayPasses: Int, JSON, Identifiable, CaseIterable {
 
 struct KalmanSettings: JSON, Equatable {
     var responsiveness: KalmanResponsiveness = .balanced
+}
+
+extension KalmanSettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        responsiveness = (try? container.decodeIfPresent(KalmanResponsiveness.self, forKey: .responsiveness)) ??
+            responsiveness
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case responsiveness
+    }
 }
 
 enum KalmanResponsiveness: String, JSON, Identifiable, CaseIterable {
@@ -1053,7 +1083,7 @@ enum KalmanResponsiveness: String, JSON, Identifiable, CaseIterable {
         }
     }
 
-    /// Multiplier on the filter's process noise. `balanced` corresponds to AndroidAPS tuning.
+    /// Multiplier on the filter's process noise. `balanced` is the filter's default tuning.
     var processNoiseScale: Double {
         switch self {
         case .calm: return 0.7

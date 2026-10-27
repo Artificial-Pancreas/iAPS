@@ -6,9 +6,15 @@ import Foundation
 /// extrapolate indefinitely. Δt enters both the transition and the process noise, so the response is the
 /// same on a 1-minute CGM as on a 5-minute one, and a dropout is just a large step with correspondingly
 /// large uncertainty - no windowing, no invented data.
+///
+/// Adapted from AndroidAPS's `UnscentedKalmanFilterPlugin`. The constants are those of the nightscout/AndroidAPS
+/// `dev` version (`efd1a3c417`), as ported in smooth-sandbox and not checked against the Kotlin source; this
+/// differs from it in how R is estimated (see `estimateMeasurementNoise`), in segmentation and in rate seeding.
+/// The autoISF fork's version (`3.4.2.6+aisf3.2.1`) is tuned differently: rate process noise 0.40, R maximum
+/// 196, an extra 0.98 rate damping per reading, chi-squared outlier scaling, and dt clamped to [3.5, 6.5].
 struct KalmanFilter: GlucoseSmoother {
     /// Multiplier on the process noise. Higher follows the readings more closely and lags less at a
-    /// turning point; lower is smoother. 1 corresponds to the AndroidAPS tuning.
+    /// turning point; lower is smoother. 1 is the default tuning.
     let responsiveness: Double
 
     let maximumGap: TimeInterval
@@ -25,7 +31,7 @@ struct KalmanFilter: GlucoseSmoother {
     private static let rateDecay: Double = 30 // minutes
 
     /// Process noise per 5 minutes: an independent random walk in glucose and in rate. Deliberately
-    /// diagonal, matching the tuning these values came from; the textbook form would add a
+    /// diagonal, as in AndroidAPS, where these values came from; the textbook form would add a
     /// glucose/rate cross term and change what the defaults mean.
     private static let processNoiseGlucose: Double = 1.0
     private static let processNoiseRate: Double = 0.35
@@ -58,8 +64,18 @@ struct KalmanFilter: GlucoseSmoother {
 
     func smooth(_ samples: [GlucoseSample]) -> [Double] {
         let values = samples.map(\.value)
-        guard values.count >= Self.minimumSamples else { return values }
 
+        // Leading error codes have nothing to start from; like every other error code they pass through.
+        guard let first = values.firstIndex(where: { $0 > Self.errorValue }),
+              values[first...].count(where: { $0 > Self.errorValue }) >= Self.minimumSamples
+        else { return values }
+
+        return Array(values[..<first]) + smoothValid(Array(samples[first...]))
+    }
+
+    /// - Parameter samples: the first one is a measurement, not an error code
+    private func smoothValid(_ samples: [GlucoseSample]) -> [Double] {
+        let values = samples.map(\.value)
         let intervals = Self.intervals(of: samples)
         let q = (
             glucose: Self.processNoiseGlucose * responsiveness,
@@ -68,7 +84,8 @@ struct KalmanFilter: GlucoseSmoother {
 
         let r = Self.estimateMeasurementNoise(values, intervals: intervals) ?? Self.measurementNoiseInitial
 
-        let forward = Self.forwardPass(values, intervals: intervals, q: q, r: r)
+        let initialRate = GlucoseSmoothing.initialSlope(of: samples) ?? 0
+        let forward = Self.forwardPass(values, intervals: intervals, initialRate: initialRate, q: q, r: r)
         var smoothed = Self.backwardPass(forward, intervals: intervals)
 
         for index in values.indices where values[index] <= Self.errorValue {
@@ -99,18 +116,21 @@ struct KalmanFilter: GlucoseSmoother {
         var pPred00 = 0.0, pPred01 = 0.0, pPred11 = 0.0
     }
 
+    /// - Parameter initialRate: mg/dL/min, the trend over the first minutes of the segment
     private static func forwardPass(
         _ values: [Double],
         intervals: [Double],
+        initialRate: Double,
         q: (glucose: Double, rate: Double),
         r: Double
     ) -> [Step] {
         var states = [Step](repeating: Step(), count: values.count)
 
-        // Two-point initialisation: seed the rate from the first interval rather than assuming zero,
-        // which would otherwise take several readings to shake off.
+        // Seed the rate from the readings rather than assuming zero, which would take several readings
+        // to shake off. Not from the first interval alone: on a 1-minute sensor that is a minute of
+        // noise, and it left the newest values after a segment start noisier than the raw readings.
         var x0 = values[0]
-        var x1 = ((values[1] - values[0]) / intervals[1]).clamped(to: -maximumRate ... maximumRate)
+        var x1 = initialRate.clamped(to: -maximumRate ... maximumRate)
         var p00 = 16.0, p01 = 0.0, p11 = 1.0
 
         states[0] = Step(x0: x0, x1: x1, p00: p00, p01: p01, p11: p11)
@@ -123,6 +143,9 @@ struct KalmanFilter: GlucoseSmoother {
 
             p00 = p00.clamped(to: minimumGlucoseVariance ... maximumGlucoseVariance)
             p11 = p11.clamped(to: minimumRateVariance ... maximumRateVariance)
+            // The covariance the prediction actually starts from is the one the RTS gain must use.
+            states[index - 1].p00 = p00
+            states[index - 1].p11 = p11
 
             let base = predict(x0: x0, x1: x1, p00: p00, p01: p01, p11: p11, dt: dt, q: q)
 
@@ -286,8 +309,8 @@ struct KalmanFilter: GlucoseSmoother {
     ///
     /// Deliberately *not* estimated from the filter's own innovations, which is what AndroidAPS does.
     /// That is circular - the innovations depend on the R being estimated -
-    /// and it also applies a symmetric trimmed mean to `ν²`, which is chi-squared and so strongly
-    /// right-skewed that trimming both tails under-reads its mean by ~42%. Together those pin the
+    /// and the `dev` version (as ported in smooth-sandbox) also applies a symmetric trimmed mean to `ν²`, which
+    /// is chi-squared and so strongly right-skewed that trimming both tails under-reads its mean by ~42%. Together those pin the
     /// estimate at its floor for every realistic sensor, which makes the whole mechanism inert.
     private static func estimateMeasurementNoise(_ values: [Double], intervals: [Double]) -> Double? {
         guard values.count >= 3 else { return nil }

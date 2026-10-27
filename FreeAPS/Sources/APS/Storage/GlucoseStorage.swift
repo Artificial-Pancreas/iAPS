@@ -240,17 +240,16 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
         return nil
     }
 
-    private static let filterIntervalFiveMinutes: TimeInterval = .minutes(4.5)
-    private static let filterIntervalOneMinute: TimeInterval = .minutes(0.8)
-
     private func updateAppCoordinator() {
         let settings = appCoordinator.settings.value
 
         let smoothed: [BloodGlucose] = settings.glucoseSmoothing.smoother
             .map { GlucoseSmoothing.smooth(cachedGlucose, using: $0) } ?? cachedGlucose
 
-        let minInterval = Self.filterIntervalFiveMinutes
-        let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(smoothed, interval: minInterval)
+        let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(
+            smoothed,
+            interval: FrequentGlucoseFiltering.fiveMinuteInterval
+        )
 
         // push alarm must happen before setGlucoseHistory
         appCoordinator.setGlucoseAlarm(getAlarm())
@@ -274,6 +273,9 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
 }
 
 enum FrequentGlucoseFiltering {
+    /// the spacing of the 5-minute stream oref receives
+    static let fiveMinuteInterval: TimeInterval = .minutes(4.5)
+
     /// glucose must be newest -> oldest
     static func filterFrequentGlucose(_ glucose: [BloodGlucose], interval: TimeInterval) -> [BloodGlucose] {
         guard let latest = glucose.first else { return [] }

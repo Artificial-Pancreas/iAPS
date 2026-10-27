@@ -451,6 +451,7 @@
 		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
 		F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A8858300058D30019BDC5 /* UIBindingOwner.swift */; };
 		F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233892D3090A9B300D6581E /* LogFileWriterTests.swift */; };
+		F23395103090E52900D6581E /* GlucoseSmoothingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233950F3090E52900D6581E /* GlucoseSmoothingTests.swift */; };
 		F23C83E030099D7D0026B83F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C83DF30099D790026B83F /* Profile.swift */; };
 		F23C876030099DD20026B83F /* GlucoseEntry0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */; };
 		F23C876330099E020026B83F /* AutoIsfInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876230099E000026B83F /* AutoIsfInput.swift */; };
@@ -500,12 +501,12 @@
 		F28B06A83016DC9100A59FA7 /* LoopEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A73016DC9100A59FA7 /* LoopEvent.swift */; };
 		F28B06AA3016DCB500A59FA7 /* GlucoseGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */; };
 		F28B06AC3016DCF500A59FA7 /* LoopEventsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */; };
-		F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */; };
-		F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B7301BBDC400A59FA7 /* GapDetection.swift */; };
-		F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B9301BBEA400A59FA7 /* LoopGap.swift */; };
 		F28B06AE3018FEFB00A59FA7 /* GlucoseSmoothing.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */; };
 		F28B06B03018FF1100A59FA7 /* KalmanFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06AF3018FF0700A59FA7 /* KalmanFilter.swift */; };
 		F28B06B2301B6E4900A59FA7 /* ExponentialFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B1301B6E4900A59FA7 /* ExponentialFilter.swift */; };
+		F28B06B6301B77EA00A59FA7 /* LoopStatRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */; };
+		F28B06B8301BBDC400A59FA7 /* GapDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B7301BBDC400A59FA7 /* GapDetection.swift */; };
+		F28B06BA301BBEA400A59FA7 /* LoopGap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F28B06B9301BBEA400A59FA7 /* LoopGap.swift */; };
 		F29135522F02668F00BF9F95 /* OpenverseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135512F02668F00BF9F95 /* OpenverseClient.swift */; };
 		F291355A2F03469E00BF9F95 /* ImageCommentInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */; };
 		F292C1CF2F5EF09700B08D81 /* DismissableTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */; };
@@ -1243,6 +1244,7 @@
 		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
 		F22A8858300058D30019BDC5 /* UIBindingOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindingOwner.swift; sourceTree = "<group>"; };
 		F233892D3090A9B300D6581E /* LogFileWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileWriterTests.swift; sourceTree = "<group>"; };
+		F233950F3090E52900D6581E /* GlucoseSmoothingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseSmoothingTests.swift; sourceTree = "<group>"; };
 		F23C83DF30099D790026B83F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry0.swift; sourceTree = "<group>"; };
 		F23C876230099E000026B83F /* AutoIsfInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoIsfInput.swift; sourceTree = "<group>"; };
@@ -1292,12 +1294,12 @@
 		F28B06A73016DC9100A59FA7 /* LoopEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEvent.swift; sourceTree = "<group>"; };
 		F28B06A93016DCB500A59FA7 /* GlucoseGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseGap.swift; sourceTree = "<group>"; };
 		F28B06AB3016DCF500A59FA7 /* LoopEventsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopEventsStorage.swift; sourceTree = "<group>"; };
-		F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStatRecordStorage.swift; sourceTree = "<group>"; };
-		F28B06B7301BBDC400A59FA7 /* GapDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapDetection.swift; sourceTree = "<group>"; };
-		F28B06B9301BBEA400A59FA7 /* LoopGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGap.swift; sourceTree = "<group>"; };
 		F28B06AD3018FEF700A59FA7 /* GlucoseSmoothing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseSmoothing.swift; sourceTree = "<group>"; };
 		F28B06AF3018FF0700A59FA7 /* KalmanFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KalmanFilter.swift; sourceTree = "<group>"; };
 		F28B06B1301B6E4900A59FA7 /* ExponentialFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExponentialFilter.swift; sourceTree = "<group>"; };
+		F28B06B5301B77E700A59FA7 /* LoopStatRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopStatRecordStorage.swift; sourceTree = "<group>"; };
+		F28B06B7301BBDC400A59FA7 /* GapDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GapDetection.swift; sourceTree = "<group>"; };
+		F28B06B9301BBEA400A59FA7 /* LoopGap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGap.swift; sourceTree = "<group>"; };
 		F29135512F02668F00BF9F95 /* OpenverseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenverseClient.swift; sourceTree = "<group>"; };
 		F29135592F03469E00BF9F95 /* ImageCommentInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCommentInputView.swift; sourceTree = "<group>"; };
 		F292C1CE2F5EF08300B08D81 /* DismissableTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissableTextField.swift; sourceTree = "<group>"; };
@@ -2616,6 +2618,7 @@
 				38FCF3F125E9028E0078B0D1 /* Info.plist */,
 				38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */,
 				F233892D3090A9B300D6581E /* LogFileWriterTests.swift */,
+				F233950F3090E52900D6581E /* GlucoseSmoothingTests.swift */,
 			);
 			path = FreeAPSTests;
 			sourceTree = "<group>";
@@ -4243,6 +4246,7 @@
 				056EB47F2B4C8B3D00CDE36E /* SystemSoundsManager.swift in Sources */,
 				F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */,
 				38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */,
+				F23395103090E52900D6581E /* GlucoseSmoothingTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
