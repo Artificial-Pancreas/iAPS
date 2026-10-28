@@ -7,7 +7,6 @@ import Swinject
 extension AddCarbs {
     struct RootView: BaseView {
         let resolver: Resolver
-        let editMode: Bool
         let override: Bool
         let mode: MealMode.Mode
         @StateObject var state: StateModel
@@ -54,12 +53,10 @@ extension AddCarbs {
 
         init(
             resolver: Resolver,
-            editMode: Bool,
             override: Bool,
             mode: MealMode.Mode
         ) {
             self.resolver = resolver
-            self.editMode = editMode
             self.override = override
             self.mode = mode
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -166,7 +163,7 @@ extension AddCarbs {
                 guard button else { return }
 
                 state.hypoTreatment = true
-                state.addAIFood(override, fetch: editMode, food: food, date: date)
+                state.addAIFood(override, food: food, date: date)
             }
         }
 
@@ -193,7 +190,7 @@ extension AddCarbs {
         }
 
         private var continueLabel: LocalizedStringKey {
-            (state.skipBolus && !override && !editMode) ? "Save" : "Continue"
+            (state.skipBolus && !override) ? "Save" : "Continue"
         }
 
         @ViewBuilder private func cancelDialogActions() -> some View {
@@ -413,7 +410,7 @@ extension AddCarbs {
                     button.toggle()
 
                     if button {
-                        state.add(override, fetch: editMode)
+                        state.add(override)
                     }
 
                 } label: {
@@ -433,13 +430,13 @@ extension AddCarbs {
                     button.toggle()
 
                     if button {
-                        state.add(override, fetch: editMode)
+                        state.add(override)
                     }
 
                 } label: {
                     Text(
                         (
-                            (state.skipBolus && !override && !editMode)
+                            (state.skipBolus && !override)
                                 || state.carbs <= 0
                         )
                             ? "Save"
@@ -749,7 +746,7 @@ extension AddCarbs {
             guard button else { return }
 
             state.hypoTreatment = false
-            state.addAIFood(override, fetch: editMode, food: food, date: date)
+            state.addAIFood(override, food: food, date: date)
         }
 
         private func handleOnAppear() {

@@ -345,7 +345,7 @@ extension Home {
         }
 
         func addCarbs() {
-            showModal(for: .addCarbs(editMode: false, override: false, mode: .meal))
+            showModal(for: .addCarbs(override: false, mode: .meal))
         }
 
         func runLoop() {

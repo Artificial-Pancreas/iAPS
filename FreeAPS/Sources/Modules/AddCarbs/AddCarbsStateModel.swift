@@ -39,6 +39,7 @@ extension AddCarbs {
             // a real pop (a cancelled back swipe leaves it set): Bolus discards the meal
             didSet { if bolusDraft == nil { oldValue?.popped.fire() } }
         }
+
         /// A save or a hand-off is running (or the meal is saved and the view is closing): no second one
         private var adding = false
 
@@ -57,7 +58,7 @@ extension AddCarbs {
             mealViewMicronutrients = settings.mealViewMicronutrients
         }
 
-        func add(_ continue_: Bool, fetch: Bool) {
+        func add(_ continue_: Bool) {
             guard beginAdding() else { return }
             Task {
                 carbs = min(carbs, maxCarbs)
@@ -76,11 +77,11 @@ extension AddCarbs {
                     isFPU: false,
                     micronutrient: micronutrient
                 )
-                await add(continue_, fetch: fetch, entry: entry)
+                await add(continue_, entry: entry)
             }
         }
 
-        func addAIFood(_ continue_: Bool, fetch: Bool, food: FoodItemDetailed, date: Date?) {
+        func addAIFood(_ continue_: Bool, food: FoodItemDetailed, date: Date?) {
             guard beginAdding() else { return }
             Task {
                 var carbs = food.nutrientInThisPortion(.carbs) ?? 0
@@ -126,7 +127,7 @@ extension AddCarbs {
                     micronutrient: micronutrients
                 )
 
-                await add(continue_, fetch: fetch, entry: entry)
+                await add(continue_, entry: entry)
             }
         }
 
@@ -137,7 +138,7 @@ extension AddCarbs {
             return true
         }
 
-        private func add(_ continue_: Bool, fetch: Bool, entry: CarbsEntry) async {
+        private func add(_ continue_: Bool, entry: CarbsEntry) async {
             if hypoTreatment {
                 await hypo()
             }
@@ -148,7 +149,7 @@ extension AddCarbs {
 
             let empty = entry.carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
 
-            if (skipBolus && !continue_ && !fetch) || hypoTreatment {
+            if (skipBolus && !continue_) || hypoTreatment {
                 await storeMeal(entry)
             } else if entry.carbs > 0 {
                 // Bolus stores it (or not, on back / cancel)

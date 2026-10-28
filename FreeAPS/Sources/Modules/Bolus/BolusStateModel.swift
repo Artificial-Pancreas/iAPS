@@ -50,7 +50,7 @@ extension Bolus {
         /// The modal screen this Bolus is in (Home's Bolus, or the Add Meal that pushed it)
         private var modalScreenID: Int?
         /// The Bolus that set inBolusView: one that closes late must not clear it under the next one
-        private static weak var inBolusViewOwner: Bolus.StateModel?
+        private weak static var inBolusViewOwner: Bolus.StateModel?
         /// The suggestion with the meal's temporary carbs
         private var previewTask: Task<Void, Never>?
         private var previewInFlight = false
@@ -425,7 +425,7 @@ extension Bolus {
 
         /// Bolus opened from Home: a new meal (it comes back here with the meal)
         func addMeal() {
-            showModal(for: .addCarbs(editMode: false, override: true, mode: .meal))
+            showModal(for: .addCarbs(override: true, mode: .meal))
         }
 
         func remoteBolus() async -> String? {

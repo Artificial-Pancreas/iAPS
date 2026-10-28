@@ -233,7 +233,7 @@ extension Home {
                     Divider()
                     HStack {
                         if state.carbButton {
-                            Button { state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
+                            Button { state.showModal(for: .addCarbs(override: false, mode: .meal)) }
                             label: {
                                 ZStack(alignment: Alignment(horizontal: .trailing, vertical: .bottom)) {
                                     Image(systemName: "fork.knife")
@@ -252,25 +252,25 @@ extension Home {
                             }
                             .contextMenu {
                                 Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .presets)) }
+                                    state.showModal(for: .addCarbs(override: false, mode: .presets)) }
                                 label: { Label("Meal Presets", systemImage: "menucard")
                                 }
                                 Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .barcode)) }
+                                    state.showModal(for: .addCarbs(override: false, mode: .barcode)) }
                                 label: { Label("Barcode", systemImage: "barcode.viewfinder")
                                 }
                                 if state.ai {
                                     Button {
-                                        state.showModal(for: .addCarbs(editMode: false, override: false, mode: .image)) }
+                                        state.showModal(for: .addCarbs(override: false, mode: .image)) }
                                     label: { Label("AI Image Analysis", systemImage: "photo.badge.magnifyingglass")
                                     }
                                     Button {
-                                        state.showModal(for: .addCarbs(editMode: false, override: false, mode: .voice)) }
+                                        state.showModal(for: .addCarbs(override: false, mode: .voice)) }
                                     label: { Label("Voice Input", systemImage: "mic.fill")
                                     }
                                 }
                                 Button {
-                                    state.showModal(for: .addCarbs(editMode: false, override: false, mode: .meal)) }
+                                    state.showModal(for: .addCarbs(override: false, mode: .meal)) }
                                 label: { Label("Add Meal", systemImage: "birthday.cake")
                                 }
                             }
@@ -280,7 +280,7 @@ extension Home {
                             if state.pumpIsBolusing() {
                                 showBolusActiveAlert = true
                             } else {
-                                state.showModal(for: .bolus(waitForSuggestion: state.useCalc, fetch: false))
+                                state.showModal(for: .bolus(waitForSuggestion: state.useCalc))
                             }
                         }
                         label: {
