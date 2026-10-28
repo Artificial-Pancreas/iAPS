@@ -2118,7 +2118,7 @@ Enact a temp Basal or a temp target */
 "Override Max IOB" = "Перевизначити Макс IOB";
 
 /* */
-"When run to completion schedule a consecutive override preset:" = "When run to completion schedule a consecutive override preset:";
+"When run to completion schedule a consecutive override preset:" = "Після завершення виконання заплануйте послідовний попередньо налаштований режим заміщення:";
 
 /* */
 "Save as Profile" = "Зберегти як Профіль";
@@ -4079,51 +4079,51 @@ Enact a temp Basal or a temp target */
 "has been added to iAPS" = "було додано до iAPS";
 "hour" = "годин";
 "iAPS" = "iAPS";
-"Processing…" = "Processing…";
-"Listening…" = "Listening…";
-"Describe what you ate…" = "Describe what you ate…";
+"Processing…" = "Обробка…";
+"Listening…" = "Слухаю…";
+"Describe what you ate…" = "Опишіть, що ви їли…";
 "iAPS needs camera access to scan barcodes. Please enable it in Settings." = "iAPS потрібен доступ до камери для сканування штрих-кодів. Увімкніть його в Налаштуваннях.";
 "too small temp basal amount" = "занадто мала тимчасова базальна доза";
 "⚠️ Warning! The entered insulin amount is greater than your Max Bolus setting!" = "⚠️ Увага! Введена кількість інсуліну перевищує налаштування Максимального Болюсу!";
 " Target Glucose" = " Цільовий рівень Глюкози";
 
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
-"Starting iAPS" = "Starting iAPS";
-"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
+"Starting iAPS" = "Запуск iAPS";
+"iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS чекає доступу до своїх даних. Зазвичай це завершується самостійно, коли ви вперше розблокуєте телефон після перезавантаження.";
 
 /* Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining */
 "Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Термін дії вашої збірки iAPS спливає %1$@ (залишилося %2$d дн.). Збірки, встановлені через Xcode, діють протягом терміну дії профілю підпису — щоб продовжити використання, виконайте повторне збирання та встановлення.";
 
 /* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
-"Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+"Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Термін дії вашої збірки iAPS спливає %1$@ (залишилося %2$d дн.). Збірки, встановлені через Xcode, діють протягом терміну дії профілю підпису — щоб продовжити використання, виконайте повторне збирання та встановлення.";
 
 /* Restore: the typed recovery token is not a UUID */
-"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "Це не токен відновлення. Токен складається з 36 символів із дефісами (наприклад, 1a2b3c4d-5e6f-…); скопіюйте його зі свого старого телефона в розділі iAPS → Налаштування → Спільний доступ.";
 
 /* Title of the newer-release alert on Home */
-"Update available" = "Update available";
+"Update available" = "Доступне оновлення";
 
 /* Dismiss the newer-release alert */
-"Later" = "Later";
+"Later" = "Потім";
 
 /* Open the release highlights page */
-"What's new" = "What's new";
+"What's new" = "Що нового";
 
 /* Body of the newer-release alert, %1$@ new version, %2$@ running version */
-"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.";
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "Доступна версія iAPS %@. Ви використовуєте версію %@. Оновлення містять виправлення, що стосуються дозування та безпеки; ознайомтеся зі змінами перед оновленням.";
 
 /* Home banner, %1$@ new version, %2$@ running version */
-"iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
+"iAPS %@ is available. You are running %@." = "iAPS %@ доступний. Ви використовуєте %@.";
 
 /* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
-"Crash Reports" = "Crash Reports";
-"Send crash reports" = "Send crash reports";
-"If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default." = "If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default.";
-"What a crash report contains" = "What a crash report contains";
-"When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help." = "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help.";
+"Crash Reports" = "Звіти про збої";
+"Send crash reports" = "Надсилати звіти про збої";
+"If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default." = "Якщо iAPS виходить з ладу, надішліть розробникам звіт про те, де це сталося. Анонімно, без глюкози та налаштувань. За замовчуванням вимкнено.";
+"What a crash report contains" = "Що містить звіт про збій";
+"When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help." = "У разі збою iAPS звіт зберігається на вашому телефоні та надсилається на open-iaps.app під час наступного запуску програми. Він містить шлях до коду, у якому стався збій (назви й адреси функцій), стан кожного потоку, повідомлення про помилку, з яким зупинилася програма, модель вашого телефону, версію iOS і iAPS.\n\nВін не містить показань рівня глюкози, інсуліну чи налаштувань; необроблена пам'ять, яку KSCrash захоплює, видаляється перед тим, як щось буде надіслано. Він подається під тим самим анонімним ідентифікатором, що й статистика.\n\nЗвіти надсилаються лише з останніх основних і розробницьких випусків — старіші версії можуть аварійно завершувати роботу через уже виправлені помилки. Щоб це допомогло, нічого більше не потрібно вмикати.";
 
 /* --- Settings → Debug options: crash reporting test hook --- */
-"Simulate a crash" = "Simulate a crash";
-"Crash" = "Crash";
-"Simulate a crash?" = "Simulate a crash?";
-"iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
+"Simulate a crash" = "Зімітувати аварію";
+"Crash" = "Аварії";
+"Simulate a crash?" = "Зімітувати аварію?";
+"iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS миттєво зупиниться, і його потрібно відкрити знову. Якщо в розділі «Спільний доступ» увімкнено «Надсилати звіти про збої», звіт надсилається під час наступного запуску.";
