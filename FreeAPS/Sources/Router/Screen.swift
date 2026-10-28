@@ -73,8 +73,8 @@ extension Screen {
             AddCarbs.RootView(resolver: resolver, editMode: editMode, override: override, mode: mode)
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
-        case let .bolus(waitForSuggestion, fetch):
-            Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion, fetch: fetch)
+        case let .bolus(waitForSuggestion, _):
+            Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion, meal: nil)
         case .manualTempBasal:
             ManualTempBasal.RootView(resolver: resolver)
         case .autotuneConfig:

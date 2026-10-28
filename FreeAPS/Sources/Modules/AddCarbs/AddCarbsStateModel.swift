@@ -10,8 +10,6 @@ extension AddCarbs {
         @Injected() private var overrideStorage: OverrideStorage!
         @Injected() private var overrideManager: OverrideManager!
 
-        private let coreDataStorage = CoreDataStorage()
-
         @Published var carbs: Decimal = 0
         @Published var date = Date()
         @Published var protein: Decimal = 0
@@ -36,6 +34,14 @@ extension AddCarbs {
 
         @Published var combinedPresets: [(preset: Presets?, portions: Double)] = []
 
+        /// The meal handed to Bolus, pushed on the navigation stack. SwiftUI sets it back to nil when Bolus is popped
+        @Published var bolusDraft: Bolus.MealDraft? {
+            // a real pop (a cancelled back swipe leaves it set): Bolus discards the meal
+            didSet { if bolusDraft == nil { oldValue?.popped.fire() } }
+        }
+        /// A save or a hand-off is running (or the meal is saved and the view is closing): no second one
+        private var adding = false
+
         let now = Date.now
 
         let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
@@ -52,11 +58,12 @@ extension AddCarbs {
         }
 
         func add(_ continue_: Bool, fetch: Bool) {
+            guard beginAdding() else { return }
             Task {
                 carbs = min(carbs, maxCarbs)
                 id_ = UUID().uuidString
 
-                let carbsToStore = [CarbsEntry(
+                let entry = CarbsEntry(
                     id: id_,
                     createdAt: now,
                     actualDate: date,
@@ -68,12 +75,13 @@ extension AddCarbs {
                     enteredBy: CarbsEntry.manual,
                     isFPU: false,
                     micronutrient: micronutrient
-                )]
-                await add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+                )
+                await add(continue_, fetch: fetch, entry: entry)
             }
         }
 
         func addAIFood(_ continue_: Bool, fetch: Bool, food: FoodItemDetailed, date: Date?) {
+            guard beginAdding() else { return }
             Task {
                 var carbs = food.nutrientInThisPortion(.carbs) ?? 0
                 let fat = food.nutrientInThisPortion(.fat) ?? 0
@@ -103,10 +111,11 @@ extension AddCarbs {
                 carbs = min(carbs, maxCarbs)
                 id_ = UUID().uuidString
 
-                let carbsToStore = [CarbsEntry(
+                let entry = CarbsEntry(
                     id: id_,
                     createdAt: now,
-                    actualDate: date,
+                    // no time picked: the meal's time, as for a manual meal (Bolus and the FPUs need one)
+                    actualDate: date ?? self.date,
                     carbs: carbs,
                     fat: fat,
                     protein: protein,
@@ -115,41 +124,46 @@ extension AddCarbs {
                     enteredBy: CarbsEntry.manual,
                     isFPU: false,
                     micronutrient: micronutrients
-                )]
+                )
 
-                await add(continue_, fetch: fetch, carbsToStore: carbsToStore)
+                await add(continue_, fetch: fetch, entry: entry)
             }
         }
 
-        func add(_ continue_: Bool, fetch: Bool, carbsToStore: [CarbsEntry]) async {
+        /// A double tap must not save twice (the FPU entries get new ids) or push Bolus twice
+        private func beginAdding() -> Bool {
+            guard !adding, bolusDraft == nil else { return false }
+            adding = true
+            return true
+        }
+
+        private func add(_ continue_: Bool, fetch: Bool, entry: CarbsEntry) async {
             if hypoTreatment {
                 await hypo()
             }
-            let carbs = carbsToStore.map(\.carbs).reduce(0, +)
-            let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
-            let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
-            let fiber = carbsToStore.compactMap(\.fiber).reduce(0, +)
-            let hasMicronutrients = carbsToStore.last?.micronutrient != nil
+            let fat = entry.fat ?? 0
+            let protein = entry.protein ?? 0
+            let fiber = entry.fiber ?? 0
+            let hasMicronutrients = entry.micronutrient != nil
 
-            let empty = carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
+            let empty = entry.carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
-                await storeMeal(carbsToStore)
-            } else if carbs > 0 {
-                saveToCoreData(carbsToStore, savedToFile: false)
-                showModal(for: .bolus(waitForSuggestion: true, fetch: true))
+                await storeMeal(entry)
+            } else if entry.carbs > 0 {
+                // Bolus stores it (or not, on back / cancel)
+                bolusDraft = Bolus.MealDraft(entry: entry)
+                adding = false
             } else if !empty {
-                await storeMeal(carbsToStore)
+                await storeMeal(entry)
             } else {
                 hideModal()
             }
         }
 
         /// Saves the meal (row, then carbs), refreshes the suggestion and closes
-        private func storeMeal(_ carbsToStore: [CarbsEntry]) async {
-            if let entry = carbsToStore.last {
-                await carbsStorage.storeMeal(entry)
-            }
+        private func storeMeal(_ entry: CarbsEntry) async {
+            await carbsStorage.storeMeal(entry)
             _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
             showModal(for: nil)
         }
@@ -207,29 +221,6 @@ extension AddCarbs {
             }
         }
 
-        func loadEntries(_ editMode: Bool) {
-            if editMode {
-                coredataContext.performAndWait {
-                    var mealToEdit = [Meals]()
-                    let requestMeal = Meals.fetchRequest() as NSFetchRequest<Meals>
-                    let sortMeal = NSSortDescriptor(key: "createdAt", ascending: false)
-                    requestMeal.sortDescriptors = [sortMeal]
-                    requestMeal.fetchLimit = 1
-                    try? mealToEdit = self.coredataContext.fetch(requestMeal)
-
-                    // TODO: is this hop needed?
-                    Task { @MainActor in
-                        self.carbs = (mealToEdit.first?.carbs ?? 0) as Decimal
-                        self.fat = (mealToEdit.first?.fat ?? 0) as Decimal
-                        self.protein = (mealToEdit.first?.protein ?? 0) as Decimal
-                        self.fiber = (mealToEdit.first?.fiber ?? 0) as Decimal
-                        self.note = mealToEdit.first?.note ?? ""
-                        self.id_ = mealToEdit.first?.id ?? ""
-                    }
-                }
-            }
-        }
-
         func addU(_ selection: Presets?) {
             carbs += ((selection?.carbs ?? 0) as NSDecimalNumber) as Decimal
             fat += ((selection?.fat ?? 0) as NSDecimalNumber) as Decimal
@@ -241,27 +232,6 @@ extension AddCarbs {
             }
 
             addPresetToNewMeal()
-        }
-
-        func saveToCoreData(_ stored: [CarbsEntry], savedToFile: Bool) {
-            print("Meal Flow 1: saving to CoreData")
-
-            for a in stored {
-                guard let b = a.micronutrient else { continue }
-                for c in b {
-                    print("Meal Flow 1: Micros: " + c.name + " " + c.formattedAmount)
-                }
-            }
-
-            Task {
-                await coreDataStorage.saveMeal(stored, now: now, savedToFile: savedToFile)
-            }
-        }
-
-        func runDetermineBasal() {
-            Task {
-                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
-            }
         }
 
         private func hypo() async {

@@ -1,16 +1,13 @@
 import Charts
-import CoreData
 import SwiftUI
 import Swinject
 
 extension Bolus {
     struct AlternativeBolusCalcRootView: BaseView {
         let resolver: Resolver
-        let fetch: Bool
         @EnvironmentObject var state: StateModel
         @State private var showInfo = false
         @State private var exceededMaxBolus = false
-        @State private var keepForNextWiew: Bool = false
         @State private var remoteBolusAlert: Alert?
         @State private var isRemoteBolusAlertPresented: Bool = false
 
@@ -23,20 +20,13 @@ extension Bolus {
         @Environment(\.colorScheme) var colorScheme
         @FocusState private var isFocused: Bool
 
-        let meal: FetchedResults<Meals>
         let mealEntries: any View
 
         init(
             resolver: Resolver,
-            fetch: Bool,
-//            state: StateModel,
-            meal: FetchedResults<Meals>,
             mealEntries: any View
         ) {
             self.resolver = resolver
-            self.fetch = fetch
-//            self.state = state
-            self.meal = meal
             self.mealEntries = mealEntries
         }
 
@@ -102,7 +92,7 @@ extension Bolus {
                 }
 
                 Section {}
-                if fetch {
+                if state.meal != nil {
                     Section { mealEntries.asAny() }
                 }
 
@@ -187,15 +177,13 @@ extension Bolus {
                                         title: Text("A Remote Bolus Was Just Delivered!"),
                                         message: Text(remoteBolus),
                                         primaryButton: .destructive(Text("Bolus"), action: {
-                                            keepForNextWiew = true
-                                            state.add()
+                                            state.enact()
                                         }),
                                         secondaryButton: .cancel()
                                     )
                                     isRemoteBolusAlertPresented = true
                                 } else {
-                                    keepForNextWiew = true
-                                    state.add()
+                                    state.enact()
                                 }
                             }
                         }
@@ -217,15 +205,10 @@ extension Bolus {
                 if state.amount <= 0 {
                     Section {
                         Button {
-                            keepForNextWiew = true
-                            state.save()
-                            state.showModal(for: nil)
-                            if state.currentBG == 0, state.manualGlucose != 0 {
-                                state.addManualGlucose()
-                            }
+                            state.saveWithoutBolus(addManualGlucose: state.currentBG == 0 && state.manualGlucose != 0)
                         }
                         label: {
-                            fetch ?
+                            state.meal != nil ?
                                 Text("Save Meal without bolus") :
                                 Text("Continue without bolus")
                         }
@@ -250,23 +233,7 @@ extension Bolus {
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button {
-                    keepForNextWiew = state.carbsView(fetch: fetch, hasFatOrProtein: hasFatOrProtein, mealSummary: meal)
-                }
-                label: {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("Meal")
-                    }
-                },
-                trailing: Button {
-                    state.hideModal()
-                    state.notActive()
-                    if fetch { state.determineBasal() }
-                }
-                label: { Text("Cancel") }
-            )
+            .toolbar { Bolus.toolbar(state) }
             .popup(isPresented: showInfo, alignment: .bottom, direction: .center, type: .default) {
                 illustrationView()
             }
@@ -285,36 +252,6 @@ extension Bolus {
         private var disabled: Bool {
             state.amount <= 0 || state.amount > state.maxBolus || state.amount <
                 state.minBolus || state.amount < state.bolusIncrement
-        }
-
-        var changed: Bool {
-            !unchanged
-        }
-
-        private var unchanged: Bool {
-            guard let meal = meal.first else { return true }
-
-            let hasMicros = (meal.micronutrient as? Set<Micronutrient>)?.contains { ($0.amount?.decimalValue ?? 0) > 0 } ?? false
-
-            return (meal.carbs?.decimalValue ?? 0) <= 0 &&
-                (meal.fat?.decimalValue ?? 0) <= 0 &&
-                (meal.protein?.decimalValue ?? 0) <= 0 &&
-                (meal.fiber?.decimalValue ?? 0) <= 0 &&
-                !hasMicros
-        }
-
-        var hasFatOrProtein: Bool {
-            guard let meal = meal.first else { return false }
-            return ((meal.fat ?? 0) != 0) || ((meal.protein ?? 0) != 0)
-        }
-
-        func carbsView() {
-            if fetch {
-                keepForNextWiew = true
-                state.backToCarbsView(override: false, editMode: true)
-            } else {
-                state.backToCarbsView(override: true, editMode: false)
-            }
         }
 
         private func illustrationView() -> some View {

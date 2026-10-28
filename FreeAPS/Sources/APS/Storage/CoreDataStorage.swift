@@ -294,32 +294,6 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func updateLatestMeal(to saved: Bool) async {
-        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            let request: NSFetchRequest<Meals> = Meals.fetchRequest()
-
-            request.sortDescriptors = [
-                NSSortDescriptor(keyPath: \Meals.createdAt, ascending: false)
-            ]
-
-            request.fetchLimit = 1
-
-            do {
-                guard let latestMeal = try context.fetch(request).first else {
-                    return
-                }
-
-                latestMeal.savedToFile = saved
-
-                if context.hasChanges {
-                    try context.save()
-                }
-            } catch {
-                print("CoreData update failed:", error)
-            }
-        }
-    }
-
     func fetchStats() async -> StatsDataSnapshot? {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
             let requestStats = StatsData.fetchRequest() as NSFetchRequest<StatsData>
