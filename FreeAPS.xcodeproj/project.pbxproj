@@ -451,6 +451,9 @@
 		F22A7A932FF94FC70019BDC5 /* MetricKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */; };
 		F22A8859300058D60019BDC5 /* UIBindingOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F22A8858300058D30019BDC5 /* UIBindingOwner.swift */; };
 		F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F233892D3090A9B300D6581E /* LogFileWriterTests.swift */; };
+		F23395143091F46500D6581E /* PersistedPropertyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23395133091F46500D6581E /* PersistedPropertyTests.swift */; };
+		F23395153091F46500D6581E /* NightscoutUploadsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23395123091F46500D6581E /* NightscoutUploadsTests.swift */; };
+		F23395163091F46500D6581E /* LiveActivityUpdateGateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23395113091F46500D6581E /* LiveActivityUpdateGateTests.swift */; };
 		F23C83E030099D7D0026B83F /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C83DF30099D790026B83F /* Profile.swift */; };
 		F23C876030099DD20026B83F /* GlucoseEntry0.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */; };
 		F23C876330099E020026B83F /* AutoIsfInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = F23C876230099E000026B83F /* AutoIsfInput.swift */; };
@@ -1240,6 +1243,9 @@
 		F22A7A912FF94FC70019BDC5 /* MetricKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricKitService.swift; sourceTree = "<group>"; };
 		F22A8858300058D30019BDC5 /* UIBindingOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBindingOwner.swift; sourceTree = "<group>"; };
 		F233892D3090A9B300D6581E /* LogFileWriterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileWriterTests.swift; sourceTree = "<group>"; };
+		F23395113091F46500D6581E /* LiveActivityUpdateGateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityUpdateGateTests.swift; sourceTree = "<group>"; };
+		F23395123091F46500D6581E /* NightscoutUploadsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutUploadsTests.swift; sourceTree = "<group>"; };
+		F23395133091F46500D6581E /* PersistedPropertyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistedPropertyTests.swift; sourceTree = "<group>"; };
 		F23C83DF30099D790026B83F /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		F23C875F30099DCF0026B83F /* GlucoseEntry0.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry0.swift; sourceTree = "<group>"; };
 		F23C876230099E000026B83F /* AutoIsfInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoIsfInput.swift; sourceTree = "<group>"; };
@@ -2607,6 +2613,9 @@
 				38FCF3F125E9028E0078B0D1 /* Info.plist */,
 				38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */,
 				F233892D3090A9B300D6581E /* LogFileWriterTests.swift */,
+				F23395113091F46500D6581E /* LiveActivityUpdateGateTests.swift */,
+				F23395123091F46500D6581E /* NightscoutUploadsTests.swift */,
+				F23395133091F46500D6581E /* PersistedPropertyTests.swift */,
 			);
 			path = FreeAPSTests;
 			sourceTree = "<group>";
@@ -4228,6 +4237,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F23395143091F46500D6581E /* PersistedPropertyTests.swift in Sources */,
+				F23395153091F46500D6581E /* NightscoutUploadsTests.swift in Sources */,
+				F23395163091F46500D6581E /* LiveActivityUpdateGateTests.swift in Sources */,
 				056EB47F2B4C8B3D00CDE36E /* SystemSoundsManager.swift in Sources */,
 				F233892E3090A9B300D6581E /* LogFileWriterTests.swift in Sources */,
 				38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */,
