@@ -76,9 +76,6 @@ final class UploadScheduleGate: Sendable {
         self.reachabilityManager = reachabilityManager
     }
 
-    /// about one loop interval: uploaders whose anchors drifted apart still go out in the same burst
-    static let slack: TimeInterval = .minutes(5)
-
     func allows() async -> Bool {
         guard let network = currentNetworkSchedule() else {
             return true
@@ -97,15 +94,23 @@ final class UploadScheduleGate: Sendable {
         }
     }
 
+    /// Due once a clock boundary of the interval (a full hour, 00:00/12:00 UTC) has passed since the last upload:
+    /// all entities on the same interval go out in the first burst after it.
+    /// `!=`, not `>`: a wall clock that went back can't stall uploads.
     static func isDue(lastUpload: Date?, interval: TimeInterval, now: Date) -> Bool {
-        now.timeIntervalSince(lastUpload ?? .distantPast) >= interval - slack
+        guard let lastUpload else { return true }
+        return bucket(of: now, interval: interval) != bucket(of: lastUpload, interval: interval)
+    }
+
+    private static func bucket(of date: Date, interval: TimeInterval) -> Double {
+        (date.timeIntervalSince1970 / interval).rounded(.down)
     }
 
     var lastUpload: Date? {
         Self.lastUpload(named: name)
     }
 
-    /// - Parameter date: the burst's start: the entities of one burst share the anchor, so hourly ones stay together
+    /// - Parameter date: the burst's start
     func recordUpload(at date: Date) {
         UserDefaults.standard.set(date, forKey: Self.lastUploadKey(name))
     }
