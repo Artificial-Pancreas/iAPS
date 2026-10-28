@@ -35,6 +35,20 @@ final class CoreDataStack: ObservableObject {
         persistentContainer.newBackgroundContext()
     }
 
+    private let batchDeleteContextsLock = NSLock()
+    private var batchDeleteContexts: [NSManagedObjectContext] = []
+
+    /// Long-lived contexts (besides the viewContext) that batch deletes, which bypass the contexts, are merged into.
+    func mergeBatchDeletes(into context: NSManagedObjectContext) {
+        batchDeleteContextsLock.withLock { batchDeleteContexts.append(context) }
+    }
+
+    /// Merges the object IDs a batch delete returned into the viewContext and the registered contexts.
+    func mergeBatchDelete(_ objectIDs: [NSManagedObjectID]) {
+        let contexts = [persistentContainer.viewContext] + batchDeleteContextsLock.withLock { batchDeleteContexts }
+        NSManagedObjectContext.mergeChanges(fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs], into: contexts)
+    }
+
     func deleteBatch(entity: String) async {
         let request = NSBatchDeleteRequest(
             fetchRequest: NSFetchRequest<NSFetchRequestResult>(
@@ -52,10 +66,7 @@ final class CoreDataStack: ObservableObject {
 
                 let result = try context.execute(request) as? NSBatchDeleteResult
                 if let objectIDs = result?.result as? [NSManagedObjectID] {
-                    NSManagedObjectContext.mergeChanges(
-                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                        into: [self.persistentContainer.viewContext] // update the view context after a batch delete
-                    )
+                    self.mergeBatchDelete(objectIDs)
                 }
             } catch {
                 debug(

@@ -692,13 +692,7 @@ final class CoreDataStorage: Sendable {
             do {
                 let deleteResult = try context.execute(deleteRequest) as? NSBatchDeleteResult
                 if let objectIDs = deleteResult?.result as? [NSManagedObjectID] {
-                    NSManagedObjectContext.mergeChanges(
-                        fromRemoteContextSave: [NSDeletedObjectsKey: objectIDs],
-                        into: [
-                            CoreDataStack.shared.persistentContainer
-                                .viewContext
-                        ] // update the view context after a batch delete
-                    )
+                    CoreDataStack.shared.mergeBatchDelete(objectIDs)
                 }
             } catch { debug(.apsManager, entity + "records failed to delete in batch.") }
         }

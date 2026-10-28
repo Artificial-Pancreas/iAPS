@@ -4,11 +4,19 @@ import Foundation
 import SwiftDate
 
 final class OverrideStorage: Sendable {
-    private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+    /// One private context for all override reads and writes, off the main queue (the loop reads overrides).
+    /// Not `performBackgroundTask`: the check-then-write operations rely on every block running on this one serial queue.
+    private let coredataContext: NSManagedObjectContext
     private let appCoordinator: AppCoordinator
 
     init(appCoordinator: AppCoordinator) {
         self.appCoordinator = appCoordinator
+        let context = CoreDataStack.shared.newBackgroundContext()
+        context.name = "OverrideStorage"
+        context.automaticallyMergesChangesFromParent = true
+        context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
+        CoreDataStack.shared.mergeBatchDeletes(into: context)
+        coredataContext = context
     }
 
     private func fetchAutoIsfArray(ids: [String]) -> [Auto_ISF] {
