@@ -740,7 +740,14 @@ extension Database {
                 start: (item.start ?? 0) as Decimal,
                 target: (item.target ?? 0) as Decimal,
                 uamMinutes: (item.uamMinutes ?? 0) as Decimal,
-                autoISF: autoISF
+                autoISF: autoISF,
+                succeeding: item.succeeding,
+                endWIthNewCarbs: item.endWIthNewCarbs,
+                overrideAutoISF: item.overrideAutoISF,
+                glucoseOverrideThresholdActive: item.glucoseOverrideThresholdActive,
+                glucoseOverrideThreshold: item.glucoseOverrideThreshold?.decimalValue,
+                glucoseOverrideThresholdActiveDown: item.glucoseOverrideThresholdActiveDown,
+                glucoseOverrideThresholdDown: item.glucoseOverrideThresholdDown?.decimalValue
             )
 
         })

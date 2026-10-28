@@ -1,6 +1,14 @@
 import Foundation
 
-/// Tracks the 90-day TestFlight build lifetime and throttles expiration alerts.
+/// Tracks when the running build stops launching and throttles the warning about it.
+///
+/// Two lifetimes exist, and they differ by months:
+///   • TestFlight builds (the GitHub Actions / browser-build path) stop launching 90 days after
+///     they were built, whatever their signing profile says.
+///   • Builds installed by Xcode, ad-hoc or in-house run exactly as long as their provisioning
+///     profile — 7 days on a free developer account, up to a year on a paid one. Those profiles
+///     name the devices they cover; App Store / TestFlight profiles do not, which is how the two
+///     are told apart (`Bundle.profileProvisionsSpecificDevices`).
 ///
 /// Alert cadence (matching Loop's behaviour):
 ///   ≤ 20 days remaining  → show at most once every 2 days
@@ -8,16 +16,41 @@ import Foundation
 final class BuildExpirationManager {
     static let shared = BuildExpirationManager()
 
+    enum Lifetime {
+        /// Dies `testFlightLifespanDays` after the build date.
+        case testFlight
+        /// Dies with the embedded provisioning profile.
+        case provisioningProfile
+    }
+
     private let defaults = UserDefaults.standard
     private static let lastAlertKey = "iaps.buildExpirationLastAlertDate"
-    private static let lifespanDays = 90
+    private static let testFlightLifespanDays = 90
     private static let warningDays = 20
 
     // MARK: - Computed properties
 
+    var lifetime: Lifetime {
+        Bundle.main.profileProvisionsSpecificDevices ? .provisioningProfile : .testFlight
+    }
+
     var expirationDate: Date {
-        Calendar.current.date(byAdding: .day, value: Self.lifespanDays, to: Bundle.main.buildDate)
-            ?? .distantFuture
+        // No embedded profile at all means the Simulator — nothing expires there.
+        guard let profileExpiry = Bundle.main.profileExpirationDate else { return .distantFuture }
+        switch lifetime {
+        case .provisioningProfile:
+            return profileExpiry
+        case .testFlight:
+            return Calendar.current.date(byAdding: .day, value: Self.testFlightLifespanDays, to: Bundle.main.buildDate)
+                ?? .distantFuture
+        }
+    }
+
+    /// "yyyy-MM-dd", for the Settings header.
+    var expirationDateText: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        return formatter.string(from: expirationDate)
     }
 
     var daysRemaining: Int {
@@ -72,15 +105,29 @@ final class BuildExpirationManager {
             return String(format: format, h)
         }
         let dateStr = expirationDate.formatted(date: .abbreviated, time: .omitted)
-        let format = daysRemaining == 1
-            ? NSLocalizedString(
+        let format: String
+        switch (lifetime, daysRemaining == 1) {
+        case (.testFlight, true):
+            format = NSLocalizedString(
                 "Your iAPS build expires on %1$@ (%2$d day remaining). TestFlight builds must be renewed every 90 days.",
                 comment: "Build expiration alert message, singular day; %1$@ is the date, %2$d the days remaining"
             )
-            : NSLocalizedString(
+        case (.testFlight, false):
+            format = NSLocalizedString(
                 "Your iAPS build expires on %1$@ (%2$d days remaining). TestFlight builds must be renewed every 90 days.",
                 comment: "Build expiration alert message, plural days; %1$@ is the date, %2$d the days remaining"
             )
+        case (.provisioningProfile, true):
+            format = NSLocalizedString(
+                "Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.",
+                comment: "Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining"
+            )
+        case (.provisioningProfile, false):
+            format = NSLocalizedString(
+                "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.",
+                comment: "Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining"
+            )
+        }
         return String(format: format, dateStr, daysRemaining)
     }
 }
