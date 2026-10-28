@@ -213,6 +213,80 @@ final class CoreDataStorage: Sendable {
         }
     }
 
+    /// The half basal target of an enacted temp target (`active == false`: no % temp target).
+    func saveTempTargetHBT(id: String, active: Bool, hbt: Double?, duration: Decimal, startDate: Date) async {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let row = TempTargets(context: context)
+            row.id = id
+            row.active = active
+            if let hbt {
+                row.hbt = hbt
+            }
+            row.date = Date()
+            row.duration = duration as NSDecimalNumber
+            row.startDate = startDate
+            do {
+                try context.save()
+            } catch {
+                debug(.service, "temp target HBT couldn't be saved to CoreData: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    /// The half basal target of a % temp target preset, by the preset's id.
+    func saveTempTargetHBTPreset(id: String, hbt: Double, duration: Decimal) async {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let row = TempTargetsSlider(context: context)
+            row.id = id
+            row.isPreset = true
+            row.enabled = true
+            row.hbt = hbt
+            row.date = Date()
+            row.duration = duration as NSDecimalNumber
+            do {
+                try context.save()
+            } catch {
+                debug(.service, "temp target preset HBT couldn't be saved to CoreData: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    func fetchTempTargetHBTPreset(id: String) async -> TempTargetsSliderSnapshot? {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let request = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+            request.predicate = NSPredicate(format: "id == %@ AND isPreset == YES", id)
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            request.fetchLimit = 1
+            return ((try? context.fetch(request)) ?? []).first.map { TempTargetsSliderSnapshot.create(from: $0) }
+        }
+    }
+
+    func deleteTempTargetHBTPresets(id: String) async {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let request = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+            request.predicate = NSPredicate(format: "id == %@", id)
+            let rows = (try? context.fetch(request)) ?? []
+            guard rows.isNotEmpty else { return }
+            rows.forEach { context.delete($0) }
+            do {
+                try context.save()
+            } catch {
+                debug(.service, "temp target preset HBT couldn't be deleted from CoreData: \(error.localizedDescription)")
+            }
+        }
+    }
+
+    /// The newest preset HBT, to seed the slider (skips the old cancel rows).
+    func fetchLastHBT() async -> Double? {
+        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
+            let request = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
+            request.predicate = NSPredicate(format: "isPreset == YES")
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            request.fetchLimit = 1
+            return ((try? context.fetch(request)) ?? []).first?.hbt
+        }
+    }
+
     /// Fetch saved meals within interval, future entries excluded
     func fetchMealData(interval: NSDate) async -> [MealsSnapshot] {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in

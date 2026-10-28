@@ -1,4 +1,3 @@
-import CoreData
 import SwiftUI
 import Swinject
 
@@ -16,11 +15,6 @@ extension AddTempTarget {
         @State private var isRemoveAlertPresented = false
         @State private var removeAlert: Alert?
         @State private var isEditing = false
-
-        @FetchRequest(
-            entity: TempTargetsSlider.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "date", ascending: false)]
-        ) var isEnabledArray: FetchedResults<TempTargetsSlider>
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -142,9 +136,6 @@ extension AddTempTarget {
                 }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
-            .onAppear {
-                state.hbt = isEnabledArray.first?.hbt ?? 160
-            }
             .navigationTitle("Enact Temp Target")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))

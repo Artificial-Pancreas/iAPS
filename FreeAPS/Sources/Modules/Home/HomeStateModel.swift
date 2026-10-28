@@ -16,7 +16,6 @@ extension Home {
         @Injected() private var appUIState: AppUIState!
         @Injected() private var databaseManager: DatabaseManager!
 
-        private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
         @Injected() private var overrideStorage: OverrideStorage!
 
@@ -430,16 +429,7 @@ extension Home {
 
         func cancelTempTarget() {
             Task {
-                await storage.storeTempTargets([TempTarget.cancel(at: Date())])
-                let saveToCoreData = TempTargets(context: self.coredataContext)
-                saveToCoreData.active = false
-                saveToCoreData.date = Date()
-                try? self.coredataContext.save()
-
-                let setHBT = TempTargetsSlider(context: self.coredataContext)
-                setHBT.enabled = false
-                setHBT.date = Date()
-                try? self.coredataContext.save()
+                await storage.cancelTempTarget()
             }
         }
 
