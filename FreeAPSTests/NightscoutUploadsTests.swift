@@ -226,28 +226,51 @@ final class NightscoutUploadBurstScheduleTests: XCTestCase {
         XCTAssertEqual(schedule.fire(now: t0), .immediate)
     }
 
-    // MARK: gate slack
+    // MARK: gate clock boundaries
 
-    private let date0 = Date(timeIntervalSinceReferenceDate: 800_000_000)
+    /// a fixed UTC date
+    private func date(_ day: Int, _ hour: Int, _ minute: Int, _ second: Int = 0) -> Date {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar.date(from: DateComponents(year: 2026, month: 10, day: day, hour: hour, minute: minute, second: second))!
+    }
 
     func testGateAllowsWithoutAnUpload() {
-        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: nil, interval: .hours(1), now: date0))
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: nil, interval: .hours(1), now: date(28, 10, 0)))
     }
 
-    func testGateAllowsWithinTheSlackOfTheInterval() {
+    func testGateHoldsWithinTheSameHour() {
+        XCTAssertFalse(UploadScheduleGate.isDue(
+            lastUpload: date(28, 10, 0, 30),
+            interval: .hours(1),
+            now: date(28, 10, 59, 59)
+        ))
+    }
+
+    func testGateAllowsOnceTheHourIsCrossed() {
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date(28, 10, 58), interval: .hours(1), now: date(28, 11, 1)))
+    }
+
+    func testEntitiesUploadedAtDifferentTimesAreDueTogether() {
         let interval: TimeInterval = .hours(1)
-        let due = interval - UploadScheduleGate.slack
-        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: date0, interval: interval, now: date0 + due - 1))
-        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date0, interval: interval, now: date0 + due))
-        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date0, interval: interval, now: date0 + interval))
+        let early = date(28, 10, 13)
+        let late = date(28, 10, 28)
+        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: early, interval: interval, now: date(28, 10, 59)))
+        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: late, interval: interval, now: date(28, 10, 59)))
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: early, interval: interval, now: date(28, 11, 2)))
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: late, interval: interval, now: date(28, 11, 2)))
     }
 
-    func testGateSlackAppliesTo12Hours() {
+    func testGateAllowsWhenTheClockWentBack() {
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date(28, 11, 5), interval: .hours(1), now: date(28, 10, 30)))
+    }
+
+    func testGateUses12HourBoundaries() {
         let interval: TimeInterval = .hours(12)
-        let eleventhHour: TimeInterval = .hours(11)
-        let fourMinutes: TimeInterval = .minutes(4)
-        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: date0, interval: interval, now: date0 + eleventhHour))
-        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date0, interval: interval, now: date0 + interval - fourMinutes))
+        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: date(28, 0, 5), interval: interval, now: date(28, 11, 59)))
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date(28, 11, 50), interval: interval, now: date(28, 12, 1)))
+        XCTAssertFalse(UploadScheduleGate.isDue(lastUpload: date(28, 12, 1), interval: interval, now: date(28, 23, 59)))
+        XCTAssertTrue(UploadScheduleGate.isDue(lastUpload: date(28, 23, 59), interval: interval, now: date(29, 0, 1)))
     }
 }
 
