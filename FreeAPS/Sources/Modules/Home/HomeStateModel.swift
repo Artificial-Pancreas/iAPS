@@ -620,19 +620,20 @@ extension Home {
 
         /// update the active temp target
         /// schedule an update on temp target activation/expiry
+        /// `tempTargets`: newest->oldest (as published by the temp targets storage)
         private func updateCurrentTempTarget(_ tempTargets: [TempTarget]) {
             tempTargetBoundaryTask?.cancel()
             tempTargetBoundaryTask = nil
 
             let now = Date()
-            let last = tempTargets.last
-            let current = last.flatMap { $0.isActive(at: now) ? $0 : nil }
+            let newest = tempTargets.first
+            let current = newest.flatMap { $0.isActive(at: now) ? $0 : nil }
             if tempTarget != current {
                 tempTarget = current
             }
 
-            guard let last, last.duration != 0 else { return }
-            let boundary = now < last.createdAt ? last.createdAt : last.endDate
+            guard let newest, newest.duration != 0 else { return }
+            let boundary = now < newest.createdAt ? newest.createdAt : newest.endDate
             guard boundary > now else { return }
 
             tempTargetBoundaryTask = Task { [weak self] in
@@ -861,13 +862,10 @@ extension Home.StateModel {
     }
 
     private func tempTargetsUpdated(_ tempTargets: [TempTarget]) {
-        // TODO: refactor the code to assume the standard newest->oldest ordering instead
-        // chart + current-detection expect oldest -> newest
-        let tempTargets = Array(tempTargets.reversed())
-
         let now = Date()
 
-        data.tempTargets = tempTargets.filter {
+        // the chart expects oldest -> newest
+        data.tempTargets = tempTargets.reversed().filter {
             $0.createdAt.addingTimeInterval(.hours(hours)) > now
         }
         updateCurrentTempTarget(tempTargets)
