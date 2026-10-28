@@ -129,37 +129,29 @@ extension AddCarbs {
             let fat = carbsToStore.compactMap(\.fat).reduce(0, +)
             let protein = carbsToStore.compactMap(\.protein).reduce(0, +)
             let fiber = carbsToStore.compactMap(\.fiber).reduce(0, +)
-            var hasMicronutrients = false
-
-            // To Do: Remove
-            print("Micros: true")
-            if let last = carbsToStore.last {
-                if let items = last.micronutrient {
-                    hasMicronutrients = true
-                    for item in items {
-                        print("Micros:  \(item.substance) " + item.formattedAmount)
-                    }
-                }
-            }
+            let hasMicronutrients = carbsToStore.last?.micronutrient != nil
 
             let empty = carbs <= 0 && fat <= 0 && protein <= 0 && fiber <= 0 && !hasMicronutrients
 
             if (skipBolus && !continue_ && !fetch) || hypoTreatment {
-                saveToCoreData(carbsToStore, savedToFile: true)
-                await carbsStorage.storeCarbs(carbsToStore)
-                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
-                showModal(for: nil)
+                await storeMeal(carbsToStore)
             } else if carbs > 0 {
                 saveToCoreData(carbsToStore, savedToFile: false)
                 showModal(for: .bolus(waitForSuggestion: true, fetch: true))
             } else if !empty {
-                saveToCoreData(carbsToStore, savedToFile: true)
-                await carbsStorage.storeCarbs(carbsToStore)
-                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
-                showModal(for: nil)
+                await storeMeal(carbsToStore)
             } else {
                 hideModal()
             }
+        }
+
+        /// Saves the meal (row, then carbs), refreshes the suggestion and closes
+        private func storeMeal(_ carbsToStore: [CarbsEntry]) async {
+            if let entry = carbsToStore.last {
+                await carbsStorage.storeMeal(entry)
+            }
+            _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
+            showModal(for: nil)
         }
 
         private func saveMicro(

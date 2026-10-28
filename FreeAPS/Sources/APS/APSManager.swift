@@ -745,7 +745,7 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 return
             }
 
-            let item = [CarbsEntry(
+            let item = CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: date,
                 actualDate: date,
@@ -756,10 +756,9 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
                 note: "Remote",
                 enteredBy: "Nightscout operator",
                 isFPU: false
-            )]
+            )
 
-            await coreDataStorage.saveMeal(item, now: date, savedToFile: true)
-            await carbsStorage.storeCarbs(item)
+            await carbsStorage.storeMeal(item)
 
             await announcementsStorage.storeAnnouncements([announcement], enacted: true)
             debug(

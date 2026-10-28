@@ -426,14 +426,25 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    /// Save one Meal entry
+    /// Save one Meal entry. Upsert by id: saving the same meal again updates its row
     func saveMeal(_ stored: [CarbsEntry], now: Date, savedToFile: Bool = false) async {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            let save = Meals(context: context)
             if let entry = stored.first {
+                let id = entry.id ?? ""
+                var existing: Meals?
+                if !id.isEmpty {
+                    let request = Meals.fetchRequest() as NSFetchRequest<Meals>
+                    request.predicate = NSPredicate(format: "id == %@", id)
+                    request.fetchLimit = 1
+                    existing = (try? context.fetch(request))?.first
+                }
+                let save = existing ?? Meals(context: context)
+                // an updated row gets its micronutrients replaced
+                (save.micronutrient as? Set<Micronutrient>)?.forEach { context.delete($0) }
+
                 save.createdAt = now
                 save.actualDate = entry.actualDate ?? entry.createdAt
-                save.id = entry.id ?? ""
+                save.id = id
                 save.carbs = entry.carbs as NSDecimalNumber
                 save.fat = (entry.fat ?? 0) as NSDecimalNumber
                 save.protein = (entry.protein ?? 0) as NSDecimalNumber
@@ -444,7 +455,6 @@ final class CoreDataStorage: Sendable {
                 // MARK: Are there any micronutrients?
 
                 if let micros = entry.micronutrient {
-                    print("Micro exist")
                     for value in micros {
                         guard value.amount != 0 else { continue }
                         let micro = Micronutrient(context: context)
@@ -457,8 +467,6 @@ final class CoreDataStorage: Sendable {
                         micro.meal = save
 
                         save.addToMicronutrients(micro)
-
-                        print("Micro " + value.name + " \(value.amount)")
                     }
                 }
 

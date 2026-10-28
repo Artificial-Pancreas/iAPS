@@ -4,6 +4,7 @@ import Swinject
 
 protocol CarbsStorage: Sendable {
     func storeCarbs(_ carbs: [CarbsEntry]) async
+    func storeMeal(_ entry: CarbsEntry) async
     func syncDate() async -> Date
     func deleteCarbsAndFPUs(at date: Date) async
 
@@ -14,6 +15,7 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
     private let storage: FileStorage
     private let settingsManager: SettingsManager
     private let appCoordinator: AppCoordinator
+    private let coreDataStorage = CoreDataStorage()
 
     init(
         storage: FileStorage,
@@ -39,6 +41,13 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
         // newest -> oldest
         let carbs = await storage.retrieve(OpenAPS.Monitor.carbHistory, as: [CarbsEntry].self) ?? []
         appCoordinator.setCarbHistory(carbs)
+    }
+
+    /// A user-confirmed meal: the Meals row (+ micronutrients, savedToFile) first, then the carbs file (+ FPU split).
+    /// Row first: Home refreshes its meal totals on the carbHistory publish of storeCarbs
+    func storeMeal(_ entry: CarbsEntry) async {
+        await coreDataStorage.saveMeal([entry], now: entry.createdAt, savedToFile: true)
+        await storeCarbs([entry])
     }
 
     func storeCarbs(_ entries: [CarbsEntry]) async {
