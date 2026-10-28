@@ -4092,7 +4092,7 @@ Enact a temp Basal or a temp target */
 "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
 
 /* Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining */
-"Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+"Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Термін дії вашої збірки iAPS спливає %1$@ (залишилося %2$d дн.). Збірки, встановлені через Xcode, діють протягом терміну дії профілю підпису — щоб продовжити використання, виконайте повторне збирання та встановлення.";
 
 /* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
 "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
