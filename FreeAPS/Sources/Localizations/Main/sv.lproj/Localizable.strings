@@ -4101,7 +4101,7 @@ Enact a temp Basal or a temp target */
 "Update available" = "Update available";
 
 /* Dismiss the newer-release alert */
-"Later" = "Later";
+"Later" = "Senare";
 
 /* Open the release highlights page */
 "What's new" = "What's new";
@@ -4121,6 +4121,6 @@ Enact a temp Basal or a temp target */
 
 /* --- Settings → Debug options: crash reporting test hook --- */
 "Simulate a crash" = "Simulate a crash";
-"Crash" = "Crash";
-"Simulate a crash?" = "Simulate a crash?";
+"Crash" = "Krasch";
+"Simulate a crash?" = "Simulera en krasch?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
