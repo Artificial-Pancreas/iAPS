@@ -242,6 +242,7 @@ actor OpenAPS: Sendable {
 
     func makeProfiles(
         dynamicVariables: DynamicVariables,
+        tempTargets: [TempTarget],
         useAutotune: Bool,
         settings: FreeAPSSettings
     ) async throws -> (profile: Profile, pumpProfile: Profile) {
@@ -253,7 +254,6 @@ actor OpenAPS: Sendable {
         let basalProfile = appCoordinator.basalProfile.value
         let isf = appCoordinator.isfSchedule.value
         let cr = appCoordinator.crSchedule.value
-        let tempTargets = appCoordinator.tempTargets.value
         let model = appCoordinator.pumpStatus.value?.model ?? "722"
         let autotune = getAutotune(useAutotune: useAutotune)
 

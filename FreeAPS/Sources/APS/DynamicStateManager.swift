@@ -1,7 +1,8 @@
 import Foundation
 
 protocol DynamicStateManager: Sendable {
-    func dynamicVariables() async -> DynamicVariables
+    /// `tempTargets`: the list the profiles are made from (one read per loop, so the HBT decision matches them).
+    func dynamicVariables(tempTargets: [TempTarget]) async -> DynamicVariables
 }
 
 actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
@@ -23,7 +24,7 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
     // this is called at the app start
     func start() async {}
 
-    func dynamicVariables() async -> DynamicVariables {
+    func dynamicVariables(tempTargets: [TempTarget]) async -> DynamicVariables {
         let preferences = appCoordinator.preferences.value
 
         let start = Date.now
@@ -47,13 +48,6 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             "dynamicVariables: Time to fetch TDD \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
-        // Temp Targets using slider
-        now = Date.now
-        let sliderArray = await coreDataStorage.fetchTempTargetsSlider()
-        print(
-            "dynamicVariables: Time for fetchTempTargetsSlider \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
-        )
-
         // Overrides
         now = Date.now
         let activeOverride = await overrideStorage.fetchCurrentActiveOverride()
@@ -61,11 +55,17 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             "dynamicVariables: Time for fetchCurrentActiveOverride \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
-        // Temp Target
+        // Temp Target: only the HBT row of the active temp target applies (one left by a temp target that was
+        // replaced or cancelled without writing a row, e.g. from Nightscout, must not)
         now = Date.now
-        let tempTargetsArray = await coreDataStorage.fetchTempTargets()
+        let activeTempTarget = TempTargetHBT.activeTarget(in: tempTargets, at: now)
+        var hbtRow: TempTargetsSnapshot?
+        if let activeTempTarget {
+            hbtRow = await coreDataStorage.fetchTempTargetHBT(id: activeTempTarget.id)
+        }
+        let tempTargetHBT = TempTargetHBT.halfBasalTarget(row: hbtRow, activeTarget: activeTempTarget, at: now)
         print(
-            "dynamicVariables: Time for fetchTempTargets \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
+            "dynamicVariables: Time for fetchTempTargetHBT \(-1 * now.timeIntervalSinceNow) seconds, total: \(-1 * start.timeIntervalSinceNow)"
         )
 
         let twoHoursArray = uniqueEvents
@@ -73,8 +73,10 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
         var nrOfIndeces = twoHoursArray.count
         let totalAmount = twoHoursArray.compactMap({ each in each.tdd ?? 0 }).reduce(0, +)
 
-        var temptargetActive = tempTargetsArray.first?.active ?? false
-        let isPercentageEnabled = sliderArray.first?.enabled ?? false
+        let temptargetActive = tempTargetHBT != nil
+        if let tempTargetHBT {
+            hbt_ = Decimal(tempTargetHBT)
+        }
 
         var overridePercentage = Decimal(activeOverride?.percentage ?? 100)
         var unlimited = activeOverride?.indefinite ?? true
@@ -109,22 +111,6 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             disableSMBs = false
         }
 
-        if temptargetActive {
-            let duration_ = Int(truncating: tempTargetsArray.first?.duration as? NSNumber ?? 0)
-            let hbt = tempTargetsArray.first?.hbt ?? Double(hbt_)
-
-            let startDate = tempTargetsArray.first?.startDate ?? Date()
-            let durationPlusStart = startDate.addingTimeInterval(.minutes(duration_))
-            let dd = durationPlusStart.timeIntervalSinceNow.minutes
-
-            if dd > 0.1 {
-                hbt_ = Decimal(hbt)
-                temptargetActive = true
-            } else {
-                temptargetActive = false
-            }
-        }
-
         // Auto ISF
         var autoISFsettings: AutoISFsettings
         if let activeOverride, activeOverride.overrideAutoISF, let fetched = activeOverride.aisf
@@ -141,7 +127,7 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             past2hoursAverage: average2hours,
             date: Date(),
             isEnabled: temptargetActive,
-            presetActive: isPercentageEnabled,
+            presetActive: temptargetActive,
             overridePercentage: overridePercentage,
             useOverride: activeOverride != nil,
             duration: duration,
@@ -165,5 +151,29 @@ actor BaseDynamicStateManager: DynamicStateManager, LifetimeOwner, AppService {
             autoISFoverrides: autoISFsettings,
             aisfOverridden: activeOverride?.overrideAutoISF ?? false
         )
+    }
+}
+
+/// Which half basal target applies: an HBT row only belongs to the temp target with its id.
+enum TempTargetHBT {
+    /// The temp target oref applies at `date` (same walk as oref0 targets.js): the newest started one,
+    /// a cancel or an invalid range ends it.
+    static func activeTarget(in targets: [TempTarget], at date: Date) -> TempTarget? {
+        for target in targets.sorted(by: { $0.createdAt > $1.createdAt }) {
+            let started = target.createdAt <= date
+            if started, target.duration == 0 { return nil }
+            guard let bottom = target.targetBottom, let top = target.targetTop, bottom != 0, top != 0 else { return nil }
+            if started, date < target.createdAt.addingTimeInterval(.minutes(target.duration)) { return target }
+        }
+        return nil
+    }
+
+    /// The HBT of `row` when it is the % row of `activeTarget` and still within its duration; nil: no % temp target.
+    static func halfBasalTarget(row: TempTargetsSnapshot?, activeTarget: TempTarget?, at date: Date) -> Double? {
+        guard let row, let activeTarget, row.active, row.id == activeTarget.id,
+              let start = row.startDate, let duration = row.duration, duration > 0,
+              start <= date, date < start.addingTimeInterval(.minutes(duration))
+        else { return nil }
+        return row.hbt
     }
 }

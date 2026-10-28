@@ -137,6 +137,7 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     func cancelTempTarget() async {
         await serializer.run {
             let cancel = TempTarget.cancel(at: Date())
+            // not needed here (no active target, no HBT), but older builds take the newest row
             await coreDataStorage.saveTempTargetHBT(
                 id: cancel.id,
                 active: false,
@@ -172,6 +173,8 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
     }
 
     /// Not serialized: callers run it inside the serializer.
+    /// The HBT row first: it carries the target's id, so it only applies once the file write makes that target active.
+    /// The other way round, a loop in between (or an app kill) would run the new temp target without its HBT.
     private func enact(_ target: TempTarget, hbt: Double?) async {
         await coreDataStorage.saveTempTargetHBT(
             id: target.id,

@@ -191,25 +191,14 @@ final class CoreDataStorage: Sendable {
         }
     }
 
-    func fetchTempTargetsSlider() async -> [TempTargetsSliderSnapshot] {
+    /// The newest HBT row of the temp target with this id.
+    func fetchTempTargetHBT(id: String) async -> TempTargetsSnapshot? {
         await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            let requestIsEnbled = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
-            let sortIsEnabled = NSSortDescriptor(key: "date", ascending: false)
-            requestIsEnbled.sortDescriptors = [sortIsEnabled]
-            // requestIsEnbled.fetchLimit = 1
-            let sliderArray = (try? context.fetch(requestIsEnbled)) ?? []
-            return sliderArray.map { TempTargetsSliderSnapshot.create(from: $0) }
-        }
-    }
-
-    func fetchTempTargets() async -> [TempTargetsSnapshot] {
-        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            let requestTempTargets = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
-            let sortTT = NSSortDescriptor(key: "date", ascending: false)
-            requestTempTargets.sortDescriptors = [sortTT]
-            requestTempTargets.fetchLimit = 1
-            let tempTargetsArray = (try? context.fetch(requestTempTargets)) ?? []
-            return tempTargetsArray.map { TempTargetsSnapshot.create(from: $0) }
+            let request = TempTargets.fetchRequest() as NSFetchRequest<TempTargets>
+            request.predicate = NSPredicate(format: "id == %@", id)
+            request.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            request.fetchLimit = 1
+            return ((try? context.fetch(request)) ?? []).first.map { TempTargetsSnapshot.create(from: $0) }
         }
     }
 

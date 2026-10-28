@@ -451,9 +451,12 @@ actor BaseAPSManager: APSManager, LifetimeOwner, AppService {
     func makeProfiles() async throws -> (profile: Profile, pumpProfile: Profile) {
         let settings = appCoordinator.settings.value
         await overrideManager.autoCancelOverrideIfNeeded()
-        let dynamicVariables = await dynamicStateManager.dynamicVariables()
+        // one read: the HBT decision in dynamicVariables must be about the temp target the profiles get
+        let tempTargets = appCoordinator.tempTargets.value
+        let dynamicVariables = await dynamicStateManager.dynamicVariables(tempTargets: tempTargets)
         let profiles = try await openAPS.makeProfiles(
             dynamicVariables: dynamicVariables,
+            tempTargets: tempTargets,
             useAutotune: settings.useAutotune,
             settings: settings
         )
