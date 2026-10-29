@@ -97,7 +97,9 @@ jobs:
           ls -d /Applications/Xcode*.app
 
           # Select the latest Xcode 27.x version
-          XCODE=$(ls -d /Applications/Xcode_27.[0-9]*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          XCODE=$( { for app in /Applications/Xcode_27.[0-9]*.app; do readlink -f "$app"; done; } \
+          | grep -viE 'beta|Release_Candidate' | sort -uV | tail -1 || true )
+          
           if [ -z "$XCODE" ]; then
             echo "::error::No stable Xcode 27.x found on this runner"
             exit 1
