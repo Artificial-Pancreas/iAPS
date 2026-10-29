@@ -119,6 +119,9 @@ final class LogFileWriter: @unchecked Sendable {
         var since: Date?
         var causes: [DropCause] = []
 
+        /// No dropped lines (causes alone don't count).
+        var isEmpty: Bool { count == 0 }
+
         mutating func add(_ lines: Int, since date: Date, cause: DropCause? = nil) {
             if let cause {
                 note(cause)
@@ -171,8 +174,8 @@ final class LogFileWriter: @unchecked Sendable {
     private let logFilePrev: URL
     private let notificationCenter: Foundation.NotificationCenter
     /// The marker line's date. Injectable (as is `write`) only for tests.
-    private let now: @Sendable () -> Date
-    private let systemWrite: @Sendable (Int32, UnsafeRawPointer, Int) -> Int
+    private let now: @Sendable() -> Date
+    private let systemWrite: @Sendable(Int32, UnsafeRawPointer, Int) -> Int
 
     /// The writer queue. Internal (not private) only so tests can hold it to simulate a stalled disk.
     let queue = DispatchQueue(label: "iAPS.LogFileWriter", qos: .utility)
@@ -201,8 +204,8 @@ final class LogFileWriter: @unchecked Sendable {
         directory: URL,
         maxPendingBytes: Int = 4 << 20,
         notificationCenter: Foundation.NotificationCenter = .default,
-        now: @escaping @Sendable () -> Date = { Date() },
-        write: @escaping @Sendable (Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
+        now: @escaping @Sendable() -> Date = { Date() },
+        write: @escaping @Sendable(Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
     ) {
         self.directory = directory
         logFile = directory.appendingPathComponent("log.txt")
@@ -274,7 +277,7 @@ final class LogFileWriter: @unchecked Sendable {
         var dropped = droppedByWriter
         dropped.add(batch.dropped)
         droppedByWriter = DropWindow()
-        guard !batch.lines.isEmpty || dropped.count > 0 else { return }
+        guard !batch.lines.isEmpty || !dropped.isEmpty else { return }
 
         refreshFormatterIfNeeded()
         // Documents is visible in the Files app: if log.txt was deleted or moved under the open
@@ -286,7 +289,7 @@ final class LogFileWriter: @unchecked Sendable {
         for line in batch.lines {
             add(line.text, at: line.date)
         }
-        if dropped.count > 0 {
+        if !dropped.isEmpty {
             add("[Default] LogFileWriter - drain() - 0 - \(dropped.marker(formatter))", at: now(), isLogLine: false)
             if !commit() {
                 // The marker was lost with this batch: carry its window, ahead of this failure.
