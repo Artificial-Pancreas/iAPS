@@ -96,6 +96,14 @@ jobs:
           echo "Available Xcode versions:"
           ls -d /Applications/Xcode*.app
 
+          # Select the latest Xcode 27.x version
+          XCODE=$(ls -d /Applications/Xcode_27.[0-9]*.app 2>/dev/null | grep -vi beta | sort -V | tail -1)
+          if [ -z "$XCODE" ]; then
+            echo "::error::No stable Xcode 27.x found on this runner"
+            exit 1
+          fi
+          sudo xcode-select --switch "$XCODE/Contents/Developer"
+
           echo "Active Xcode:"
           xcodebuild -version
 
