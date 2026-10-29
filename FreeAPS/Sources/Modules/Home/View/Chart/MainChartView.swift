@@ -343,14 +343,10 @@ struct MainChartCanvas: View {
                                 scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                             }
                         }
-                        .onAppear {
-                            DispatchQueue.main.async {
-                                scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
-                            }
-                        }
                 }
             }
         }
+        .defaultScrollAnchor(.trailing)
     }
 
     private var yGridView: some View {
