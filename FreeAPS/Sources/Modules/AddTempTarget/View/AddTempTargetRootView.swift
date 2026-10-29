@@ -33,11 +33,12 @@ extension AddTempTarget {
                     }
                 }
 
-                HStack {
-                    Text("Experimental")
-                    Toggle(isOn: $state.viewPercantage) {}.controlSize(.mini)
-                    Image(systemName: "figure.highintensity.intervaltraining")
-                    Image(systemName: "fork.knife")
+                Toggle(isOn: $state.viewPercantage) {
+                    HStack(spacing: 6) {
+                        Text("Experimental")
+                        Image(systemName: "figure.highintensity.intervaltraining")
+                        Image(systemName: "fork.knife")
+                    }
                 }
 
                 if state.viewPercantage {
@@ -117,6 +118,7 @@ extension AddTempTarget {
                 Section {
                     Button { state.enact() }
                     label: { Text("Start") }
+                        .disabled(state.duration == 0)
                     Button { state.cancel() }
                     label: { Text("Cancel Temp Target") }
                 }
