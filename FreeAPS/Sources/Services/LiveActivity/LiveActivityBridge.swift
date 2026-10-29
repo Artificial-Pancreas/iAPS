@@ -146,7 +146,60 @@ private struct ActiveActivity {
     }
 }
 
+/// Decides whether a content update goes out to the current activity:
+/// equal content is dropped, IOB-only updates are throttled and coalesced into one trailing update.
+struct LiveActivityUpdateGate<State: Equatable> {
+    enum Trigger {
+        case iob
+        /// loop completion, forced updates and the trailing IOB update; clears any pending deferral
+        case immediate
+    }
+
+    enum Decision: Equatable {
+        case push
+        case skip
+        case deferred(until: Date)
+    }
+
+    /// displayed IOB is rounded to 0.1 U, so faster updates rarely show anything new, and iOS throttles frequent activity updates
+    static var iobInterval: TimeInterval { .seconds(60) }
+
+    /// lets the loop's own push (which carries the latest IOB) absorb the IOB ticks published while it runs
+    static var iobDebounce: TimeInterval { .seconds(15) }
+
+    private var lastPushed: State?
+    private var lastPushDate: Date?
+    /// pending IOB deferral; fixed once set, later ticks share it
+    private var deadline: Date?
+
+    mutating func decide(_ state: State, trigger: Trigger, now: Date) -> Decision {
+        if trigger == .immediate { deadline = nil }
+        if state == lastPushed { return .skip }
+        guard trigger == .iob, let lastPushDate else { return .push }
+
+        let deadline = self.deadline ?? max(
+            lastPushDate.addingTimeInterval(Self.iobInterval),
+            now.addingTimeInterval(Self.iobDebounce)
+        )
+        guard deadline > now else { return .push }
+        self.deadline = deadline
+        return .deferred(until: deadline)
+    }
+
+    mutating func didPush(_ state: State, at date: Date) {
+        lastPushed = state
+        lastPushDate = date
+        deadline = nil
+    }
+
+    mutating func reset() {
+        self = Self()
+    }
+}
+
 actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
+    private typealias UpdateTrigger = LiveActivityUpdateGate<LiveActivityAttributes.ContentState>.Trigger
+
     private let settingsManager: SettingsManager
     private let storage: FileStorage
     private let appCoordinator: AppCoordinator
@@ -161,8 +214,19 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
 
     private var knownSettings: FreeAPSSettings?
 
-    private var currentActivity: ActiveActivity?
+    private var currentActivity: ActiveActivity? {
+        didSet {
+            // a new or ended activity always gets the next update
+            if currentActivity?.activity.id != oldValue?.activity.id {
+                updateGate.reset()
+            }
+        }
+    }
+
     private var latestLoopOutcome: LoopOutcome?
+
+    private var updateGate = LiveActivityUpdateGate<LiveActivityAttributes.ContentState>()
+    private var trailingIOBUpdate: (deadline: Date, task: Task<Void, Never>)?
 
     init(
         settingsManager: SettingsManager,
@@ -220,11 +284,35 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
 
     private func loopCompleted(_ outcome: LoopOutcome) async {
         latestLoopOutcome = outcome
-        await updateActivityContent()
+        await updateActivityContent(trigger: .immediate)
     }
 
     private func iobUpdated(_: [IOBEntry]) async {
-        await updateActivityContent()
+        await updateActivityContent(trigger: .iob)
+    }
+
+    private func scheduleTrailingIOBUpdate(at date: Date) {
+        // same deadline: already scheduled. A different one: the task outlived its deferral (pushes don't cancel it)
+        // and would fire too early for the new one
+        guard trailingIOBUpdate?.deadline != date else { return }
+        cancelTrailingIOBUpdate()
+        let task = Task { [weak self] in
+            try? await Task.sleep(for: .seconds(max(date.timeIntervalSinceNow, 0)))
+            await self?.trailingIOBUpdateFired()
+        }
+        trailingIOBUpdate = (date, task)
+    }
+
+    private func cancelTrailingIOBUpdate() {
+        trailingIOBUpdate?.task.cancel()
+        trailingIOBUpdate = nil
+    }
+
+    private func trailingIOBUpdateFired() async {
+        // runs in the trailing task: cancelled if it was replaced or the activity ended meanwhile
+        guard !Task.isCancelled else { return }
+        trailingIOBUpdate = nil
+        await updateActivityContent(trigger: .immediate)
     }
 
     private func settingsUpdated(_ newSettings: FreeAPSSettings) async {
@@ -252,14 +340,14 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         // only do this if there is no current activity or the current activity is older than 1h
         if knownSettings.useLiveActivity {
             if force || currentActivity?.needsRecreation() ?? true {
-                await updateActivityContent()
+                await updateActivityContent(trigger: .immediate)
             }
         } else {
             await endActivity()
         }
     }
 
-    private func updateActivityContent() async {
+    private func updateActivityContent(trigger: UpdateTrigger) async {
         guard let settings = knownSettings, systemEnabled else { return }
 
         guard settings.useLiveActivity else {
@@ -292,11 +380,15 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         ) else {
             return
         }
-        await pushUpdate(content, settings: settings)
+        await pushUpdate(content, settings: settings, trigger: trigger)
     }
 
     /// attempts to present this live activity state, creating a new activity if none exists yet
-    private func pushUpdate(_ state: LiveActivityAttributes.ContentState, settings: FreeAPSSettings) async {
+    private func pushUpdate(
+        _ state: LiveActivityAttributes.ContentState,
+        settings: FreeAPSSettings,
+        trigger: UpdateTrigger
+    ) async {
         guard systemEnabled else { return }
 
         // hide duplicate/unknown activities
@@ -309,8 +401,19 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
             if currentActivity.needsRecreation(), await UIApplication.shared.applicationState == .active {
                 // activity is no longer visible or old. End it and try to push the update again
                 await endActivity()
-                await pushUpdate(state, settings: settings)
+                await pushUpdate(state, settings: settings, trigger: trigger)
             } else {
+                switch updateGate.decide(state, trigger: trigger, now: Date.now) {
+                case .skip:
+                    return
+                case let .deferred(until):
+                    scheduleTrailingIOBUpdate(at: until)
+                    return
+                case .push:
+                    // a pending trailing update is left to fire: dedup skips it if this push already carried the latest IOB
+                    break
+                }
+
                 let encoder = JSONEncoder()
                 let encodedLength: Int = {
                     if let data = try? encoder.encode(state) {
@@ -338,6 +441,8 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
                     }
                 }()
 
+                // recorded before the await so a reentrant equal update is dropped
+                updateGate.didPush(state, at: Date.now)
                 await currentActivity.activity.update(content)
             }
         } else {
@@ -376,7 +481,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
                 currentActivity = ActiveActivity(activity: activity, startDate: Date.now)
 
                 // then show the actual content
-                await pushUpdate(state, settings: settings)
+                await pushUpdate(state, settings: settings, trigger: trigger)
             } catch {
                 debug(.service, "activity creation error: \(error)")
             }
@@ -385,6 +490,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
 
     /// ends all live activities immediately
     private func endActivity() async {
+        cancelTrailingIOBUpdate()
         if let currentActivity {
             await currentActivity.activity.end(nil, dismissalPolicy: .immediate)
             self.currentActivity = nil

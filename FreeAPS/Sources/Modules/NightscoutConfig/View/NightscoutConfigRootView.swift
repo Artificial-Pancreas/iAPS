@@ -292,8 +292,8 @@ extension NightscoutConfig {
             ("overrides", NSLocalizedString("Overrides", comment: "Upload entity")),
             ("podAge", NSLocalizedString("Pod age", comment: "Upload entity")),
             ("cgmState", NSLocalizedString("CGM state", comment: "Upload entity")),
-            ("pumpStatus", NSLocalizedString("Pump status", comment: "Upload entity")),
-            ("iob", NSLocalizedString("IOB", comment: "Upload entity"))
+            // pump status, phone battery and IOB
+            ("pumpStatus", NSLocalizedString("Pump status", comment: "Upload entity"))
         ]
 
         var body: some View {

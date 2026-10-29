@@ -8,6 +8,17 @@ struct NightscoutStatus: JSON {
     let createdAt: Date
 }
 
+extension NightscoutStatus {
+    // without `created_at`, NS stamps the receive time
+    private enum CodingKeys: String, CodingKey {
+        case device
+        case openaps
+        case pump
+        case uploader
+        case createdAt = "created_at"
+    }
+}
+
 struct OpenAPSStatus: JSON {
     let iob: IOBEntry?
     let suggested: Suggestion?

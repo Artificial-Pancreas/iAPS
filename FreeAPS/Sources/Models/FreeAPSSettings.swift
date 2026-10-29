@@ -889,7 +889,7 @@ enum UploadScheduleInterval: String, JSON, Identifiable, CaseIterable {
         }
     }
 
-    /// minimum time between uploads; `nil` means uploads are not allowed
+    /// the upload period, aligned on clock boundaries (`UploadScheduleGate.isDue`); `nil` means uploads are not allowed
     var timeInterval: TimeInterval? {
         switch self {
         case .always: return 0
