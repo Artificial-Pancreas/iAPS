@@ -8,7 +8,10 @@ extension AutoISF {
         @Published var autoisf: Bool = false
         @Published var autocr: Bool = false
         @Published var enableBGacceleration: Bool = true
+        @Published var autoisfOneMinuteReadings: Bool = false
         @Published var use_B30 = false
+
+        @Published var oneMinuteReadingsAvailable: Bool = false
 
         @Published var autoisf_min: Decimal = 0.8
         @Published var autoisf_max: Decimal = 1.2
@@ -48,6 +51,7 @@ extension AutoISF {
             subscribeSetting(\.autoisf, on: $autoisf) { self.autoisf = $0 }
             subscribeSetting(\.autocr, on: $autocr) { self.autocr = $0 }
             subscribeSetting(\.enableBGacceleration, on: $enableBGacceleration) { self.enableBGacceleration = $0 }
+            subscribeSetting(\.autoisfOneMinuteReadings, on: $autoisfOneMinuteReadings) { self.autoisfOneMinuteReadings = $0 }
             subscribeSetting(\.smbDeliveryRatioBGrange, on: $smbDeliveryRatioBGrange) { self.smbDeliveryRatioBGrange = $0 }
 
             subscribeSetting(\.autoisf_min, on: $autoisf_min) { self.autoisf_min = $0 }
@@ -78,6 +82,8 @@ extension AutoISF {
             subscribeSetting(\.nightTime, on: $nightTime) { self.nightTime = $0 }
 
             subscribeSetting(\.units, on: $units) { self.units = $0 }
+
+            oneMinuteReadingsAvailable = appCoordinator.cgmStatus.value?.oneMinuteReadings ?? false
         }
     }
 }

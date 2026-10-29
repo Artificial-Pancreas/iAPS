@@ -793,7 +793,7 @@ extension Home.StateModel {
     }
 
     private func readFromSettings(_ settings: FreeAPSSettings) async {
-        data.smooth = settings.smoothGlucose
+        data.smooth = settings.glucoseSmoothing.isEnabled
 
         data.lowGlucose = settings.low
         data.highGlucose = settings.high

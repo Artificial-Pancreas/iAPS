@@ -45,10 +45,10 @@ actor OpenAPS: Sendable {
 
         let pumpHistory = appCoordinator.pumpHistory.value
         let carbs = appCoordinator.carbHistory.value
-        let glucose = readGlucoseHistory()
+        let settings = appCoordinator.settings.value
+        let (glucose, glucoseFast) = readGlucoseHistoryWithFast(settings: settings)
         let preferences = appCoordinator.preferences.value
         let basalProfile = appCoordinator.basalProfile.value
-        let settings = appCoordinator.settings.value
         let pumpSettings = appCoordinator.pumpSettings.value
         let reservoir = readReservoir()
 
@@ -107,6 +107,7 @@ actor OpenAPS: Sendable {
             now = Date.now
             profile = try await autosisf(
                 glucose: glucose,
+                glucoseFast: glucoseFast,
                 iob: iob,
                 profile: alteredProfile,
                 autosens: autosens,
@@ -316,9 +317,44 @@ actor OpenAPS: Sendable {
     private func readGlucoseHistory() -> [GlucoseEntry0] {
         // frequency-filtered is derived from the smoothed glucose
         // with smoothing enabled it contains smoothed values,
-        // otherwise they it contains raw (unsmoothed) values
+        // otherwise it contains raw (unsmoothed) values
         // newest->oldest
-        appCoordinator.glucoseFrequencyFiltered.value.map { g in
+        glucoseEntries(from: appCoordinator.glucoseFrequencyFiltered.value)
+    }
+
+    /// Readings older than this are not sent as `glucose_fast`: autoISF's parabola fit, its only user,
+    /// looks back at most 47.5 minutes.
+    private static let fastGlucoseHistory: TimeInterval = .minutes(60)
+
+    /// `glucose`, plus autoISF's `glucose_fast` when it is on and the CGM is currently providing 1-minute readings.
+    ///
+    /// Both come from one read of the smoothed readings. They are separate subjects, sent one after
+    /// the other from the glucose storage, so reading each could pair two different updates - a
+    /// `glucose_fast` newer than `glucose`, or the same reading smoothed differently.
+    private func readGlucoseHistoryWithFast(settings: FreeAPSSettings) -> ([GlucoseEntry0], [GlucoseEntry0]?) {
+        guard settings.autoisfOneMinuteReadings, appCoordinator.cgmStatus.value?.oneMinuteReadings == true else {
+            return (readGlucoseHistory(), nil)
+        }
+
+        // newest -> oldest
+        let smoothed = appCoordinator.glucoseSmoothed.value
+        let frequencyFiltered = FrequentGlucoseFiltering.filterFrequentGlucose(
+            smoothed,
+            interval: FrequentGlucoseFiltering.fiveMinuteInterval
+        )
+
+        guard let newest = smoothed.first?.dateString else { return ([], nil) }
+        // The fit takes every entry it is given, so only CGM readings: no fingersticks, no error codes.
+        let fast = smoothed
+            .prefix(while: { newest.timeIntervalSince($0.dateString) <= Self.fastGlucoseHistory })
+            .filter { $0.type == GlucoseType.sgv.rawValue && Double($0.glucose) > GlucoseSmoothing.errorCodeLimit }
+
+        return (glucoseEntries(from: frequencyFiltered), glucoseEntries(from: fast))
+    }
+
+    /// - Parameter glucose: newest -> oldest
+    private func glucoseEntries(from glucose: [BloodGlucose]) -> [GlucoseEntry0] {
+        glucose.map { g in
             GlucoseEntry0(
                 date: Int(g.dateString.timeIntervalSince1970 * 1000),
                 displayTime: nil,
@@ -820,6 +856,7 @@ actor OpenAPS: Sendable {
 
     private func autosisf(
         glucose: [GlucoseEntry0],
+        glucoseFast: [GlucoseEntry0]?,
         iob: [IOBEntry],
         profile: Profile,
         autosens: Autosens?,
@@ -830,6 +867,7 @@ actor OpenAPS: Sendable {
             function: "autoisf",
             with: AutoIsfInput(
                 glucose: glucose,
+                glucose_fast: glucoseFast,
                 iob: iob,
                 profile: profile,
                 autosens: autosens,

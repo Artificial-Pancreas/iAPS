@@ -22,6 +22,56 @@ extension CGM {
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
+        private var smoothingSection: some View {
+            let selected = state.glucoseSmoothing.algorithm
+            return Section {
+                settingRow(description: selected.settingsDescription) {
+                    Picker("Algorithm", selection: $state.glucoseSmoothing.algorithm) {
+                        ForEach(GlucoseSmoothingAlgorithm.allCases) { algorithm in
+                            Text(algorithm.displayName).tag(algorithm)
+                        }
+                    }
+                }
+
+                switch selected {
+                case .exponential,
+                     .off:
+                    EmptyView()
+                case .savitzkyGolay:
+                    settingRow(description: selected.optionsDescription) {
+                        Picker("Passes", selection: $state.glucoseSmoothing.savitzkyGolay.passes) {
+                            ForEach(SavitzkyGolayPasses.allCases) { passes in
+                                Text(passes.displayName).tag(passes)
+                            }
+                        }
+                    }
+                case .kalman:
+                    settingRow(description: selected.optionsDescription) {
+                        Picker("Responsiveness", selection: $state.glucoseSmoothing.kalman.responsiveness) {
+                            ForEach(KalmanResponsiveness.allCases) { responsiveness in
+                                Text(responsiveness.displayName).tag(responsiveness)
+                            }
+                        }
+                    }
+                }
+            }
+            header: { Text("Smoothing") }
+        }
+
+        private func settingRow(description: String?, @ViewBuilder control: () -> some View) -> some View {
+            VStack(alignment: .leading, spacing: 6) {
+                control()
+                    .pickerStyle(.menu)
+                if let description {
+                    Text(description)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(.vertical, 2)
+        }
+
         var body: some View {
             let cgmInfo = appUIState.cgmInfo
             let cgmStatus = appUIState.cgmStatus
@@ -109,9 +159,7 @@ extension CGM {
                             }
                         }
 
-                        Section(header: Text("Experimental")) {
-                            Toggle("Smooth Glucose Value", isOn: $state.smoothGlucose)
-                        }
+                        smoothingSection
                     }
                 }
                 .dynamicTypeSize(...DynamicTypeSize.xxLarge)

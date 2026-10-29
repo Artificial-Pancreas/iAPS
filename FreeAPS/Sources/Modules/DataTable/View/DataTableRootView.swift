@@ -591,12 +591,13 @@ extension DataTable {
                     role: .none,
                     action: {
                         alertGlucoseToDelete = item
+                        let glucoseValue = Double(item.glucose.glucose)
                         let valueText = (
                             isManual.type == GlucoseType.manual.rawValue ?
                                 manualGlucoseFormatter :
                                 glucoseFormatter
                         ).string(from: Double(
-                            state.units == .mmolL ? Double(item.glucose.value.asMmolL) : item.glucose.value
+                            state.units == .mmolL ? Double(glucoseValue.asMmolL) : glucoseValue
                         ) as NSNumber)! + " " + state.units.rawValue
                         alertTitle = "Delete Glucose?"
                         alertMessage = dateFormatter.string(from: item.glucose.dateString) + ", " + valueText

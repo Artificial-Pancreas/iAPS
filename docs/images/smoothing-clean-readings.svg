@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="570" viewBox="0 0 900 570" role="img" aria-labelledby="title description">
+<title id="title">When readings are already clean, smoothing mainly changes timing</title>
+<desc id="description">A synthetic low-noise glucose curve shows raw readings and all three smoothing methods. They differ most during a rapid rise, where smoothing changes timing rather than removing much noise.</desc>
+<style>
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #0f172a; }
+  .title { font-size: 25px; font-weight: 700; }
+  .subtitle { font-size: 15px; fill: #475569; }
+  .panel-title { font-size: 18px; font-weight: 700; }
+  .panel-note { font-size: 14px; fill: #475569; }
+  .axis-title { font-size: 14px; font-weight: 600; fill: #475569; }
+  .tick { font-size: 13px; fill: #64748b; }
+  .legend { font-size: 14px; fill: #475569; }
+  .grid { stroke: #e2e8f0; stroke-width: 1; }
+  .frame { fill: none; stroke: #64748b; stroke-width: 1; }
+</style>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="42" y="43" class="title">When readings are already clean, smoothing mainly changes timing</text>
+<text x="42" y="69" class="subtitle">Illustrative low-noise 5-minute readings. There is little noise to remove; differences appear most during the rise.</text>
+<circle cx="82" cy="108" r="4" fill="#475569"/><text x="104" y="112" class="legend">Raw readings</text>
+<line x1="240" y1="108" x2="265" y2="108" stroke="#94a3b8" stroke-width="3" stroke-dasharray="7 5"/><text x="274" y="112" class="legend">Underlying glucose</text>
+<line x1="440" y1="108" x2="465" y2="108" stroke="#2563eb" stroke-width="3"/><text x="474" y="112" class="legend">SG — 3 passes</text>
+<line x1="602" y1="108" x2="627" y2="108" stroke="#7c3aed" stroke-width="3"/><text x="636" y="112" class="legend">Kalman — Balanced</text>
+<line x1="770" y1="108" x2="795" y2="108" stroke="#d97706" stroke-width="3"/><text x="804" y="112" class="legend">Exponential</text>
+<line x1="92" y1="470.0" x2="862" y2="470.0" class="grid"/>
+<text x="80" y="475.0" text-anchor="end" class="tick">103</text>
+<line x1="92" y1="307.2" x2="862" y2="307.2" class="grid"/>
+<text x="80" y="312.2" text-anchor="end" class="tick">132</text>
+<line x1="92" y1="150.0" x2="862" y2="150.0" class="grid"/>
+<text x="80" y="155.0" text-anchor="end" class="tick">160</text>
+<text x="92.0" y="495" text-anchor="middle" class="tick">0</text>
+<text x="477.0" y="495" text-anchor="middle" class="tick">150</text>
+<text x="862.0" y="495" text-anchor="middle" class="tick">300</text>
+<rect x="92" y="150" width="770" height="320" class="frame"/>
+<text x="40" y="310" text-anchor="middle" class="axis-title" transform="rotate(-90 40 310)">Glucose (mg/dL)</text>
+<text x="477" y="518" text-anchor="middle" class="axis-title">Elapsed time (minutes)</text>
+<path d="M92.0,441.9 L104.8,441.9 L117.7,441.9 L130.5,441.9 L143.3,441.9 L156.2,441.9 L169.0,441.9 L181.8,441.9 L194.7,441.9 L207.5,441.9 L220.3,359.0 L233.2,298.1 L246.0,254.1 L258.8,223.2 L271.7,202.2 L284.5,188.9 L297.3,181.4 L310.2,178.2 L323.0,178.4 L335.8,181.0 L348.7,185.4 L361.5,191.1 L374.3,197.8 L387.2,205.0 L400.0,212.7 L412.8,220.5 L425.7,228.5 L438.5,236.4 L451.3,244.3 L464.2,252.0 L477.0,259.5 L489.8,266.9 L502.7,274.0 L515.5,280.9 L528.3,287.5 L541.2,293.9 L554.0,300.1 L566.8,306.1 L579.7,311.8 L592.5,317.3 L605.3,322.5 L618.2,327.6 L631.0,332.4 L643.8,337.0 L656.7,341.5 L669.5,345.8 L682.3,349.8 L695.2,353.7 L708.0,357.5 L720.8,361.1 L733.7,364.5 L746.5,367.8 L759.3,371.0 L772.2,374.0 L785.0,376.9 L797.8,379.6 L810.7,382.3 L823.5,384.8 L836.3,387.2 L849.2,389.6 L862.0,391.8" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity="1" stroke-dasharray="7 6"/>
+<path d="M92.0,441.9 L104.8,436.3 L117.7,441.9 L130.5,441.9 L143.3,436.3 L156.2,436.3 L169.0,447.5 L181.8,436.3 L194.7,447.5 L207.5,441.9 L220.3,357.7 L233.2,301.6 L246.0,256.7 L258.8,223.0 L271.7,200.5 L284.5,189.3 L297.3,189.3 L310.2,178.1 L323.0,178.1 L335.8,183.7 L348.7,189.3 L361.5,194.9 L374.3,194.9 L387.2,200.5 L400.0,211.8 L412.8,228.6 L425.7,234.2 L438.5,245.4 L451.3,245.4 L464.2,251.1 L477.0,262.3 L489.8,267.9 L502.7,284.7 L515.5,279.1 L528.3,296.0 L541.2,301.6 L554.0,307.2 L566.8,307.2 L579.7,318.4 L592.5,318.4 L605.3,318.4 L618.2,335.3 L631.0,335.3 L643.8,335.3 L656.7,335.3 L669.5,340.9 L682.3,352.1 L695.2,352.1 L708.0,352.1 L720.8,363.3 L733.7,368.9 L746.5,368.9 L759.3,380.2 L772.2,374.6 L785.0,380.2 L797.8,385.8 L810.7,380.2 L823.5,385.8 L836.3,380.2 L849.2,397.0 L862.0,391.4" fill="none" stroke="#475569" stroke-width="1.4" stroke-linejoin="round" stroke-linecap="round" opacity="0.66"/>
+<circle cx="92.0" cy="441.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="104.8" cy="436.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="117.7" cy="441.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="130.5" cy="441.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="143.3" cy="436.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="156.2" cy="436.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="169.0" cy="447.5" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="181.8" cy="436.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="194.7" cy="447.5" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="207.5" cy="441.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="220.3" cy="357.7" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="233.2" cy="301.6" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="246.0" cy="256.7" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="258.8" cy="223.0" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="271.7" cy="200.5" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="284.5" cy="189.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="297.3" cy="189.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="310.2" cy="178.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="323.0" cy="178.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="335.8" cy="183.7" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="348.7" cy="189.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="361.5" cy="194.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="374.3" cy="194.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="387.2" cy="200.5" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="400.0" cy="211.8" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="412.8" cy="228.6" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="425.7" cy="234.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="438.5" cy="245.4" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="451.3" cy="245.4" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="464.2" cy="251.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="477.0" cy="262.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="489.8" cy="267.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="502.7" cy="284.7" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="515.5" cy="279.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="528.3" cy="296.0" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="541.2" cy="301.6" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="554.0" cy="307.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="566.8" cy="307.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="579.7" cy="318.4" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="592.5" cy="318.4" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="605.3" cy="318.4" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="618.2" cy="335.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="631.0" cy="335.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="643.8" cy="335.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="656.7" cy="335.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="669.5" cy="340.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="682.3" cy="352.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="695.2" cy="352.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="708.0" cy="352.1" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="720.8" cy="363.3" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="733.7" cy="368.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="746.5" cy="368.9" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="759.3" cy="380.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="772.2" cy="374.6" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="785.0" cy="380.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="797.8" cy="385.8" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="810.7" cy="380.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="823.5" cy="385.8" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="836.3" cy="380.2" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="849.2" cy="397.0" r="3.3" fill="#475569" opacity="0.66"/>
+<circle cx="862.0" cy="391.4" r="3.3" fill="#475569" opacity="0.66"/>
+<path d="M92.0,441.9 L104.8,436.3 L117.7,441.9 L130.5,442.8 L143.3,437.8 L156.2,436.1 L169.0,444.2 L181.8,439.8 L194.7,445.3 L207.5,444.2 L220.3,383.1 L233.2,309.1 L246.0,244.8 L258.8,202.0 L271.7,184.9 L284.5,184.6 L297.3,189.4 L310.2,186.2 L323.0,183.0 L335.8,184.6 L348.7,189.4 L361.5,196.0 L374.3,198.8 L387.2,201.5 L400.0,209.5 L412.8,225.1 L425.7,236.5 L438.5,247.7 L451.3,249.7 L464.2,251.4 L477.0,258.6 L489.8,266.7 L502.7,281.8 L515.5,284.7 L528.3,294.4 L541.2,301.5 L554.0,307.7 L566.8,309.1 L579.7,316.7 L592.5,318.6 L605.3,319.6 L618.2,330.7 L631.0,336.5 L643.8,337.8 L656.7,337.2 L669.5,339.0 L682.3,347.6 L695.2,353.5 L708.0,355.0 L720.8,361.8 L733.7,368.0 L746.5,370.5 L759.3,378.9 L772.2,377.9 L785.0,379.4 L797.8,383.9 L810.7,382.2 L823.5,384.4 L836.3,381.9 L849.2,391.5 L862.0,393.5" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="1"/>
+<path d="M92.0,441.9 L104.8,436.3 L117.7,438.6 L130.5,440.5 L143.3,437.9 L156.2,436.6 L169.0,443.3 L181.8,439.6 L194.7,444.5 L207.5,443.5 L220.3,388.7 L233.2,325.1 L246.0,268.6 L258.8,225.6 L271.7,197.2 L284.5,182.5 L297.3,180.5 L310.2,175.8 L323.0,175.2 L335.8,179.6 L348.7,186.0 L361.5,192.7 L374.3,195.5 L387.2,199.8 L400.0,208.5 L412.8,223.1 L425.7,233.1 L438.5,243.7 L451.3,247.6 L464.2,251.6 L477.0,259.8 L489.8,267.1 L502.7,280.9 L515.5,282.2 L528.3,292.9 L541.2,300.9 L554.0,307.1 L566.8,308.8 L579.7,316.3 L592.5,319.2 L605.3,319.6 L618.2,330.9 L631.0,335.6 L643.8,336.7 L656.7,336.4 L669.5,339.7 L682.3,348.8 L695.2,352.6 L708.0,353.4 L720.8,360.8 L733.7,367.7 L746.5,370.0 L759.3,377.9 L772.2,377.1 L785.0,379.7 L797.8,384.4 L810.7,382.4 L823.5,384.8 L836.3,382.0 L849.2,392.1 L862.0,392.9" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="1"/>
+<path d="M92.0,441.9 L104.8,436.3 L117.7,441.9 L130.5,438.8 L143.3,438.3 L156.2,437.7 L169.0,442.0 L181.8,440.8 L194.7,443.9 L207.5,443.9 L220.3,406.2 L233.2,348.0 L246.0,284.6 L258.8,230.0 L271.7,192.6 L284.5,174.7 L297.3,174.1 L310.2,177.0 L323.0,181.3 L335.8,186.2 L348.7,190.6 L361.5,194.6 L374.3,196.3 L387.2,198.8 L400.0,205.2 L412.8,217.5 L425.7,229.4 L438.5,241.6 L451.3,248.5 L464.2,252.8 L477.0,258.6 L489.8,264.4 L502.7,275.3 L515.5,280.7 L528.3,290.2 L541.2,298.6 L554.0,305.8 L566.8,309.3 L579.7,314.8 L592.5,318.1 L605.3,319.5 L618.2,326.9 L631.0,332.9 L643.8,336.4 L656.7,337.7 L669.5,339.7 L682.3,345.6 L695.2,350.3 L708.0,353.1 L720.8,359.0 L733.7,365.4 L746.5,369.5 L759.3,376.0 L772.2,377.7 L785.0,379.8 L797.8,383.0 L810.7,382.7 L823.5,384.1 L836.3,382.6 L849.2,388.5 L862.0,391.4" fill="none" stroke="#d97706" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="1"/>
+<text x="450" y="550" class="panel-note" text-anchor="middle">If the raw readings are believable, changed timing may not justify added lag.</text>
+</svg>

@@ -31,7 +31,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var minuteInterval: Int = 30
     var delay: Int = 60
     var useAppleHealth: Bool = false
-    var smoothGlucose: Bool = false
+    var glucoseSmoothing = GlucoseSmoothingSettings()
     var displayOnWatch: AwConfig = .BGTarget
     var overrideHbA1cUnit: Bool = false
     var high: Decimal = 145
@@ -140,6 +140,7 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var lowerISFrangeWeight: Decimal = 0
     var postMealISFweight: Decimal = 0
     var enableBGacceleration: Bool = true
+    var autoisfOneMinuteReadings: Bool = false
     var bgAccelISFweight: Decimal = 0
     var bgBrakeISFweight: Decimal = 0.10
     var iobThresholdPercent: Decimal = 100
@@ -424,8 +425,8 @@ extension FreeAPSSettings: Decodable {
             settings.animatedBackground = animatedBackground
         }
 
-        if let smoothGlucose = try? container.decode(Bool.self, forKey: .smoothGlucose) {
-            settings.smoothGlucose = smoothGlucose
+        if let glucoseSmoothing = try? container.decode(GlucoseSmoothingSettings.self, forKey: .glucoseSmoothing) {
+            settings.glucoseSmoothing = glucoseSmoothing
         }
 
         if let low = try? container.decode(Decimal.self, forKey: .low) {
@@ -684,6 +685,10 @@ extension FreeAPSSettings: Decodable {
             settings.enableBGacceleration = enableBGacceleration
         }
 
+        if let autoisfOneMinuteReadings = try? container.decode(Bool.self, forKey: .autoisfOneMinuteReadings) {
+            settings.autoisfOneMinuteReadings = autoisfOneMinuteReadings
+        }
+
         if let use_B30 = try? container.decode(Bool.self, forKey: .use_B30) {
             settings.use_B30 = use_B30
         }
@@ -927,4 +932,163 @@ struct UploadSchedule: JSON, Equatable {
 struct UploadNetworkSchedule: JSON, Equatable {
     var interval: UploadScheduleInterval = .always
     var alwaysWhileCharging: Bool = false
+}
+
+struct GlucoseSmoothingSettings: JSON, Equatable {
+    var algorithm: GlucoseSmoothingAlgorithm = .off
+    var savitzkyGolay = SavitzkyGolaySettings()
+    var kalman = KalmanSettings()
+
+    var isEnabled: Bool { algorithm != .off }
+}
+
+extension GlucoseSmoothingSettings {
+    /// Field by field: a value this version does not know (an unknown algorithm, an out-of-range number
+    /// of passes) falls back to that field's default instead of turning smoothing off altogether.
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        algorithm = (try? container.decodeIfPresent(GlucoseSmoothingAlgorithm.self, forKey: .algorithm)) ?? algorithm
+        savitzkyGolay = (try? container.decodeIfPresent(SavitzkyGolaySettings.self, forKey: .savitzkyGolay)) ??
+            savitzkyGolay
+        kalman = (try? container.decodeIfPresent(KalmanSettings.self, forKey: .kalman)) ?? kalman
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case algorithm
+        case savitzkyGolay
+        case kalman
+    }
+}
+
+enum GlucoseSmoothingAlgorithm: String, JSON, Identifiable, CaseIterable {
+    case off
+    case savitzkyGolay
+    case kalman
+    case exponential
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .off: return NSLocalizedString("No smoothing", comment: "Glucose smoothing algorithm")
+        case .savitzkyGolay: return NSLocalizedString("Savitzky-Golay", comment: "Glucose smoothing algorithm")
+        case .kalman: return NSLocalizedString("Kalman filter", comment: "Glucose smoothing algorithm")
+        case .exponential: return NSLocalizedString("Exponential", comment: "Glucose smoothing algorithm")
+        }
+    }
+
+    var settingsDescription: String {
+        switch self {
+        case .off:
+            return NSLocalizedString(
+                "Glucose is used exactly as the CGM reports it.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        case .savitzkyGolay:
+            return NSLocalizedString(
+                "The smoothing used by older iAPS versions, which always ran it with 3 passes. Fits a curve through a window of about 30 minutes around each reading.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        case .kalman:
+            return NSLocalizedString(
+                "Tracks glucose and how fast it is changing, along with how sure it is of each. Ignores single readings that disagree with the trend, but follows genuine fast rises and falls.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        case .exponential:
+            return NSLocalizedString(
+                "Each reading is blended into two running averages, a plain one and one that follows the current trend, which counts for 60 percent of the result. The simplest option, and the only one that never revises an earlier reading - so older values on the chart lag behind the raw ones.",
+                comment: "Glucose smoothing algorithm description"
+            )
+        }
+    }
+
+    var optionsDescription: String? {
+        switch self {
+        case .exponential,
+             .off:
+            return nil
+        case .savitzkyGolay:
+            return NSLocalizedString(
+                "Each extra pass widens the window the curve is fitted over: a little less noise, but sharp peaks and dips are flattened more.",
+                comment: "Glucose smoothing algorithm options description"
+            )
+        case .kalman:
+            return NSLocalizedString(
+                "How readily the filter gives up its own trend to follow the readings. Calmer is smoother, but the newest reading lags further behind a sharp turn.",
+                comment: "Glucose smoothing algorithm options description"
+            )
+        }
+    }
+}
+
+struct SavitzkyGolaySettings: JSON, Equatable {
+    var passes: SavitzkyGolayPasses = .three
+}
+
+extension SavitzkyGolaySettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        passes = (try? container.decodeIfPresent(SavitzkyGolayPasses.self, forKey: .passes)) ?? passes
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case passes
+    }
+}
+
+enum SavitzkyGolayPasses: Int, JSON, Identifiable, CaseIterable {
+    case one = 1
+    case two = 2
+    case three = 3
+
+    var id: Int { rawValue }
+
+    var displayName: String { "\(rawValue)" }
+}
+
+struct KalmanSettings: JSON, Equatable {
+    var responsiveness: KalmanResponsiveness = .balanced
+}
+
+extension KalmanSettings {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init()
+
+        responsiveness = (try? container.decodeIfPresent(KalmanResponsiveness.self, forKey: .responsiveness)) ??
+            responsiveness
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case responsiveness
+    }
+}
+
+enum KalmanResponsiveness: String, JSON, Identifiable, CaseIterable {
+    case calm
+    case balanced
+    case responsive
+
+    var id: String { rawValue }
+
+    var displayName: String {
+        switch self {
+        case .calm: return NSLocalizedString("Calm", comment: "Kalman responsiveness")
+        case .balanced: return NSLocalizedString("Balanced", comment: "Kalman responsiveness")
+        case .responsive: return NSLocalizedString("Responsive", comment: "Kalman responsiveness")
+        }
+    }
+
+    /// Multiplier on the filter's process noise. `balanced` is the filter's default tuning.
+    var processNoiseScale: Double {
+        switch self {
+        case .calm: return 0.7
+        case .balanced: return 1
+        case .responsive: return 1.5
+        }
+    }
 }
