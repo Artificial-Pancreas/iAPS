@@ -31,7 +31,7 @@ struct OpenAIProtocol: AIProviderProtocol {
 
         var textOptions: OpenAIResponsesTextOptions?
         var stream: Bool?
-        if model.isGPT5 {
+        if model.isReasoningModel {
             textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object"))
             stream = false
         }
