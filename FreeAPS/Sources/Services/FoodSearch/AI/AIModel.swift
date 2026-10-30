@@ -177,64 +177,82 @@ extension AnalysiedFoodItem: Decodable {
         case assessmentNotes = "assessment_notes"
     }
 
-    private static var micronutrientFields: [(String, Any)] {
+    private static var micronutrientFields: [AISchemaField] {
         MicroNutrient.allCases.map {
-            ($0.codingKey, "decimal, \($0.displayName) per 100g/ml")
+            AISchemaField($0.codingKey, .number, "decimal, \($0.displayName) per 100g/ml")
         }
     }
 }
 
 extension AnalysiedFoodItem {
-    private static var fields: [(AnalysiedFoodItem.CodingKeys, Any)] {
+    private static var fields: [AISchemaField] {
         [
-            (.name, "string, required; specific food name; (language)"),
-            (
-                .standardName,
+            AISchemaField(CodingKeys.name.rawValue, .string, required: true, "string, required; specific food name; (language)"),
+            AISchemaField(
+                CodingKeys.standardName.rawValue,
+                .string,
                 "string; concise image-search query for this product. Branded/menu item: include the brand + product name. Generic food: use only the common product name. Use only nouns, plus an optional color. Do not use any other adjectives. Never include rawness, doneness, peel/skin state, serving style, cut form, or texture."
             ),
-            (.confidence, "decimal 0 to 1; required; confidence for this item"),
-            (.units, "string enum; one of: 'grams' or 'milliliters'; as appropriate for this meal; do NOT translate;"),
-            (.carbsPer100, "decimal, grams of available / digestible carbohydrates per 100 grams or milliliters"),
-            (.fatPer100, "decimal, grams of fat per 100 grams or milliliters"),
-            (.fiberPer100, "decimal, grams of fiber per 100 grams or milliliters"),
-            (.proteinPer100, "decimal, grams of protein per 100 grams or milliliters"),
-            (.sugarsPer100, "decimal, grams of sugars per 100 grams or milliliters"),
-            (.portionEstimateSize, "decimal, exact size of the identified portion; in grams or milliliters; do not include unit"),
-            (
-                .standardServingSize,
+            AISchemaField(
+                CodingKeys.confidence.rawValue,
+                .number,
+                required: true,
+                "decimal 0 to 1; required; confidence for this item"
+            ),
+            AISchemaField(
+                CodingKeys.units.rawValue,
+                .enumeration([MealUnits.grams.rawValue, MealUnits.milliliters.rawValue]),
+                required: true,
+                "string enum; one of: 'grams' or 'milliliters'; as appropriate for this meal; do NOT translate;"
+            ),
+            AISchemaField(
+                CodingKeys.carbsPer100.rawValue,
+                .number,
+                "decimal, grams of available / digestible carbohydrates per 100 grams or milliliters"
+            ),
+            AISchemaField(CodingKeys.fatPer100.rawValue, .number, "decimal, grams of fat per 100 grams or milliliters"),
+            AISchemaField(CodingKeys.fiberPer100.rawValue, .number, "decimal, grams of fiber per 100 grams or milliliters"),
+            AISchemaField(CodingKeys.proteinPer100.rawValue, .number, "decimal, grams of protein per 100 grams or milliliters"),
+            AISchemaField(CodingKeys.sugarsPer100.rawValue, .number, "decimal, grams of sugars per 100 grams or milliliters"),
+            AISchemaField(
+                CodingKeys.portionEstimateSize.rawValue,
+                .number,
+                "decimal, exact size of the identified portion; in grams or milliliters; do not include unit"
+            ),
+            AISchemaField(
+                CodingKeys.standardServingSize.rawValue,
+                .number,
                 "decimal, the identified standard serving size in grams or milliliters, if available; do not include unit"
             ),
-            (
-                .standardServing,
+            AISchemaField(
+                CodingKeys.standardServing.rawValue,
+                .string,
                 "description of the identified standard serving, if available; if natural description is available - do NOT add size in grams/milliliters; (language)"
             ),
-            (.glycemicIndex, "decimal, glycemic index if available")
+            AISchemaField(CodingKeys.glycemicIndex.rawValue, .number, "decimal, glycemic index if available")
         ]
     }
 
-    static var schemaVisual: [(String, Any)] {
-        let macroFields = fields + [
-            (.visualCues, "visual elements analyzed; (language)"),
-            (.preparationMethod, "cooking details observed; (language)"),
-            (
-                .assessmentNotes,
-                "explain how you calculated this specific portion size, what visual references you used for measurement; (language)"
+    static var schemaVisual: AISchemaObject {
+        AISchemaObject(fields: fields + [
+            AISchemaField(CodingKeys.visualCues.rawValue, .string, "visual elements analyzed; (language)"),
+            AISchemaField(CodingKeys.preparationMethod.rawValue, .string, "cooking details observed; (language)"),
+            AISchemaField(
+                CodingKeys.assessmentNotes.rawValue,
+                .string,
+                "brief note (one or two sentences) on the estimated portion size and the visual references used; (language)"
             )
-        ]
-        return macroFields.map { ($0.0.rawValue, $0.1) }
-            + micronutrientFields
+        ] + micronutrientFields)
     }
 
-    static var schemaText: [(String, Any)] {
-        let fields = self.fields + [
-            (
-                .assessmentNotes,
-                "explain how you calculated this specific portion size, what references you used; (language)"
+    static var schemaText: AISchemaObject {
+        AISchemaObject(fields: fields + [
+            AISchemaField(
+                CodingKeys.assessmentNotes.rawValue,
+                .string,
+                "brief note (one or two sentences) on the estimated portion size and the references used; (language)"
             )
-        ]
-        return fields.map { key, value in
-            (key.rawValue, value)
-        } + micronutrientFields
+        ] + micronutrientFields)
     }
 }
 
@@ -282,34 +300,43 @@ extension AIAnalysisResult: Decodable {
 }
 
 extension AIAnalysisResult {
-    private static var fields: [(AIAnalysisResult.CodingKeys, Any)] {
+    private static var fields: [AISchemaField] {
         [
-            (.briefDescription, "generate a SHORT UI TITLE describing the analyzed food; (language)"),
-            (.diabetesConsiderations, "carb sources, GI impact (low/medium/high), timing considerations; (language)")
+            AISchemaField(
+                CodingKeys.briefDescription.rawValue,
+                .string,
+                "generate a SHORT UI TITLE describing the analyzed food; (language)"
+            ),
+            AISchemaField(
+                CodingKeys.diabetesConsiderations.rawValue,
+                .string,
+                "carb sources, GI impact (low/medium/high), timing considerations; (language)"
+            )
         ]
     }
 
-    static var schemaVisual: [(String, Any)] {
-        let fields = [
-            (.imageType, "string enum: food_photo or menu_photo or recipe_photo"),
-            (.foodItems, [AnalysiedFoodItem.schemaVisual]),
-            (.overallDescription, "describe what you see on the photo; (language)")
-        ] + self.fields
-
-        return fields.map { key, value in
-            (key.rawValue, value)
-        }
+    static var schemaVisual: AISchemaObject {
+        AISchemaObject(fields: [
+            AISchemaField(
+                CodingKeys.imageType.rawValue,
+                .enumeration(ImageAnalysisType.allCases.map(\.rawValue)),
+                required: true,
+                "string enum: food_photo or menu_photo or recipe_photo"
+            ),
+            AISchemaField(CodingKeys.foodItems.rawValue, .array(AnalysiedFoodItem.schemaVisual), required: true, ""),
+            AISchemaField(CodingKeys.overallDescription.rawValue, .string, "describe what you see on the photo; (language)")
+        ] + fields)
     }
 
-    static var schemaText: [(String, Any)] {
-        let fields = [
-            (.foodItems, [AnalysiedFoodItem.schemaText]),
-            (.overallDescription, "describe what you perceived from the user input; (language)")
-        ] + self.fields
-
-        return fields.map { key, value in
-            (key.rawValue, value)
-        }
+    static var schemaText: AISchemaObject {
+        AISchemaObject(fields: [
+            AISchemaField(CodingKeys.foodItems.rawValue, .array(AnalysiedFoodItem.schemaText), required: true, ""),
+            AISchemaField(
+                CodingKeys.overallDescription.rawValue,
+                .string,
+                "describe what you perceived from the user input; (language)"
+            )
+        ] + fields)
     }
 }
 

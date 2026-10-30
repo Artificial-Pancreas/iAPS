@@ -13,6 +13,7 @@ struct ClaudeProtocol: AIProviderProtocol {
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> URLRequest {
         var request = URLRequest(url: url)
@@ -35,17 +36,29 @@ struct ClaudeProtocol: AIProviderProtocol {
             )
         ]
 
+        // Structured outputs are deliberately NOT used: Anthropic caps a schema at 24 optional
+        // properties (and at 24 nullable unions in the strict form), and the food item alone has
+        // about 40 optional nutrition fields. Making them required would turn "unknown" into 0.
+        // Claude follows the example object in the prompt reliably; the schema is kept only for
+        // the parameter so the request shape stays uniform across providers.
+        _ = responseSchema
+        let schema: OrderedJSON? = nil
+        let outputFormat = schema.map { ClaudeOutputFormat(type: "json_schema", schema: $0) }
+        let outputConfig: ClaudeOutputConfig? = model.effort == nil && outputFormat == nil
+            ? nil
+            : ClaudeOutputConfig(effort: model.effort, format: outputFormat)
+
         let body = ClaudeMessagesRequest(
             model: model,
             // Thinking tokens count against this limit on the 5.5 models, so leave headroom.
             max_tokens: 16000,
             temperature: model.temperature,
-            output_config: model.effort.map { ClaudeOutputConfig(effort: $0) },
+            output_config: outputConfig,
             messages: messages
         )
 
         do {
-            request.httpBody = try JSONEncoder().encode(body)
+            request.httpBody = try OrderedJSON.encode(body, splicing: [schema])
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -63,6 +76,12 @@ struct ClaudeProtocol: AIProviderProtocol {
                 let message = apiError.error.message
                 let type = apiError.error.type ?? ""
                 debug(.service, "Claude API error \(httpResponse.statusCode): \(message) [type: \(type)]")
+
+                // A rejected request is a bug on our side (schema, parameters), never a quota problem:
+                // report Anthropic's message instead of pattern-matching words like "limit" in it.
+                if type == "invalid_request_error" {
+                    throw AIFoodAnalysisError.customError("Claude rejected the request: \(message)")
+                }
 
                 if message.localizedCaseInsensitiveContains("credit") || message
                     .localizedCaseInsensitiveContains("billing") || message.localizedCaseInsensitiveContains("usage")
@@ -158,7 +177,13 @@ private struct ClaudeMessagesRequest: Encodable {
 }
 
 private struct ClaudeOutputConfig: Encodable {
-    let effort: String
+    let effort: String?
+    let format: ClaudeOutputFormat?
+}
+
+private struct ClaudeOutputFormat: Encodable {
+    let type: String
+    let schema: OrderedJSON
 }
 
 private struct ClaudeMessage: Encodable {

@@ -294,10 +294,10 @@ enum GeminiModel: String, AIModelBase, CaseIterable, Encodable {
     /// model accepts. Nil for 2.5, which uses the legacy thinking budget instead.
     var thinkingLevel: String? {
         switch self {
-        case .gemini_4_argon: "low"
-        case .gemini_3_8_flash: "low"
-        case .gemini_3_6_flash: "minimal"
-        case .gemini_3_5_flash_lite: "minimal"
+        case .gemini_4_argon: "LOW"
+        case .gemini_3_8_flash: "LOW"
+        case .gemini_3_6_flash: "MINIMAL"
+        case .gemini_3_5_flash_lite: "MINIMAL"
         case .gemini_2_5_pro: nil
         case .gemini_2_5_flash: nil
         }

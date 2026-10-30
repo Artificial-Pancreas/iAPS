@@ -13,6 +13,7 @@ struct GeminiProtocol: AIProviderProtocol {
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> URLRequest {
         let baseURL = baseURLTemplate.replacingOccurrences(of: "{model}", with: model.rawValue)
@@ -26,6 +27,7 @@ struct GeminiProtocol: AIProviderProtocol {
             GeminiPart(inline_data: GeminiInlineData(mime_type: "image/jpeg", data: $0))
         }
 
+        let schema = responseSchema.map { OrderedJSON($0.jsonSchema(dialect: .lenient)) }
         let geminiRequest = GeminiGenerateContentRequest(
             contents: [GeminiContent(parts: [userTextPart] + imageParts)],
             generationConfig: GeminiGenerationConfig(
@@ -36,6 +38,9 @@ struct GeminiProtocol: AIProviderProtocol {
                 // above the few thousand tokens the JSON answer itself needs.
                 maxOutputTokens: 16000,
                 responseMimeType: "application/json",
+                // JSON Schema enforced by the API. `responseJsonSchema` is the form every offered model
+                // accepts; the newer `responseFormat.text.schema` is the eventual replacement.
+                responseJsonSchema: schema,
                 thinkingConfig: model.thinkingLevel.map { GeminiThinkingConfig(thinkingLevel: $0) }
             )
         )
@@ -45,7 +50,7 @@ struct GeminiProtocol: AIProviderProtocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         do {
-            request.httpBody = try JSONEncoder().encode(geminiRequest)
+            request.httpBody = try OrderedJSON.encode(geminiRequest, splicing: [schema])
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -185,6 +190,7 @@ private struct GeminiGenerationConfig: Encodable {
     let topK: Int?
     let maxOutputTokens: Int
     let responseMimeType: String?
+    let responseJsonSchema: OrderedJSON?
     let thinkingConfig: GeminiThinkingConfig?
 }
 

@@ -4,15 +4,245 @@ import UIKit
 enum AIPrompts {
     static func getAnalysisPrompt(
         _ request: AnalysisRequest,
-        responseSchema: [(String, Any)],
-    ) throws -> String {
+        responseSchema: AISchemaObject
+    ) throws -> AIAnalysisPrompt {
         do {
             return try buildAnalysisPrompt(
                 request,
-                responseSchema: responseSchema,
+                responseSchema: responseSchema
             )
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
+        }
+    }
+}
+
+// MARK: - Response schema
+
+/// One property of the JSON the model must return. The same definition renders the example
+/// object in the prompt (description as the value) and the JSON schema the provider enforces.
+struct AISchemaField: Sendable {
+    indirect enum Kind: Sendable {
+        case string
+        case number
+        /// Closed set of string values.
+        case enumeration([String])
+        /// Array of objects.
+        case array(AISchemaObject)
+    }
+
+    let key: String
+    let kind: Kind
+    /// Whether the model must always produce the property. Optional properties may be null
+    /// or absent; the decoders treat both the same.
+    let required: Bool
+    /// Guidance for the model. May contain the "(language)" placeholder.
+    let description: String
+
+    init(_ key: String, _ kind: Kind, required: Bool = false, _ description: String) {
+        self.key = key
+        self.kind = kind
+        self.required = required
+        self.description = description
+    }
+}
+
+struct AISchemaObject: Sendable {
+    let fields: [AISchemaField]
+}
+
+/// How optional properties are expressed, since the providers' structured-output modes differ.
+enum JSONSchemaDialect {
+    /// OpenAI strict mode: every property is listed in `required`, optional ones allow null.
+    case strict
+    /// Claude and Gemini: optional properties are simply left out of `required`.
+    case lenient
+}
+
+/// The analysis prompt together with the schema its answer must follow.
+struct AIAnalysisPrompt: Sendable {
+    let text: String
+    let responseSchema: AIResponseSchema
+}
+
+/// A response schema with the prompt's language instruction already applied to descriptions.
+struct AIResponseSchema: Sendable {
+    let object: AISchemaObject
+    /// Replaces the "(language)" placeholder in field descriptions.
+    let languageInstruction: String
+
+    func jsonSchema(dialect: JSONSchemaDialect) -> JSONValue {
+        object.jsonSchema(dialect: dialect, languageInstruction: languageInstruction)
+    }
+}
+
+/// Minimal JSON tree for the response schema. Objects keep their keys in definition order; use
+/// `serialized()` or `OrderedJSON` to put it on the wire, since JSONEncoder would reorder the keys.
+indirect enum JSONValue: Encodable, Sendable {
+    case object([(String, JSONValue)])
+    case array([JSONValue])
+    case string(String)
+    case bool(Bool)
+    case null
+
+    func encode(to encoder: Encoder) throws {
+        switch self {
+        case let .object(pairs):
+            var container = encoder.container(keyedBy: DynamicCodingKey.self)
+            for (key, value) in pairs {
+                guard let codingKey = DynamicCodingKey(stringValue: key) else { continue }
+                try container.encode(value, forKey: codingKey)
+            }
+        case let .array(items):
+            var container = encoder.unkeyedContainer()
+            for item in items {
+                try container.encode(item)
+            }
+        case let .string(string):
+            var container = encoder.singleValueContainer()
+            try container.encode(string)
+        case let .bool(bool):
+            var container = encoder.singleValueContainer()
+            try container.encode(bool)
+        case .null:
+            var container = encoder.singleValueContainer()
+            try container.encodeNil()
+        }
+    }
+}
+
+extension JSONValue {
+    /// JSON text with object keys in definition order. The providers generate properties in
+    /// schema order, and Gemini in particular degenerates (empty answers, or a number that never
+    /// ends) when the schema arrives with its properties shuffled.
+    func serialized() -> String {
+        switch self {
+        case let .object(pairs):
+            "{" + pairs.map { "\(Self.quoted($0.0)):\($0.1.serialized())" }.joined(separator: ",") + "}"
+        case let .array(items):
+            "[" + items.map { $0.serialized() }.joined(separator: ",") + "]"
+        case let .string(string):
+            Self.quoted(string)
+        case let .bool(bool):
+            bool ? "true" : "false"
+        case .null:
+            "null"
+        }
+    }
+
+    private static func quoted(_ string: String) -> String {
+        var out = "\""
+        for scalar in string.unicodeScalars {
+            switch scalar {
+            case "\"": out += "\\\""
+            case "\\": out += "\\\\"
+            case "\n": out += "\\n"
+            case "\r": out += "\\r"
+            case "\t": out += "\\t"
+            case ..<" ": out += String(format: "\\u%04x", scalar.value)
+            default: out.unicodeScalars.append(scalar)
+            }
+        }
+        return out + "\""
+    }
+}
+
+/// Carries a `JSONValue` through an Encodable request body without losing its key order:
+/// it encodes as a unique placeholder string, and `splice(into:)` replaces that placeholder in
+/// the encoded body with the ordered serialization.
+struct OrderedJSON: Encodable {
+    let value: JSONValue
+    private let token = "<<ordered-json:\(UUID().uuidString)>>"
+
+    init(_ value: JSONValue) {
+        self.value = value
+    }
+
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(token)
+    }
+
+    func splice(into body: Data) throws -> Data {
+        guard let text = String(data: body, encoding: .utf8) else {
+            throw AIFoodAnalysisError.requestCreationFailed
+        }
+        let placeholder = "\"" + token + "\""
+        guard text.contains(placeholder) else {
+            throw AIFoodAnalysisError.requestCreationFailed
+        }
+        return Data(text.replacingOccurrences(of: placeholder, with: value.serialized()).utf8)
+    }
+
+    /// Encodes `body` with JSONEncoder, then splices every given `OrderedJSON` into the result.
+    static func encode(_ body: some Encodable, splicing ordered: [OrderedJSON?]) throws -> Data {
+        var data = try JSONEncoder().encode(body)
+        for item in ordered.compactMap({ $0 }) {
+            data = try item.splice(into: data)
+        }
+        return data
+    }
+}
+
+extension AISchemaObject {
+    /// The JSON Schema for this object. Descriptions are kept: all three providers pass them
+    /// to the model, and they carry the per-field instructions the prompt relied on.
+    func jsonSchema(dialect: JSONSchemaDialect, languageInstruction: String) -> JSONValue {
+        var properties: [(String, JSONValue)] = []
+        var required: [JSONValue] = []
+
+        for field in fields {
+            let description = field.description.replacingOccurrences(of: "(language)", with: languageInstruction)
+            var entry: [(String, JSONValue)] = []
+            let nullable = !field.required && dialect == .strict
+
+            func type(_ name: String) -> JSONValue {
+                nullable ? .array([.string(name), .string("null")]) : .string(name)
+            }
+
+            switch field.kind {
+            case .string:
+                entry.append(("type", type("string")))
+            case .number:
+                entry.append(("type", type("number")))
+            case let .enumeration(values):
+                entry.append(("type", type("string")))
+                var cases = values.map(JSONValue.string)
+                if nullable { cases.append(.null) }
+                entry.append(("enum", .array(cases)))
+            case let .array(itemObject):
+                entry.append(("type", type("array")))
+                entry.append(("items", itemObject.jsonSchema(dialect: dialect, languageInstruction: languageInstruction)))
+            }
+            if !description.isEmpty {
+                entry.append(("description", .string(description)))
+            }
+
+            properties.append((field.key, .object(entry)))
+            if field.required || dialect == .strict {
+                required.append(.string(field.key))
+            }
+        }
+
+        return .object([
+            ("type", .string("object")),
+            ("properties", .object(properties)),
+            ("required", .array(required)),
+            ("additionalProperties", .bool(false))
+        ])
+    }
+
+    /// The example object shown in the prompt: each property's value is its description.
+    fileprivate var promptPairs: [(String, Any)] {
+        fields.map { field in
+            switch field.kind {
+            case .enumeration,
+                 .number,
+                 .string:
+                return (field.key, field.description)
+            case let .array(itemObject):
+                return (field.key, [itemObject.promptPairs])
+            }
         }
     }
 }
@@ -53,8 +283,8 @@ private let prompt_8_footer =
 
 private func buildAnalysisPrompt(
     _ request: AnalysisRequest,
-    responseSchema: [(String, Any)],
-) throws -> String {
+    responseSchema: AISchemaObject
+) throws -> AIAnalysisPrompt {
     let instructions = switch request {
     case let .image(_, comment):
         if let comment, comment.trimmingCharacters(in: .whitespacesAndNewlines).isNotEmpty {
@@ -74,27 +304,32 @@ private func buildAnalysisPrompt(
     case let .query(textQuery): prompt_5b_text_instructions.replacingOccurrences(of: "(query)", with: textQuery)
     }
 
-    let schemaJson = PlainJSONFromPairs(responseSchema)
+    let schemaJson = PlainJSONFromPairs(responseSchema.promptPairs)
 
-    var schema = renderPlainJSON(schemaJson)
     let languageCode = UserDefaults.standard.userPreferredLanguageForAI ?? systemLanguageCode()
     let regionCode = UserDefaults.standard.userPreferredRegionForAI ?? systemRegionCode()
 
-    if let languageForAI = getLanguageForAI(primaryLanguageCode: languageCode) {
-        schema = schema.replacingOccurrences(of: "(language)", with: "translate into \(languageForAI)")
+    let languageInstruction: String = if let languageForAI = getLanguageForAI(primaryLanguageCode: languageCode) {
+        "translate into \(languageForAI)"
     } else {
-        schema = schema.replacingOccurrences(of: "(language)", with: "in English")
+        "in English"
     }
-    let responseSchema = prompt_7_response_schema.replacingOccurrences(of: "(schema)", with: schema)
+    let schema = renderPlainJSON(schemaJson).replacingOccurrences(of: "(language)", with: languageInstruction)
+    let responseSchemaText = prompt_7_response_schema.replacingOccurrences(of: "(schema)", with: schema)
 
     let userPreferences: String = makePreferencesBlock(regionCode: regionCode)
 
-    return prompt_0_header + "\n\n" +
+    let text = prompt_0_header + "\n\n" +
         userPreferences + "\n\n" +
         prompt_3_standards + "\n\n" +
         instructions + "\n\n" +
-        responseSchema + "\n\n" +
+        responseSchemaText + "\n\n" +
         prompt_8_footer
+
+    return AIAnalysisPrompt(
+        text: text,
+        responseSchema: AIResponseSchema(object: responseSchema, languageInstruction: languageInstruction)
+    )
 }
 
 private func systemLanguageCode() -> String {

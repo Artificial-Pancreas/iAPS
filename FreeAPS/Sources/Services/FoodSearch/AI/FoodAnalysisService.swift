@@ -49,9 +49,33 @@ extension AIAnalysisService: ImageAnalysisService {
         images: [String],
         telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
+        try await analyzeImage(prompt: prompt, responseSchema: nil, images: images, telemetryCallback: telemetryCallback)
+    }
+
+    /// Analysis with the answer constrained to the prompt's response schema.
+    func analyzeImage(
+        prompt: AIAnalysisPrompt,
+        images: [String],
+        telemetryCallback: (@Sendable(String) -> Void)?
+    ) async throws -> FoodItemGroup {
+        try await analyzeImage(
+            prompt: prompt.text,
+            responseSchema: prompt.responseSchema,
+            images: images,
+            telemetryCallback: telemetryCallback
+        )
+    }
+
+    private func analyzeImage(
+        prompt: String,
+        responseSchema: AIResponseSchema?,
+        images: [String],
+        telemetryCallback: (@Sendable(String) -> Void)?
+    ) async throws -> FoodItemGroup {
         let response = try await client.executeQuery(
             prompt: prompt,
             images: images,
+            responseSchema: responseSchema,
             telemetryCallback: telemetryCallback
         )
 
@@ -74,9 +98,26 @@ extension AIAnalysisService: TextAnalysisService {
         prompt: String,
         telemetryCallback: (@Sendable(String) -> Void)?
     ) async throws -> FoodItemGroup {
+        try await analyzeText(prompt: prompt, responseSchema: nil, telemetryCallback: telemetryCallback)
+    }
+
+    /// Analysis with the answer constrained to the prompt's response schema.
+    func analyzeText(
+        prompt: AIAnalysisPrompt,
+        telemetryCallback: (@Sendable(String) -> Void)?
+    ) async throws -> FoodItemGroup {
+        try await analyzeText(prompt: prompt.text, responseSchema: prompt.responseSchema, telemetryCallback: telemetryCallback)
+    }
+
+    private func analyzeText(
+        prompt: String,
+        responseSchema: AIResponseSchema?,
+        telemetryCallback: (@Sendable(String) -> Void)?
+    ) async throws -> FoodItemGroup {
         let response = try await client.executeQuery(
             prompt: prompt,
             images: [],
+            responseSchema: responseSchema,
             telemetryCallback: telemetryCallback
         )
 

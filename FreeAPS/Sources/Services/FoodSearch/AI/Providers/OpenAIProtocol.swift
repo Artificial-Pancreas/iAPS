@@ -13,6 +13,7 @@ struct OpenAIProtocol: AIProviderProtocol {
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> URLRequest {
         var request = URLRequest(url: apiURL)
@@ -29,10 +30,22 @@ struct OpenAIProtocol: AIProviderProtocol {
             OpenAIResponsesMessage(role: "user", content: [textPart] + imageParts)
         ]
 
+        // Structured Outputs (json_schema, strict) is enforced on every model the app offers;
+        // JSON mode remains the fallback when no schema is supplied.
         var textOptions: OpenAIResponsesTextOptions?
         var stream: Bool?
+        let schema = responseSchema.map { OrderedJSON($0.jsonSchema(dialect: .strict)) }
+        if let schema {
+            textOptions = OpenAIResponsesTextOptions(format: .init(
+                type: "json_schema",
+                name: "food_analysis",
+                strict: true,
+                schema: schema
+            ))
+        } else if model.isReasoningModel {
+            textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object", name: nil, strict: nil, schema: nil))
+        }
         if model.isReasoningModel {
-            textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object"))
             stream = false
         }
 
@@ -48,7 +61,7 @@ struct OpenAIProtocol: AIProviderProtocol {
         )
 
         do {
-            request.httpBody = try JSONEncoder().encode(body)
+            request.httpBody = try OrderedJSON.encode(body, splicing: [schema])
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -192,7 +205,13 @@ private struct OpenAIReasoningOptions: Encodable {
 }
 
 private struct OpenAIResponsesTextOptions: Encodable {
-    struct Format: Encodable { let type: String }
+    struct Format: Encodable {
+        let type: String
+        let name: String?
+        let strict: Bool?
+        let schema: OrderedJSON?
+    }
+
     let format: Format
 }
 
