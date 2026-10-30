@@ -159,6 +159,13 @@ enum OpenAIModel: String, AIModelBase, CaseIterable, Encodable {
         }
     }
 
+    /// `reasoning.effort` for the Responses API. Reasoning tokens count against
+    /// `max_output_tokens`, so food analysis asks for the lowest level every current model
+    /// accepts ("low"; "minimal" and "none" are rejected by some GPT-6 models). Nil for GPT-4o.
+    var reasoningEffort: String? {
+        isReasoningModel ? "low" : nil
+    }
+
     /// Reasoning-family models (GPT-5 and later): JSON output is requested via the `text.format`
     /// option, streaming is off, and the longer request timeouts apply.
     var isReasoningModel: Bool {
@@ -268,7 +275,33 @@ enum GeminiModel: String, AIModelBase, CaseIterable, Encodable {
         }
     }
 
-    var temperature: Double? { 0.01 }
+    /// Google strongly recommends leaving sampling at its defaults on Gemini 3 and later; the
+    /// old near-zero temperature was tuned for 2.5 and is kept only there.
+    var temperature: Double? {
+        switch self {
+        case .gemini_3_5_flash_lite,
+             .gemini_3_6_flash,
+             .gemini_3_8_flash,
+             .gemini_4_argon:
+            nil
+        case .gemini_2_5_pro: 0.01
+        case .gemini_2_5_flash: 0.01
+        }
+    }
+
+    /// Gemini 3 and later think by default ("medium" on the current models) and the thought
+    /// tokens count against `maxOutputTokens`, so food analysis asks for the lowest level the
+    /// model accepts. Nil for 2.5, which uses the legacy thinking budget instead.
+    var thinkingLevel: String? {
+        switch self {
+        case .gemini_4_argon: "low"
+        case .gemini_3_8_flash: "low"
+        case .gemini_3_6_flash: "minimal"
+        case .gemini_3_5_flash_lite: "minimal"
+        case .gemini_2_5_pro: nil
+        case .gemini_2_5_flash: nil
+        }
+    }
 
     var displayName: String {
         switch self {
@@ -369,6 +402,22 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
         case .sonnet_4_6: 0.01
         case .opus_4_6: 0.01
         case .haiku_4_5: 0.01
+        }
+    }
+
+    /// `output_config.effort`. Thinking is adaptive and cannot be turned off on the 5.5 models,
+    /// and thinking tokens count against `max_tokens`, so food analysis runs at "low". The 4.6
+    /// models accept effort too; Sonnet 4.5 and Haiku 4.5 reject the parameter.
+    var effort: String? {
+        switch self {
+        case .haiku_5_5,
+             .opus_4_6,
+             .opus_5_5,
+             .sonnet_4_6,
+             .sonnet_5_5:
+            "low"
+        case .sonnet_4_5: nil
+        case .haiku_4_5: nil
         }
     }
 

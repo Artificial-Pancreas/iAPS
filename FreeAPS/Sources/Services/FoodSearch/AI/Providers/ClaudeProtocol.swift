@@ -37,8 +37,10 @@ struct ClaudeProtocol: AIProviderProtocol {
 
         let body = ClaudeMessagesRequest(
             model: model,
-            max_tokens: 8000,
+            // Thinking tokens count against this limit on the 5.5 models, so leave headroom.
+            max_tokens: 16000,
             temperature: model.temperature,
+            output_config: model.effort.map { ClaudeOutputConfig(effort: $0) },
             messages: messages
         )
 
@@ -111,6 +113,22 @@ struct ClaudeProtocol: AIProviderProtocol {
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
+        switch claudeResponse.stop_reason {
+        case "max_tokens":
+            let usage = claudeResponse.usage
+            debug(
+                .service,
+                "Claude output was cut off at max_tokens (output tokens: \(usage?.output_tokens ?? -1), input: \(usage?.input_tokens ?? -1)); the JSON is incomplete"
+            )
+            throw AIFoodAnalysisError
+                .customError("The Claude response was cut off before the analysis was complete. Please try again.")
+        case "refusal":
+            debug(.service, "Claude declined the request (stop_reason: refusal): \(String(decoding: data, as: UTF8.self))")
+            throw AIFoodAnalysisError.customError("Claude declined to analyze this request. Please try another photo or model.")
+        default:
+            break
+        }
+
         guard let contentItems = claudeResponse.content, !contentItems.isEmpty else {
             debug(.service, "Claude response contains no content items: \(String(decoding: data, as: UTF8.self))")
             throw AIFoodAnalysisError.responseParsingFailed
@@ -135,7 +153,12 @@ private struct ClaudeMessagesRequest: Encodable {
     let model: ClaudeModel
     let max_tokens: Int
     let temperature: Double?
+    let output_config: ClaudeOutputConfig?
     let messages: [ClaudeMessage]
+}
+
+private struct ClaudeOutputConfig: Encodable {
+    let effort: String
 }
 
 private struct ClaudeMessage: Encodable {
@@ -171,6 +194,13 @@ private struct ClaudeImageSource: Encodable {
 // Response
 private struct ClaudeMessagesResponse: Decodable {
     let content: [ClaudeMessageContent]?
+    let stop_reason: String?
+    let usage: ClaudeUsage?
+}
+
+private struct ClaudeUsage: Decodable {
+    let input_tokens: Int?
+    let output_tokens: Int?
 }
 
 private struct ClaudeMessageContent: Decodable {
