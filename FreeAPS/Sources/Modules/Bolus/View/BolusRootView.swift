@@ -1,15 +1,11 @@
-import CoreData
 import SwiftUI
 import Swinject
 
 extension Bolus {
     struct RootView: BaseView {
         let resolver: Resolver
-        let waitForSuggestion: Bool
-        let fetch: Bool
         @StateObject var state: StateModel
-
-        @State private var keepForNextWiew: Bool = false
+        @EnvironmentObject private var mainState: Main.StateModel
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -25,38 +21,35 @@ extension Bolus {
             return formatter
         }
 
-        private func format(_ number: NSDecimalNumber?) -> String {
-            guard let number = number else { return "" }
-            return mealFormatter.string(from: number) ?? ""
+        private func format(_ number: Decimal) -> String {
+            mealFormatter.string(from: number as NSNumber) ?? ""
         }
 
-        @FetchRequest(
-            entity: Meals.entity(),
-            sortDescriptors: [NSSortDescriptor(key: "createdAt", ascending: false)]
-        ) var meal: FetchedResults<Meals>
-
+        /// `meal`: handed over by Add Meal (pushed on its navigation stack), stored only by this view
         init(
             resolver: Resolver,
             waitForSuggestion: Bool,
-            fetch: Bool
+            meal: MealDraft?
         ) {
             self.resolver = resolver
-            self.waitForSuggestion = waitForSuggestion
-            self.fetch = fetch
-            _state = StateObject(wrappedValue: StateModel(resolver: resolver))
+            _state = StateObject(wrappedValue: StateModel(
+                resolver: resolver,
+                waitForSuggestion: waitForSuggestion,
+                meal: meal
+            ))
         }
 
         var body: some View {
             calculator
+                // the system back button (to Add Meal) only when nothing is being stored
+                .navigationBarBackButtonHidden(state.committing)
+                // again after a cancelled back swipe (which may or may not have fired onDisappear): re-arms, idempotent.
+                // No onDisappear: a pop (Add Meal clears the swipe block) or the modal closing ends this Bolus
                 .onAppear {
                     state.viewActive()
-                    state.waitForCarbs = fetch
-                    state.waitForSuggestionInitial = waitForSuggestion
-                    state.waitForSuggestion = waitForSuggestion
+                    // no swipe-down while a meal is pending (a pushed view's interactiveDismissDisabled may not reach the sheet)
+                    if let meal = state.meal, !state.closed { mainState.bolusMealPending = meal.id }
                     state.start()
-                }
-                .onDisappear {
-                    state.notActive()
                 }
         }
 
@@ -65,16 +58,12 @@ extension Bolus {
                 if state.eventualBG {
                     DefaultBolusCalcRootView(
                         resolver: resolver,
-                        fetch: fetch,
-                        meal: meal,
                         mealEntries: mealEntries
                     )
                     .environmentObject(state)
                 } else {
                     AlternativeBolusCalcRootView(
                         resolver: resolver,
-                        fetch: fetch,
-                        meal: meal,
                         mealEntries: mealEntries
                     )
                     .environmentObject(state)
@@ -86,7 +75,7 @@ extension Bolus {
 
         private var cleanBolusView: some View {
             Form {
-                if fetch {
+                if state.meal != nil {
                     Section {
                         mealEntries
                     } header: { Text("Meal Summary") }
@@ -109,8 +98,7 @@ extension Bolus {
                 Section {
                     if state.amount > 0 {
                         Button {
-                            state.add()
-                            keepForNextWiew = true
+                            state.enact()
                         }
                         label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
                             .frame(maxWidth: .infinity, alignment: .center)
@@ -119,9 +107,7 @@ extension Bolus {
                             .tint(.white)
                     } else {
                         Button {
-                            state.hideModal()
-                            if fetch { state.saveMeal() }
-                            keepForNextWiew = true
+                            state.saveWithoutBolus()
                         }
                         label: {
                             Text("Continue without bolus")
@@ -130,32 +116,17 @@ extension Bolus {
                     }
                 }
             }
+            .interactiveDismissDisabled(state.meal != nil)
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(
-                leading: Button {
-                    keepForNextWiew = state.carbsView(fetch: fetch, hasFatOrProtein: hasFatOrProtein, mealSummary: meal)
-                }
-                label: {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("Meal")
-                    }
-                },
-                trailing: Button { state.hideModal() }
-                label: { Text("Cancel") }
-            )
-        }
-
-        private var hasFatOrProtein: Bool {
-            guard let meal = meal.first else { return false }
-            return ((meal.fat ?? 0) != 0) || ((meal.protein ?? 0) != 0)
+            .toolbar { Bolus.toolbar(state) }
         }
 
         private var mealEntries: some View {
-            VStack {
-                if let carbs = meal.first?.carbs, carbs != 0 {
+            let meal = state.meal?.entry
+            return VStack {
+                if let carbs = meal?.carbs, carbs != 0 {
                     HStack {
                         Text("Carbs")
                         Spacer()
@@ -163,7 +134,7 @@ extension Bolus {
                         Text("g")
                     }.foregroundColor(.secondary)
                 }
-                if let fat = meal.first?.fat, fat != 0 {
+                if let fat = meal?.fat, fat != 0 {
                     HStack {
                         Text("Fat")
                         Spacer()
@@ -171,7 +142,7 @@ extension Bolus {
                         Text("g")
                     }.foregroundColor(.secondary)
                 }
-                if let protein = meal.first?.protein, protein != 0 {
+                if let protein = meal?.protein, protein != 0 {
                     HStack {
                         Text("Protein")
                         Spacer()
@@ -179,7 +150,7 @@ extension Bolus {
                         Text("g")
                     }.foregroundColor(.secondary)
                 }
-                if let note = meal.first?.note, note != "" {
+                if let note = meal?.note, note != "" {
                     HStack {
                         Text("Note")
                         Spacer()
@@ -187,6 +158,33 @@ extension Bolus {
                     }.foregroundColor(.secondary)
                 }
             }
+        }
+    }
+}
+
+extension Bolus {
+    /// Leading "‹ Meal" (Bolus from Home only; with a meal the system back button returns to Add Meal) and Cancel.
+    /// Cancel with a meal closes the sheet and discards the meal
+    @MainActor @ToolbarContentBuilder static func toolbar(_ state: StateModel) -> some ToolbarContent {
+        if state.meal == nil {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    state.addMeal()
+                }
+                label: {
+                    HStack {
+                        Image(systemName: "chevron.backward")
+                        Text("Meal")
+                    }
+                }
+            }
+        }
+        ToolbarItem(placement: .topBarTrailing) {
+            Button {
+                state.cancel()
+            }
+            label: { Text("Cancel") }
+                .disabled(state.committing)
         }
     }
 }

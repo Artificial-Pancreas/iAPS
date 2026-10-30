@@ -95,6 +95,9 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
         observe(appCoordinator.tempTargets.dropFirst()) { me, _ in
             await me.configureState()
         }
+        observe(appCoordinator.tempTargetPresetsChanged.dropFirst()) { me, _ in
+            await me.configureState()
+        }
 //        observe(appCoordinator.carbHistoryUpdates) { me, carbs in
 //            // TODO:
 //        }
@@ -552,21 +555,10 @@ private extension BaseWatchManager {
         }
 
         if let tempTargetID = message.tempTarget {
-            if var preset = await tempTargetsStorage.presets().first(where: { $0.id == tempTargetID }) {
-                preset.createdAt = Date()
-                await tempTargetsStorage.storeTempTargets([preset])
+            if tempTargetID == "cancel" {
+                await tempTargetsStorage.cancelTempTarget()
                 return .confirmed
-            } else if tempTargetID == "cancel" {
-                let entry = TempTarget(
-                    name: TempTarget.cancel,
-                    createdAt: Date(),
-                    targetTop: 0,
-                    targetBottom: 0,
-                    duration: 0,
-                    enteredBy: TempTarget.manual,
-                    reason: TempTarget.cancel
-                )
-                await tempTargetsStorage.storeTempTargets([entry])
+            } else if await tempTargetsStorage.enactPreset(id: tempTargetID) != nil {
                 return .confirmed
             }
         }

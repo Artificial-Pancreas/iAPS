@@ -43,12 +43,13 @@ extension Main {
         var body: some View {
             router.view(for: .home)
                 .sheet(isPresented: $state.isModalPresented) {
-                    NavigationView {
+                    // a stack: Add Meal pushes Bolus with the meal
+                    NavigationStack {
                         self.state.modal!.view
-                            .environmentObject(state)
                     }
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    .interactiveDismissDisabled(state.shouldPreventModalDismiss)
+                    // outside the stack, so that pushed views get it too
+                    .environmentObject(state)
+                    .interactiveDismissDisabled(state.shouldPreventModalDismiss || state.bolusMealPending != nil)
                     .environment(\.colorScheme, colorScheme)
                 }
                 .sheet(isPresented: $state.isSecondaryModalPresented) {

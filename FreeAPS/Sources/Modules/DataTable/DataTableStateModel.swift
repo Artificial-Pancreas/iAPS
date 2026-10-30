@@ -222,13 +222,14 @@ extension DataTable {
             }
         }
 
-        func deleteCarbs(_ treatment: Treatment, storage: Meals?) {
+        /// `mealID`: the id of the CoreData meal of this treatment, if there is one
+        func deleteCarbs(_ treatment: Treatment, mealID: String?) {
             Task {
                 await doDeleteCarbs(treatment.creationDate)
 
                 // In need of CoreData deletion?
-                if let data = storage {
-                    await coreDataStorage.deleteBatch(identifier: data.id, entity: "Meals")
+                if let mealID {
+                    await coreDataStorage.deleteBatch(identifier: mealID, entity: "Meals")
                 }
 
                 // In need of a loop update?
@@ -305,7 +306,8 @@ extension DataTable {
         }
 
         /// Update Carbs or Carb equivalents in storage, data table
-        func updateCarbs(treatment: Treatment?, computed: Meals?) {
+        /// `mealID`: the id of the CoreData meal of this treatment, if there is one
+        func updateCarbs(treatment: Treatment?, mealID: String?) {
             guard let old = treatment else { return }
 
             Task {
@@ -324,9 +326,9 @@ extension DataTable {
                 )
 
                 // Remove old CoreData meal
-                if let deleteOld = computed {
+                if let mealID {
                     await coreDataStorage.deleteBatch(
-                        identifier: deleteOld.id,
+                        identifier: mealID,
                         entity: "Meals"
                     )
                 }
@@ -357,15 +359,15 @@ extension DataTable {
             }
         }
 
-        func updateVariables(mealItem: Treatment, complex: Meals?) {
+        func updateVariables(mealItem: Treatment, complex: MealsSnapshot?) {
             treatment = mealItem
             let string = (mealItem.amountText.components(separatedBy: " ").first ?? "0")
                 .replacingOccurrences(of: ",", with: ".")
             meal.carbs = string.toDecimal ?? 0
             oldCarbs = meal.carbs
-            meal.fat = (complex?.fat ?? 0) as Decimal
-            meal.protein = (complex?.protein ?? 0) as Decimal
-            meal.fiber = (complex?.fiber ?? 0) as Decimal
+            meal.fat = complex?.fat ?? 0
+            meal.protein = complex?.protein ?? 0
+            meal.fiber = complex?.fiber ?? 0
             meal.note = complex?.note ?? "Meal"
             meal.micronutrient = complex?.micronutrientValues ?? []
         }

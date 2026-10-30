@@ -150,6 +150,9 @@ final class AppCoordinator: @unchecked Sendable {
     // bumped whenever override-related CoreData entities change
     let overridesChanged = CurrentValueSubject<Date, Never>(.distantPast)
 
+    // bumped whenever the temp target presets change (they are not published as temp targets)
+    let tempTargetPresetsChanged = CurrentValueSubject<Date, Never>(.distantPast)
+
     /// Fires when DatabaseManager stores a published-versions check (the VNr table); Home
     /// recomputes its newer-release notice from it instead of polling on the loop path.
     let versionCheckStored = CurrentValueSubject<Date, Never>(.distantPast)
@@ -206,6 +209,10 @@ final class AppCoordinator: @unchecked Sendable {
 
     func overridesDidChange() {
         overridesChanged.send(Date())
+    }
+
+    func tempTargetPresetsDidChange() {
+        tempTargetPresetsChanged.send(Date())
     }
 
     func versionCheckDidStore() {

@@ -9,14 +9,11 @@ extension BasalProfileEditor {
         @State private var editMode = EditMode.inactive
         @Environment(\.dismiss) var dismiss
 
-        @Environment(AppUIState.self) private var appUIState
-
         @FetchRequest(
             entity: InsulinConcentration.entity(), sortDescriptors: [NSSortDescriptor(key: "date", ascending: true)]
         ) var concentration: FetchedResults<InsulinConcentration>
 
         let saveNewConcentration: Bool
-        let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
 
         private var dateFormatter: DateFormatter {
             let formatter = DateFormatter()
@@ -245,7 +242,7 @@ extension BasalProfileEditor {
                 Button("Yes", role: .destructive) {
                     clean = false
                     saving = true
-                    save()
+                    state.saveConcentration(Double(set))
                 }
             } message: {
                 Text("\n" + NSLocalizedString(
@@ -263,24 +260,6 @@ extension BasalProfileEditor {
             state.items.remove(atOffsets: offsets)
             state.validate()
             state.calcTotal()
-        }
-
-        private func save() {
-            let preferences = appUIState.preferences
-            coredataContext.perform { [self] in
-                let newConfiguration = InsulinConcentration(context: self.coredataContext)
-                newConfiguration.concentration = Double(set)
-                newConfiguration.incrementSetting = Double(preferences.bolusIncrement)
-                newConfiguration.date = Date.now
-                do {
-                    try self.coredataContext.save()
-                } catch {
-                    debug(.apsManager, "Insulin Concentration setting couldn't be saved to CoreData. Error: " + "\(error)")
-                }
-                Task { @MainActor [self] in
-                    self.state.save()
-                }
-            }
         }
     }
 }

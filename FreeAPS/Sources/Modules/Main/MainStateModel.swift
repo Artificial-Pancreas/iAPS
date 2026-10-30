@@ -19,6 +19,9 @@ extension Main {
         @Published var isSecondaryModalPresented = false
         @Published var secondaryModalView: AnyView? = nil
         @Published var shouldPreventModalDismiss = false
+        /// The draft id of the Bolus on screen with a meal from Add Meal: no swipe-down (it would drop the meal unnoticed).
+        /// An id, not a flag: a Bolus that is going away clears only its own
+        @Published var bolusMealPending: UUID?
 
         private let resolver: Resolver
 
@@ -59,6 +62,9 @@ extension Main {
         }
 
         private func mainModalScreenUpdated(_ screen: Screen?) {
+            // a new modal, or none: the previous one's swipe blocks went with it (the new one sets its own on appear)
+            shouldPreventModalDismiss = false
+            bolusMealPending = nil
             let modal = screen?.modal(resolver: resolver)
             self.modal = modal
             isModalPresented = modal != nil

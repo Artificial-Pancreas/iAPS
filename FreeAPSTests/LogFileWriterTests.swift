@@ -20,8 +20,8 @@ final class LogFileWriterTests: XCTestCase {
     private func makeWriter(
         maxPendingBytes: Int = 8 << 20,
         center: Foundation.NotificationCenter = Foundation.NotificationCenter(),
-        now: @escaping @Sendable () -> Date = { Date() },
-        write: @escaping @Sendable (Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
+        now: @escaping @Sendable() -> Date = { Date() },
+        write: @escaping @Sendable(Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
     ) -> LogFileWriter {
         LogFileWriter(directory: directory, maxPendingBytes: maxPendingBytes, notificationCenter: center, now: now, write: write)
     }
@@ -34,7 +34,7 @@ final class LogFileWriterTests: XCTestCase {
 
     private func makeDropWriter(
         maxPendingBytes: Int = 8 << 20,
-        write: @escaping @Sendable (Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
+        write: @escaping @Sendable(Int32, UnsafeRawPointer, Int) -> Int = { Darwin.write($0, $1, $2) }
     ) -> LogFileWriter {
         makeWriter(maxPendingBytes: maxPendingBytes, now: { Self.markerDate }, write: write)
     }

@@ -7,7 +7,6 @@ import Swinject
 extension AddCarbs {
     struct RootView: BaseView {
         let resolver: Resolver
-        let editMode: Bool
         let override: Bool
         let mode: MealMode.Mode
         @StateObject var state: StateModel
@@ -18,6 +17,7 @@ extension AddCarbs {
         @State var saved = false
         @State var pushed = false
         @State var button = false
+        @State private var appeared = false
 
         @State private var showAlert = false
         @State private var presentPresets = false
@@ -53,12 +53,10 @@ extension AddCarbs {
 
         init(
             resolver: Resolver,
-            editMode: Bool,
             override: Bool,
             mode: MealMode.Mode
         ) {
             self.resolver = resolver
-            self.editMode = editMode
             self.override = override
             self.mode = mode
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -94,6 +92,16 @@ extension AddCarbs {
                     actions: cancelDialogActions,
                     message: { Text("Do you want to discard this meal?") }
                 )
+                // Bolus with the meal; back pops to this view as it was left
+                .navigationDestination(item: $state.bolusDraft) { draft in
+                    Bolus.RootView(resolver: resolver, waitForSuggestion: true, meal: draft)
+                }
+                .onChange(of: state.bolusDraft) { popped, draft in
+                    guard draft == nil else { return }
+                    // back from Bolus: the next tap must add again, and swipe-down is up to this view again
+                    button = false
+                    if let popped, mainState.bolusMealPending == popped.id { mainState.bolusMealPending = nil }
+                }
                 .onAppear(perform: handleOnAppear)
                 .onDisappear { mainState.shouldPreventModalDismiss = false }
                 .onChange(of: shouldPreventDismiss) { syncDismissState() }
@@ -155,7 +163,7 @@ extension AddCarbs {
                 guard button else { return }
 
                 state.hypoTreatment = true
-                state.addAIFood(override, fetch: editMode, food: food, date: date)
+                state.addAIFood(override, food: food, date: date)
             }
         }
 
@@ -182,15 +190,12 @@ extension AddCarbs {
         }
 
         private var continueLabel: LocalizedStringKey {
-            (state.skipBolus && !override && !editMode) ? "Save" : "Continue"
+            (state.skipBolus && !override) ? "Save" : "Continue"
         }
 
         @ViewBuilder private func cancelDialogActions() -> some View {
             Button("Discard", role: .destructive) {
                 state.hideModal()
-                if editMode {
-                    state.runDetermineBasal()
-                }
             }
             Button("Cancel", role: .cancel) {}
         }
@@ -405,7 +410,7 @@ extension AddCarbs {
                     button.toggle()
 
                     if button {
-                        state.add(override, fetch: editMode)
+                        state.add(override)
                     }
 
                 } label: {
@@ -425,13 +430,13 @@ extension AddCarbs {
                     button.toggle()
 
                     if button {
-                        state.add(override, fetch: editMode)
+                        state.add(override)
                     }
 
                 } label: {
                     Text(
                         (
-                            (state.skipBolus && !override && !editMode)
+                            (state.skipBolus && !override)
                                 || state.carbs <= 0
                         )
                             ? "Save"
@@ -741,13 +746,16 @@ extension AddCarbs {
             guard button else { return }
 
             state.hypoTreatment = false
-            state.addAIFood(override, fetch: editMode, food: food, date: date)
+            state.addAIFood(override, food: food, date: date)
         }
 
         private func handleOnAppear() {
             syncDismissState()
 
-            state.loadEntries(editMode)
+            // once: it runs again when Bolus is popped
+            guard !appeared else { return }
+            appeared = true
+
             addMissingFoodIDs()
             updateSavedFoods()
 
@@ -1089,9 +1097,6 @@ extension AddCarbs {
 
             // Otherwise, just dismiss
             state.hideModal()
-            if editMode {
-                state.runDetermineBasal()
-            }
         }
 
         private var editView: some View {

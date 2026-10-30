@@ -39,8 +39,21 @@ extension Bolus {
         @Published var waitForSuggestion: Bool = false
         @Published var carbRatio: Decimal = 0
 
-        var waitForSuggestionInitial: Bool = false
-        @Published var waitForCarbs: Bool = false
+        /// The meal handed over by Add Meal. Not stored until enact / save without bolus
+        let meal: MealDraft?
+        private let waitForSuggestionInitial: Bool
+        /// Enact / save without bolus is running (or done): blocks a second commit, the discard and the back button
+        @Published private(set) var committing = false
+        private var started = false
+        /// Gone for good (see `close`): never touches the modal, inBolusView or the swipe block again
+        private(set) var closed = false
+        /// The modal screen this Bolus is in (Home's Bolus, or the Add Meal that pushed it)
+        private var modalScreenID: Int?
+        /// The Bolus that set inBolusView: one that closes late must not clear it under the next one
+        private weak static var inBolusViewOwner: Bolus.StateModel?
+        /// The suggestion with the meal's temporary carbs
+        private var previewTask: Task<Void, Never>?
+        private var previewInFlight = false
 
         // added for bolus calculator
         @Published var recentGlucose: BloodGlucose?
@@ -64,7 +77,6 @@ extension Bolus {
         @Published var useFattyMealCorrectionFactor: Bool = false
         @Published var displayPredictions: Bool = true
 
-        @Published var meal: [CarbsEntry]?
         @Published var carbs: Decimal = 0
         @Published var fat: Decimal = 0
         @Published var protein: Decimal = 0
@@ -76,7 +88,6 @@ extension Bolus {
         @Published var loopDate: Date = .distantFuture
         @Published var now = Date.now
         @Published var bolus: Decimal = 0
-        @Published var carbToStore: CarbsEntry? = nil
         @Published var disable15MinTrend: Bool = false
         @Published var minBolus: Decimal = 0.05
 
@@ -100,12 +111,19 @@ extension Bolus {
             return formatter
         }()
 
-        override init(resolver: Resolver) {
+        init(resolver: Resolver, waitForSuggestion: Bool, meal: MealDraft?) {
+            self.meal = meal
+            waitForSuggestionInitial = waitForSuggestion
             super.init(resolver: resolver)
             let settings = appCoordinator.settings.value
             // need to initialize these before subscribe()
             useCalc = settings.useCalc
             eventualBG = settings.eventualBG
+            self.waitForSuggestion = waitForSuggestion
+            modalScreenID = router.mainModalScreen.value?.id
+            meal?.popped.onFire { [weak self] in
+                self?.close()
+            }
         }
 
         override func subscribe() async {
@@ -139,6 +157,9 @@ extension Bolus {
             observe(appCoordinator.pumpStatus) { me, pumpStatus in
                 await me.updateMinBolus(pumpStatus)
             }
+            observe(router.mainModalScreen) { me, screen in
+                await me.modalScreenUpdated(screen)
+            }
         }
 
         private func updateMinBolus(_ pumpStatus: PumpDisplayStatus?) async {
@@ -148,10 +169,18 @@ extension Bolus {
         }
 
         private func suggestionDidUpdate(_: Suggestion?) async {
+            guard !committing, !closed else { return }
             if Date.now >= now.addingTimeInterval(.minutes(loopReminder * 1.5)) {
-                hideModal()
-                notActive()
+                // a handed-over meal is discarded
                 debug(.apsManager, "Force Closing Bolus View")
+                closeModal()
+            }
+        }
+
+        /// Its modal closed or replaced: Cancel, autoclose, a commit, swipe-down, another screen
+        private func modalScreenUpdated(_ screen: Screen?) {
+            if screen?.id != modalScreenID {
+                close()
             }
         }
 
@@ -160,13 +189,14 @@ extension Bolus {
         }
 
         func start() {
-            Task {
+            // onAppear runs again when the view comes back (e.g. a cancelled back swipe)
+            guard !started, !closed else { return }
+            started = true
+            previewInFlight = waitForSuggestionInitial
+            previewTask = Task {
                 if waitForSuggestionInitial {
-                    if waitForCarbs {
-                        await setupBolusData()
-                    }
-
-                    self.suggestion = try? await apsManager.determineBasal(temporaryCarbs: carbToStore)
+                    self.suggestion = try? await apsManager.determineBasal(temporaryCarbs: meal?.entry)
+                    previewInFlight = false
                     self.predictions = self.suggestion?.predictions
                     if self.suggestion == nil {
                         self.insulinRequired = 0
@@ -266,7 +296,7 @@ extension Bolus {
         /// When COB module fail
         var recentCarbs: Decimal {
             var temporaryCarbs: Decimal = 0
-            guard let temporary = carbToStore else { return 0 }
+            guard let temporary = meal?.entry else { return 0 }
             let timeDifference = (temporary.actualDate ?? .distantPast).timeIntervalSinceNow
             if timeDifference <= 0, timeDifference > TimeInterval.minutes(-15) {
                 temporaryCarbs = temporary.carbs
@@ -274,43 +304,94 @@ extension Bolus {
             return temporaryCarbs
         }
 
-        func add() {
-            Task {
-                guard amount > 0 else {
-                    showModal(for: nil)
-                    return
-                }
+        /// Stores the meal (if any), then enacts the bolus and closes
+        func enact() {
+            guard !committing else { return }
+            guard amount > 0 else {
+                closeModal()
+                return
+            }
+            committing = true
 
+            Task {
                 let pumpSettings = appCoordinator.pumpSettings.value
                 let maxAmount = Double(min(amount, pumpSettings.maxBolus))
 
                 do {
                     try await unlockmanager.unlock()
-                    self.save()
-                    await self.apsManager.enactBolus(amount: maxAmount, isSMB: false)
-                    self.showModal(for: nil)
                 } catch {
                     debug(.default, "device was not unlocked, skipping bolus")
+                    committing = false
+                    return
                 }
+
+                let previewWasInFlight = previewInFlight
+                // the meal first: the suggestion after the bolus (and the next loop) sees its carbs
+                if let meal {
+                    await carbsStorage.storeMeal(meal.entry)
+                }
+                await apsManager.enactBolus(amount: maxAmount, isSMB: false)
+                // a late preview would publish the temporary carbs on top of the stored ones
+                if meal != nil, previewWasInFlight {
+                    refreshSuggestion()
+                }
+                closeModal()
             }
         }
 
-        func save() {
-            guard let carbToStore, !carbToStore.isEmpty else { return }
+        /// Stores the meal (if any) without a bolus and closes
+        func saveWithoutBolus(addManualGlucose addGlucose: Bool = false) {
+            guard !committing else { return }
+            committing = true
+            if addGlucose {
+                addManualGlucose()
+            }
+
             Task {
-                await coreDataStorage.updateLatestMeal(to: true)
-                await carbsStorage.storeCarbs([carbToStore])
+                if let meal {
+                    await carbsStorage.storeMeal(meal.entry)
+                    refreshSuggestion()
+                }
+                closeModal()
             }
         }
 
-        func saveMeal() {
-            Task {
-                if carbToStore == nil {
-                    await setupBolusData()
-                }
+        func cancel() {
+            guard !committing else { return }
+            closeModal()
+        }
 
-                // meal is already in CoreData (saved by AddCarbs), `save()` only marks it as saved to file
-                save()
+        /// Closes the modal, unless this Bolus is closed already or another screen replaced it, and then this Bolus
+        private func closeModal() {
+            if !closed, router.mainModalScreen.value?.id == modalScreenID {
+                hideModal()
+            }
+            close()
+        }
+
+        /// Bolus is gone for good: popped back to Add Meal, or its modal closed or replaced. Not on disappear: that also
+        /// comes with a back swipe that is then cancelled (and Bolus stays). A meal left without a commit is discarded
+        private func close() {
+            guard !closed else { return }
+            closed = true
+            discard()
+            notActive()
+        }
+
+        /// A handed-over meal left without a commit (back, cancel, autoclose): nothing is stored,
+        /// the suggestion drops its temporary carbs
+        private func discard() {
+            guard meal != nil, !committing else { return }
+            refreshSuggestion()
+        }
+
+        /// A suggestion without temporary carbs, after an in-flight preview so that it can't land later.
+        /// Not in `lifetime`: it outlives the view
+        private func refreshSuggestion() {
+            let preview = previewTask
+            Task {
+                await preview?.value
+                _ = try? await self.apsManager.determineBasal(temporaryCarbs: nil)
             }
         }
 
@@ -342,19 +423,9 @@ extension Bolus {
             }
         }
 
-        func backToCarbsView(override: Bool, editMode: Bool) {
-            showModal(for: .addCarbs(editMode: editMode, override: override, mode: .meal))
-        }
-
-        func carbsView(fetch: Bool, hasFatOrProtein _: Bool, mealSummary _: FetchedResults<Meals>) -> Bool {
-            var keepForNextWiew = false
-            if fetch {
-                keepForNextWiew = true
-                backToCarbsView(override: false, editMode: true)
-            } else {
-                backToCarbsView(override: true, editMode: false)
-            }
-            return keepForNextWiew
+        /// Bolus opened from Home: a new meal (it comes back here with the meal)
+        func addMeal() {
+            showModal(for: .addCarbs(override: true, mode: .meal))
         }
 
         func remoteBolus() async -> String? {
@@ -382,13 +453,17 @@ extension Bolus {
             return nil
         }
 
-        func notActive() {
+        private func notActive() {
+            guard Self.inBolusViewOwner == nil || Self.inBolusViewOwner === self else { return }
+            Self.inBolusViewOwner = nil
             let defaults = UserDefaults.standard
             defaults.set(false, forKey: IAPSconfig.inBolusView)
             // print("Active: NO") // For testing
         }
 
         func viewActive() {
+            guard !closed else { return }
+            Self.inBolusViewOwner = self
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: IAPSconfig.inBolusView)
             // print("Active: YES") // For testing
@@ -459,30 +534,6 @@ extension Bolus {
             // Account for increments (don't use the APSManager function as that gets too slow)
             let increment = minBolus
             return Decimal(round(Double(amount / increment))) * increment
-        }
-
-        private func setupBolusData() async {
-            if let recent = await coreDataStorage.recentMeal() {
-                carbToStore = CarbsEntry(
-                    id: recent.id,
-                    createdAt: (recent.createdAt ?? Date.now).addingTimeInterval(.seconds(5)),
-                    actualDate: recent.actualDate,
-                    carbs: (recent.carbs ?? 0) as Decimal,
-                    fat: (recent.fat ?? 0) as Decimal,
-                    protein: (recent.protein ?? 0) as Decimal,
-                    fiber: (recent.fiber ?? 0) as Decimal,
-                    note: recent.note,
-                    enteredBy: CarbsEntry.manual,
-                    isFPU: false,
-                    micronutrient: recent.micronutrientValues
-                )
-            }
-        }
-
-        func determineBasal() {
-            Task {
-                _ = try? await apsManager.determineBasal(temporaryCarbs: nil)
-            }
         }
 
         private func fetchGlucose() async -> [ReadingsSnapshot] {

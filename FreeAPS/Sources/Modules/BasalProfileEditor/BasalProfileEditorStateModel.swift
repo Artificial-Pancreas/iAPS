@@ -76,20 +76,43 @@ extension BasalProfileEditor {
         }
 
         func save() {
+            guard beginSync() else { return }
             Task {
-                saved = false
-                syncInProgress = true
-                let profile = currentProfile()
-
-                do {
-                    try await saveProfile(profile)
-                } catch {
-                    // TODO: show the error in the UI?
-                    debug(.default, "failed to save profile: \(error.localizedDescription)")
-                }
-                self.syncInProgress = false
-                self.saved = true
+                await syncProfile()
             }
+        }
+
+        /// Saves the new concentration, then syncs the basal schedule with it.
+        func saveConcentration(_ concentration: Double) {
+            guard beginSync() else { return }
+            Task {
+                await coreDataStorage.saveConcentration(
+                    concentration,
+                    increment: appCoordinator.preferences.value.bolusIncrement
+                )
+                await syncProfile()
+            }
+        }
+
+        /// Before the Task: the buttons are disabled (no second tap) and the footer is neutral right away
+        private func beginSync() -> Bool {
+            guard !syncInProgress else { return false }
+            saved = false
+            syncInProgress = true
+            return true
+        }
+
+        private func syncProfile() async {
+            let profile = currentProfile()
+
+            do {
+                try await saveProfile(profile)
+            } catch {
+                // TODO: show the error in the UI?
+                debug(.default, "failed to save profile: \(error.localizedDescription)")
+            }
+            syncInProgress = false
+            saved = true
         }
 
         func validate() {

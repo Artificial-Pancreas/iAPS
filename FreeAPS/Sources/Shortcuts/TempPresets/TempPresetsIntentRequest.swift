@@ -1,4 +1,3 @@
-import CoreData
 import Foundation
 
 final class TempPresetsIntentRequest: BaseIntentsRequest {
@@ -34,56 +33,13 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     func enactTempTarget(_ presetTarget: TempTarget) async throws -> TempTarget {
-        var tempTarget = presetTarget
-        tempTarget.createdAt = Date()
-        await tempTargetsStorage.storeTempTargets([tempTarget])
-
-        let tempTargetID = tempTarget.id
-
-        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            var tempTargetsArray = [TempTargetsSlider]()
-            let requestTempTargets = TempTargetsSlider.fetchRequest() as NSFetchRequest<TempTargetsSlider>
-            let sortTT = NSSortDescriptor(key: "date", ascending: false)
-            requestTempTargets.sortDescriptors = [sortTT]
-            try? tempTargetsArray = context.fetch(requestTempTargets)
-
-            let whichID = tempTargetsArray.first(where: { $0.id == tempTargetID })
-
-            if whichID != nil {
-                let saveToCoreData = TempTargets(context: context)
-                saveToCoreData.active = true
-                saveToCoreData.date = Date()
-                saveToCoreData.hbt = whichID?.hbt ?? 160
-                saveToCoreData.startDate = Date()
-                saveToCoreData.duration = whichID?.duration ?? 0
-
-                try? context.save()
-            } else {
-                let saveToCoreData = TempTargets(context: context)
-                saveToCoreData.active = false
-                saveToCoreData.date = Date()
-                try? context.save()
-            }
+        guard let tempTarget = await tempTargetsStorage.enactPreset(id: presetTarget.id) else {
+            throw TempPresetsError.noTempTargetFound
         }
-
         return tempTarget
     }
 
     func cancelTempTarget() async throws {
-        await tempTargetsStorage.storeTempTargets([TempTarget.cancel(at: Date())])
-
-        await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
-            let saveToCoreData = TempTargets(context: context)
-            saveToCoreData.active = false
-
-            let setHBT = TempTargetsSlider(context: context)
-            setHBT.enabled = false
-
-            if context.hasChanges {
-                saveToCoreData.date = Date()
-                setHBT.date = Date()
-                try? context.save()
-            }
-        }
+        await tempTargetsStorage.cancelTempTarget()
     }
 }

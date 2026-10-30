@@ -449,7 +449,7 @@ extension DataTable {
             }.padding(.vertical, (item.type == .carbs || item.type == .bolus) ? 10 : 0)
                 .swipeActions(edge: .leading) {
                     Button {
-                        state.updateVariables(mealItem: item, complex: filtered(id: item.id))
+                        state.updateVariables(mealItem: item, complex: filtered(id: item.id).map(MealsSnapshot.create(from:)))
                         editIsPresented.toggle()
                     }
                     label: { Label("Edit", systemImage: "pencil.line") }
@@ -492,7 +492,7 @@ extension DataTable {
                         }
 
                         if treatmentToDelete.type == .carbs {
-                            state.deleteCarbs(treatmentToDelete, storage: filtered(id: treatmentToDelete.id))
+                            state.deleteCarbs(treatmentToDelete, mealID: filtered(id: treatmentToDelete.id)?.id)
                         } else {
                             state.deleteInsulin(treatmentToDelete)
                         }
@@ -744,7 +744,7 @@ extension DataTable {
                                 /// To Do: Fix the saving. Not working properly
                                 state.updateCarbs(
                                     treatment: item,
-                                    computed: filtered(id: item.id)
+                                    mealID: filtered(id: item.id)?.id
                                 )
                             }
                             label: {
