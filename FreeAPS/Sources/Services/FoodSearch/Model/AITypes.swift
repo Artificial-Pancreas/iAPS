@@ -351,6 +351,7 @@ enum GeminiModel: String, AIModelBase, CaseIterable, Encodable {
 
 enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
     // Current lineup (Claude models overview, Oct 2026)
+    case fable_5_1 = "claude-fable-5-1"
     case opus_5_5 = "claude-opus-5-5"
     case sonnet_5_5 = "claude-sonnet-5-5"
     case haiku_5_5 = "claude-haiku-5-5"
@@ -364,6 +365,7 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
 
     var fast: Bool {
         switch self {
+        case .fable_5_1: false
         case .opus_5_5: false
         case .sonnet_5_5: false
         case .haiku_5_5: true
@@ -379,7 +381,8 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
     /// "not sooner than" dates only, so no shutdown date is recorded for them.
     var deprecation: AIModelDeprecation? {
         switch self {
-        case .haiku_5_5,
+        case .fable_5_1,
+             .haiku_5_5,
              .opus_5_5,
              .sonnet_5_5:
             nil
@@ -394,7 +397,8 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
     /// API version 2026-10-21, so the current models send none.
     var temperature: Double? {
         switch self {
-        case .haiku_5_5,
+        case .fable_5_1,
+             .haiku_5_5,
              .opus_5_5,
              .sonnet_5_5:
             nil
@@ -410,7 +414,8 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
     /// models accept effort too; Sonnet 4.5 and Haiku 4.5 reject the parameter.
     var effort: String? {
         switch self {
-        case .haiku_5_5,
+        case .fable_5_1,
+             .haiku_5_5,
              .opus_4_6,
              .opus_5_5,
              .sonnet_4_6,
@@ -423,6 +428,7 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
 
     var displayName: String {
         switch self {
+        case .fable_5_1: "Fable 5.1"
         case .opus_5_5: "Opus 5.5"
         case .sonnet_5_5: "Sonnet 5.5"
         case .haiku_5_5: "Haiku 5.5"
@@ -435,6 +441,7 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
 
     var defaultImageETA: TimeInterval {
         switch self {
+        case .fable_5_1: 90
         case .opus_5_5: 70
         case .sonnet_5_5: 55
         case .haiku_5_5: 35
@@ -447,6 +454,7 @@ enum ClaudeModel: String, AIModelBase, CaseIterable, Encodable {
 
     var defaultTextETA: TimeInterval {
         switch self {
+        case .fable_5_1: 25
         case .opus_5_5: 20
         case .sonnet_5_5: 15
         case .haiku_5_5: 10
