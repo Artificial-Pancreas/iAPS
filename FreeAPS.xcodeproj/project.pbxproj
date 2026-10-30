@@ -4413,7 +4413,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -4434,7 +4434,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
