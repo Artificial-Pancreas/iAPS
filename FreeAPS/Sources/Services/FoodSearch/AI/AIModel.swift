@@ -292,7 +292,7 @@ extension AIAnalysisResult {
     static var schemaVisual: [(String, Any)] {
         let fields = [
             (.imageType, "string enum: food_photo or menu_photo or recipe_photo"),
-            (.foodItems, AnalysiedFoodItem.schemaVisual),
+            (.foodItems, [AnalysiedFoodItem.schemaVisual]),
             (.overallDescription, "describe what you see on the photo; (language)")
         ] + self.fields
 
