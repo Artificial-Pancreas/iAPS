@@ -28,6 +28,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
+        case noLoopRepeatingNotification = "FreeAPS.noLoopRepeatingNotification"
         case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
     }
 
@@ -211,6 +212,7 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
 
             let firstInterval = 20 // min
             let secondInterval = 40 // min
+            let repeatingInterval = 60 // min
 
             let firstContent = UNMutableNotificationContent()
             firstContent.interruptionLevel = .timeSensitive
@@ -224,8 +226,22 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
             secondContent.body = String(format: body, secondInterval)
             if sound { secondContent.sound = .default }
 
+            // The chain used to end with the 40 min notification: a loop that stays wedged for
+            // hours never re-armed it, so nothing fired again (a 5 h overnight gap in the fleet
+            // data got two banners at the start and silence after). Keep reminding every hour
+            // until looping resumes, which cancels and re-arms all three like before.
+            let repeatingContent = UNMutableNotificationContent()
+            repeatingContent.interruptionLevel = .timeSensitive
+            repeatingContent.title = title
+            repeatingContent.body = String(format: body, repeatingInterval)
+            if sound { repeatingContent.sound = .default }
+
             let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
             let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
+            let repeatingTrigger = UNTimeIntervalNotificationTrigger(
+                timeInterval: 60 * TimeInterval(repeatingInterval),
+                repeats: true
+            )
 
             await self.addRequest(
                 identifier: .noLoopFirstNotification,
@@ -238,6 +254,12 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
                 content: secondContent,
                 deleteOld: true,
                 trigger: secondTrigger
+            )
+            await self.addRequest(
+                identifier: .noLoopRepeatingNotification,
+                content: repeatingContent,
+                deleteOld: true,
+                trigger: repeatingTrigger
             )
         }
     }
