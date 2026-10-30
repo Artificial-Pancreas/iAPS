@@ -68,7 +68,7 @@ jobs:
   build:
     name: Build
     needs: [check_certs,check_latest_from_upstream]
-    runs-on: macos-latest
+    runs-on: xcode-27
     permissions:
       contents: write
     steps:
@@ -87,20 +87,43 @@ jobs:
           if [ -n "$BUILD_GROUP_VAR" ]; then
             echo "BUILD_GROUP=$BUILD_GROUP_VAR" >> "$GITHUB_ENV"
           fi
-
-      - name: Select Xcode version
+        
+      - name: Verify Xcode version
+        shell: bash
         run: |
+          set -euo pipefail
+
           echo "Available Xcode versions:"
           ls -d /Applications/Xcode*.app
-          XCODE=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
+
+          # Select the latest Xcode 27.x version
+          XCODE=$( { for app in /Applications/Xcode_27.[0-9]*.app; do readlink -f "$app"; done; } \
+          | grep -viE 'beta|Release_Candidate' | sort -uV | tail -1 || true )
+          
           if [ -z "$XCODE" ]; then
-            echo "::error::Xcode 26.x NOT found on this runner"
+            echo "::error::No stable Xcode 27.x found on this runner"
             exit 1
           fi
-          echo "Selecting $XCODE"
           sudo xcode-select --switch "$XCODE/Contents/Developer"
+
+          echo "Active Xcode:"
           xcodebuild -version
-      
+
+          VERSION=$(xcodebuild -version | awk '/^Xcode / {print $2}')
+
+          if [[ ! "$VERSION" =~ ^([0-9]+)\.([0-9]+)(\.[0-9]+)?$ ]]; then
+            echo "::error::Unexpected Xcode version: $VERSION"
+            exit 1
+          fi
+
+          MAJOR="${BASH_REMATCH[1]}"
+          MINOR="${BASH_REMATCH[2]}"
+
+          if (( MAJOR < 27 || (MAJOR == 27 && MINOR < 1) )); then
+            echo "::error::Xcode 27.1 or newer required, found $VERSION"
+            exit 1
+          fi
+
       - name: Checkout Repo for syncing
         if: |
           vars.SCHEDULED_SYNC == 'true'
