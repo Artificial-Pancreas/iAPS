@@ -11,7 +11,15 @@ protocol CalendarManager {
 }
 
 final class BaseCalendarManager: CalendarManager, Injectable {
-    private lazy var eventStore: EKEventStore = { EKEventStore() }()
+    private var eventStore = EKEventStore()
+
+    /// An EKEventStore created before calendar access was granted keeps returning an
+    /// empty calendar list until it is recreated. Call this after a grant so that the
+    /// feature starts working without requiring an app restart.
+    private func refreshEventStoreAfterAccessChange(granted: Bool) {
+        guard granted else { return }
+        eventStore = EKEventStore()
+    }
 
     @Persisted(key: "CalendarManager.currentCalendarID") var currentCalendarID: String? = nil
     @Injected() private var settingsManager: SettingsManager!
@@ -24,7 +32,19 @@ final class BaseCalendarManager: CalendarManager, Injectable {
         broadcaster.register(GlucoseObserver.self, observer: self)
         broadcaster.register(SuggestionObserver.self, observer: self)
         broadcaster.register(PumpHistoryObserver.self, observer: self)
+        Foundation.NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(eventStoreChanged),
+            name: .EKEventStoreChanged,
+            object: nil
+        )
         setupGlucose()
+    }
+
+    /// The calendar database changed outside of this store (e.g. a calendar was added or
+    /// renamed in the Calendar app). Drop cached state so the next query sees fresh data.
+    @objc private func eventStoreChanged(_: Notification) {
+        eventStore.reset()
     }
 
     let coredataContext = CoreDataStack.shared.persistentContainer.newBackgroundContext()
@@ -39,6 +59,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                         if let error = error {
                             warning(.service, "Calendar access not granted", error: error)
                         }
+                        self.refreshEventStoreAfterAccessChange(granted: granted)
                         promise(.success(granted))
                     })
                 #else
@@ -46,6 +67,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                         if let error = error {
                             warning(.service, "Calendar access not granted", error: error)
                         }
+                        self.refreshEventStoreAfterAccessChange(granted: granted)
                         promise(.success(granted))
                     }
                 #endif
@@ -64,6 +86,7 @@ final class BaseCalendarManager: CalendarManager, Injectable {
                             print("Calendar access not upgraded")
                             warning(.service, "Calendar access not upgraded", error: error)
                         }
+                        self.refreshEventStoreAfterAccessChange(granted: granted)
                         promise(.success(granted))
                     })
             #endif
