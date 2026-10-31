@@ -86,7 +86,7 @@ extension UserDefaults {
     var aiImageProvider: ImageSearchProvider {
         get {
             if let str = string(forKey: AIKey.aiImageProvider.rawValue) {
-                return ImageSearchProvider(rawValue: str) ?? .defaultProvider
+                return ImageSearchProvider.resolve(rawValue: str)
             } else {
                 return .defaultProvider
             }
@@ -99,7 +99,7 @@ extension UserDefaults {
     var aiTextProvider: AITextProvider {
         get {
             if let str = string(forKey: AIKey.aiTextProvider.rawValue) {
-                return AITextProvider(rawValue: str) ?? .defaultProvider
+                return AITextProvider.resolve(rawValue: str)
             } else {
                 return .defaultProvider
             }

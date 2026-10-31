@@ -13,6 +13,7 @@ struct OpenAIProtocol: AIProviderProtocol {
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> URLRequest {
         var request = URLRequest(url: apiURL)
@@ -29,24 +30,38 @@ struct OpenAIProtocol: AIProviderProtocol {
             OpenAIResponsesMessage(role: "user", content: [textPart] + imageParts)
         ]
 
+        // Structured Outputs (json_schema, strict) is enforced on every model the app offers;
+        // JSON mode remains the fallback when no schema is supplied.
         var textOptions: OpenAIResponsesTextOptions?
         var stream: Bool?
-        if model.isGPT5 {
-            textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object"))
+        let schema = responseSchema.map { OrderedJSON($0.jsonSchema(dialect: .strict)) }
+        if let schema {
+            textOptions = OpenAIResponsesTextOptions(format: .init(
+                type: "json_schema",
+                name: "food_analysis",
+                strict: true,
+                schema: schema
+            ))
+        } else if model.isReasoningModel {
+            textOptions = OpenAIResponsesTextOptions(format: .init(type: "json_object", name: nil, strict: nil, schema: nil))
+        }
+        if model.isReasoningModel {
             stream = false
         }
 
         let body = OpenAIResponsesRequest(
             model: model,
             input: inputMessages,
-            max_output_tokens: 6000,
+            // Reasoning tokens count against this limit, so leave headroom above the JSON answer.
+            max_output_tokens: 16000,
             temperature: model.temperature,
             text: textOptions,
-            stream: stream
+            stream: stream,
+            reasoning: model.reasoningEffort.map { OpenAIReasoningOptions(effort: $0) }
         )
 
         do {
-            request.httpBody = try JSONEncoder().encode(body)
+            request.httpBody = try OrderedJSON.encode(body, splicing: [schema])
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -117,6 +132,19 @@ struct OpenAIProtocol: AIProviderProtocol {
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
+        if responsesPayload.status == "incomplete" {
+            let reason = responsesPayload.incomplete_details?.reason ?? "unknown"
+            let reasoningTokens = responsesPayload.usage?.output_tokens_details?.reasoning_tokens ?? -1
+            debug(
+                .service,
+                "OpenAI response is incomplete (reason: \(reason), output tokens: \(responsesPayload.usage?.output_tokens ?? -1), of which reasoning: \(reasoningTokens)); the JSON is likely cut off"
+            )
+            if reason == "max_output_tokens" {
+                throw AIFoodAnalysisError
+                    .customError("The OpenAI response was cut off before the analysis was complete. Please try again.")
+            }
+        }
+
         guard let content = extractContent(from: responsesPayload), !content.isEmpty else {
             debug(
                 .service,
@@ -169,10 +197,21 @@ private struct OpenAIResponsesRequest: Encodable {
     let temperature: Double?
     let text: OpenAIResponsesTextOptions?
     let stream: Bool?
+    let reasoning: OpenAIReasoningOptions?
+}
+
+private struct OpenAIReasoningOptions: Encodable {
+    let effort: String
 }
 
 private struct OpenAIResponsesTextOptions: Encodable {
-    struct Format: Encodable { let type: String }
+    struct Format: Encodable {
+        let type: String
+        let name: String?
+        let strict: Bool?
+        let schema: OrderedJSON?
+    }
+
     let format: Format
 }
 
@@ -205,6 +244,20 @@ private struct OpenAIResponsesResponse: Decodable {
     let output_text: String?
     let output: [OpenAIResponsesMessageOutput]?
     let content: [OpenAIResponsesContentItem]?
+    let status: String?
+    let incomplete_details: OpenAIIncompleteDetails?
+    let usage: OpenAIResponsesUsage?
+}
+
+private struct OpenAIIncompleteDetails: Decodable {
+    let reason: String?
+}
+
+private struct OpenAIResponsesUsage: Decodable {
+    struct OutputTokensDetails: Decodable { let reasoning_tokens: Int? }
+    let input_tokens: Int?
+    let output_tokens: Int?
+    let output_tokens_details: OutputTokensDetails?
 }
 
 private struct OpenAIResponsesMessageOutput: Decodable {

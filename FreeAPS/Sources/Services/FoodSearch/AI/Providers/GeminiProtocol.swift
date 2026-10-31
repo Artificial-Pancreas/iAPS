@@ -13,6 +13,7 @@ struct GeminiProtocol: AIProviderProtocol {
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback _: ((String) -> Void)?
     ) throws -> URLRequest {
         let baseURL = baseURLTemplate.replacingOccurrences(of: "{model}", with: model.rawValue)
@@ -26,14 +27,21 @@ struct GeminiProtocol: AIProviderProtocol {
             GeminiPart(inline_data: GeminiInlineData(mime_type: "image/jpeg", data: $0))
         }
 
+        let schema = responseSchema.map { OrderedJSON($0.jsonSchema(dialect: .lenient)) }
         let geminiRequest = GeminiGenerateContentRequest(
             contents: [GeminiContent(parts: [userTextPart] + imageParts)],
             generationConfig: GeminiGenerationConfig(
                 temperature: model.temperature,
-                topP: 0.95,
-                topK: 8,
-                maxOutputTokens: 8000,
-                responseMimeType: "application/json"
+                topP: model.thinkingLevel == nil ? 0.95 : nil,
+                topK: model.thinkingLevel == nil ? 8 : nil,
+                // Thought tokens count against this limit on thinking models, so leave headroom
+                // above the few thousand tokens the JSON answer itself needs.
+                maxOutputTokens: 16000,
+                responseMimeType: "application/json",
+                // JSON Schema enforced by the API. `responseJsonSchema` is the form every offered model
+                // accepts; the newer `responseFormat.text.schema` is the eventual replacement.
+                responseJsonSchema: schema,
+                thinkingConfig: model.thinkingLevel.map { GeminiThinkingConfig(thinkingLevel: $0) }
             )
         )
 
@@ -42,7 +50,7 @@ struct GeminiProtocol: AIProviderProtocol {
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         do {
-            request.httpBody = try JSONEncoder().encode(geminiRequest)
+            request.httpBody = try OrderedJSON.encode(geminiRequest, splicing: [schema])
         } catch {
             throw AIFoodAnalysisError.requestCreationFailed
         }
@@ -132,6 +140,16 @@ struct GeminiProtocol: AIProviderProtocol {
             throw AIFoodAnalysisError.responseParsingFailed
         }
 
+        if firstCandidate.finishReason == "MAX_TOKENS" {
+            let usage = geminiResponse.usageMetadata
+            debug(
+                .service,
+                "Gemini output was cut off at maxOutputTokens (thoughts: \(usage?.thoughtsTokenCount ?? -1), answer: \(usage?.candidatesTokenCount ?? -1), total: \(usage?.totalTokenCount ?? -1)); the JSON is incomplete"
+            )
+            throw AIFoodAnalysisError
+                .customError("The Gemini response was cut off before the analysis was complete. Please try again.")
+        }
+
         return text
     }
 }
@@ -168,15 +186,29 @@ private struct GeminiInlineData: Encodable {
 
 private struct GeminiGenerationConfig: Encodable {
     let temperature: Double?
-    let topP: Double
-    let topK: Int
+    let topP: Double?
+    let topK: Int?
     let maxOutputTokens: Int
     let responseMimeType: String?
+    let responseJsonSchema: OrderedJSON?
+    let thinkingConfig: GeminiThinkingConfig?
+}
+
+private struct GeminiThinkingConfig: Encodable {
+    let thinkingLevel: String
 }
 
 // Response payload
 private struct GeminiGenerateContentResponse: Decodable {
     let candidates: [GeminiCandidate]?
+    let usageMetadata: GeminiUsageMetadata?
+}
+
+private struct GeminiUsageMetadata: Decodable {
+    let promptTokenCount: Int?
+    let candidatesTokenCount: Int?
+    let thoughtsTokenCount: Int?
+    let totalTokenCount: Int?
 }
 
 private struct GeminiCandidate: Decodable {
