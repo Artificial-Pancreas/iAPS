@@ -121,7 +121,7 @@ final class BaseGlucoseStorage: GlucoseStorage, Injectable {
                         absolute: nil,
                         rate: nil,
                         eventType: .nsSensorChange,
-                        createdAt: sensorSessionStart.sessionStartDate,
+                        createdAt: sessionStartDate,
                         enteredBy: NigtscoutTreatment.local,
                         bolus: nil,
                         insulin: nil,

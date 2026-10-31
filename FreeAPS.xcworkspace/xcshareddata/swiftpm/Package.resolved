@@ -1,5 +1,5 @@
 {
-  "originHash" : "6d0566f6fad45d3d24f6d84c5cca697eacdfc644f8c83548f18c89354b1504b2",
+  "originHash" : "3fb9b35a31f002aec8b33fc537ca047c6a0b59d991f6ada3ae189e9a47ea3607",
   "pins" : [
     {
       "identity" : "cryptoswift",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "19b3c3ceed117c5cc883517c4e658548315ba70b",
         "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "kscrash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kstenerud/KSCrash",
+      "state" : {
+        "revision" : "3f77f379c2db001e0c261c2a51b7e2b115d31f91",
+        "version" : "2.6.0"
       }
     },
     {

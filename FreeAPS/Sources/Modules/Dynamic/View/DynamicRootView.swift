@@ -72,7 +72,7 @@ extension Dynamic {
                         }.disabled(isPresented)
                     }
 
-                    if state.useNewFormula, !state.aisf {
+                    if state.useNewFormula {
                         HStack {
                             Toggle(isOn: $state.enableDynamicCR) {
                                 Text("Activate Dynamic Carb Ratio (CR)")
@@ -89,7 +89,7 @@ extension Dynamic {
                     }
                 } header: { state.aisf ? nil : Text("Experimental").foregroundStyle(.red) }
 
-                if state.useNewFormula, !state.aisf {
+                if state.useNewFormula {
                     Section {
                         HStack {
                             Toggle(isOn: $state.sigmoid) {

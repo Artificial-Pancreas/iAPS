@@ -13,8 +13,15 @@ Ready to explore iAPS? Here's how you can download and build the repository:
   * **Using Terminal:**
 
     clone and open workspace project in Xcode
+
+    Stable release (`main` branch, recommended):
     ```bash
     git clone --recurse-submodules --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
+    ```
+
+    Development version (`dev` branch, latest features, may be less stable):
+    ```bash
+    git clone --recurse-submodules --branch=dev https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
     ```
 ### Update the submodules in your local (old) clone 
 
@@ -83,6 +90,8 @@ Distributing and building TestFlight apps also requires a paid membership.
       * 1
       * 2 (European)
       * 2 Plus (European)
+      * 3
+      * 3 Plus
   * **Eversense**
       * E3 (90 & 180 days)
       * 365

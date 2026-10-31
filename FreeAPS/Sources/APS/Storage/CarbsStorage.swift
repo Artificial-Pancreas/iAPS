@@ -29,7 +29,6 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let file = OpenAPS.Monitor.carbHistory
             var uniqEvents: [CarbsEntry] = []
 
-            let cbs = entries.last?.carbs ?? 0
             let fat = entries.last?.fat ?? 0
             let protein = entries.last?.protein ?? 0
             let creationDate = entries.last?.createdAt ?? Date.now

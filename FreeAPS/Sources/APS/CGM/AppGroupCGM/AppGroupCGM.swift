@@ -6,7 +6,7 @@ import LoopKit
 import LoopKitUI
 import Swinject
 
-public class AppGroupCGM: CGMManager, AppGroupCGMHeartBeatDelegate {
+public class AppGroupCGM: CGMManager {
     public static let pluginIdentifier = "AppGroupCGM"
 
     public static let localizedTitle = NSLocalizedString(
@@ -88,7 +88,12 @@ public class AppGroupCGM: CGMManager, AppGroupCGMHeartBeatDelegate {
 
     private let updateTimer: DispatchTimer
 
+    func deleted() {
+        appGroupSource.heartBeatDelegate = nil
+    }
+
     private func scheduleUpdateTimer() {
+        appGroupSource.heartBeatDelegate = HeartbeatRelay { [weak self] in self?.fireUpdate() }
         updateTimer.suspend()
         updateTimer.eventHandler = { [weak self] in
             guard let self = self else { return }
@@ -102,10 +107,16 @@ public class AppGroupCGM: CGMManager, AppGroupCGMHeartBeatDelegate {
         updateTimer.resume()
         updateTimer.fire()
     }
+}
 
-    func heartbeat() {
-        updateTimer.fire()
-    }
+extension AppGroupCGM {
+    func fireUpdate() { updateTimer.fire() }
+}
+
+private final class HeartbeatRelay: AppGroupCGMHeartBeatDelegate, @unchecked Sendable {
+    private let onHeartbeat: () -> Void
+    init(onHeartbeat: @escaping () -> Void) { self.onHeartbeat = onHeartbeat }
+    func heartbeat() { onHeartbeat() }
 }
 
 // MARK: - AlertResponder implementation
@@ -133,7 +144,7 @@ public struct AppGroupCGMState: RawRepresentable, Equatable {
     public init(rawValue _: RawValue) {}
 
     public var rawValue: RawValue {
-        var rawValue: RawValue = [:]
+        let rawValue: RawValue = [:]
         return rawValue
     }
 }
