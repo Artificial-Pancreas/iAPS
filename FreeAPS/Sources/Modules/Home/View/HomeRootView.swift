@@ -114,6 +114,13 @@ extension Home {
             return dateFormatter
         }()
 
+        /// Weekday + time ("Tue 14:00" in the locale's form), for a temp target that ends on another day.
+        private let weekdayTimeFormatter: DateFormatter = {
+            let dateFormatter = DateFormatter()
+            dateFormatter.setLocalizedDateFormatFromTemplate("EEE j:mm")
+            return dateFormatter
+        }()
+
         private var spriteScene: SKScene {
             let scene = SnowScene()
             scene.scaleMode = .resizeFill
@@ -215,7 +222,11 @@ extension Home {
             guard let tempTarget = state.tempTarget else {
                 return nil
             }
-            return tempTarget.displayName
+            // Name plus the time it ends, so the remaining duration is visible without opening it;
+            // with the weekday when that is not today, or "14:00" would read as today.
+            let endsAt = tempTarget.endsAt
+            let formatter = Calendar.current.isDateInToday(endsAt) ? dateFormatter : weekdayTimeFormatter
+            return tempTarget.displayName + " · " + formatter.string(from: endsAt)
         }
 
         var info: some View {
@@ -239,6 +250,7 @@ extension Home {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
+                        .lineLimit(1)
                 } else {
                     profileView
                 }

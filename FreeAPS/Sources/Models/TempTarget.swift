@@ -18,6 +18,11 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
         name ?? reason ?? TempTarget.custom
     }
 
+    /// `duration` is in minutes; fractional minutes count (the Watch bridge always kept them).
+    var endsAt: Date {
+        createdAt.addingTimeInterval(Double(duration) * 60)
+    }
+
     static func == (lhs: TempTarget, rhs: TempTarget) -> Bool {
         lhs.createdAt == rhs.createdAt
     }

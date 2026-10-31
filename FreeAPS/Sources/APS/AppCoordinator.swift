@@ -21,7 +21,14 @@ final class AppCoordinator {
         shouldUploadGlucose = shouldUpload
     }
 
+    /// Called from every CGM state update (on the device manager's queue; the G7 mutates state on
+    /// each reading) and from setupCGM on main. The compare-and-publish happens on main so the two
+    /// callers cannot race and the @Published change reaches SwiftUI on the right thread; only a
+    /// change is published.
     func setSensorDays(_ sensorDays: Double?) {
-        self.sensorDays = sensorDays
+        DispatchQueue.main.async {
+            guard self.sensorDays != sensorDays else { return }
+            self.sensorDays = sensorDays
+        }
     }
 }

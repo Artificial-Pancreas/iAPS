@@ -32,7 +32,7 @@ enum KnownPlugins {
 
         return switch cgmManager.pluginIdentifier {
         case G6CGMManager.pluginIdentifier: 10 * secondsOfDay
-        case G7CGMManager.pluginIdentifier: 10.5 * secondsOfDay
+        case G7CGMManager.pluginIdentifier: g7SessionSpan(cgmManager as? G7CGMManager)
         case LibreTransmitterManagerV3.pluginIdentifier: libreExpirationSeconds
         case LibreLoopCGMManager.pluginIdentifier:
             (cgmManager as? LibreLoopCGMManager)?.state.wearDurationMinutes.map { TimeInterval($0) * 60 }
@@ -49,6 +49,15 @@ enum KnownPlugins {
             return nil
         }
         return TimeInterval(maxAge * 60) // Convert minutes to seconds
+    }
+
+    /// Time from `sessionStart` (end of warm-up for the G7) to the driver's `sensorEndsAt`, so the Home
+    /// countdown reaches zero when the sensor stops. The session length (10 or 15 days, 12 h grace
+    /// included) is only known once the sensor has connected; the G7 defaults apply until then.
+    private static func g7SessionSpan(_ manager: G7CGMManager?) -> TimeInterval {
+        let lifetime = manager?.lifetime ?? G7Sensor.defaultLifetime
+        let warmup = manager?.warmupDuration ?? G7Sensor.defaultWarmupDuration
+        return lifetime + G7Sensor.gracePeriod - warmup
     }
 
     static func sessionStart(cgmManager: CGMManager) -> Date? {

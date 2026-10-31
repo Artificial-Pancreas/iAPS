@@ -4135,3 +4135,7 @@ Enact a temp Basal or a temp target */
 "Crash" = "Crash";
 "Simulate a crash?" = "Simulate a crash?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
+
+/* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
+"Convert fat and protein into carb equivalents" = "Convert fat and protein into carb equivalents";
+"When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface.";
