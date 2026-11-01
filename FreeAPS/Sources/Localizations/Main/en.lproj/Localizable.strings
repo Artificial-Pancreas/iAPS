@@ -1526,6 +1526,16 @@ Enact a temp Basal or a temp target */
 
 "Fast" = "Fast";
 
+"Legacy" = "Legacy";
+
+"Deprecated · until %@" = "Deprecated · until %@";
+
+"%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ shut this model down on %2$@. Requests will fail; please select another model.";
+
+"%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then." = "%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then.";
+
+"This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model." = "This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model.";
+
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
