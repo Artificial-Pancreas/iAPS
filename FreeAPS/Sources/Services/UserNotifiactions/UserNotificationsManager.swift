@@ -28,7 +28,11 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
         case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
-        case noLoopRepeatingNotification = "FreeAPS.noLoopRepeatingNotification"
+        case noLoop60MinNotification = "FreeAPS.noLoop60MinNotification"
+        case noLoop120MinNotification = "FreeAPS.noLoop120MinNotification"
+        case noLoop180MinNotification = "FreeAPS.noLoop180MinNotification"
+        case noLoop240MinNotification = "FreeAPS.noLoop240MinNotification"
+        case noLoop300MinNotification = "FreeAPS.noLoop300MinNotification"
         case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
     }
 
@@ -204,64 +208,43 @@ actor BaseUserNotificationsManager: UserNotificationsManager, Injectable, Lifeti
         }
     }
 
+    /// One-shot reminders after the last loop: 20 and 40 min as before, then hourly up to 5 h.
+    /// The chain used to end at 40 min, so a loop that stayed wedged for hours (a 5.4 h overnight gap in
+    /// fleet data) got two banners at the start and silence after. Bounded one-shots instead of a
+    /// repeating request: each says how long it has really been, and the chain ends on its own after a
+    /// deliberate pump break or CGM-only use. Every loop (enacted or suggested) re-arms the whole chain.
+    private static let missingLoopSchedule: [(identifier: Identifier, minutes: Int)] = [
+        (.noLoopFirstNotification, 20),
+        (.noLoopSecondNotification, 40),
+        (.noLoop60MinNotification, 60),
+        (.noLoop120MinNotification, 120),
+        (.noLoop180MinNotification, 180),
+        (.noLoop240MinNotification, 240),
+        (.noLoop300MinNotification, 300)
+    ]
+
     private func scheduleMissingLoopNotifiactions(_: Date?) async {
-        let sound = settings.missingLoops
-        if await ensureCanSendNotification() {
-            let title = NSLocalizedString("iAPS not active", comment: "iAPS not active")
-            let body = NSLocalizedString("Last loop was more than %d min ago", comment: "Last loop was more than %d min ago")
-
-            let firstInterval = 20 // min
-            let secondInterval = 40 // min
-            let repeatingInterval = 60 // min
-
-            let firstContent = UNMutableNotificationContent()
-            firstContent.interruptionLevel = .timeSensitive
-            firstContent.title = title
-            firstContent.body = String(format: body, firstInterval)
-            if sound { firstContent.sound = .default }
-
-            let secondContent = UNMutableNotificationContent()
-            secondContent.interruptionLevel = .timeSensitive
-            secondContent.title = title
-            secondContent.body = String(format: body, secondInterval)
-            if sound { secondContent.sound = .default }
-
-            // The chain used to end with the 40 min notification: a loop that stays wedged for
-            // hours never re-armed it, so nothing fired again (a 5 h overnight gap in the fleet
-            // data got two banners at the start and silence after). Keep reminding every hour
-            // until looping resumes, which cancels and re-arms all three like before.
-            let repeatingContent = UNMutableNotificationContent()
-            repeatingContent.interruptionLevel = .timeSensitive
-            repeatingContent.title = title
-            repeatingContent.body = String(format: body, repeatingInterval)
-            if sound { repeatingContent.sound = .default }
-
-            let firstTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(firstInterval), repeats: false)
-            let secondTrigger = UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(secondInterval), repeats: false)
-            let repeatingTrigger = UNTimeIntervalNotificationTrigger(
-                timeInterval: 60 * TimeInterval(repeatingInterval),
-                repeats: true
-            )
-
-            await self.addRequest(
-                identifier: .noLoopFirstNotification,
-                content: firstContent,
+        guard await ensureCanSendNotification() else { return }
+        for entry in Self.missingLoopSchedule {
+            await addRequest(
+                identifier: entry.identifier,
+                content: missingLoopContent(minutes: entry.minutes),
                 deleteOld: true,
-                trigger: firstTrigger
-            )
-            await self.addRequest(
-                identifier: .noLoopSecondNotification,
-                content: secondContent,
-                deleteOld: true,
-                trigger: secondTrigger
-            )
-            await self.addRequest(
-                identifier: .noLoopRepeatingNotification,
-                content: repeatingContent,
-                deleteOld: true,
-                trigger: repeatingTrigger
+                trigger: UNTimeIntervalNotificationTrigger(timeInterval: 60 * TimeInterval(entry.minutes), repeats: false)
             )
         }
+    }
+
+    private func missingLoopContent(minutes: Int) -> UNMutableNotificationContent {
+        let content = UNMutableNotificationContent()
+        content.interruptionLevel = .timeSensitive
+        content.title = NSLocalizedString("iAPS not active", comment: "iAPS not active")
+        content.body = String(
+            format: NSLocalizedString("Last loop was more than %d min ago", comment: "Last loop was more than %d min ago"),
+            minutes
+        )
+        if settings.missingLoops { content.sound = .default }
+        return content
     }
 
     private func notifyBolusFailure() async {
