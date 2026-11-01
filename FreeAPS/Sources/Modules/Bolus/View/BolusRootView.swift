@@ -97,6 +97,7 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
+                            autofocus: true,
                             liveEditing: true
                         )
                         Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
@@ -125,6 +126,11 @@ extension Bolus {
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
+                }
+            }
+            .onAppear {
+                if !state.useCalc {
+                    state.viewActive()
                 }
             }
             .onDisappear {

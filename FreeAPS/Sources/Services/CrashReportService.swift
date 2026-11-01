@@ -23,7 +23,7 @@ import KSCrashRecording
 /// prompted: with the toggle off, pending reports are discarded silently.
 ///
 /// What leaves the phone is a scrubbed copy of KSCrash's report (see `scrubbed`):
-/// backtraces, register state, queue labels, the exception and its message, binary
+/// backtraces, register state, thread names, the exception and its message, binary
 /// names and UUIDs, device model, OS and app version. KSCrash also records things
 /// the consent text does not cover — a raw window of the crashed thread's stack, the
 /// object an NSException reason points at and its userInfo, a per-device hash, the
@@ -80,7 +80,8 @@ final class CrashReportService {
 
         let config = KSCrashConfiguration()
         config.monitors = [.machException, .signal, .cppException, .nsException, .system, .applicationState, .userInfo]
-        config.enableQueueNameSearch = true // dispatch queue labels are the key iAPS diagnostic
+        // No enableQueueNameSearch: KSCrash's thread cache would then read every thread's
+        // dispatch queue pointer every 60 s with no fault protection, which can crash the app.
         config.enableCPUExceptionReporting = false // the forced Resource monitor must not write reports
         config.enableMemoryIntrospection = false
         config.addConsoleLogToReport = false
@@ -94,10 +95,6 @@ final class CrashReportService {
 
         do {
             try KSCrash.shared.install(with: config)
-            // KSCrash 2.6 applies enableQueueNameSearch and then starts its thread cache,
-            // whose init resets the flag to false (kstc_init runs after the configuration
-            // is handled). Set it again afterwards or no report carries a queue label.
-            kstc_setSearchQueueNames(true)
             installed = true
         } catch {
             warning(.default, "Crash reporter did not install: \(error.localizedDescription)")
@@ -196,7 +193,7 @@ final class CrashReportService {
     ///   `freeStorage`.
     /// - app binary paths reduced to their file name; the container path carries a
     ///   per-install UUID. System image paths are kept.
-    /// Kept: backtraces (addresses, binary names and UUIDs), registers, queue labels,
+    /// Kept: backtraces (addresses, binary names and UUIDs), registers, thread names,
     /// the exception type and its message, model, OS and app version.
     static func scrubbed(_ report: [String: Any]) -> [String: Any] {
         var out = report

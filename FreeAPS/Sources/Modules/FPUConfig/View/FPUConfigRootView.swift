@@ -27,6 +27,14 @@ extension FPUConfig {
 
         var body: some View {
             Form {
+                Section {
+                    Toggle("Convert fat and protein into carb equivalents", isOn: $state.fatProteinConversion)
+                } footer: {
+                    Text(
+                        "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface."
+                    )
+                }
+
                 Section(header: Text("Conversion settings")) {
                     HStack {
                         Text("Delay In Minutes")

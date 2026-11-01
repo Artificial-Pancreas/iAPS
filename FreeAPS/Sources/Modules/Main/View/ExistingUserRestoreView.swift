@@ -447,8 +447,8 @@ extension ExistingUserRestoreView {
                         if let v = ai.barcodeSearchProvider, let p = BarcodeSearchProvider(rawValue: v) {
                             d.barcodeSearchProvider = p
                         }
-                        if let v = ai.aiImageProvider, let p = ImageSearchProvider(rawValue: v) { d.aiImageProvider = p }
-                        if let v = ai.aiTextProvider, let p = AITextProvider(rawValue: v) { d.aiTextProvider = p }
+                        if let v = ai.aiImageProvider { d.aiImageProvider = ImageSearchProvider.resolve(rawValue: v) }
+                        if let v = ai.aiTextProvider { d.aiTextProvider = AITextProvider.resolve(rawValue: v) }
                         if let v = ai.nutritionAuthority, let p = NutritionAuthority(rawValue: v) {
                             d.userPreferredNutritionAuthorityForAI = p
                         }
