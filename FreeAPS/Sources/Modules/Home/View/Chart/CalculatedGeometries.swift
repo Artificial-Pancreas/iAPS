@@ -790,9 +790,7 @@ private final class GeometriesBuilder {
         var rects = data.tempTargets.map { tempTarget -> CGRect in
             let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970)
             let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0))
-            let x1 = timeToXCoordinate(
-                tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval
-            )
+            let x1 = timeToXCoordinate(tempTarget.endsAt.timeIntervalSince1970)
             let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0))
             return CGRect(
                 x: x0,

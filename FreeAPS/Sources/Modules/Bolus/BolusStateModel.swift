@@ -375,15 +375,25 @@ extension Bolus {
             return nil
         }
 
+        /// The sheet is gone: stop listening for suggestions. Every dismissal path calls this
+        /// (the three onDisappear blocks and the force close below). Without it a state model
+        /// that outlives its sheet keeps receiving suggestionDidUpdate, and once its `now` is
+        /// older than the auto-close window it closes whatever bolus sheet is on screen.
         func notActive() {
             let defaults = UserDefaults.standard
             defaults.set(false, forKey: IAPSconfig.inBolusView)
+            broadcaster.unregister(SuggestionObserver.self, observer: self)
             // print("Active: NO") // For testing
         }
 
+        /// The sheet is on screen: the auto-close and loop-reminder windows count from now, and
+        /// the suggestion observer is (re)attached in case this instance was dismissed before.
         func viewActive() {
             let defaults = UserDefaults.standard
             defaults.set(true, forKey: IAPSconfig.inBolusView)
+            now = Date()
+            broadcaster.unregister(SuggestionObserver.self, observer: self)
+            broadcaster.register(SuggestionObserver.self, observer: self)
             // print("Active: YES") // For testing
         }
 
@@ -521,6 +531,7 @@ extension Bolus.StateModel: SuggestionObserver {
         setupInsulinRequired()
         loopDate = apsManager.lastLoopDate
 
+        // Auto-close a calculator left open through a loop cycle (`now` is when the sheet appeared).
         if abs(now.timeIntervalSinceNow / 60) > loopReminder * 1.5 {
             hideModal()
             notActive()

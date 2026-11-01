@@ -212,10 +212,7 @@ extension Home {
         }
 
         var tempTargetString: String? {
-            guard let tempTarget = state.tempTarget else {
-                return nil
-            }
-            return tempTarget.displayName
+            state.tempTarget?.displayNameWithEndTime
         }
 
         var info: some View {
@@ -239,6 +236,7 @@ extension Home {
                     Text(tempTargetString)
                         .font(.buttonFont)
                         .foregroundColor(.secondary)
+                        .lineLimit(1)
                 } else {
                     profileView
                 }
