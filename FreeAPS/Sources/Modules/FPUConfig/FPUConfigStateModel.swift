@@ -2,6 +2,7 @@ import SwiftUI
 
 extension FPUConfig {
     final class StateModel: BaseStateModel<Provider> {
+        @Published var fatProteinConversion: Bool = true
         @Published var individualAdjustmentFactor: Decimal = 0
         @Published var timeCap: Decimal = 0
         @Published var minuteInterval: Decimal = 0
@@ -9,6 +10,8 @@ extension FPUConfig {
 
         override func subscribe() async {
             // TODO: these values are clamped on read, but not on write
+
+            subscribeSetting(\.fatProteinConversion, on: $fatProteinConversion) { self.fatProteinConversion = $0 }
 
             subscribeSetting(\.timeCap, on: $timeCap.map(Int.init)) {
                 let value = max(min($0, 12), 3)

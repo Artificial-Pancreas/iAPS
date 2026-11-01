@@ -45,7 +45,7 @@ import Swinject
         appUIState = Self.resolver.resolve(AppUIState.self)!
         debug(
             .default,
-            "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate)] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
+            "iAPS Started: v\(Bundle.main.releaseVersionNumber ?? "")(\(Bundle.main.buildVersionNumber ?? "")) [buildDate: \(Bundle.main.buildDate.map { "\($0)" } ?? "unknown")] [buildExpires: \(Bundle.main.profileExpiration ?? "")]"
         )
         AppearanceManager.setupGlobalAppearance()
     }

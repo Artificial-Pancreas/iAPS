@@ -163,7 +163,7 @@ enum TempTargetHBT {
             let started = target.createdAt <= date
             if started, target.duration == 0 { return nil }
             guard let bottom = target.targetBottom, let top = target.targetTop, bottom != 0, top != 0 else { return nil }
-            if started, date < target.createdAt.addingTimeInterval(.minutes(target.duration)) { return target }
+            if started, date < target.endDate { return target }
         }
         return nil
     }

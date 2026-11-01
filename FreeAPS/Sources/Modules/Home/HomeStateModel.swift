@@ -157,7 +157,7 @@ extension Home {
 
             pumpHistory = appCoordinator.pumpHistory.value.reversed()
 
-            cgmSensorDays = appCoordinator.cgmInfo.value?.sensorDays
+            cgmSensorDays = appCoordinator.cgmStatus.value?.sensorDays
 
             tempTargetsUpdated(appCoordinator.tempTargets.value)
 
@@ -189,7 +189,7 @@ extension Home {
             await setupOverrideHistory()
             await setupData()
 
-            observeUI(appCoordinator.cgmInfo, map: { $0?.sensorDays }) { me, sensorDays in
+            observeUI(appCoordinator.cgmStatus, map: { $0?.sensorDays }) { me, sensorDays in
                 await me.cgmCensorDaysUpdated(sensorDays)
             }
 
@@ -239,7 +239,8 @@ extension Home {
                 me.autotuneUpdated(autotune)
             }
 
-            observeUI(appCoordinator.tempTargets) { me, tempTargets in
+            // not `==` (createdAt only): an edit in Nightscout keeps created_at and changes the duration
+            observeUI(appCoordinator.tempTargets, isDuplicate: { TempTarget.identical($0, $1) }) { me, tempTargets in
                 me.tempTargetsUpdated(tempTargets)
             }
 
@@ -628,7 +629,8 @@ extension Home {
             let now = Date()
             let newest = tempTargets.first
             let current = newest.flatMap { $0.isActive(at: now) ? $0 : nil }
-            if tempTarget != current {
+            // the header shows the end time: a changed duration must reach it, `!=` compares only createdAt
+            if !TempTarget.identical(tempTarget, current) {
                 tempTarget = current
             }
 

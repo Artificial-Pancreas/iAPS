@@ -143,7 +143,7 @@ extension CGM {
                         }
 
                         // if CGM/App is selected but sensor life-span is not known...
-                        if cgmInfo.sensorDays == nil
+                        if cgmStatus?.sensorDays == nil
                         {
                             Section {
                                 HStack {

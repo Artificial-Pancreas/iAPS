@@ -17,7 +17,6 @@ extension Bolus {
         @State private var isRemoteBolusAlertPresented: Bool = false
 
         @Environment(\.colorScheme) var colorScheme
-        @FocusState private var isFocused: Bool
 
         private var formatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -128,11 +127,11 @@ extension Bolus {
                             "0",
                             value: $state.amount,
                             formatter: formatter,
+                            autofocus: true,
                             liveEditing: true
                         )
                         Text(!(state.amount > state.maxBolus) ? "U" : "😵").foregroundColor(.secondary)
                     }
-                    .focused($isFocused)
                 }
 
                 if state.amount > 0 {

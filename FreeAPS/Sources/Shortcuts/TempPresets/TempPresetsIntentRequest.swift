@@ -6,28 +6,34 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         case noDurationDefined
     }
 
+    /// The stored presets plus the Cancel entry, which has a fixed id (see `TempTarget.cancelPreset`).
+    private func presetsWithCancel() async -> [TempTarget] {
+        await tempTargetsStorage.presets() + [TempTarget.cancelPreset]
+    }
+
     private func convert(tt: [TempTarget]) -> [TempPreset] {
-        let presets = tt + [TempTarget.cancel(at: Date())]
-        return presets.map { TempPreset.convert($0) }
+        tt.compactMap { TempPreset.convert($0) }
     }
 
     func fetchAll() async -> [TempPreset] {
-        convert(tt: await tempTargetsStorage.presets())
+        convert(tt: await presetsWithCancel())
     }
 
+    /// In the requested order, as the entity query contract expects.
     func fetchIDs(_ uuid: [TempPreset.ID]) async -> [TempPreset] {
-        let UUIDTempTarget = await tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
-        return convert(tt: UUIDTempTarget)
+        let presets = convert(tt: await presetsWithCancel())
+        return uuid.compactMap { id in presets.first(where: { $0.id == id }) }
     }
 
     func fetchOne(_ uuid: TempPreset.ID) async -> TempPreset? {
-        let UUIDTempTarget = await tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
-        guard let OneTempTarget = UUIDTempTarget.first else { return nil }
-        return TempPreset.convert(OneTempTarget)
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        guard let found = await presetsWithCancel().first(where: { UUID(uuidString: $0.id) == uuid }) else { return nil }
+        return TempPreset.convert(found)
     }
 
     func findTempTarget(_ tempPreset: TempPreset) async throws -> TempTarget {
-        let tempTargetFound = await tempTargetsStorage.presets().filter { $0.id == tempPreset.id.uuidString }
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        let tempTargetFound = await tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == tempPreset.id }
         guard let tempOneTarget = tempTargetFound.first else { throw TempPresetsError.noTempTargetFound }
         return tempOneTarget
     }

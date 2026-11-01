@@ -324,7 +324,7 @@ extension RestoreCoreDataStatusView {
 
         private func saveTempTargetPresets(_ targets: [TempTarget]) async -> Int {
             guard !targets.isEmpty else { return 0 }
-            await tempTargetsStorage.storeTempTargets(targets)
+            await tempTargetsStorage.storePresets(targets)
             return await tempTargetsStorage.presets().count
         }
     }

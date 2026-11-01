@@ -8,7 +8,6 @@ struct CgmDisplayInfo: Equatable, Sendable {
     let image: UIImage?
     let pumpIsCgm: Bool
     let providesHeartbeat: Bool
-    let sensorDays: Double?
     let allowCalibrations: Bool
     let appURL: URL?
     let glucoseUploadSupported: Bool
@@ -19,4 +18,5 @@ struct CgmDisplayStatus: Equatable, Sendable {
     let sessionStartDate: Date?
     let shouldUploadGlucose: Bool
     let oneMinuteReadings: Bool
+    let sensorDays: Double?
 }
