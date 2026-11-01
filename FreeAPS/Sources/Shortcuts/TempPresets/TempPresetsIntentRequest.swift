@@ -7,13 +7,9 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         case noDurationDefined
     }
 
-    /// The "Cancel" entry is not a stored preset, so it needs a fixed identifier: Shortcuts persists the
-    /// chosen entity's ID and resolves it again on every run. A fresh UUID per call (the previous
-    /// behaviour) never resolved, which made the "Apply or cancel" action prompt for a preset each time.
-    static let cancelPresetID = UUID(uuidString: "00000000-0000-0000-0000-000000000000")!
-
-    private var cancelPreset: tempPreset {
-        tempPreset(id: Self.cancelPresetID, name: TempTarget.cancel, targetTop: 0, targetBottom: 0, duration: 0)
+    /// The stored presets plus the Cancel entry, which has a fixed id (see `TempTarget.cancelPreset`).
+    private var presetsWithCancel: [TempTarget] {
+        tempTargetsStorage.presets() + [TempTarget.cancelPreset]
     }
 
     private func convert(tt: [TempTarget]) -> [tempPreset] {
@@ -21,19 +17,18 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
     }
 
     func fetchAll() -> [tempPreset] {
-        convert(tt: tempTargetsStorage.presets()) + [cancelPreset]
+        convert(tt: presetsWithCancel)
     }
 
-    /// In the requested order, as the entity query contract expects; `fetchOne` knows the Cancel entry.
+    /// In the requested order, as the entity query contract expects.
     func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
         uuid.compactMap { fetchOne($0) }
     }
 
     func fetchOne(_ uuid: tempPreset.ID) -> tempPreset? {
-        if uuid == Self.cancelPresetID { return cancelPreset }
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
-        guard let OneTempTarget = UUIDTempTarget.first else { return nil }
-        return tempPreset.convert(OneTempTarget)
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        guard let found = presetsWithCancel.first(where: { UUID(uuidString: $0.id) == uuid }) else { return nil }
+        return tempPreset.convert(found)
     }
 
     func findTempTarget(_ tempPreset: tempPreset) throws -> TempTarget {
