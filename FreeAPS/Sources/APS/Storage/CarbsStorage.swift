@@ -66,7 +66,9 @@ actor BaseCarbsStorage: CarbsStorage, AppService {
 
         let settings = await settingsManager.settings
 
-        if fat > 0 || protein > 0 {
+        // Fat/protein are stored with the meal below either way; the conversion into future carb
+        // equivalents is its own setting (Settings → Fat and Protein).
+        if fat > 0 || protein > 0, settings.fatProteinConversion {
             // -------------------------- FPU--------------------------------------
             let interval = settings.minuteInterval // Interval between carbs
             let timeCap = settings.timeCap // Max Duration

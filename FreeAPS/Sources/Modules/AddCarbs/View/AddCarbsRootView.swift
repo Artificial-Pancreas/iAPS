@@ -231,17 +231,19 @@ extension AddCarbs {
                         autofocus: true
                     )
 
-                    macroRow(
-                        title: "Fat",
-                        value: $state.fat,
-                        color: .blue
-                    )
+                    if state.useFPUconversion {
+                        macroRow(
+                            title: "Fat",
+                            value: $state.fat,
+                            color: .blue
+                        )
 
-                    macroRow(
-                        title: "Protein",
-                        value: $state.protein,
-                        color: .green
-                    )
+                        macroRow(
+                            title: "Protein",
+                            value: $state.protein,
+                            color: .green
+                        )
+                    }
 
                     if state.mealViewMicronutrients {
                         otherNutritionButton
