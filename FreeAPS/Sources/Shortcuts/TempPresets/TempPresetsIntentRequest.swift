@@ -7,28 +7,33 @@ final class TempPresetsIntentRequest: BaseIntentsRequest {
         case noDurationDefined
     }
 
+    /// The stored presets plus the Cancel entry, which has a fixed id (see `TempTarget.cancelPreset`).
+    private var presetsWithCancel: [TempTarget] {
+        tempTargetsStorage.presets() + [TempTarget.cancelPreset]
+    }
+
     private func convert(tt: [TempTarget]) -> [tempPreset] {
-        let presets = tt + [TempTarget.cancel(at: Date())]
-        return presets.map { tempPreset.convert($0) }
+        tt.compactMap { tempPreset.convert($0) }
     }
 
     func fetchAll() -> [tempPreset] {
-        convert(tt: tempTargetsStorage.presets())
+        convert(tt: presetsWithCancel)
     }
 
+    /// In the requested order, as the entity query contract expects.
     func fetchIDs(_ uuid: [tempPreset.ID]) -> [tempPreset] {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { uuid.contains(UUID(uuidString: $0.id)!) }
-        return convert(tt: UUIDTempTarget)
+        uuid.compactMap { fetchOne($0) }
     }
 
     func fetchOne(_ uuid: tempPreset.ID) -> tempPreset? {
-        let UUIDTempTarget = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == uuid }
-        guard let OneTempTarget = UUIDTempTarget.first else { return nil }
-        return tempPreset.convert(OneTempTarget)
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        guard let found = presetsWithCancel.first(where: { UUID(uuidString: $0.id) == uuid }) else { return nil }
+        return tempPreset.convert(found)
     }
 
     func findTempTarget(_ tempPreset: tempPreset) throws -> TempTarget {
-        let tempTargetFound = tempTargetsStorage.presets().filter { $0.id == tempPreset.id.uuidString }
+        // Compare as UUIDs: the app stores upper-case ids, presets from elsewhere may not.
+        let tempTargetFound = tempTargetsStorage.presets().filter { UUID(uuidString: $0.id) == tempPreset.id }
         guard let tempOneTarget = tempTargetFound.first else { throw TempPresetsError.noTempTargetFound }
         return tempOneTarget
     }

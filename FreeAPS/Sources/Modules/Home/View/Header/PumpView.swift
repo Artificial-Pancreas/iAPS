@@ -205,37 +205,49 @@ struct PumpView: View {
     private func remainingTime(time: TimeInterval) -> some View {
         HStack {
             if time > 0 {
-                let days = Int(time / 1.days.timeInterval)
-                let hours = Int(time / 1.hours.timeInterval)
-                let minutes = Int(time / 1.minutes.timeInterval)
-                let adjustedHours = Int(hours - days * 24)
+                durationLabel(time, prefix: " ", unitColor: time < 4 * 60 * 60 ? .red : .secondary)
+            } else {
+                // Expired: show how far into the grace period the pod is, under "Replace".
+                VStack(spacing: 0) {
+                    Text(NSLocalizedString("Replace", comment: "View/Header when pod expired"))
+                    durationLabel(-time, prefix: "-", unitColor: .red, minutesUnderADay: true)
+                        .font(.caption2)
+                }
+                .foregroundStyle(.red)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            }
+        }
+    }
 
-                if days >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(days)")
-                        Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(.secondary)
-                        if adjustedHours >= 0 {
-                            Text(" ")
-                            Text("\(adjustedHours)")
-                            // spacer
-                            Text(NSLocalizedString("h", comment: "abbreviation for days")).foregroundStyle(.secondary)
-                        }
-                    }
-                } else if hours >= 1 {
-                    HStack(spacing: 0) {
-                        Text(" \(hours)")
-                        Text(NSLocalizedString("h", comment: "abbreviation for hours"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
-                    }
-                } else {
-                    HStack(spacing: 0) {
-                        Text(" \(minutes)")
-                        Text(NSLocalizedString("m", comment: "abbreviation for minutes"))
-                            .foregroundStyle(time < 4 * 60 * 60 ? .red : .secondary)
-                    }
+    /// "2d 5h", "17h" (or "17h 23m" with `minutesUnderADay`) and "42m" for a non-negative interval,
+    /// with `prefix` in front of the first number.
+    @ViewBuilder private func durationLabel(
+        _ interval: TimeInterval,
+        prefix: String,
+        unitColor: Color,
+        minutesUnderADay: Bool = false
+    ) -> some View {
+        let totalMinutes = Int(interval / 1.minutes.timeInterval)
+        let days = totalMinutes / (24 * 60)
+        let hours = totalMinutes / 60 % 24
+        let minutes = totalMinutes % 60
+        HStack(spacing: 0) {
+            if days >= 1 {
+                Text("\(prefix)\(days)")
+                Text(NSLocalizedString("d", comment: "abbreviation for days")).foregroundStyle(unitColor)
+                Text(" \(hours)")
+                Text(NSLocalizedString("h", comment: "abbreviation for hours")).foregroundStyle(unitColor)
+            } else if hours >= 1 {
+                Text("\(prefix)\(hours)")
+                Text(NSLocalizedString("h", comment: "abbreviation for hours")).foregroundStyle(unitColor)
+                if minutesUnderADay {
+                    Text(" \(minutes)")
+                    Text(NSLocalizedString("m", comment: "abbreviation for minutes")).foregroundStyle(unitColor)
                 }
             } else {
-                Text(NSLocalizedString("Replace", comment: "View/Header when pod expired")).foregroundStyle(.red)
+                Text("\(prefix)\(minutes)")
+                Text(NSLocalizedString("m", comment: "abbreviation for minutes")).foregroundStyle(unitColor)
             }
         }
     }
