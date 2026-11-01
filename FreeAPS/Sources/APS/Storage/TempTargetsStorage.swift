@@ -69,9 +69,10 @@ actor BaseTempTargetsStorage: TempTargetsStorage, AppService {
         var targets = targets
         let now = Date()
         if !isPresets {
-            if await current() != nil, let newActive = targets.last(where: {
-                $0.createdAt.addingTimeInterval(.minutes(Int($0.duration))) > now
-                    && $0.createdAt <= now
+            // the running one stored again (a Nightscout poll, an edit of its duration) ends nothing:
+            // a cancel would only replace its earlier marker with a new id on every poll
+            if let current = await current(), let newActive = targets.last(where: {
+                $0.isActive(at: now) && $0.createdAt != current.createdAt
             }) {
                 // cancel current
                 targets += [TempTarget.cancel(at: newActive.createdAt.subtractingTimeInterval(.seconds(1)))]

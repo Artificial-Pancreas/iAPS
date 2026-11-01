@@ -18,17 +18,12 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
         name ?? reason ?? TempTarget.custom
     }
 
-    /// `duration` is in minutes; fractional minutes count (the Watch bridge always kept them).
-    var endsAt: Date {
-        createdAt.addingTimeInterval(Double(duration) * 60)
-    }
-
     /// Name plus the time it ends ("Activity · 14:00"), so the remaining duration is visible at a glance.
     /// Uses the weekday when it ends on another day, or "14:00" would read as today.
     var displayNameWithEndTime: String {
-        let sameDay = Calendar.current.isDateInToday(endsAt)
+        let sameDay = Calendar.current.isDateInToday(endDate)
         let formatter = sameDay ? TempTarget.timeFormatter : TempTarget.weekdayTimeFormatter
-        return displayName + " · " + formatter.string(from: endsAt)
+        return displayName + " · " + formatter.string(from: endDate)
     }
 
     private static let timeFormatter: DateFormatter = {
@@ -77,13 +72,36 @@ struct TempTarget: JSON, Identifiable, Equatable, Hashable {
 }
 
 extension TempTarget {
+    /// `duration` is in minutes; fractional minutes count (the Watch bridge always kept them).
     var endDate: Date {
-        createdAt.addingTimeInterval(.minutes(Int(duration)))
+        createdAt.addingTimeInterval(.minutes(duration))
     }
 
     /// a cancel record (duration == 0) is never active
     func isActive(at date: Date) -> Bool {
         duration != 0 && createdAt <= date && date < endDate
+    }
+}
+
+extension TempTarget {
+    /// `==` matches entries by `createdAt` only, as storage does. This compares every field, for views that
+    /// show them: a temp target edited in Nightscout keeps its `created_at` and changes its duration.
+    func isIdentical(to other: TempTarget) -> Bool {
+        id == other.id && name == other.name && createdAt == other.createdAt
+            && targetTop == other.targetTop && targetBottom == other.targetBottom && duration == other.duration
+            && enteredBy == other.enteredBy && reason == other.reason
+    }
+
+    static func identical(_ lhs: TempTarget?, _ rhs: TempTarget?) -> Bool {
+        switch (lhs, rhs) {
+        case (nil, nil): true
+        case let (lhs?, rhs?): lhs.isIdentical(to: rhs)
+        default: false
+        }
+    }
+
+    static func identical(_ lhs: [TempTarget], _ rhs: [TempTarget]) -> Bool {
+        lhs.elementsEqual(rhs) { $0.isIdentical(to: $1) }
     }
 }
 

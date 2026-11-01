@@ -173,8 +173,7 @@ actor BaseWatchManager: WatchManager, LifetimeOwner, AppService {
             .map { target -> TempTargetWatchPreset in
                 let untilDate = currentTarget.flatMap { currentTarget -> Date? in
                     guard currentTarget.id == target.id else { return nil }
-                    let date = currentTarget.createdAt.addingTimeInterval(TimeInterval(currentTarget.duration * 60))
-                    return date > Date() ? date : nil
+                    return currentTarget.endDate > Date() ? currentTarget.endDate : nil
                 }
                 return TempTargetWatchPreset(
                     name: target.displayName,

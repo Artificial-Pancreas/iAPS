@@ -1554,7 +1554,6 @@ private extension BaseDeviceDataManager {
             image: (cgmManager as? CGMManagerUI)?.smallImage,
             pumpIsCgm: pumpIsCgm,
             providesHeartbeat: cgmManager.providesBLEHeartbeat,
-            sensorDays: KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager),
             allowCalibrations: KnownPlugins.allowCalibrations(for: cgmManager),
             appURL: cgmManager.appURL,
             glucoseUploadSupported: KnownPlugins.glucoseUploadingAvailable(for: cgmManager)
@@ -1573,7 +1572,9 @@ private extension BaseDeviceDataManager {
             statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM,
-            oneMinuteReadings: KnownPlugins.isOneMinuteReadingsEnabled(for: cgmManager)
+            oneMinuteReadings: KnownPlugins.isOneMinuteReadingsEnabled(for: cgmManager),
+            // here, not in CgmDisplayInfo: the G7 lifetime (10 vs 15 days) is known only after the sensor connects
+            sensorDays: KnownPlugins.cgmExpirationByPluginIdentifier(cgmManager)
         )
 
         appCoordinator.setCgmStatus(status)

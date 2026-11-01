@@ -106,6 +106,16 @@ extension UIBindingOwner {
         _observeUI(subject, map: { $0 }, isDuplicate: { _, _ in false }, dropInitial: false, on: self, perform: action)
     }
 
+    /// for values whose `==` does not compare everything that is shown
+    func observeUI<Value: Sendable>(
+        _ subject: CurrentValueSubject<Value, Never>,
+        isDuplicate: @escaping @Sendable(Value, Value) -> Bool,
+        dropInitial: Bool = false,
+        perform action: @escaping @MainActor @Sendable(Self, Value) async -> Void
+    ) {
+        _observeUI(subject, map: { $0 }, isDuplicate: isDuplicate, dropInitial: dropInitial, on: self, perform: action)
+    }
+
     func observeUI<Root: Sendable, Value: Equatable & Sendable>(
         _ subject: CurrentValueSubject<Root, Never>,
         map transform: @escaping @Sendable(Root) -> Value,

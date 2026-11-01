@@ -61,7 +61,7 @@ extension DataTable {
             observeUI(appCoordinator.pumpHistory, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
-            observeUI(appCoordinator.tempTargets, dropInitial: true) { me, _ in
+            observeUI(appCoordinator.tempTargets, isDuplicate: { TempTarget.identical($0, $1) }, dropInitial: true) { me, _ in
                 await me.setupTreatments()
             }
             observeUI(appCoordinator.carbHistory, dropInitial: true) { me, _ in
