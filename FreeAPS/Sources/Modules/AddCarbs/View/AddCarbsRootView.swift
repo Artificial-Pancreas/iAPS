@@ -243,8 +243,6 @@ extension AddCarbs {
                     }
 
                     timeRow
-
-                    noteRow
                 }
 
                 if !empty, !saved {
@@ -267,6 +265,7 @@ extension AddCarbs {
             .sheet(isPresented: $showMicronutrients) {
                 OtherNutritionSheet(
                     fiber: $state.fiber,
+                    note: $state.note,
                     micronutrients: $state.micronutrient,
                     formatter: Self.formatter
                 )
@@ -325,7 +324,7 @@ extension AddCarbs {
 
             switch (hasFiber, microCount > 0) {
             case (false, false):
-                return ""
+                return state.note
 
             case (true, false):
                 return "Fiber"
@@ -339,18 +338,6 @@ extension AddCarbs {
         }
 
         // MARK: - Time Row
-
-        // Free-text note on the entry, blank by default. Logged with the entry so analysis
-        // can read context the numbers cannot carry (a low treatment, a walk, a guessed meal).
-        private var noteRow: some View {
-            HStack {
-                Text("Note")
-
-                TextField("Optional", text: $state.note)
-                    .multilineTextAlignment(.trailing)
-                    .autocorrectionDisabled()
-            }
-        }
 
         private var timeRow: some View {
             HStack {
@@ -468,6 +455,7 @@ extension AddCarbs {
 
         private struct OtherNutritionSheet: View {
             @Binding var fiber: Decimal
+            @Binding var note: String
             @Binding var micronutrients: [MicronutrientValue]
 
             let formatter: NumberFormatter
@@ -477,6 +465,10 @@ extension AddCarbs {
             var body: some View {
                 NavigationStack {
                     Form {
+                        Section("Note") {
+                            TextField("Meal", text: $note)
+                        }
+
                         Section("Fiber") {
                             HStack {
                                 Text("Fiber")
