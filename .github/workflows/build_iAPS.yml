@@ -1,200 +1,68 @@
 name: 4. Build iAPS
-run-name: Build iAPS (${{ github.ref_name }})
+
 on:
   workflow_dispatch:
-  
-  # this will trigger this workflow for any push to any branch that this workflow is
-  # active on, *but*, the auto_build_check job will check to see if this branch is
-  # enabled *for* being auto built, and short circuit the process if so.
-  #
-  # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
-  # workflow is triggered, but doesn't actually do anything.
-  #
-  push:
-  
-env:  
-  UPSTREAM_REPO: Artificial-Pancreas/iAPS
-  UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
-  TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
-  ALIVE_BRANCH: alive
+
+env:
+  FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+  TEAM_ID: ${{ secrets.TEAMID }}
+  MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+  MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
 
 jobs:
-  auto_build_check:
-    name: Check Auto Build Status
-    runs-on: ubuntu-latest
-    outputs:
-      AUTO_BUILD_ENABLED: ${{ steps.auto-build-enabled.outputs.auto_build }}
-
-    steps:
-      - name: Is Auto Build Branch
-        id: auto-build-enabled
-        run: |
-          echo "auto_build=false" >> $GITHUB_OUTPUT
-          if [ ! -z "${{ vars.AUTO_BUILD_BRANCHES }}" ]; then
-            if echo ",${{ vars.AUTO_BUILD_BRANCHES }}," | grep -q ",${{ github.ref_name }},"; then
-              echo "auto_build=true" >> $GITHUB_OUTPUT
-            fi
-          fi
-
-      - name: Show Auto Build Status
-        run: |
-          echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
-    # Checks if Distribution certificate is present and valid, optionally nukes and
-    # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
-  check_certs: 
-    needs: auto_build_check
-    name: Check certificates
-    if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
-    uses: ./.github/workflows/create_certs.yml
-    secrets: inherit
-  check_latest_from_upstream:
-    needs: [check_certs]
-    runs-on: ubuntu-latest
-    name: Check upstream
-    outputs: 
-      NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
-    
-    steps:
-    - name: Checkout target repo
-      if: |
-        needs.check_alive_and_permissions.outputs.WORKFLOW_PERMISSION == 'true' &&
-        (vars.SCHEDULED_BUILD != 'false' || vars.SCHEDULED_SYNC != 'false')
-      uses: actions/checkout@v5
-      with:
-        token: ${{ secrets.GH_PAT }}
-        ref: alive
-  
-  # Builds iAPS
-  build:
-    name: Build
-    needs: [check_certs,check_latest_from_upstream]
+  check_certs:
     runs-on: macos-latest
-    permissions:
-      contents: write
     steps:
-      - name: Set special variables
-        env:
-          # APP_IDENTIFIER may be set as a secret (preferred, since it embeds the team id)
-          # or as a repository variable (fallback). The secret wins when both are set.
-          APP_IDENTIFIER_SECRET: ${{ secrets.APP_IDENTIFIER }}
-          APP_IDENTIFIER_VAR: ${{ vars.APP_IDENTIFIER }}
-          BUILD_GROUP_VAR: ${{ vars.BUILD_GROUP }}
-        run: |
-          APP_ID="${APP_IDENTIFIER_SECRET:-$APP_IDENTIFIER_VAR}"
-          if [ -n "$APP_ID" ]; then
-            echo "APP_IDENTIFIER=$APP_ID" >> "$GITHUB_ENV"
-          fi
-          if [ -n "$BUILD_GROUP_VAR" ]; then
-            echo "BUILD_GROUP=$BUILD_GROUP_VAR" >> "$GITHUB_ENV"
-          fi
-
-      - name: Select Xcode version
-        run: |
-          echo "Available Xcode versions:"
-          ls -d /Applications/Xcode*.app
-          XCODE=$(ls -d /Applications/Xcode_26*.app | sort -V | tail -1)
-          if [ -z "$XCODE" ]; then
-            echo "::error::Xcode 26.x NOT found on this runner"
-            exit 1
-          fi
-          echo "Selecting $XCODE"
-          sudo xcode-select --switch "$XCODE/Contents/Developer"
-          xcodebuild -version
-      
-      - name: Checkout Repo for syncing
-        if: |
-          vars.SCHEDULED_SYNC == 'true'
-        uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.TARGET_BRANCH }} 
-      
-      - name: Sync upstream changes
-        if: | # do not run the upstream sync action on the upstream repository
-          vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
-        id: sync
-        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
-        with:
-          target_sync_branch: ${{ env.TARGET_BRANCH }}
-          shallow_since: 6 months ago
-          target_repo_token: ${{ secrets.GH_PAT }}
-          upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
-          upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-      
-      # Display a sample message based on the sync output var 'has_new_commits'
-      - name: New commits found
-        if: |
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
-        run: echo "New commits were found to sync."
-    
-      - name: No new commits
-        if: |
-          vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
-        run: echo "There were no new commits."
-      
-      - name: Show value of 'has_new_commits'
-        if: |
-          vars.SCHEDULED_SYNC == 'true'
-        run: |
-          echo ${{ steps.sync.outputs.has_new_commits }}
-          echo "NEW_COMMITS=${{ steps.sync.outputs.has_new_commits }}" >> $GITHUB_OUTPUT
+          submodules: true
 
-      - name: Checkout Repo for building
-        uses: actions/checkout@v5
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Bundle install
+        run: bundle install
+
+      - name: Check Certificates
+        env:
+          FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+          TEAM_ID: ${{ secrets.TEAMID }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+        run: bundle exec fastlane check_certs
+
+  build:
+    needs: check_certs
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
-          submodules: recursive
-          ref: ${{ env.TARGET_BRANCH }}
+          submodules: true
 
-      # Ensure compatible Bundler version for Fastlane (fastlane requires bundler < 3)
-      - name: Install Bundler 2.x
-        run: |
-          gem install bundler -v 2.7.2
-          echo "BUNDLER_VER=2.7.2" >> $GITHUB_ENV
-
-      # Patch Fastlane Match to not print tables
-      - name: Patch Match Tables
-        run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
-      
-      # Install project dependencies
-      - name: Install project dependencies
-        run: bundle _${{ env.BUNDLER_VER }}_ install
-
-      # Sync the GitHub runner clock with the Windows time server (workaround as suggested in https://github.com/actions/runner/issues/2996)
-      - name: Sync clock
-        run: sudo sntp -sS time.windows.com
-
-      # Build signed iAPS IPA file
-      - name: Fastlane Build & Archive
-        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane build_iAPS        
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      
-      # Upload to TestFlight
-      # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
-      # publishing to TestFlight (when testing).
-      - name: Fastlane upload to TestFlight
-        if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
-        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
-      # Upload Build artifacts
-      - name: Upload build log, IPA and Symbol artifacts
-        if: always()
-        uses: actions/upload-artifact@v6
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          name: build-artifacts
-          path: |
-            artifacts
-            buildlog
+          ruby-version: "3.3"
+          bundler-cache: true
+
+      - name: Bundle install
+        run: bundle install
+
+      - name: Build iAPS
+        env:
+          FASTLANE_APPLE_ID: ${{ secrets.FASTLANE_APPLE_ID }}
+          TEAM_ID: ${{ secrets.TEAMID }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+        run: bundle exec fastlane build_iAPS
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: iAPS-Build
+          path: output/*.ipa
