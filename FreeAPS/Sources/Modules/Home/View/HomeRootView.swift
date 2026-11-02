@@ -1312,7 +1312,7 @@ extension Home {
                     isOverride ? "person.fill" : "person",
                     color: .purple,
                     active: isOverride
-                ).scaleEffect(isOverride ? 1.4 : 1.1)
+                ).scaleEffect(isOverride ? 1.2 : 1.1)
             }
             .confirmationDialog("Cancel Profile Override", isPresented: $showCancelAlert) {
                 Button("Cancel Profile Override", role: .destructive) {
