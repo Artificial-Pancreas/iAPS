@@ -2,16 +2,17 @@ name: 4. Build iAPS
 run-name: Build iAPS (${{ github.ref_name }})
 on:
   workflow_dispatch:
-  
+  
   # this will trigger this workflow for any push to any branch that this workflow is
   # active on, *but*, the auto_build_check job will check to see if this branch is
   # enabled *for* being auto built, and short circuit the process if so.
   #
   # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
   # workflow is triggered, but doesn't actually do anything.
+  #
   push:
-  
-env:  
+  
+env:  
   UPSTREAM_REPO: Artificial-Pancreas/iAPS
   UPSTREAM_BRANCH: ${{ github.ref_name }} # branch on upstream repository to sync from (replace with specific branch name if needed)
   TARGET_BRANCH: ${{ github.ref_name }} # target branch on fork to be kept in sync, and target branch on upstream to be kept alive (replace with specific branch name if needed)
@@ -38,23 +39,21 @@ jobs:
       - name: Show Auto Build Status
         run: |
           echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
-
-  # ========== 【改动1】注释掉自动证书创建job，不再运行create_certs.yml ==========
-  # check_certs: 
-  #   needs: auto_build_check
-  #   name: Check certificates
-  #   if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
-  #   uses: ./.github/workflows/create_certs.yml
-  #   secrets: inherit
-
+    # Checks if Distribution certificate is present and valid, optionally nukes and
+    # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
+  check_certs: 
+    needs: auto_build_check
+    name: Check certificates
+    if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
+    uses: ./.github/workflows/create_certs.yml
+    secrets: inherit
   check_latest_from_upstream:
-    # ==========【改动2】把依赖从 [check_certs,auto_build_check] 修改为只依赖 auto_build_check ==========
-    needs: [auto_build_check]
+    needs: [check_certs]
     runs-on: ubuntu-latest
     name: Check upstream
-    outputs: 
+    outputs: 
       NEW_COMMITS: ${{ steps.sync.outputs.has_new_commits }}
-    
+    
     steps:
     - name: Checkout target repo
       if: |
@@ -64,12 +63,11 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         ref: alive
-  
+  
   # Builds iAPS
   build:
     name: Build
-    # ==========【改动3】去掉check_certs依赖 ==========
-    needs: [auto_build_check,check_latest_from_upstream]
+    needs: [check_certs,check_latest_from_upstream]
     runs-on: macos-latest
     permissions:
       contents: write
@@ -102,15 +100,15 @@ jobs:
           echo "Selecting $XCODE"
           sudo xcode-select --switch "$XCODE/Contents/Developer"
           xcodebuild -version
-      
+      
       - name: Checkout Repo for syncing
         if: |
           vars.SCHEDULED_SYNC == 'true'
         uses: actions/checkout@v5
         with:
           token: ${{ secrets.GH_PAT }}
-          ref: ${{ env.TARGET_BRANCH }} 
-      
+          ref: ${{ env.TARGET_BRANCH }} 
+      
       - name: Sync upstream changes
         if: | # do not run the upstream sync action on the upstream repository
           vars.SCHEDULED_SYNC == 'true' && github.repository_owner != 'Artificial-Pancreas'
@@ -122,18 +120,18 @@ jobs:
           target_repo_token: ${{ secrets.GH_PAT }}
           upstream_sync_branch: ${{ env.UPSTREAM_BRANCH }}
           upstream_sync_repo: ${{ env.UPSTREAM_REPO }}
-      
+      
       # Display a sample message based on the sync output var 'has_new_commits'
       - name: New commits found
         if: |
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'true'
         run: echo "New commits were found to sync."
-    
+    
       - name: No new commits
         if: |
           vars.SCHEDULED_SYNC == 'true' && steps.sync.outputs.has_new_commits == 'false'
         run: echo "There were no new commits."
-      
+      
       - name: Show value of 'has_new_commits'
         if: |
           vars.SCHEDULED_SYNC == 'true'
@@ -157,7 +155,7 @@ jobs:
       # Patch Fastlane Match to not print tables
       - name: Patch Match Tables
         run: find /usr/local/lib/ruby/gems -name table_printer.rb | xargs sed -i "" "/puts(Terminal::Table.new(params))/d"
-      
+      
       # Install project dependencies
       - name: Install project dependencies
         run: bundle _${{ env.BUNDLER_VER }}_ install
@@ -166,33 +164,30 @@ jobs:
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
-      # ==========【改动4】修改fastlane命令，增加参数，关闭match证书管理 ==========
-      # Build iAPS IPA
+      # Build signed iAPS IPA file
       - name: Fastlane Build & Archive
-        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane build_iAPS skip_match:true skip_codesign:true
+        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane build_iAPS        
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
-          # ==========【改动5】移除苹果App Store Connect API密钥，不再读取 ==========
-          # FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          # FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          # FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          # MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      
-      # ==========【改动6】注释掉TestFlight上传，不需要上传 ==========
-      # # Upload to TestFlight
-      # # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
-      # # publishing to TestFlight (when testing).
-      # - name: Fastlane upload to TestFlight
-      #   if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
-      #   run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
-      #   env:
-      #     TEAMID: ${{ secrets.TEAMID }}
-      #     GH_PAT: ${{ secrets.GH_PAT }}
-      #     FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-      #     FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-      #     FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      
+      # Upload to TestFlight
+      # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
+      # publishing to TestFlight (when testing).
+      - name: Fastlane upload to TestFlight
+        if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
+        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
+        env:
+          TEAMID: ${{ secrets.TEAMID }}
+          GH_PAT: ${{ secrets.GH_PAT }}
+          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
