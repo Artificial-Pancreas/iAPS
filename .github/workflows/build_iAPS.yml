@@ -9,7 +9,6 @@ on:
   #
   # if AUTO_BUILD_BRANCHES is not set, or the current branch is not listed, this
   # workflow is triggered, but doesn't actually do anything.
-  #
   push:
   
 env:  
@@ -39,16 +38,18 @@ jobs:
       - name: Show Auto Build Status
         run: |
           echo "Auto Build Status: ${{ steps.auto-build-enabled.outputs.auto_build }}"
-    # Checks if Distribution certificate is present and valid, optionally nukes and
-    # creates new certs if the repository variable ENABLE_NUKE_CERTS == 'true'
-  check_certs: 
-    needs: auto_build_check
-    name: Check certificates
-    if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
-    uses: ./.github/workflows/create_certs.yml
-    secrets: inherit
+
+  # ========== 【改动1】注释掉自动证书创建job，不再运行create_certs.yml ==========
+  # check_certs: 
+  #   needs: auto_build_check
+  #   name: Check certificates
+  #   if: needs.auto_build_check.outputs.AUTO_BUILD_ENABLED == 'true' || github.event_name == 'workflow_dispatch'
+  #   uses: ./.github/workflows/create_certs.yml
+  #   secrets: inherit
+
   check_latest_from_upstream:
-    needs: [check_certs]
+    # ==========【改动2】把依赖从 [check_certs,auto_build_check] 修改为只依赖 auto_build_check ==========
+    needs: [auto_build_check]
     runs-on: ubuntu-latest
     name: Check upstream
     outputs: 
@@ -67,7 +68,8 @@ jobs:
   # Builds iAPS
   build:
     name: Build
-    needs: [check_certs,check_latest_from_upstream]
+    # ==========【改动3】去掉check_certs依赖 ==========
+    needs: [auto_build_check,check_latest_from_upstream]
     runs-on: macos-latest
     permissions:
       contents: write
@@ -164,30 +166,33 @@ jobs:
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
-      # Build signed iAPS IPA file
+      # ==========【改动4】修改fastlane命令，增加参数，关闭match证书管理 ==========
+      # Build iAPS IPA
       - name: Fastlane Build & Archive
-        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane build_iAPS        
+        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane build_iAPS skip_match:true skip_codesign:true
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          # ==========【改动5】移除苹果App Store Connect API密钥，不再读取 ==========
+          # FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+          # FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+          # FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          # MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
       
-      # Upload to TestFlight
-      # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
-      # publishing to TestFlight (when testing).
-      - name: Fastlane upload to TestFlight
-        if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
-        run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
-        env:
-          TEAMID: ${{ secrets.TEAMID }}
-          GH_PAT: ${{ secrets.GH_PAT }}
-          FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
-          FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
-          FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
-          MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+      # ==========【改动6】注释掉TestFlight上传，不需要上传 ==========
+      # # Upload to TestFlight
+      # # Set repository variable SKIP_TESTFLIGHT_UPLOAD=true to build & archive without
+      # # publishing to TestFlight (when testing).
+      # - name: Fastlane upload to TestFlight
+      #   if: ${{ vars.SKIP_TESTFLIGHT_UPLOAD != 'true' }}
+      #   run: bundle _${{ env.BUNDLER_VER }}_ exec fastlane release
+      #   env:
+      #     TEAMID: ${{ secrets.TEAMID }}
+      #     GH_PAT: ${{ secrets.GH_PAT }}
+      #     FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
+      #     FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
+      #     FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+      #     MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
 
       # Upload Build artifacts
       - name: Upload build log, IPA and Symbol artifacts
