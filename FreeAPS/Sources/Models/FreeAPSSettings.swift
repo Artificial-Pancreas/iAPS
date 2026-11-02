@@ -718,10 +718,6 @@ extension FreeAPSSettings: Decodable {
             settings.b30_duration = b30_duration
         }
 
-        if let b30_duration = try? container.decode(Decimal.self, forKey: .b30_duration) {
-            settings.b30_duration = b30_duration
-        }
-
         if let iobThresholdPercent = try? container.decode(Decimal.self, forKey: .iobThresholdPercent) {
             settings.iobThresholdPercent = iobThresholdPercent
         }
@@ -763,6 +759,10 @@ extension FreeAPSSettings: Decodable {
 
         if let variableKetoProtect = try? container.decode(Bool.self, forKey: .variableKetoProtect) {
             settings.variableKetoProtect = variableKetoProtect
+        }
+
+        if let ketoProtectBasalPercent = try? container.decode(Decimal.self, forKey: .ketoProtectBasalPercent) {
+            settings.ketoProtectBasalPercent = ketoProtectBasalPercent
         }
 
         if let ketoProtectAbsolut = try? container.decode(Bool.self, forKey: .ketoProtectAbsolut) {
