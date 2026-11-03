@@ -4093,3 +4093,40 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
 "Starting iAPS" = "iAPS starten";
 "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS wacht op toegang tot de gegevens. Normaal gesproken eindigt dit vannzelf nadat je je telefoon voor de eerste keer hebt ontgrendeld na een herstart.";
+
+/* Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+
+/* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+
+/* Restore: the typed recovery token is not a UUID */
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
+
+/* Title of the newer-release alert on Home */
+"Update available" = "Update available";
+
+/* Dismiss the newer-release alert */
+"Later" = "Later";
+
+/* Open the release highlights page */
+"What's new" = "What's new";
+
+/* Body of the newer-release alert, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.";
+
+/* Home banner, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
+
+/* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
+"Crash Reports" = "Crash Reports";
+"Send crash reports" = "Send crash reports";
+"If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default." = "If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default.";
+"What a crash report contains" = "What a crash report contains";
+"When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help." = "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help.";
+
+/* --- Settings → Debug options: crash reporting test hook --- */
+"Simulate a crash" = "Simulate a crash";
+"Crash" = "Crash";
+"Simulate a crash?" = "Simulate a crash?";
+"iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";

@@ -112,7 +112,7 @@ struct FoodSearchSettingsView: View {
                                 .font(.title3)
 
                             Picker("", selection: $imageSearchProvider) {
-                                ForEach(ImageSearchProvider.allCases, id: \.self) { provider in
+                                ForEach(ImageSearchProvider.pickerCases(current: imageSearchProvider), id: \.self) { provider in
                                     HStack(spacing: 12) {
                                         Text(provider.providerName)
                                             .font(.caption)
@@ -127,6 +127,10 @@ struct FoodSearchSettingsView: View {
 
                                         Spacer()
 
+                                        if let deprecation = provider.deprecation {
+                                            AIModelDeprecationBadge(deprecation: deprecation)
+                                        }
+
                                         if let fast = provider.fast, fast {
                                             Text("Fast")
                                                 .font(.caption2)
@@ -140,6 +144,10 @@ struct FoodSearchSettingsView: View {
                                 }
                             }
                             .pickerStyle(.navigationLink)
+
+                            if let deprecation = imageSearchProvider.deprecation {
+                                AIModelDeprecationNotice(providerName: imageSearchProvider.providerName, deprecation: deprecation)
+                            }
                         }
                         .padding(.vertical, 4)
 
@@ -148,7 +156,7 @@ struct FoodSearchSettingsView: View {
                                 .font(.title3)
 
                             Picker("", selection: $aiTextProvider) {
-                                ForEach(AITextProvider.allCases, id: \.self) { provider in
+                                ForEach(AITextProvider.pickerCases(current: aiTextProvider), id: \.self) { provider in
                                     HStack(spacing: 12) {
                                         Text(provider.providerName)
                                             .font(.caption)
@@ -163,6 +171,10 @@ struct FoodSearchSettingsView: View {
 
                                         Spacer()
 
+                                        if let deprecation = provider.deprecation {
+                                            AIModelDeprecationBadge(deprecation: deprecation)
+                                        }
+
                                         if let fast = provider.fast, fast {
                                             Text("Fast")
                                                 .font(.caption2)
@@ -176,6 +188,10 @@ struct FoodSearchSettingsView: View {
                                 }
                             }
                             .pickerStyle(.navigationLink)
+
+                            if let deprecation = aiTextProvider.deprecation {
+                                AIModelDeprecationNotice(providerName: aiTextProvider.providerName, deprecation: deprecation)
+                            }
                         }
                         .padding(.vertical, 4)
                     }
@@ -552,5 +568,80 @@ private struct StableSecureField: View {
                 .textInputAutocapitalization(.never)
                 .autocorrectionDisabled()
         }
+    }
+}
+
+// MARK: - Deprecated model indicators
+
+/// Small badge for a picker row: "Deprecated" plus the vendor's shutdown date when known.
+struct AIModelDeprecationBadge: View {
+    let deprecation: AIModelDeprecation
+
+    var body: some View {
+        Text(label)
+            .font(.caption2)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(Color.red.opacity(0.15))
+            .cornerRadius(4)
+    }
+
+    private var label: String {
+        if let date = deprecation.shutdownDate {
+            return String(
+                format: NSLocalizedString(
+                    "Deprecated · until %@",
+                    comment: "Badge for a deprecated AI model with a shutdown date"
+                ),
+                date.formatted(date: .abbreviated, time: .omitted)
+            )
+        }
+        return NSLocalizedString("Legacy", comment: "Badge for an AI model that is no longer in the vendor's current lineup")
+    }
+}
+
+/// Warning shown under a picker whose current selection is deprecated.
+struct AIModelDeprecationNotice: View {
+    let providerName: String
+    let deprecation: AIModelDeprecation
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: deprecation.isPastShutdown ? "xmark.octagon.fill" : "exclamationmark.triangle.fill")
+                .foregroundColor(deprecation.isPastShutdown ? .red : .orange)
+            Text(message)
+                .font(.caption)
+                .foregroundColor(.secondary)
+        }
+        .padding(.top, 2)
+    }
+
+    private var message: String {
+        if let date = deprecation.shutdownDate {
+            let formatted = date.formatted(date: .long, time: .omitted)
+            if deprecation.isPastShutdown {
+                return String(
+                    format: NSLocalizedString(
+                        "%1$@ shut this model down on %2$@. Requests will fail; please select another model.",
+                        comment: "Notice when the selected AI model is past its shutdown date"
+                    ),
+                    providerName, formatted
+                )
+            }
+            return String(
+                format: NSLocalizedString(
+                    "%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then.",
+                    comment: "Notice when the selected AI model has a scheduled shutdown date"
+                ),
+                providerName, formatted
+            )
+        }
+        return String(
+            format: NSLocalizedString(
+                "This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model.",
+                comment: "Notice when the selected AI model is legacy, with no announced shutdown date"
+            ),
+            providerName
+        )
     }
 }

@@ -567,6 +567,13 @@ final class BaseDeviceDataManager: Injectable, DeviceDataManager {
 // MARK: - PumpManagerDelegate
 
 extension BaseDeviceDataManager: PumpManagerDelegate {
+    /// UTC ISO-8601 for the "Pump lifecycle:" log line (pump-side event dates).
+    static let lifecycleDateFormatter: ISO8601DateFormatter = {
+        let f = ISO8601DateFormatter()
+        f.formatOptions = [.withInternetDateTime]
+        return f
+    }()
+
     func pumpManagerPumpWasReplaced(_: PumpManager) {
         debug(.deviceManager, "pumpManagerPumpWasReplaced")
     }
@@ -686,6 +693,23 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump events:\n\(events.map(\.title).joined(separator: "\n"))")
 
+        // The titles above are localized and carry no event date. Log the site / reservoir
+        // lifecycle events once more in a locale-free form with the pump-side date, so the
+        // uploaded logs can place pod changes, set changes and refills on every pump type.
+        for event in events {
+            switch event.type {
+            case .prime,
+                 .replaceComponent,
+                 .rewind:
+                debug(
+                    .deviceManager,
+                    "Pump lifecycle: \(event.type!.rawValue) at \(Self.lifecycleDateFormatter.string(from: event.date)) title=\(event.title)"
+                )
+            default:
+                break
+            }
+        }
+
         pumpHistoryStorage.storePumpEvents(events)
         lastEventDate = events.last?.date
         completion(nil)
@@ -766,6 +790,17 @@ extension BaseDeviceDataManager: DeviceManagerDelegate {
         )
     }
 
+    func deviceManager(_ manager: DeviceManager, recordAnalyticsEvent name: String, properties: [AnyHashable: Any]?) {
+        // OmnipodKit reports "Pod Paired" and "Pod Ended" (lifetimeHours from the pod's own clock,
+        // reason = fault / deactivated / discarded, faultCode) through this hook; LoopKit's default
+        // implementation drops them. One line per event, keys sorted so the format is stable.
+        let kv = (properties ?? [:])
+            .map { "\($0.key)=\($0.value)" }
+            .sorted()
+            .joined(separator: " ")
+        debug(.deviceManager, "Device analytics [\(manager.pluginIdentifier)] \(name): \(kv)")
+    }
+
     func deviceManager(
         _: LoopKit.DeviceManager,
         logEventForDeviceIdentifier deviceIdentifier: String?,
@@ -821,6 +856,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         rawCGMManager = manager.rawValue
         appCoordinator.setShouldUploadGlucose(manager.shouldSyncToRemoteService)
+        // The G7 session length (10 vs 15 days) is only known after the sensor has connected.
+        appCoordinator.setSensorDays(KnownPlugins.cgmExpirationByPluginIdentifier(manager))
     }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {

@@ -563,6 +563,11 @@ extension NightscoutAPI {
         components.host = statURL.host
         components.port = statURL.port
         components.path = Config.versionPath
+        // Which build is asking, so the server can answer per version and count stale builds.
+        components.queryItems = [
+            URLQueryItem(name: "version", value: Bundle.main.releaseVersionNumber ?? ""),
+            URLQueryItem(name: "branch", value: Bundle.main.gitBranch ?? "")
+        ]
 
         var request = URLRequest(url: components.url!)
         request.allowsConstrainedNetworkAccess = true

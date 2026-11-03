@@ -10,6 +10,7 @@ extension Settings {
         @State private var showShareSheet = false
         @State private var entity: String = "Readings"
         @State private var deletionAlert = false
+        @State private var simulateCrashAlert = false
 
         @FetchRequest(
             entity: VNr.entity(),
@@ -50,7 +51,10 @@ extension Settings {
                             )
                         }
 
-                        if let latest = fetchedVersionNumber.first, let nr = latest.nr, nr > state.versionNumber {
+                        if let latest = fetchedVersionNumber.first,
+                           let nr = Version(main: latest.nr ?? "", dev: latest.dev ?? "")
+                           .offered(for: state.versionNumber, branch: Version.runningBranchName)
+                        {
                             Text("Newer release availabe at GitHub: " + nr)
                                 .foregroundStyle(.orange).bold()
                                 .multilineTextAlignment(.leading)
@@ -138,6 +142,22 @@ extension Settings {
 
                                 HStack {
                                     Toggle("Max Override 400%", isOn: $state.extended_overrides)
+                                }
+
+                                HStack {
+                                    Text("Simulate a crash")
+                                    Button("Crash") { simulateCrashAlert = true }
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .buttonStyle(.borderedProminent)
+                                        .tint(.red)
+                                }
+                                .alert("Simulate a crash?", isPresented: $simulateCrashAlert) {
+                                    Button("Crash", role: .destructive) { CrashReportService.simulateCrash() }
+                                    Button("Cancel", role: .cancel) {}
+                                } message: {
+                                    Text(
+                                        "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start."
+                                    )
                                 }
                             }
                             Group {

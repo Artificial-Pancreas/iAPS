@@ -2,6 +2,15 @@
   "originHash" : "b1a331d9debe4601ca8a3a87fcd63e34dad5088cb8b1e904ee75455e78e634cf",
   "pins" : [
     {
+      "identity" : "kscrash",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kstenerud/KSCrash",
+      "state" : {
+        "revision" : "3f77f379c2db001e0c261c2a51b7e2b115d31f91",
+        "version" : "2.6.0"
+      }
+    },
+    {
       "identity" : "slidebutton",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/no-comment/SlideButton",
