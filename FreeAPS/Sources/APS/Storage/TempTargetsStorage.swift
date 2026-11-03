@@ -34,7 +34,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
             var targets = targets
             if !isPresets {
                 if current() != nil, let newActive = targets.last(where: {
-                    $0.createdAt.addingTimeInterval(Int($0.duration).minutes.timeInterval) > Date()
+                    $0.endsAt > Date()
                         && $0.createdAt <= Date()
                 }) {
                     // cancel current
@@ -73,7 +73,7 @@ final class BaseTempTargetsStorage: TempTargetsStorage, Injectable {
             return nil
         }
 
-        guard last.createdAt.addingTimeInterval(Int(last.duration).minutes.timeInterval) > Date(), last.createdAt <= Date(),
+        guard last.endsAt > Date(), last.createdAt <= Date(),
               last.duration != 0
         else {
             return nil

@@ -55,7 +55,7 @@ extension Settings {
                            let nr = Version(main: latest.nr ?? "", dev: latest.dev ?? "")
                            .offered(for: state.versionNumber, branch: Version.runningBranchName)
                         {
-                            Text("Newer release availabe at GitHub: " + nr)
+                            Text(NSLocalizedString("Newer release available at GitHub: ", comment: "") + nr)
                                 .foregroundStyle(.orange).bold()
                                 .multilineTextAlignment(.leading)
                         }
