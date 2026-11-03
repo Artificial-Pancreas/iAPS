@@ -40,6 +40,11 @@ extension Home {
         @Published var errorMessage: String? = nil
         @Published var errorDate: Date? = nil
         @Published var bolusProgress: Decimal?
+        /// A published release newer than this build (from the daily version check), if any.
+        @Published var newerVersion: String?
+        @Published var showVersionBanner = false
+        @Published var showVersionAlert = false
+        let versionNumber = Bundle.main.releaseVersionNumber ?? ""
         @Published var bolusAmount: Decimal?
         @Published var eventualBG: Int?
         @Published var carbsRequired: Decimal?
@@ -148,6 +153,53 @@ extension Home {
             timer.suspend()
         }
 
+        /// Compare the stored version check against this build; a stale check is refreshed
+        /// right away rather than waiting for the loop's daily slot.
+        /// Recomputes the banner/alert from the stored version check. Called when Home comes
+        /// up, when the app returns to the foreground and whenever a new check is stored (the
+        /// view observes the VNr table), so it does not depend on a loop being enacted.
+        ///
+        /// A stored check older than 23 h is refreshed right away rather than waiting for the
+        /// loop's slot; fetchVersion itself allows one attempt an hour, success or not.
+        func refreshVersionNotice() {
+            let defaults = UserDefaults.standard
+            let stored = CoreDataStorage().fetchVNr()
+            if (stored?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+                nightscoutManager.fetchVersion()
+            }
+            guard let main = stored?.nr, !main.isEmpty else {
+                newerVersion = nil
+                showVersionBanner = false
+                showVersionAlert = false
+                return
+            }
+            let offered = Version(main: main, dev: stored?.dev ?? "")
+                .offered(for: versionNumber, branch: Version.runningBranchName)
+            newerVersion = offered
+            showVersionBanner = offered != nil && defaults.string(forKey: IAPSconfig.versionBannerDismissed) != offered
+            if let offered {
+                if defaults.string(forKey: IAPSconfig.versionAlertShown) != offered {
+                    showVersionAlert = true
+                }
+            } else {
+                showVersionAlert = false
+            }
+        }
+
+        func acknowledgeVersionAlert() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionAlertShown)
+            }
+            showVersionAlert = false
+        }
+
+        func dismissVersionBanner() {
+            if let offered = newerVersion {
+                UserDefaults.standard.set(offered, forKey: IAPSconfig.versionBannerDismissed)
+            }
+            showVersionBanner = false
+        }
+
         override func subscribe() {
             setupGlucose()
             setupBasals()
@@ -182,6 +234,8 @@ extension Home {
             manualTempBasal = apsManager.isManualTempBasal
             setStatusTitle()
             setupCurrentTempTarget()
+            // refreshVersionNotice() runs from the view's onAppear, after the build-expiration check,
+            // so on a cold launch the version alert is never flagged ahead of the expiration alert.
             data.smooth = settingsManager.settings.smoothGlucose
             maxValue = settingsManager.preferences.autosensMax
             data.lowGlucose = settingsManager.settings.low

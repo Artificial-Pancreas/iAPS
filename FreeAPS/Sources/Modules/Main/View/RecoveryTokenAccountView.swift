@@ -306,11 +306,14 @@ extension RecoveryTokenAccountView {
         }
 
         /// Nudge a forced settings upload so the device is registered server-side (an AppDevice
-        /// row) before the user tries to link/register — it only uploads if Online Backup is on,
-        /// which is also the only case where a token is worth linking. Best-effort, once.
+        /// row) before the user tries to link/register — only when Online Backup is on, which is
+        /// also the only case where a token is worth linking. The gate has to live here: the
+        /// forced upload deliberately bypasses the toggle inside NightscoutManager, so without it
+        /// every install that declined sharing still left a backup on the server. Best-effort, once.
         func onAppear() {
             guard !nudged else { return }
             nudged = true
+            guard resolver.resolve(SettingsManager.self)?.settings.uploadStats == true else { return }
             resolver.resolve(NightscoutManager.self)?.uploadProfileAndSettings(true)
         }
 

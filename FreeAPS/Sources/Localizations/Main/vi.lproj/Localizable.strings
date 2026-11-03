@@ -274,7 +274,7 @@
 "Dynamic Variables" = "Dynamic Variables";
 
 /*  */
-"Basal profile" = "Phác đồ liều nền";
+"Basal profile" = "Hồ sơ liều nền";
 
 /*  */
 "Carb ratio" = "Tỷ lệ Carb";
@@ -298,7 +298,7 @@
 "Add" = "Thêm";
 
 /*  */
-"Basal Profile" = "Phác đồ liều nền";
+"Basal Profile" = "Hồ sơ liều nền";
 
 /* Rate basal profile */
 "Rate" = "Tỷ lệ";
@@ -1085,7 +1085,7 @@ Enact a temp Basal or a temp target */
 /* Override Shortcut */
 
 /* Override Shortcut */
-"The Profile Override" = "Cấu hình ghi đè";
+"The Profile Override" = "Hồ sơ ghi đè";
 
 /* Override Shortcut */
 "is now activated" = "hiện đã được kích hoạt";
@@ -1928,7 +1928,7 @@ Enact a temp Basal or a temp target */
 "Pump profile" = "Cấu hình Bơm";
 
 /* Debug option view Profile */
-"Profile" = "Cấu hình";
+"Profile" = "Hồ sơ";
 
 /* Debug option view Enacted */
 "Enacted" = "Đã kích hoạt";
@@ -2545,7 +2545,7 @@ Enact a temp Basal or a temp target */
 "Past Month " = "Tháng trước ";
 
 /* Duration displayed in statPanel */
-"Past 90 Days " = "Past 90 Days ";
+"Past 90 Days " = "90 ngày trước ";
 
 /* Duration displayed in statPanel */
 "All Past Days of Data " = "Tất cả dữ liệu của các ngày trước ";
@@ -4088,3 +4088,40 @@ Enact a temp Basal or a temp target */
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
 "Starting iAPS" = "Đang khởi động iAPS";
 "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS đang chờ quyền truy cập vào dữ liệu. Thông thường, quá trình này sẽ tự hoàn tất sau khi bạn mở khóa điện thoại lần đầu tiên sau khi khởi động lại.";
+
+/* Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Bản dựng iAPS của bạn sẽ hết hạn vào ngày %1$@ (còn %2$d ngày). Các bản dựng được cài đặt bằng Xcode chỉ hoạt động trong thời hạn của hồ sơ ký ứng dụng. Hãy tạo lại bản dựng và cài đặt lại để gia hạn.";
+
+/* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Bản dựng iAPS của bạn sẽ hết hạn vào ngày %1$@ (còn %2$d ngày). Bản dựng được cài đặt bằng Xcode chỉ hoạt động trong thời hạn của hồ sơ ký ứng dụng. Hãy tạo lại bản dựng và cài đặt lại để gia hạn.";
+
+/* Restore: the typed recovery token is not a UUID */
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "Đây không phải là mã khôi phục. Mã khôi phục gồm 36 ký tự có dấu gạch ngang, ví dụ: 1a2b3c4d-5e6f-…. Hãy sao chép mã từ điện thoại cũ theo đường dẫn iAPS → Cài đặt → Chia sẻ.";
+
+/* Title of the newer-release alert on Home */
+"Update available" = "Bản cập nhật có sẵn";
+
+/* Dismiss the newer-release alert */
+"Later" = "Để sau";
+
+/* Open the release highlights page */
+"What's new" = "Có gì mới";
+
+/* Body of the newer-release alert, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "Đã có phiên bản iAPS %@. Bạn đang sử dụng phiên bản %@. Các bản phát hành bao gồm những sửa lỗi liên quan đến liều insulin và an toàn; hãy xem các thay đổi trước khi cập nhật.";
+
+/* Home banner, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@." = "Đã có phiên bản iAPS %@. Bạn đang sử dụng phiên bản %@.";
+
+/* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
+"Crash Reports" = "Báo cáo sự cố";
+"Send crash reports" = "Gửi báo cáo sự cố";
+"If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default." = "Nếu iAPS gặp sự cố, hãy gửi báo cáo cho nhà phát triển để xác định vị trí xảy ra lỗi. Báo cáo ẩn danh, không chứa dữ liệu đường huyết hoặc cài đặt. Tính năng này mặc định bị tắt.";
+"What a crash report contains" = "Nội dung báo cáo sự cố";
+"When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help." = "Khi iAPS gặp sự cố, một báo cáo sẽ được lưu trên điện thoại của bạn và gửi đến open-iaps.app vào lần tiếp theo ứng dụng khởi chạy. Báo cáo bao gồm đường dẫn mã gây ra sự cố (tên hàm và địa chỉ), trạng thái của từng luồng xử lý, thông báo lỗi khiến ứng dụng dừng hoạt động, kiểu điện thoại, phiên bản iOS và phiên bản iAPS.\n\nBáo cáo không chứa dữ liệu đường huyết, insulin hoặc cài đặt. Dữ liệu bộ nhớ thô do KSCrash thu thập sẽ bị xóa trước khi gửi. Báo cáo được lưu cùng mã định danh ẩn danh dùng cho thống kê.\n\nBáo cáo chỉ được gửi từ các bản phát hành mới nhất của nhánh main và dev — các phiên bản cũ hơn có thể gặp lỗi đã được khắc phục. Bạn không cần bật thêm bất kỳ tính năng nào khác để việc này có ích.";
+
+/* --- Settings → Debug options: crash reporting test hook --- */
+"Simulate a crash" = "Mô phỏng sự cố";
+"Crash" = "Sự cố";
+"Simulate a crash?" = "Mô phỏng sự cố?";
+"iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS sẽ dừng ngay lập tức và bạn cần mở lại ứng dụng. Nếu tùy chọn “Gửi báo cáo sự cố” được bật trong mục Chia sẻ, báo cáo sẽ được gửi khi ứng dụng khởi chạy lần tiếp theo.";

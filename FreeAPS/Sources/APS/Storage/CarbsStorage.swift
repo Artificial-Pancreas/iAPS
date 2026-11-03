@@ -29,12 +29,13 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
             let file = OpenAPS.Monitor.carbHistory
             var uniqEvents: [CarbsEntry] = []
 
-            let cbs = entries.last?.carbs ?? 0
             let fat = entries.last?.fat ?? 0
             let protein = entries.last?.protein ?? 0
             let creationDate = entries.last?.createdAt ?? Date.now
 
-            if fat > 0 || protein > 0 {
+            // Fat/protein are stored with the meal below either way; the conversion into future carb
+            // equivalents is its own setting (Settings → Fat and Protein).
+            if fat > 0 || protein > 0, settings.settings.fatProteinConversion {
                 // -------------------------- FPU--------------------------------------
                 let interval = settings.settings.minuteInterval // Interval between carbs
                 let timeCap = settings.settings.timeCap // Max Duration

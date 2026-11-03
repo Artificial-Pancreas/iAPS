@@ -10,6 +10,7 @@ struct AIProviderClient: Sendable {
     func executeQuery(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback: ((String) -> Void)?
     ) async throws -> String {
         telemetryCallback?("📡 Preparing API request …")
@@ -17,6 +18,7 @@ struct AIProviderClient: Sendable {
         var urlRequest: URLRequest = try proto.buildRequest(
             prompt: prompt,
             images: images,
+            responseSchema: responseSchema,
             telemetryCallback: telemetryCallback
         )
 
@@ -137,9 +139,11 @@ protocol AIProviderProtocol: Sendable {
 
     var timeoutsConfig: ModelTimeoutsConfig { get }
 
+    /// `responseSchema`, when given, is enforced through the provider's structured-output mode.
     func buildRequest(
         prompt: String,
         images: [String],
+        responseSchema: AIResponseSchema?,
         telemetryCallback: ((String) -> Void)?
     ) throws -> URLRequest
 

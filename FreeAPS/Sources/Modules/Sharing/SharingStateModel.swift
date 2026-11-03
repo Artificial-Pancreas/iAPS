@@ -7,6 +7,7 @@ extension Sharing {
 
         @Published var uploadStats: Bool = false
         @Published var uploadLogs: Bool = false
+        @Published var uploadCrashReports: Bool = false
         @Published var identfier: String = ""
         @Published var birthDate = Date.distantPast
         @Published var sexSetting: Int = 3
@@ -22,6 +23,8 @@ extension Sharing {
             subscribeSetting(\.uploadStats, on: $uploadStats) { uploadStats = $0 }
             uploadLogs = settingsManager.settings.uploadLogs
             subscribeSetting(\.uploadLogs, on: $uploadLogs) { uploadLogs = $0 }
+            uploadCrashReports = settingsManager.settings.uploadCrashReports
+            subscribeSetting(\.uploadCrashReports, on: $uploadCrashReports) { uploadCrashReports = $0 }
             subscribeSetting(\.birthDate, on: $birthDate) { birthDate = $0 }
             subscribeSetting(\.sexSetting, on: $sexSetting) { sexSetting = $0 }
             subscribeSetting(\.weight, on: $weight) { weight = $0 }

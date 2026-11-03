@@ -23,6 +23,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var useFPUconversion: Bool = true
+    /// Convert a meal's fat and protein into future carb equivalents (Warsaw method). Off, the
+    /// macros are still saved with the meal but no carb-equivalent entries are created from them.
+    var fatProteinConversion: Bool = true
     var individualAdjustmentFactor: Decimal = 0.5
     var timeCap: Int = 8
     var minuteInterval: Int = 30
@@ -35,6 +38,9 @@ struct FreeAPSSettings: JSON, Equatable {
     var low: Decimal = 70
     var uploadStats: Bool = false
     var uploadLogs: Bool = false
+    /// Opt-in crash reports to open-iaps.app (Sharing screen). Independent of the other
+    /// sharing toggles: a crash report needs nothing else to be useful.
+    var uploadCrashReports: Bool = false
     var hours: Int = 6
     var xGridLines: Bool = true
     var yGridLines: Bool = true
@@ -271,6 +277,10 @@ extension FreeAPSSettings: Decodable {
 
         if let useFPUconversion = try? container.decode(Bool.self, forKey: .useFPUconversion) {
             settings.useFPUconversion = useFPUconversion
+        }
+
+        if let fatProteinConversion = try? container.decode(Bool.self, forKey: .fatProteinConversion) {
+            settings.fatProteinConversion = fatProteinConversion
         }
 
         if let individualAdjustmentFactor = try? container.decode(Decimal.self, forKey: .individualAdjustmentFactor) {
@@ -708,10 +718,6 @@ extension FreeAPSSettings: Decodable {
             settings.b30_duration = b30_duration
         }
 
-        if let b30_duration = try? container.decode(Decimal.self, forKey: .b30_duration) {
-            settings.b30_duration = b30_duration
-        }
-
         if let iobThresholdPercent = try? container.decode(Decimal.self, forKey: .iobThresholdPercent) {
             settings.iobThresholdPercent = iobThresholdPercent
         }
@@ -755,6 +761,10 @@ extension FreeAPSSettings: Decodable {
             settings.variableKetoProtect = variableKetoProtect
         }
 
+        if let ketoProtectBasalPercent = try? container.decode(Decimal.self, forKey: .ketoProtectBasalPercent) {
+            settings.ketoProtectBasalPercent = ketoProtectBasalPercent
+        }
+
         if let ketoProtectAbsolut = try? container.decode(Bool.self, forKey: .ketoProtectAbsolut) {
             settings.ketoProtectAbsolut = ketoProtectAbsolut
         }
@@ -777,6 +787,10 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadLogs = try? container.decode(Bool.self, forKey: .uploadLogs) {
             settings.uploadLogs = uploadLogs
+        }
+
+        if let uploadCrashReports = try? container.decode(Bool.self, forKey: .uploadCrashReports) {
+            settings.uploadCrashReports = uploadCrashReports
         }
 
         if let nightTime = try? container.decode(NightTimeConfiguration.self, forKey: .nightTime) {

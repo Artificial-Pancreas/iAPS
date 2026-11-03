@@ -1,5 +1,6 @@
 
 struct ContactTrickEntry: JSON, Equatable, Hashable {
+    var enabled: Bool = true
     var layout: ContactTrickLayout = .single
     var ring1: ContactTrickLargeRing = .none
     var primary: ContactTrickValue = .glucose
@@ -26,6 +27,7 @@ protocol ContactTrickObserver {
 
 extension ContactTrickEntry {
     private enum CodingKeys: String, CodingKey {
+        case enabled
         case layout
         case ring1
         case primary
@@ -44,6 +46,7 @@ extension ContactTrickEntry {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
+        let enabled = try container.decodeIfPresent(Bool.self, forKey: .enabled) ?? true
         let layout = try container.decodeIfPresent(ContactTrickLayout.self, forKey: .layout) ?? .single
         let ring1 = try container.decodeIfPresent(ContactTrickLargeRing.self, forKey: .ring1) ?? .none
         let primary = try container.decodeIfPresent(ContactTrickValue.self, forKey: .primary) ?? .glucose
@@ -60,6 +63,7 @@ extension ContactTrickEntry {
         let fontTracking = try container.decodeIfPresent(FontTracking.self, forKey: .fontTracking) ?? .normal
 
         self = ContactTrickEntry(
+            enabled: enabled,
             layout: layout,
             ring1: ring1,
             primary: primary,

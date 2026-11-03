@@ -321,10 +321,18 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             .eraseToAnyPublisher()
     }
 
+    /// Asks open-iaps.app for the published versions, at most once an hour counted from the last
+    /// attempt. A failed request stores nothing (the API maps errors to an empty Version, which
+    /// saveVNr drops), so callers that fetch "while the stored check is stale" would otherwise
+    /// repeat the request — with its retries — on every call while the server is unreachable.
     func fetchVersion() {
         guard isNetworkReachable else {
             return
         }
+        let defaults = UserDefaults.standard
+        let lastAttempt = defaults.object(forKey: IAPSconfig.versionCheckAttempted) as? Date ?? .distantPast
+        guard lastAttempt < Date.now.addingTimeInterval(-1.hours.timeInterval) else { return }
+        defaults.set(Date.now, forKey: IAPSconfig.versionCheckAttempted)
         let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
         processQueue.async {
             nightscout.fetchVersion()

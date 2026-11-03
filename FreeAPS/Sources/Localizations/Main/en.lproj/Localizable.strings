@@ -1526,6 +1526,16 @@ Enact a temp Basal or a temp target */
 
 "Fast" = "Fast";
 
+"Legacy" = "Legacy";
+
+"Deprecated · until %@" = "Deprecated · until %@";
+
+"%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ shut this model down on %2$@. Requests will fail; please select another model.";
+
+"%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then." = "%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then.";
+
+"This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model." = "This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model.";
+
 "Provider for AI Image Analysis" = "Provider for AI Image Analysis";
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
@@ -2964,7 +2974,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Target Level for B30 to be enacted";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop.";
 
 /* */
 "Minimum Start Bolus size" = "Minimum Start Bolus size";
@@ -3775,6 +3785,8 @@ Enact a temp Basal or a temp target */
 
 "You're now running version %@." = "You're now running version %@.";
 
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
+
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
 
 "Review Settings" = "Review Settings";
@@ -4098,3 +4110,44 @@ Enact a temp Basal or a temp target */
 /* --- Launch gate (shown while iAPS waits for its data to become readable) --- */
 "Starting iAPS" = "Starting iAPS";
 "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart." = "iAPS is waiting for access to its data. Normally this finishes on its own once you have unlocked your phone for the first time after a restart.";
+
+/* Build expiration alert message for an Xcode-installed build, singular day; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d day remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+
+/* Build expiration alert message for an Xcode-installed build, plural days; %1$@ is the date, %2$d the days remaining */
+"Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew." = "Your iAPS build expires on %1$@ (%2$d days remaining). Builds installed with Xcode last as long as their signing profile — rebuild and reinstall to renew.";
+
+/* Restore: the typed recovery token is not a UUID */
+"That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing." = "That isn't a recovery token. A token is 36 characters with dashes, like 1a2b3c4d-5e6f-…; copy it from your old phone under iAPS → Settings → Sharing.";
+
+/* Title of the newer-release alert on Home */
+"Update available" = "Update available";
+
+/* Dismiss the newer-release alert */
+"Later" = "Later";
+
+/* Open the release highlights page */
+"What's new" = "What's new";
+
+/* Body of the newer-release alert, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update." = "iAPS %@ is available. You are running %@. Releases carry dosing and safety fixes; see what changed before you update.";
+
+/* Home banner, %1$@ new version, %2$@ running version */
+"iAPS %@ is available. You are running %@." = "iAPS %@ is available. You are running %@.";
+
+/* --- Sharing: crash reports (opt-in, independent of the other sharing toggles) --- */
+"Crash Reports" = "Crash Reports";
+"Send crash reports" = "Send crash reports";
+"If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default." = "If iAPS crashes, send the developers a report of where it happened. Anonymous, no glucose or settings. Off by default.";
+"What a crash report contains" = "What a crash report contains";
+"When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help." = "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help.";
+
+/* --- Settings → Debug options: crash reporting test hook --- */
+"Simulate a crash" = "Simulate a crash";
+"Crash" = "Crash";
+"Simulate a crash?" = "Simulate a crash?";
+"iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
+
+/* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
+"Convert fat and protein into carb equivalents" = "Convert fat and protein into carb equivalents";
+"When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface.";
