@@ -28,6 +28,18 @@ class FileStorageTests: XCTestCase {
         seed.displayOnWatch = .steps
         seed.lightMode = .dark
         seed.birthDate = Date(timeIntervalSince1970: 643_000_000)
+        seed.loopEventsPlacement = .top
+        for keyPath in [
+            \FreeAPSSettings.glucoseUploadSchedule,
+            \.treatmentsAndLoopsUploadSchedule,
+            \.deviceStatusUploadSchedule
+        ] {
+            seed[keyPath: keyPath].onWifi.interval = .everyHour
+            seed[keyPath: keyPath].onCellular.interval = .every12Hours
+        }
+        seed.glucoseSmoothing.algorithm = .kalman
+        seed.glucoseSmoothing.savitzkyGolay.passes = .two
+        seed.glucoseSmoothing.kalman.responsiveness = .calm
 
         let defaults = try leaves(jsonObject(FreeAPSSettings()))
         let expected = try nonDefault(jsonObject(seed), defaults: jsonObject(FreeAPSSettings()))
