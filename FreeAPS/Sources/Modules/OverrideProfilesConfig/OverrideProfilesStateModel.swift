@@ -151,6 +151,10 @@ extension OverrideProfilesConfig {
                 )
 
                 try? self.coredataContext.save()
+                OverrideStorage.logStarted(
+                    saveOverride,
+                    name: self.isPreset ? (OverrideStorage().fetchPreset(id: saveOverride.id ?? "")?.name ?? "Preset") : "Custom"
+                )
             }
         }
 
