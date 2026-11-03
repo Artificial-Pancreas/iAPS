@@ -1525,7 +1525,7 @@ Enact a temp Basal or a temp target */
 
 "Legacy" = "Arv";
 
-"Deprecated · until %@" = "Föråldrad · sedan %@";
+"Deprecated · until %@" = "Föråldrad · tills %@";
 
 "%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ stängde ner denna modellen den %2$@. Analyser kommer att misslyckas; välj en annan modell.";
 
