@@ -124,6 +124,10 @@ final class AppLauncher: ObservableObject {
         CrashReportService.shared.install()
         let settings = FreeAPSApp.resolver.resolve(SettingsManager.self)?.settings
         CrashReportService.shared.processPendingReports(enabled: settings?.uploadCrashReports ?? false)
+
+        // Also covers a launch straight into the background (Bluetooth relaunch), which never
+        // sees a scene phase change.
+        BackgroundWatchdog.shared.schedule()
     }
 }
 
@@ -174,6 +178,9 @@ private struct LaunchedAppView: View {
                 FootprintLog.log("app \(scenePhase)")
                 if scenePhase == .active {
                     appServices.deviceManager.didBecomeActive()
+                }
+                if scenePhase == .background {
+                    BackgroundWatchdog.shared.schedule()
                 }
             }
     }
