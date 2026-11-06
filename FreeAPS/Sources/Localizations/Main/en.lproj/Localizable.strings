@@ -3785,6 +3785,8 @@ Enact a temp Basal or a temp target */
 
 "You're now running version %@." = "You're now running version %@.";
 
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
+
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
 
 "Review Settings" = "Review Settings";
