@@ -14,7 +14,8 @@ protocol PumpHistoryStorage: Sendable {
 
     func deleteInsulin(at date: Date) async
 
-    func saveRawJSON(_ raw: RawJSON) async throws
+    /// - Parameter loaded: the file as the editor loaded it: the events missing from `raw` are explicit deletions
+    func saveRawJSON(_ raw: RawJSON, editing loaded: RawJSON) async throws
 }
 
 actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
@@ -40,15 +41,33 @@ actor BasePumpHistoryStorage: PumpHistoryStorage, LifetimeOwner, AppService {
         await resetCache()
     }
 
-    func saveRawJSON(_ raw: RawJSON) async throws {
-        try await storage.save(raw: raw, as: OpenAPS.Monitor.pumpHistory, decodingInto: [PumpHistoryEvent].self)
-        await resetCache()
+    func saveRawJSON(_ raw: RawJSON, editing loaded: RawJSON) async throws {
+        try await serializer.run {
+            try await storage.save(raw: raw, as: OpenAPS.Monitor.pumpHistory, decodingInto: [PumpHistoryEvent].self)
+            let after = await resetCache()
+            // the edit's removals are explicit deletions (the pump event store deletes those rows, final or not):
+            // against what the editor loaded, not the file now. An event stored while it was open isn't in the edit
+            // either (the save drops it from the file), but it wasn't deleted by the user. Sent after the publish, as
+            // deleteInsulin does.
+            let before = (try? JSONCoding.decoder.decode([PumpHistoryEvent].self, from: Data(loaded.utf8))) ?? []
+            let removed = Self.removed(from: before, keeping: after)
+            if removed.isNotEmpty {
+                self.appCoordinator.sendPumpHistoryDeleted(removed)
+            }
+        }
     }
 
-    private func resetCache() async {
+    /// The events of `before` whose identity is not in `after`.
+    static func removed(from before: [PumpHistoryEvent], keeping after: [PumpHistoryEvent]) -> [PumpHistoryEvent] {
+        let kept = Set(after.map(\.identity))
+        return before.filter { !kept.contains($0.identity) }
+    }
+
+    @discardableResult private func resetCache() async -> [PumpHistoryEvent] {
         // newest -> oldest
         let history = await storage.retrieve(OpenAPS.Monitor.pumpHistory, as: [PumpHistoryEvent].self) ?? []
         appCoordinator.setPumpHistory(history)
+        return history
     }
 
     private var concentration: (concentration: Double, increment: Double) {

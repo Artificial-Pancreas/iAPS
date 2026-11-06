@@ -1119,7 +1119,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     }
 
     func pumpManager(
-        _: any LoopKit.PumpManager,
+        _ pumpManager: any LoopKit.PumpManager,
         hasNewPumpEvents events: [LoopKit.NewPumpEvent],
         lastReconciliation _: Date?,
         replacePendingEvents: Bool,
@@ -1147,6 +1147,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 break
             }
         }
+        let lifecycle = events.compactMap { PumpLifecycleEvent($0, plugin: pumpManager.pluginIdentifier) }
+        if lifecycle.isNotEmpty { appCoordinator.sendPumpLifecycleEvents(lifecycle) }
 
         lastEventDate = events.map(\.date).max() ?? lastEventDate
 
@@ -1505,6 +1507,7 @@ private extension BaseDeviceDataManager {
             image: pumpManager.smallImage,
             expiresAt: KnownPlugins.pumpExpirationDate(pumpManager),
             podActivatedAt: KnownPlugins.pumpActivationDate(pumpManager),
+            deliveryUnitActive: KnownPlugins.isDeliveryUnitActive(pumpManager)
         )
 
         appCoordinator.setPumpInfo(info)

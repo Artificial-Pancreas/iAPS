@@ -35,7 +35,6 @@ extension UIUX {
                 } header: { Text("Home View Button Panel ") }
 
                 Section {
-                    Toggle("Never display the small glucose chart when scrolling", isOn: $state.skipGlucoseChart)
                     Toggle("Always Color Glucose Value (green, yellow etc)", isOn: $state.alwaysUseColors)
                     Toggle("Display Glucose Delta", isOn: $state.displayDelta)
                     Toggle("Hide Concentration Badge", isOn: $state.hideInsulinBadge)
@@ -63,8 +62,6 @@ extension UIUX {
                         Text(state.units.rawValue).foregroundColor(.secondary)
                     }
                     Toggle("Override HbA1c Unit", isOn: $state.overrideHbA1cUnit)
-                    Toggle("Standing / Laying TIR Chart", isOn: $state.oneDimensionalGraph)
-
                 } header: { Text("Statistics settings ") }
 
                 Section {

@@ -23,7 +23,8 @@ final class APSAssembly: Assembly {
         container.register(OverrideManager.self) { r in
             BaseOverrideManager(
                 overrideStorage: r.resolve(OverrideStorage.self)!,
-                nightscoutManager: r.resolve(NightscoutManager.self)!
+                nightscoutManager: r.resolve(NightscoutManager.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
             )
         }
         container.register(DynamicStateManager.self) { r in

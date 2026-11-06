@@ -8,7 +8,6 @@ struct CurrentGlucoseView: View {
     let highGlucose: Decimal
     let alwaysUseColors: Bool
     let displayDelta: Bool
-    let scrolling: Bool
     let displaySAGE: Bool
     let displayExpiration: Bool
     let sensordays: Double
@@ -106,7 +105,7 @@ struct CurrentGlucoseView: View {
     var glucoseView: some View {
         ZStack {
             if let recent = recentGlucose {
-                if displayDelta, !scrolling, let deltaInt = delta,
+                if displayDelta, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
                 if displayExpiration || displaySAGE {
                     sageView
@@ -123,18 +122,16 @@ struct CurrentGlucoseView: View {
                         .background { glucoseDrop }
                         .contentTransition(.numericText())
                         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: recent.glucose)
-                    if !scrolling {
-                        let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
-                        let text = Self.timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
-                        Text(
-                            minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
-                                (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
-                        )
-                        .animation(.spring(response: 0.4, dampingFraction: 0.7), value: minutesAgo)
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
-                        .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
-                    }
+                    let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
+                    let text = Self.timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
+                    Text(
+                        minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
+                            (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
+                    )
+                    .animation(.spring(response: 0.4, dampingFraction: 0.7), value: minutesAgo)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .offset(x: 1, y: fontSize >= .extraLarge ? -3 : 0)
                 }
             }
         }
@@ -242,21 +239,20 @@ struct CurrentGlucoseView: View {
             let decimal = string.components(separatedBy: Self.decimalString)
             if decimal.count > 1 {
                 HStack(spacing: 0) {
-                    Text(decimal[0]).font(scrolling ? .glucoseSmallFont : .glucoseFont)
-                    Text(Self.decimalString).font(.system(size: !scrolling ? 28 : 14).weight(.semibold)).baselineOffset(-10)
-                    Text(decimal[1]).font(.system(size: !scrolling ? 28 : 18)).baselineOffset(!scrolling ? -10 : -4)
+                    Text(decimal[0]).font(.glucoseFont)
+                    Text(Self.decimalString).font(.system(size: 28).weight(.semibold)).baselineOffset(-10)
+                    Text(decimal[1]).font(.system(size: 28)).baselineOffset(-10)
                 }
                 .tracking(-1)
                 .offset(x: -2, y: 14)
                 .foregroundColor(alwaysUseColors ? colorOfGlucose : appUIState.glucoseAlarm == nil ? .primary : .loopRed)
             } else {
                 Text(string)
-                    .font(scrolling ? .glucoseSmallFont : .glucoseFontMdDl.width(.condensed)) // .tracking(-2)
+                    .font(.glucoseFontMdDl.width(.condensed)) // .tracking(-2)
                     .foregroundColor(alwaysUseColors ? colorOfGlucose : appUIState.glucoseAlarm == nil ? .primary : .loopRed)
                     .offset(x: string.count > 2 ? -1 : -1, y: 16)
             }
         }
-        .offset(y: scrolling ? 3 : 0)
     }
 
     private var glucoseDrop: some View {
@@ -265,25 +261,28 @@ struct CurrentGlucoseView: View {
         let shadowDirection = direction(degree: degree)
         return Image("glucoseDrops")
             .resizable()
-            .frame(width: !scrolling ? 140 : 80, height: !scrolling ? 140 : 80).rotationEffect(.degrees(degree))
+            .frame(width: 140, height: 140).rotationEffect(.degrees(degree))
             .animation(.bouncy(duration: 1, extraBounce: 0.2), value: degree)
             .offset(x: adjust.x, y: adjust.y)
             .shadow(radius: 3, x: shadowDirection.x, y: shadowDirection.y)
     }
 
     private var colorOfGlucose: Color {
-        let whichGlucose = recentGlucose?.glucose ?? 0
-        guard lowGlucose < highGlucose else { return .primary }
+        Self.glucoseColour(
+            recentGlucose?.glucose ?? 0,
+            bands: StatsBands(low: lowGlucose, high: highGlucose, units: units)
+        )
+    }
 
-        switch whichGlucose {
-        case 0 ..< Int(lowGlucose):
-            return .loopRed
-        case Int(lowGlucose) ..< Int(highGlucose):
-            return .loopGreen
-        case Int(highGlucose)...:
-            return .loopYellow
-        default:
-            return .loopYellow
+    /// The Home chart's rule (the Statistics bands): red below low, green in range (low...high, inclusive),
+    /// yellow above high.
+    static func glucoseColour(_ mgdl: Int, bands: StatsBands) -> Color {
+        switch bands.band(mgdl) {
+        case .low,
+             .veryLow: return .loopRed
+        case .inRange: return .loopGreen
+        case .high,
+             .veryHigh: return .loopYellow
         }
     }
 }

@@ -492,7 +492,7 @@ extension DataTable {
                         }
 
                         if treatmentToDelete.type == .carbs {
-                            state.deleteCarbs(treatmentToDelete, mealID: filtered(id: treatmentToDelete.id)?.id)
+                            state.deleteCarbs(treatmentToDelete)
                         } else {
                             state.deleteInsulin(treatmentToDelete)
                         }
@@ -742,10 +742,7 @@ extension DataTable {
                                 editIsPresented.toggle()
 
                                 /// To Do: Fix the saving. Not working properly
-                                state.updateCarbs(
-                                    treatment: item,
-                                    mealID: filtered(id: item.id)?.id
-                                )
+                                state.updateCarbs(treatment: item)
                             }
                             label: {
                                 Text("Save")

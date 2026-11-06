@@ -470,7 +470,6 @@ extension MainChartConfig {
          @Published var alwaysUseColors: Bool = false
          @Published var minimumSMB: Decimal = 0.3
          @Published var useInsulinBars: Bool = false
-         @Published var skipGlucoseChart: Bool = false
          @Published var hideInsulinBadge: Bool = false
          @Published var fpus: Bool = true
          @Published var fpuAmounts: Bool = false

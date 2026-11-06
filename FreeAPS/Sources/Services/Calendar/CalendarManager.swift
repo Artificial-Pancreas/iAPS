@@ -127,9 +127,7 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
 
         var glucoseIcon = "🟢"
         if displayEmojis {
-            glucoseIcon = Double(glucoseValue) <= Double(settings.low) ? "🔴" : glucoseIcon
-            glucoseIcon = Double(glucoseValue) >= Double(settings.high) ? "🟠" : glucoseIcon
-            glucoseIcon = freshLoop > 15 ? "🚫" : glucoseIcon
+            glucoseIcon = freshLoop > 15 ? "🚫" : Self.glucoseEmoji(glucoseValue, bands: StatsBands(settings: settings))
         }
 
         let glucoseText = glucoseFormatter(settings)
@@ -200,6 +198,18 @@ actor BaseCalendarManager: CalendarManager, Injectable, LifetimeOwner, AppServic
             } catch {
                 warning(.service, "Cannot remove calendar events", error: error)
             }
+        }
+    }
+
+    /// The Home chart's rule (the Statistics bands): red below low, green in range (low...high, inclusive),
+    /// orange above high.
+    static func glucoseEmoji(_ mgdl: Int, bands: StatsBands) -> String {
+        switch bands.band(mgdl) {
+        case .low,
+             .veryLow: return "🔴"
+        case .inRange: return "🟢"
+        case .high,
+             .veryHigh: return "🟠"
         }
     }
 

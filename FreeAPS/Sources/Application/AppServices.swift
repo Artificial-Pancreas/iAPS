@@ -21,6 +21,10 @@ import Swinject
         // Nothing below may run while our own files are unreadable.
         await ProtectedData.waitUntilFilesAreReadable()
 
+        // Before anything resolves a storage. A store that can't be opened stops the startup here (StartupGate shows
+        // the error): no loop and no device managers run on an empty database.
+        try await CoreDataStack.shared.loadStores()
+
         try await startService(resolver.resolve(DataMigrations.self))
 
         let appCoordinator = resolver.resolve(AppCoordinator.self)!
@@ -44,6 +48,14 @@ import Swinject
         _ = resolver.resolve(BluetoothStateManager.self)!
 
         try await startService(resolver.resolve(CoreDataManager.self))
+        // before anything stores readings: it listens for their changes
+        try await startService(resolver.resolve(GlucoseStatistics.self))
+        // before PumpHistoryStorage publishes the file, which it mirrors; its start() only registers observers. Also
+        // before DeviceDataManager (it creates the pump manager): the pump's change events (pumpLifecycleEvents, a
+        // PassthroughSubject) sent before the store observes them would be lost (the heartbeat's fallback start covers that)
+        try await startService(resolver.resolve(PumpEventStore.self))
+        // listens for the insulin data changes the store (and the Reasons save) send; its start() only registers observers
+        try await startService(resolver.resolve(InsulinStatsService.self))
         try await startService(resolver.resolve(DatabaseManager.self))
         try await startService(resolver.resolve(LoopStatRecordStorage.self))
 

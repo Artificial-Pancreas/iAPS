@@ -13,7 +13,6 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, LifetimeOwner, AppServ
     private let settingsManager: SettingsManager
 
     let lifetime = Lifetime()
-    private let coreDataStorage = CoreDataStorage()
 
     private let interval: TimeInterval = .minutes(1)
     private var pollingTask: Task<Void, Never>?
@@ -77,10 +76,10 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, LifetimeOwner, AppServ
             async let carbs = nightscoutManager.fetchCarbs()
             async let targets = nightscoutManager.fetchTempTargets()
 
-            let filteredCarbs = await carbs.filter { !($0.enteredBy?.contains(CarbsEntry.manual) ?? false) }
-            if filteredCarbs.isNotEmpty {
-                await coreDataStorage.saveMeals(filteredCarbs)
-                await self.carbsStorage.storeCarbs(filteredCarbs)
+            // iAPS's own meals are left out there
+            let downloadedCarbs = await carbs
+            if downloadedCarbs.isNotEmpty {
+                await self.carbsStorage.storeDownloadedCarbs(downloadedCarbs)
             }
             let filteredTargets = await targets.filter { !($0.enteredBy?.contains(TempTarget.manual) ?? false) }
             if filteredTargets.isNotEmpty {
