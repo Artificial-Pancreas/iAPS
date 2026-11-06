@@ -32,6 +32,7 @@ extension UIUX {
         @Published var useCarbBars: Bool = false
         @Published var ai: Bool = true
         @Published var mealViewMicronutrients: Bool = true
+        @Published var animatedBackground: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -65,6 +66,7 @@ extension UIUX {
             subscribeSetting(\.useCarbBars, on: $useCarbBars) { useCarbBars = $0 }
             subscribeSetting(\.ai, on: $ai) { ai = $0 }
             subscribeSetting(\.mealViewMicronutrients, on: $mealViewMicronutrients) { mealViewMicronutrients = $0 }
+            subscribeSetting(\.animatedBackground, on: $animatedBackground) { animatedBackground = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
