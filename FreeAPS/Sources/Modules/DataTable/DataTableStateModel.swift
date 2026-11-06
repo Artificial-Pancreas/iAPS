@@ -14,7 +14,6 @@ extension DataTable {
         @Injected() private var overrideStorage: OverrideStorage!
         @Injected() private var loopEventsStorage: LoopEventsStorage!
 
-        private let coreDataStorage = CoreDataStorage()
         private let totalDailyDose = TotalDailyDose()
         let uiBindings = UIBindings()
 
@@ -222,15 +221,10 @@ extension DataTable {
             }
         }
 
-        /// `mealID`: the id of the CoreData meal of this treatment, if there is one
-        func deleteCarbs(_ treatment: Treatment, mealID: String?) {
+        /// Deletes the carbs (with their FPU entries and Meals row)
+        func deleteCarbs(_ treatment: Treatment) {
             Task {
                 await doDeleteCarbs(treatment.creationDate)
-
-                // In need of CoreData deletion?
-                if let mealID {
-                    await coreDataStorage.deleteBatch(identifier: mealID, entity: "Meals")
-                }
 
                 // In need of a loop update?
                 if treatment.creationDate.timeIntervalSinceNow > .hours(-2) {
@@ -306,8 +300,7 @@ extension DataTable {
         }
 
         /// Update Carbs or Carb equivalents in storage, data table
-        /// `mealID`: the id of the CoreData meal of this treatment, if there is one
-        func updateCarbs(treatment: Treatment?, mealID: String?) {
+        func updateCarbs(treatment: Treatment?) {
             guard let old = treatment else { return }
 
             Task {
@@ -325,26 +318,9 @@ extension DataTable {
                     micronutrient: meal.micronutrient
                 )
 
-                // Remove old CoreData meal
-                if let mealID {
-                    await coreDataStorage.deleteBatch(
-                        identifier: mealID,
-                        entity: "Meals"
-                    )
-                }
-
-                // Remove old carb entry
-                await doDeleteCarbs(old.creationDate)
-
-                // Save updated CoreData meal + micros
-                await coreDataStorage.saveMeal(
-                    [newCarbs],
-                    now: old.creationDate,
-                    savedToFile: true
-                )
-
-                // Store updated meal to file. To Do: remove
-                await carbStorage.storeCarbs([newCarbs])
+                // The old carb entry (+ FPUs and its Meals row) replaced by the updated meal, in one step: a
+                // Nightscout fetch can't land in between
+                await carbStorage.replaceMeal(createdAt: old.creationDate, with: newCarbs)
 
                 debug(
                     .apsManager,
@@ -365,11 +341,13 @@ extension DataTable {
                 .replacingOccurrences(of: ",", with: ".")
             meal.carbs = string.toDecimal ?? 0
             oldCarbs = meal.carbs
-            meal.fat = complex?.fat ?? 0
-            meal.protein = complex?.protein ?? 0
-            meal.fiber = complex?.fiber ?? 0
-            meal.note = complex?.note ?? "Meal"
-            meal.micronutrient = complex?.micronutrientValues ?? []
+            // no Meals row (stored before every source kept one): the carbs entry has the rest
+            let entry = appCoordinator.carbHistory.value.first { $0.id == mealItem.id && $0.isFPU != true }
+            meal.fat = complex?.fat ?? entry?.fat ?? 0
+            meal.protein = complex?.protein ?? entry?.protein ?? 0
+            meal.fiber = complex?.fiber ?? entry?.fiber ?? 0
+            meal.note = complex?.note ?? entry?.note ?? "Meal"
+            meal.micronutrient = complex?.micronutrientValues ?? entry?.micronutrient ?? []
         }
 
         private func doDeleteCarbs(_ date: Date) async {

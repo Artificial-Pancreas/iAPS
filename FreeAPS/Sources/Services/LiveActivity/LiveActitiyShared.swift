@@ -19,8 +19,28 @@ struct LiveActivityAttributes: ActivityAttributes {
         let watchPredictions: Bool
         let watchDelta: Bool
         let watchEventual: Bool
+        /// in range is `chartLowThreshold ... chartHighThreshold`, inclusive, mg/dL: the app sends the Statistics band
+        /// edges (`StatsBands(settings:)`), so the chart colours a reading as Home does. A state encoded by an older
+        /// app has the truncated low/high settings here (at most 1 mg/dL off) until its next update.
         let chartLowThreshold: Int16
         let chartHighThreshold: Int16
+
+        enum ReadingRange: Equatable {
+            case below
+            case inRange
+            case above
+        }
+
+        /// red below low, green in range (inclusive), orange above high
+        static func readingRange(_ mgdl: Int16, low: Int16, high: Int16) -> ReadingRange {
+            if mgdl < low { return .below }
+            if mgdl > high { return .above }
+            return .inRange
+        }
+
+        func readingRange(_ mgdl: Int16) -> ReadingRange {
+            Self.readingRange(mgdl, low: chartLowThreshold, high: chartHighThreshold)
+        }
 
         func withoutPredictions() -> ContentState {
             ContentState(

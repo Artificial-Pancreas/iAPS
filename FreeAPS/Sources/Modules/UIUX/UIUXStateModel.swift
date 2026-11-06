@@ -5,12 +5,10 @@ extension UIUX {
         @Published var overrideHbA1cUnit = false
         @Published var low: Decimal = 4 / 0.0555
         @Published var high: Decimal = 10 / 0.0555
-        @Published var oneDimensionalGraph = false
         @Published var skipBolusScreenAfterCarbs: Bool = false
         @Published var useFPUconversion: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var alwaysUseColors: Bool = false
-        @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var hideInsulinBadge: Bool = false
         @Published var displayExpiration: Bool = false
@@ -28,12 +26,10 @@ extension UIUX {
             units = settings.units
 
             subscribeSetting(\.overrideHbA1cUnit, on: $overrideHbA1cUnit) { self.overrideHbA1cUnit = $0 }
-            subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { self.skipGlucoseChart = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { self.alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { self.useFPUconversion = $0 }
             subscribeSetting(\.useTargetButton, on: $useTargetButton) { self.useTargetButton = $0 }
             subscribeSetting(\.skipBolusScreenAfterCarbs, on: $skipBolusScreenAfterCarbs) { self.skipBolusScreenAfterCarbs = $0 }
-            subscribeSetting(\.oneDimensionalGraph, on: $oneDimensionalGraph) { self.oneDimensionalGraph = $0 }
             subscribeSetting(\.displayDelta, on: $displayDelta) { self.displayDelta = $0 }
             subscribeSetting(\.hideInsulinBadge, on: $hideInsulinBadge) { self.hideInsulinBadge = $0 }
             subscribeSetting(\.displayExpiration, on: $displayExpiration) { self.displayExpiration = $0 }

@@ -21,6 +21,12 @@ actor NightscoutAPI {
         static let treatmentsPath = "/api/v1/treatments.json"
         static let statusPath = "/api/v1/devicestatus.json"
         static let profilePath = "/api/v1/profile.json"
+        /// the profile history: unlike `/profile`, it applies `find` (by `startDate`) and `count`
+        static let profilesPath = "/api/v1/profiles.json"
+        /// treatments per page of the insulin backfill (the server's default with a `find`)
+        static let treatmentsPageSize = 1000
+        /// profile documents per page of the insulin backfill
+        static let profilesPageSize = 1000
         static let retryCount = 2
         static let timeout: TimeInterval = 60
     }
@@ -43,15 +49,16 @@ extension NightscoutAPI {
         }
     }
 
-    func fetchGlucose(dateInterval: DateInterval) async -> [GlucoseEntry] {
-        await withCheckedContinuation { continuation in
+    /// One page of glucose entries, newest first: at most 500, the newest ones in the interval.
+    func fetchGlucose(dateInterval: DateInterval) async throws -> [GlucoseEntry] {
+        try await withCheckedThrowingContinuation { continuation in
             nightscoutClient.fetchGlucose(dateInterval: dateInterval, maxCount: 500) { result in
                 switch result {
                 case let .success(entries):
                     continuation.resume(returning: entries)
                 case let .failure(error):
                     warning(.nightscout, "Glucose fetching error: \(error.localizedDescription)")
-                    continuation.resume(returning: [])
+                    continuation.resume(throwing: error)
                 }
             }
         }
@@ -90,12 +97,17 @@ extension NightscoutAPI {
         }
 
         do {
-            return try await sendGetRequest(
+            let downloaded = try await sendGetRequest(
                 Config.treatmentsPath,
                 query: queryItems,
-                as: [CarbsEntry].self,
+                as: [LossyCarbsEntry].self,
                 allowsConstrainedNetworkAccess: false
             )
+            let carbs = downloaded.compactMap(\.entry)
+            if carbs.count < downloaded.count {
+                warning(.nightscout, "Carbs fetching: \(downloaded.count - carbs.count) treatments could not be read")
+            }
+            return carbs
         } catch {
             warning(.nightscout, "Carbs fetching error: \(error.localizedDescription)")
             return []
@@ -290,6 +302,86 @@ extension NightscoutAPI {
             as: [FetchedNightscoutProfileStore].self,
             allowsConstrainedNetworkAccess: false
         )
+    }
+}
+
+// MARK: - Insulin backfill (read-only, on demand)
+
+extension NightscoutAPI {
+    /// One page of the treatments of one insulin query, newest first: at most `treatmentsPageSize`, the newest ones
+    /// with `created_at` in the interval (both ends included). An entry that can't be read is dropped, not the page.
+    func fetchInsulinTreatments(
+        _ query: NightscoutInsulinQuery,
+        dateInterval: DateInterval
+    ) async throws -> [NightscoutInsulinTreatment] {
+        let items = query.queryItems + [
+            URLQueryItem(name: "find[created_at][$gte]", value: dateInterval.start.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "find[created_at][$lte]", value: dateInterval.end.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "count", value: "\(Config.treatmentsPageSize)")
+        ]
+        return try await fetchLossy(Config.treatmentsPath, query: items, as: NightscoutInsulinTreatment.self)
+    }
+
+    /// The newest treatments of the query before `date` (the ones in effect when a range starts), at most `count`.
+    func fetchInsulinTreatments(
+        _ query: NightscoutInsulinQuery,
+        before date: Date,
+        count: Int
+    ) async throws -> [NightscoutInsulinTreatment] {
+        let items = query.queryItems + [
+            URLQueryItem(name: "find[created_at][$lt]", value: date.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "count", value: "\(count)")
+        ]
+        return try await fetchLossy(Config.treatmentsPath, query: items, as: NightscoutInsulinTreatment.self)
+    }
+
+    /// One page of profile documents, newest first: at most `profilesPageSize`, the newest ones with `startDate` in
+    /// the interval (both ends included). Nightscout compares `startDate` as stored (a string): documents dated in
+    /// another format than ISO UTC can fall outside.
+    func fetchProfileDocuments(dateInterval: DateInterval) async throws -> [NightscoutProfileDocument] {
+        let items = [
+            URLQueryItem(name: "find[startDate][$gte]", value: dateInterval.start.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "find[startDate][$lte]", value: dateInterval.end.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "count", value: "\(Config.profilesPageSize)")
+        ]
+        return try await fetchLossy(Config.profilesPath, query: items, as: NightscoutProfileDocument.self)
+    }
+
+    /// The newest profile document before `date`: the one in effect when a range starts, if any.
+    func fetchProfileDocument(before date: Date) async throws -> NightscoutProfileDocument? {
+        let items = [
+            URLQueryItem(name: "find[startDate][$lt]", value: date.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "count", value: "1")
+        ]
+        return try await fetchLossy(Config.profilesPath, query: items, as: NightscoutProfileDocument.self).first
+    }
+
+    /// A user-started fetch: allowed in Low Data Mode, as the glucose backfill (NightscoutKit) is.
+    private func fetchLossy<Element: Decodable & Sendable>(
+        _ path: String,
+        query: [URLQueryItem],
+        as _: Element.Type
+    ) async throws -> [Element] {
+        let downloaded = try await sendGetRequest(
+            path,
+            query: query,
+            as: [LossyElement<Element>].self,
+            allowsConstrainedNetworkAccess: true
+        )
+        let elements = downloaded.compactMap(\.element)
+        if elements.count < downloaded.count {
+            warning(.nightscout, "Insulin backfill: \(downloaded.count - elements.count) documents could not be read")
+        }
+        return elements
+    }
+}
+
+/// An array element that is dropped (nil) when it can't be decoded, instead of failing the array.
+private struct LossyElement<Element: Decodable>: Decodable {
+    let element: Element?
+
+    init(from decoder: Decoder) throws {
+        element = try? Element(from: decoder)
     }
 }
 

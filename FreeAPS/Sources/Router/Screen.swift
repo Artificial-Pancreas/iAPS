@@ -29,7 +29,11 @@ enum Screen: Identifiable, Hashable {
     case iconConfig
     case overrideProfilesConfig
     case snooze
-    case statistics
+    /// `nutrients`: the Meals tab with its Nutrients screen pushed (Home's meal card); `focus`: scrolled to that card.
+    /// The Day tab with 24 h opens on its 24 hours, else on today.
+    case statistics(period: StatsPeriod, tab: StatsTab, nutrients: Bool = false, focus: StatsFocus? = nil)
+    /// the Loops screen (Home's Loops card): the last five weeks of loops, day by day
+    case loops
     case watch
     case uiConfig
     case mainChartConfig
@@ -37,7 +41,9 @@ enum Screen: Identifiable, Hashable {
     case dynamicISF
     case calendar
     case contactTrick
-    case sharing
+    /// `fromDemographics` / `fromSharing`: pushed from the other one, whose row then goes back instead of pushing again
+    case sharing(fromDemographics: Bool = false)
+    case demographics(fromSharing: Bool = false)
     case autoISF
     var id: Int { String(reflecting: self).hashValue }
 }
@@ -99,8 +105,10 @@ extension Screen {
             Snooze.RootView(resolver: resolver)
         case .watch:
             WatchConfig.RootView(resolver: resolver)
-        case .statistics:
-            Stat.RootView(resolver: resolver)
+        case let .statistics(period, tab, nutrients, focus):
+            Stat.RootView(resolver: resolver, period: period, tab: tab, nutrients: nutrients, focus: focus)
+        case .loops:
+            LoopHistory.RootView(resolver: resolver)
         case .uiConfig:
             UIUX.RootView(resolver: resolver)
         case .mainChartConfig:
@@ -113,8 +121,10 @@ extension Screen {
             CalendarShare.RootView(resolver: resolver)
         case .contactTrick:
             ContactTrick.RootView(resolver: resolver)
-        case .sharing:
-            Sharing.RootView(resolver: resolver)
+        case let .sharing(fromDemographics):
+            Sharing.RootView(resolver: resolver, fromDemographics: fromDemographics)
+        case let .demographics(fromSharing):
+            Demographics.RootView(resolver: resolver, fromSharing: fromSharing)
         case .autoISF:
             AutoISF.RootView(resolver: resolver)
         }

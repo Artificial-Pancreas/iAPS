@@ -133,6 +133,65 @@ enum KnownPlugins {
         }
     }
 
+    /// The pump delivers: onboarded, with an active delivery unit (`isDeliveryUnitActive`, published as
+    /// `deliveryUnitActive`).
+    static func hasActiveDeliveryUnit(_ info: PumpDisplayInfo) -> Bool {
+        info.isOnboarded && info.deliveryUnitActive
+    }
+
+    /// The pod or patch can deliver: activated and not faulted, expired or stopped. True for the pumps without the
+    /// concept. Only public state of the pump managers.
+    static func isDeliveryUnitActive(_ pumpManager: PumpManager) -> Bool {
+        switch pumpManager.pluginIdentifier {
+        case MedtrumPumpManager.pluginIdentifier:
+            guard let state = (pumpManager as? MedtrumPumpManager)?.state, state.patchActivatedAt != nil else {
+                return false
+            }
+            return isDelivering(patchState: state.pumpState.rawValue)
+        case OmniPumpManager.pluginIdentifier:
+            return isDelivering(
+                podActivatedAt: (pumpManager as? OmniPumpManager)?.state.podState?.activatedAt,
+                basalDeliveryState: pumpManager.status.basalDeliveryState
+            )
+        default:
+            return true
+        }
+    }
+
+    /// A Medtrum patch state that delivers, or is suspended (MedtrumKit reports those suspensions as events). Not: the
+    /// setup states, the faults (occlusion, reservoir empty, patch/base fault, battery out, no calibration), expired,
+    /// stopped.
+    static func isDelivering(patchState rawValue: UInt8) -> Bool {
+        switch PatchState(rawValue: rawValue) {
+        case .active,
+             .active_alt,
+             .autoSuspended,
+             .dailyMaxSuspended,
+             .hourlyMaxSuspended,
+             .lowBgSuspended,
+             .lowBgSuspended2,
+             .paused,
+             .suspended:
+            return true
+        default:
+            return false
+        }
+    }
+
+    /// An Omnipod pod that delivers: activated, and not faulted. OmniPumpManager reports a faulted pod (or one not set
+    /// up) "just like no pod", as `.active(.distantPast)`; its `activatedAt` survives a fault, and no suspend is
+    /// reported for it. (`PodState.fault` / `isFaulted` are internal to OmnipodKit.)
+    static func isDelivering(
+        podActivatedAt: Date?,
+        basalDeliveryState: PumpManagerStatus.BasalDeliveryState?
+    ) -> Bool {
+        guard podActivatedAt != nil else { return false }
+        if case let .active(since) = basalDeliveryState, since == .distantPast {
+            return false
+        }
+        return true
+    }
+
     static func pumpExpirationDate(_ pumpManager: PumpManager) -> Date? {
         switch pumpManager.pluginIdentifier {
         case MedtrumPumpManager.pluginIdentifier:

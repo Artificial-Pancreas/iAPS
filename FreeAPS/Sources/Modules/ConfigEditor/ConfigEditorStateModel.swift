@@ -16,6 +16,8 @@ extension ConfigEditor {
 
         let file: String
         @Published var configText = ""
+        /// the text as last loaded or saved: what the pump history's explicit deletions are computed against
+        private var savedText = ""
         @Published var urlForFile: URL?
         /// non-nil when the last save was rejected; drives the error alert in the view
         @Published var saveError: String?
@@ -27,6 +29,7 @@ extension ConfigEditor {
 
         override func subscribe() async {
             configText = await load(file: file)
+            savedText = configText
             urlForFile = await storage.urlFor(file: file)
         }
 
@@ -36,7 +39,9 @@ extension ConfigEditor {
                 do {
                     // the storage validates the raw text, only saves valid values
                     // invalid edits are rejected and an error is displayed
-                    try await persist(configText, as: file)
+                    let text = configText
+                    try await persist(text, as: file)
+                    savedText = text
                     saveError = nil
                 } catch {
                     saveError = Self.message(for: error, file: file)
@@ -59,7 +64,7 @@ extension ConfigEditor {
             case OpenAPS.Monitor.glucose:
                 try await glucoseStorage.saveRawJSON(value)
             case OpenAPS.Monitor.pumpHistory:
-                try await pumpHistoryStorage.saveRawJSON(value)
+                try await pumpHistoryStorage.saveRawJSON(value, editing: savedText)
             case OpenAPS.Monitor.carbHistory:
                 try await carbsStorage.saveRawJSON(value)
             case OpenAPS.Settings.tempTargets:

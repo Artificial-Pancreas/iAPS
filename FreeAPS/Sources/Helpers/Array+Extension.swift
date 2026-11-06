@@ -9,3 +9,12 @@ extension Array where Element: Hashable {
         return result
     }
 }
+
+extension Collection {
+    /**
+     Returns the most frequent element in the collection.
+     */
+    func mostFrequent() -> Element? where Element: Hashable {
+        reduce(into: [:]) { $0[$1, default: 0] += 1 }.max(by: { $0.1 < $1.1 })?.key
+    }
+}

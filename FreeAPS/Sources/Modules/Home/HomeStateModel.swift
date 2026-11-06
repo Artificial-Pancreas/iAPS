@@ -33,7 +33,6 @@ extension Home {
         @Published var enactedSuggestion: Suggestion?
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
-        @Published var overrideUnit: Bool = false
         @Published var closedLoop = false
         @Published var pumpSuspended = false
         @Published var statusTitle = ""
@@ -52,15 +51,6 @@ extension Home {
         @Published var showVersionBanner = false
         @Published var showVersionAlert = false
         let versionNumber = Bundle.main.releaseVersionNumber ?? ""
-        @Published var readings: [ReadingsSnapshot] = []
-        @Published var loopStatistics: (loops: Int, readings: Int, percentage: Double, averageInterval: String) = (
-            loops: 0,
-            readings: 0,
-            percentage: 0,
-            averageInterval: ""
-        )
-        @Published var standing: Bool = false
-        @Published var preview: Bool = true
         @Published var useTargetButton: Bool = false
         @Published var overrideHistory: [OverrideHistorySnapshot] = []
         @Published private(set) var latestOverride: OverrideSnapshot?
@@ -74,10 +64,6 @@ extension Home {
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
-        @Published var showIOBChart: Bool = false
-        @Published var showCOBChart: Bool = false
-        @Published var insulinStatistics: InsulinStatistics = .empty
-        @Published var skipGlucoseChart: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
@@ -87,10 +73,96 @@ extension Home {
         @Published var sensorDays: Double = 10
         @Published var carbButton: Bool = true
         @Published var profileButton: Bool = true
-        @Published var mealData = MealData()
         @Published var ai: Bool = false
-        @Published var individual = Individual.default
-        @Published var selectedMealInterval: DateFilter = .today
+
+        // the stats bar's range, picked on a long-press: what its header shows and its tap opens Statistics on; the bar
+        // itself follows its config (`homeStatsConfig`), from the settings. The other cards have no range: the Loops
+        // card the last 24 h (`Home.loopsRange`), the insulin and meal cards Today
+        @Setting(\.homeStatsRange) var homeStatsRange: StatsPeriod = .last24h
+
+        // the On board card, the last 24 h (no range of its own): its long-press menu's lanes
+        @Setting(\.homeOnBoardGlucose) var homeOnBoardGlucose: Bool = true
+        @Setting(\.homeOnBoardCOB) var homeOnBoardCOB: Bool = true
+        /// as of its last build (`refreshOnBoard`); nil without the IOB rows (more than 3 in its window)
+        @Published private(set) var homeOnBoard: HomeOnBoardCard.Content?
+        /// the last `reasons` read (`setupData`): the last 24 h and the 7.5 min before them; nil before the first
+        private var onBoardRows: [IOBData]?
+        /// the `reasons` reads started (`setupData`) and the newest one of them applied: a loop's and its suggestion's
+        /// read run at once, a read landing after a newer one is dropped
+        private var reasonsReadsStarted = 0
+        private var reasonsReadApplied = 0
+
+        // the stats bar
+        /// the latest result for `homeStatsConfig`: the range's read with the GMI line's latest; nil until the range's
+        /// first read
+        @Published private(set) var homeStats: HomeStatsSnapshot?
+        /// the range and the settings the bar is computed for, from the settings; nil until they are delivered
+        private var homeStatsConfig: StatsConfig?
+        /// the range's latest read and its config: the GMI line's read lands beside it (`publishHomeStats`)
+        private var homeStatsRangeResult: (summary: GlucoseSummary, config: StatsConfig)?
+        /// the GMI line's latest read (`Home.gmiPeriod`), kept up to the next one lands; nil until the first one: no
+        /// line meanwhile
+        private var homeStatsGMI: GlucoseSummary?
+        /// the range's read in flight: at most one, plus `homeStatsPending`
+        private var homeStatsTask: Task<Void, Never>?
+        /// a range read was asked for while one was in flight: it runs when that one is done, with the config of then
+        private var homeStatsPending = false
+        /// the GMI line's read in flight (the slow one, 90 d): at most one, plus `homeStatsGMIPending`; apart from the
+        /// range's, so the range's result doesn't wait for it
+        private var homeStatsGMITask: Task<Void, Never>?
+        /// a GMI read was asked for while one was in flight: it runs when that one is done, with the bands of then
+        private var homeStatsGMIPending = false
+        /// a refresh was asked for in the background (or the app went there): `didBecomeActive` makes it (both reads)
+        private var homeStatsAwaitsForeground = false
+
+        // the Loops card, the last 24 h (`Home.loopsRange`)
+        /// the latest result, as of its read; nil until the first one (a failed read keeps it)
+        @Published private(set) var homeLoops: HomeLoopsCard.Content?
+        /// the newest loop start of the result `homeLoops` shows (`HomeLoopStats.newestStart`): whether a reading
+        /// changes it before the next loop (`homeLoopsReadingsChanged`)
+        private var homeLoopsNewestStart: Date?
+        /// the 1-minute loop, from the settings; nil until they are delivered
+        private var homeLoopsConfig: LoopsConfig?
+        /// the refresh in flight: at most one, plus `homeLoopsPending`
+        private var homeLoopsTask: Task<Void, Never>?
+        /// a refresh was asked for while one was in flight: it runs when that one is done, with the config of then
+        private var homeLoopsPending = false
+        /// a refresh was asked for in the background (or the app went there): `didBecomeActive` makes it
+        private var homeLoopsAwaitsForeground = false
+        /// a failed read's retry, in a minute
+        private var homeLoopsRetry: Task<Void, Never>?
+
+        // the meal card, Today (no range of its own)
+        /// the latest result, as of its read; nil until the first one (a failed read keeps it)
+        @Published private(set) var homeMeals: HomeMealsCard.Content?
+        /// the settings were delivered: the first read's trigger
+        private var homeMealsStarted = false
+        /// the refresh in flight: at most one, plus `homeMealsPending`
+        private var homeMealsTask: Task<Void, Never>?
+        /// a refresh was asked for while one was in flight: it runs when that one is done
+        private var homeMealsPending = false
+        /// a refresh was asked for in the background (or the app went there): `didBecomeActive` makes it
+        private var homeMealsAwaitsForeground = false
+        /// a failed read's retry, in a minute
+        private var homeMealsRetry: Task<Void, Never>?
+
+        // the insulin card, Today (no range of its own)
+        /// the latest result, as of its read (each day's insulin and the usual by the read's time): it changes only with
+        /// a read; nil until the first one (a failed read keeps it)
+        @Published private(set) var homeInsulin: HomeInsulinCard.Content?
+        /// the settings were delivered: the first read's trigger
+        private var homeInsulinStarted = false
+        /// the read in flight: at most one, plus `homeInsulinPending`
+        private var homeInsulinTask: Task<Void, Never>?
+        /// a refresh was asked for while one was in flight: it runs when that one is done
+        private var homeInsulinPending = false
+        /// a refresh was asked for in the background (or the app went there): `didBecomeActive` makes it
+        private var homeInsulinAwaitsForeground = false
+        /// a failed read's retry, in a minute
+        private var homeInsulinRetry: Task<Void, Never>?
+        /// the newest `insulinStatsChanged` the last read read (its `seq` when it started): a change at or below it is
+        /// skipped (the observer delivers the current change again after the background, where `didBecomeActive` reads)
+        private var homeInsulinReadSeq = 0
 
         // Chart data
         var data = ChartModel(
@@ -174,9 +246,7 @@ extension Home {
             data.loopEvents = appCoordinator.loopEvents.value
             data.loopGaps = appCoordinator.loopGaps.value
 
-            setupLoopStatsBackground()
             setupCob()
-            setupMeals()
 
             data.suggestion = appCoordinator.suggested.value
             enactedSuggestion = appCoordinator.latestLoopOutcome.value?.enactedSuggestion
@@ -185,6 +255,13 @@ extension Home {
 
             setStatusTitle()
             refreshCurrentTempTarget()
+
+            // before the awaits below, so the first summary is computed meanwhile
+            subscribeHomeStats()
+            subscribeHomeLoops()
+            subscribeHomeMeals()
+            subscribeHomeInsulin()
+            subscribeHomeOnBoard()
 
             await setupOverrideHistory()
             await setupData()
@@ -211,8 +288,9 @@ extension Home {
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            observeUI(appCoordinator.settings) { me, settings in
-                await me.settingsUpdated(settings)
+            // not on a pick of the stats bar's range alone (`ReloadSettings`): the bar follows its own
+            observeUI(appCoordinator.settings, map: { ReloadSettings($0) }) { me, reload in
+                await me.settingsUpdated(reload.settings)
             }
 
             observeUI(appCoordinator.preferences) { me, preferences in
@@ -434,14 +512,13 @@ extension Home {
             }
         }
 
-        private func setupGlucose() async {
+        private func setupGlucose() {
             let rawGlucose = provider.rawGlucose(hours: filteredHours)
 
             data.isManual = provider.manualGlucose(hours: filteredHours)
             // the chart draws the smoothed series + raw values on top
             data.glucose = provider.smoothedGlucose(hours: filteredHours)
             data.rawGlucose = rawGlucose
-            readings = await coreDataStorage.fetchGlucose(interval: DateFilter.today.startDate)
 
             recentGlucose = rawGlucose.last
             if rawGlucose.count >= 2 {
@@ -449,6 +526,8 @@ extension Home {
             } else {
                 glucoseDelta = nil
             }
+            // the readings, or the bands and the units (`readFromSettings`)
+            refreshOnBoard()
         }
 
         private func setupBasals() {
@@ -536,49 +615,6 @@ extension Home {
             data.succeedingOverride = succeedingPreset
         }
 
-        private func setupLoopStatsBackground() {
-            Task {
-                let todayStart = DateFilter.today.startDate
-                let todayStartDate = DateFilter.today.startDate as Date
-                let allowOneMinuteLoop = appCoordinator.settings.value.allowOneMinuteLoop
-                let glucoseRaw = appCoordinator.glucoseRaw.value
-                let glucoseFrequencyFiltered = appCoordinator.glucoseFrequencyFiltered.value
-                let readings = appCoordinator.glucoseRaw.value.count { $0.dateString >= todayStartDate }
-                let loopStats = await self.coreDataStorage.fetchLoopStats(interval: todayStart)
-
-                let result = await Task.detached {
-                    let expectedLoops = allowOneMinuteLoop ?
-                        glucoseRaw.count { $0.dateString >= todayStartDate } :
-                        glucoseFrequencyFiltered.count { $0.dateString >= todayStartDate }
-
-                    let loops = loopStats.count { $0.loopStatus == "Success" }
-                    let percentage = expectedLoops == 0 ? 0.0 : min(Double(loops) / Double(expectedLoops) * 100, 100)
-
-                    let loopStarts = loopStats
-                        .compactMap(\.start)
-                        .sorted()
-
-                    let intervals = zip(loopStarts, loopStarts.dropFirst()).map { previous, next in
-                        next.timeIntervalSince(previous) / 60
-                    }
-
-                    let averageInterval = intervals.isEmpty
-                        ? nil
-                        : intervals.reduce(0, +) / Double(intervals.count)
-
-                    return (
-                        loops: loops,
-                        readings: readings,
-                        percentage: percentage,
-                        averageInterval: averageInterval
-                            .map { $0.formatted(.number.grouping(.never).rounded().precision(.fractionLength(1))) + " min" } ??
-                            "-"
-                    )
-                }.value
-                self.loopStatistics = result
-            }
-        }
-
         private func setupAnnouncements() async {
             data.announcement = await provider.announcement(filteredHours)
         }
@@ -645,101 +681,573 @@ extension Home {
             }
         }
 
-        private func setupData() async {
-            if let data = await provider.reasons() {
-                iobData = data
-                showIOBChart = data.isNotEmpty
-                showCOBChart = data.contains { $0.cob > 0 }
-                insulinStatistics = await makeInsulinStatistics(reasons: data)
+        // MARK: - Stats bar
+
+        /// The stats bar's triggers (its range and the GMI line's 90 d, two reads). The settings' first delivery
+        /// makes the first refresh; then new, backfilled, deleted or recalibrated readings, a wipe and a time zone change
+        /// (`glucoseStatsChanged` comes after the save and the cache invalidation, never `glucoseSmoothed`: that one comes
+        /// before the save), and midnight and DST. Nothing is clock-driven: the numbers are as of the last read (a
+        /// stalled CGM shows the numbers of its last reading's read). Nothing runs in the background: a refresh asked
+        /// for there (or the background itself) waits for the foreground, where `didBecomeActive` is the one trigger
+        /// (the observers' foreground replay is held back).
+        private func subscribeHomeStats() {
+            observeUI(appCoordinator.settings, map: { StatsConfig($0) }) { me, config in
+                me.homeStatsConfigChanged(config)
+            }
+            observeUI(appCoordinator.glucoseStatsChanged, dropInitial: true) { me, _ in
+                me.refreshHomeStats()
+            }
+            // midnight, DST, a time zone change
+            observe(notification: UIApplication.significantTimeChangeNotification) { me in
+                await me.refreshHomeStats()
+            }
+            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+                await me.homeStatsEnteredBackground()
+            }
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.homeStatsBecameActive()
             }
         }
 
-        private func makeInsulinStatistics(reasons: [IOBData]) async -> InsulinStatistics {
-            let minutesWithNegativeIOB = reasons.filter { $0.iob < 0 }.count * 5
+        /// The range or the stats settings changed (or were delivered for the first time). The GMI line is read again
+        /// only for other bands (the HbA1c unit is formatting, `publishHomeStats`): not for another range.
+        private func homeStatsConfigChanged(_ config: StatsConfig) {
+            guard config != homeStatsConfig else { return }
+            let bandsChanged = config.settings.bands != homeStatsConfig?.settings.bands
+            homeStatsConfig = config
+            refreshHomeStatsRange()
+            if bandsChanged {
+                refreshHomeStatsGMI()
+            }
+        }
 
-            let tdds = await coreDataStorage.fetchTDD(interval: DateFilter.tenDays.startDate)
+        /// Recomputes the stats bar: its range and the GMI line, each read at once, after its read in flight (once,
+        /// however often it is asked for meanwhile, with the config of then), or in the background not at all
+        /// (`didBecomeActive` does it). The range's result is shown as soon as it lands, the GMI line added or updated
+        /// when its own (90 d, slower) lands.
+        func refreshHomeStats() {
+            refreshHomeStatsRange()
+            refreshHomeStatsGMI()
+        }
 
-            // Time-adjusted average daily TDD over the last ten days. The walk is shared with the dynamic-variables path; this one is post-loop.
-            let actualAverage = tdds.averageDailyTDD
+        /// held back up to didBecomeActive, also in the inactive moment before it (the observers' foreground replay)
+        private func homeStatsHeldBack() -> Bool {
+            guard homeStatsAwaitsForeground || UIApplication.shared.applicationState == .background else { return false }
+            homeStatsAwaitsForeground = true
+            return true
+        }
 
-            let latestTDD = (tdds.first?.tdd ?? 0) as Decimal
-            let yesterdayTDD = (tdds.first(where: {
-                ($0.timestamp ?? .distantFuture) <= Date().subtractingTimeInterval(.hours(24))
-            })?.tdd ?? 0) as Decimal
+        /// One at a time: a call already running in the service can't be stopped, so a slow result must not be able to
+        /// land after a newer one.
+        private func refreshHomeStatsRange() {
+            guard homeStatsConfig != nil, !homeStatsHeldBack() else { return }
+            guard homeStatsTask == nil else {
+                homeStatsPending = true
+                return
+            }
+            startHomeStatsRefresh()
+        }
 
-            let todayStart = DateFilter.today.startDate as Date
-            let oneDayAgo = tdds.last(where: { ($0.timestamp ?? .distantPast) >= todayStart })
-            let tdd2DaysAgo = (tdds.first(where: {
-                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
-                    .subtractingTimeInterval(.hours(24))
-            })?.tdd ?? 0) as Decimal
-            let tdd3DaysAgo = (tdds.first(where: {
-                ($0.timestamp ?? .distantFuture) <= (oneDayAgo?.timestamp ?? .distantPast)
-                    .subtractingTimeInterval(.days(2))
-            })?.tdd ?? 0) as Decimal
+        /// One at a time, as the range's.
+        private func refreshHomeStatsGMI() {
+            guard homeStatsConfig != nil, !homeStatsHeldBack() else { return }
+            guard homeStatsGMITask == nil else {
+                homeStatsGMIPending = true
+                return
+            }
+            startHomeStatsGMIRefresh()
+        }
 
-            return InsulinStatistics(
-                minutesWithNegativeIOB: minutesWithNegativeIOB,
-                tddChange: latestTDD - yesterdayTDD,
-                tddAverage: latestTDD - actualAverage,
-                tddYesterday: (oneDayAgo?.tdd ?? 0) as Decimal,
-                tdd2DaysAgo: tdd2DaysAgo,
-                tdd3DaysAgo: tdd3DaysAgo,
-                tddActualAverage: actualAverage
+        private func startHomeStatsRefresh() {
+            guard let config = homeStatsConfig else { return }
+            homeStatsPending = false
+            let provider = self.provider
+            homeStatsTask = Task { [weak self] in
+                let summary = await provider.glucoseSummary(config.range, bands: config.settings.bands)
+                guard let self else { return }
+                self.homeStatsTask = nil
+                // a newer request (a reading, the settings, midnight) replaces this result at once
+                guard !self.homeStatsPending else {
+                    self.refreshHomeStatsRange()
+                    return
+                }
+                guard config == self.homeStatsConfig else { return }
+                self.homeStatsRangeResult = (summary, config)
+                self.publishHomeStats()
+            }
+        }
+
+        /// The GMI line's 90 d: a read of its own (complete days from the service's day cache).
+        private func startHomeStatsGMIRefresh() {
+            guard let bands = homeStatsConfig?.settings.bands else { return }
+            homeStatsGMIPending = false
+            let provider = self.provider
+            homeStatsGMITask = Task { [weak self] in
+                let gmi = await provider.glucoseSummary(Home.gmiPeriod, bands: bands)
+                guard let self else { return }
+                self.homeStatsGMITask = nil
+                // a newer request replaces this result at once
+                guard !self.homeStatsGMIPending else {
+                    self.refreshHomeStatsGMI()
+                    return
+                }
+                guard bands == self.homeStatsConfig?.settings.bands else { return }
+                self.homeStatsGMI = gmi
+                self.publishHomeStats()
+            }
+        }
+
+        /// The range's latest read with the GMI line's latest (none before its first read), in the range's config;
+        /// nothing before the range's first read.
+        private func publishHomeStats() {
+            guard let range = homeStatsRangeResult else { return }
+            let snapshot = HomeStatsSnapshot(
+                range.summary,
+                gmi: homeStatsGMI,
+                period: range.config.range,
+                settings: range.config.settings
             )
-        }
-
-        func setupMeals() {
-            Task {
-                print("Meal Flow: update mealData")
-
-                let meals = await provider.fetchedMeals(selectedMealInterval.startDate)
-
-                mealData = MealData(
-                    carbs: sum(\.carbs, in: meals),
-                    fat: sum(\.fat, in: meals),
-                    protein: sum(\.protein, in: meals),
-                    fiber: sum(\.fiber, in: meals),
-                    kcal: 0,
-                    servings: meals.count,
-                    micronutrients: microCount(meals),
-                    intervalDays: DateFilter.interval(meals)
-                )
-
-                mealData.kcal =
-                    4 * (mealData.carbs + mealData.protein) +
-                    9 * mealData.fat
-
-                debugPrintMealData()
+            if snapshot != homeStats {
+                homeStats = snapshot
             }
         }
 
-        private func sum(
-            _ keyPath: KeyPath<MealsSnapshot, Decimal?>,
-            in meals: [MealsSnapshot]
-        ) -> Decimal {
-            meals
-                .compactMap { $0[keyPath: keyPath] as Decimal? }
-                .reduce(0, +)
+        /// The time went on in the background: the foreground refreshes.
+        private func homeStatsEnteredBackground() {
+            // the notification comes asynchronously: nothing to do when the app is back already
+            guard UIApplication.shared.applicationState == .background else { return }
+            homeStatsAwaitsForeground = true
         }
 
-        private func microCount(_ meals: [MealsSnapshot]) -> [MicroNutrient: Decimal] {
-            meals.reduce(into: [:]) { result, meal in
-                for (nutrient, amount) in meal.micronutrientTotals {
-                    result[nutrient, default: 0] += amount
+        /// The one foreground trigger: only back from the background (or after a refresh held back), not after
+        /// Control Center, a system alert or Face ID, which don't change the numbers.
+        private func homeStatsBecameActive() {
+            guard homeStatsAwaitsForeground else { return }
+            homeStatsAwaitsForeground = false
+            refreshHomeStats()
+        }
+
+        // MARK: - Loops card
+
+        /// The Loops card's triggers, as the stats bar's (`subscribeHomeStats`): the settings' first delivery makes the
+        /// first refresh, then a change of the 1-minute loop, every loop (`loopCompleted`: the readings before it too),
+        /// the readings changing while no loop comes (`glucoseStatsChanged`, only for the ongoing gap:
+        /// `homeLoopsReadingsChanged`), and midnight and DST.
+        /// Nothing is clock-driven: the card is as of its last read, an ongoing gap up to that read (the header shows the
+        /// loop status). The one timer is a failed read's retry. Nothing runs in the background: a refresh asked for
+        /// there waits for the foreground, where `didBecomeActive` is the one trigger.
+        private func subscribeHomeLoops() {
+            observeUI(appCoordinator.settings, map: { LoopsConfig($0) }) { me, config in
+                me.homeLoopsConfigChanged(config)
+            }
+            observeUI(appCoordinator.glucoseStatsChanged, dropInitial: true) { me, _ in
+                me.homeLoopsReadingsChanged()
+            }
+            // midnight, DST, a time zone change
+            observe(notification: UIApplication.significantTimeChangeNotification) { me in
+                await me.refreshHomeLoops()
+            }
+            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+                await me.homeLoopsEnteredBackground()
+            }
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.homeLoopsBecameActive()
+            }
+        }
+
+        /// The 1-minute loop changed (or was delivered for the first time).
+        private func homeLoopsConfigChanged(_ config: LoopsConfig) {
+            guard config != homeLoopsConfig else { return }
+            homeLoopsConfig = config
+            refreshHomeLoops()
+        }
+
+        /// The readings changed: the next loop reads them (a loop follows every reading), so read now only when they can
+        /// change the card before it, the ongoing gap (`HomeLoopsCard.Content.readingMayChange`), or without a result.
+        private func homeLoopsReadingsChanged() {
+            guard homeLoops == nil || HomeLoopsCard.Content.readingMayChange(newestStart: homeLoopsNewestStart, now: Date())
+            else { return }
+            refreshHomeLoops()
+        }
+
+        /// Recomputes the Loops card: at once, after the refresh in flight (once, with the config of then), or in the
+        /// background not at all (`didBecomeActive` does it). One at a time, as the stats bar's.
+        func refreshHomeLoops() {
+            guard homeLoopsConfig != nil else { return }
+            cancelHomeLoopsRetry()
+            // held back up to didBecomeActive, also in the inactive moment before it (the observers' foreground replay)
+            if homeLoopsAwaitsForeground || UIApplication.shared.applicationState == .background {
+                homeLoopsAwaitsForeground = true
+                return
+            }
+            guard homeLoopsTask == nil else {
+                homeLoopsPending = true
+                return
+            }
+            startHomeLoopsRefresh()
+        }
+
+        private func startHomeLoopsRefresh() {
+            guard let config = homeLoopsConfig else { return }
+            homeLoopsPending = false
+            let provider = self.provider
+            homeLoopsTask = Task { [weak self] in
+                let stats = await provider.loopStats(Home.loopsRange, allowOneMinuteLoop: config.allowOneMinuteLoop)
+                guard let self else { return }
+                self.homeLoopsTask = nil
+                // a newer request (a loop, a reading, the settings, midnight) replaces this result at once
+                guard !self.homeLoopsPending else {
+                    self.refreshHomeLoops()
+                    return
+                }
+                guard config == self.homeLoopsConfig else { return }
+                guard let stats else {
+                    self.homeLoopsReadFailed()
+                    return
+                }
+                let content = HomeLoopsCard.Content(stats)
+                self.homeLoopsNewestStart = stats.newestStart
+                if content != self.homeLoops {
+                    self.homeLoops = content
                 }
             }
         }
 
-        private func debugPrintMealData() {
-            print("Meal Flow Carbs: \(mealData.carbs)")
-            print("Meal Flow Protein: \(mealData.protein)")
-            print("Meal Flow Fat: \(mealData.fat)")
+        /// A failed read keeps the card as it is; the read is tried again in a minute, until one comes or another trigger
+        /// reads. Without a result yet there is no card.
+        private func homeLoopsReadFailed() {
+            scheduleHomeLoopsRetry()
+        }
 
-            for item in mealData.micronutrients {
-                print(
-                    "Meal Flow Micro \(item.key.rawValue) \(item.value)"
+        /// No retry in the background: the foreground refreshes.
+        private func homeLoopsEnteredBackground() {
+            // the notification comes asynchronously: nothing to do when the app is back already
+            guard UIApplication.shared.applicationState == .background else { return }
+            cancelHomeLoopsRetry()
+            homeLoopsAwaitsForeground = true
+        }
+
+        /// The one foreground trigger: only back from the background (or after a refresh held back).
+        private func homeLoopsBecameActive() {
+            guard homeLoopsAwaitsForeground else { return }
+            homeLoopsAwaitsForeground = false
+            refreshHomeLoops()
+        }
+
+        private func cancelHomeLoopsRetry() {
+            homeLoopsRetry?.cancel()
+            homeLoopsRetry = nil
+        }
+
+        /// A failed read's retry, a minute after it (any other refresh first cancels it).
+        private func scheduleHomeLoopsRetry() {
+            cancelHomeLoopsRetry()
+            guard UIApplication.shared.applicationState != .background else { return }
+            homeLoopsRetry = Task { [weak self] in
+                try? await Task.sleep(for: .seconds(TimeInterval.minutes(1)))
+                guard !Task.isCancelled else { return }
+                self?.homeLoopsRetry = nil
+                self?.refreshHomeLoops()
+            }
+        }
+
+        // MARK: - Meal card
+
+        /// The meal card's triggers, as the Loops card's (`subscribeHomeLoops`): the settings' first delivery makes the
+        /// first refresh (it has no range: Today), then a meal stored or deleted (`mealsChanged`, after the save), and
+        /// midnight and DST (a new today). Nothing is clock-driven: the card is as of its last read (an entry dated later
+        /// counts from the first read after its time). The one timer is a failed read's retry. Nothing runs in the
+        /// background: a refresh asked for there waits for the foreground, where `didBecomeActive` is the one trigger.
+        private func subscribeHomeMeals() {
+            // the first delivery only: no setting changes the card
+            observeUI(appCoordinator.settings, map: { _ in true }) { me, _ in
+                me.homeMealsSettingsDelivered()
+            }
+            observeUI(appCoordinator.mealsChanged, dropInitial: true) { me, _ in
+                me.refreshHomeMeals()
+            }
+            // midnight, DST, a time zone change
+            observe(notification: UIApplication.significantTimeChangeNotification) { me in
+                await me.refreshHomeMeals()
+            }
+            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+                await me.homeMealsEnteredBackground()
+            }
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.homeMealsBecameActive()
+            }
+        }
+
+        /// The settings were delivered: the first read.
+        private func homeMealsSettingsDelivered() {
+            guard !homeMealsStarted else { return }
+            homeMealsStarted = true
+            refreshHomeMeals()
+        }
+
+        /// Recomputes the meal card: at once, after the refresh in flight (once), or in the background not at all
+        /// (`didBecomeActive` does it). One at a time, as the stats bar's.
+        func refreshHomeMeals() {
+            guard homeMealsStarted else { return }
+            cancelHomeMealsRetry()
+            // held back up to didBecomeActive, also in the inactive moment before it (the observers' foreground replay)
+            if homeMealsAwaitsForeground || UIApplication.shared.applicationState == .background {
+                homeMealsAwaitsForeground = true
+                return
+            }
+            guard homeMealsTask == nil else {
+                homeMealsPending = true
+                return
+            }
+            startHomeMealsRefresh()
+        }
+
+        private func startHomeMealsRefresh() {
+            guard homeMealsStarted else { return }
+            homeMealsPending = false
+            let provider = self.provider
+            homeMealsTask = Task { [weak self] in
+                let content = await provider.mealsCard()
+                guard let self else { return }
+                self.homeMealsTask = nil
+                // a newer request (a meal, midnight) replaces this result at once
+                guard !self.homeMealsPending else {
+                    self.refreshHomeMeals()
+                    return
+                }
+                guard let content else {
+                    self.homeMealsReadFailed()
+                    return
+                }
+                if content != self.homeMeals {
+                    self.homeMeals = content
+                }
+            }
+        }
+
+        /// As the Loops card's: a failed read keeps the card as it is; the read is tried again in a minute, until one
+        /// comes or another trigger reads.
+        private func homeMealsReadFailed() {
+            scheduleHomeMealsRetry()
+        }
+
+        /// No retry in the background: the foreground refreshes.
+        private func homeMealsEnteredBackground() {
+            // the notification comes asynchronously: nothing to do when the app is back already
+            guard UIApplication.shared.applicationState == .background else { return }
+            cancelHomeMealsRetry()
+            homeMealsAwaitsForeground = true
+        }
+
+        /// The one foreground trigger: only back from the background (or after a refresh held back).
+        private func homeMealsBecameActive() {
+            guard homeMealsAwaitsForeground else { return }
+            homeMealsAwaitsForeground = false
+            refreshHomeMeals()
+        }
+
+        private func cancelHomeMealsRetry() {
+            homeMealsRetry?.cancel()
+            homeMealsRetry = nil
+        }
+
+        /// A failed read's retry, a minute after it (any other refresh first cancels it).
+        private func scheduleHomeMealsRetry() {
+            cancelHomeMealsRetry()
+            guard UIApplication.shared.applicationState != .background else { return }
+            homeMealsRetry = Task { [weak self] in
+                try? await Task.sleep(for: .seconds(TimeInterval.minutes(1)))
+                guard !Task.isCancelled else { return }
+                self?.homeMealsRetry = nil
+                self?.refreshHomeMeals()
+            }
+        }
+
+        // MARK: - Insulin card
+
+        /// The insulin card's triggers, as the meal card's (`subscribeHomeMeals`): the settings' first delivery makes the
+        /// first refresh (it has no range: Today), then the insulin statistics changing (`insulinStatsChanged`, the
+        /// Insulin tab's signal: after the service dropped the days a loop, a pump event, a backfill or a profile edit
+        /// touched, never `insulinDataChanged`, which comes before that), and midnight and DST (the days move on; a read
+        /// at midnight makes the new today). Nothing is clock-driven: Today shows the read's time (each day's insulin and
+        /// the usual by 14:35), true between reads. The one timer is a failed read's retry. Nothing runs in the
+        /// background: a refresh asked for there waits for the foreground, where `didBecomeActive` is the one trigger.
+        private func subscribeHomeInsulin() {
+            // the first delivery only: no setting changes the card
+            observeUI(appCoordinator.settings, map: { _ in true }) { me, _ in
+                me.homeInsulinSettingsDelivered()
+            }
+            observeUI(appCoordinator.insulinStatsChanged, dropInitial: true) { me, change in
+                me.homeInsulinStatsChanged(change)
+            }
+            // midnight (also when it passed in the background: queued up to the foreground), DST, a time zone change
+            observe(notification: UIApplication.significantTimeChangeNotification) { me in
+                await me.refreshHomeInsulin()
+            }
+            observe(notification: UIApplication.didEnterBackgroundNotification) { me in
+                await me.homeInsulinEnteredBackground()
+            }
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.homeInsulinBecameActive()
+            }
+        }
+
+        /// The settings were delivered: the first read.
+        private func homeInsulinSettingsDelivered() {
+            guard !homeInsulinStarted else { return }
+            homeInsulinStarted = true
+            refreshHomeInsulin()
+        }
+
+        /// The insulin statistics changed: a read, unless the last one read this change already (the foreground's
+        /// replay of it after `didBecomeActive` read).
+        private func homeInsulinStatsChanged(_ change: StatsChange) {
+            guard change.seq > homeInsulinReadSeq else { return }
+            refreshHomeInsulin()
+        }
+
+        /// Reads the insulin card again: at once, after the one in flight (once), or in the background not at all
+        /// (`didBecomeActive` does it). One at a time, as the stats bar's.
+        func refreshHomeInsulin() {
+            guard homeInsulinStarted else { return }
+            cancelHomeInsulinRetry()
+            // held back up to didBecomeActive, also in the inactive moment before it (the observers' foreground replay)
+            if homeInsulinAwaitsForeground || UIApplication.shared.applicationState == .background {
+                homeInsulinAwaitsForeground = true
+                return
+            }
+            guard homeInsulinTask == nil else {
+                homeInsulinPending = true
+                return
+            }
+            startHomeInsulinRefresh()
+        }
+
+        private func startHomeInsulinRefresh() {
+            guard homeInsulinStarted else { return }
+            homeInsulinPending = false
+            // before the read: the service published it after it dropped the changed days, so the read reads it
+            homeInsulinReadSeq = appCoordinator.insulinStatsChanged.value.seq
+            let provider = self.provider
+            homeInsulinTask = Task { [weak self] in
+                let content = await provider.insulinCard()
+                guard let self else { return }
+                self.homeInsulinTask = nil
+                // a newer request (the insulin data, the time) replaces this result at once
+                guard !self.homeInsulinPending else {
+                    self.refreshHomeInsulin()
+                    return
+                }
+                guard let content else {
+                    self.homeInsulinReadFailed()
+                    return
+                }
+                if content != self.homeInsulin {
+                    self.homeInsulin = content
+                }
+            }
+        }
+
+        /// A failed read keeps the card as it is (as of its read: its time says so); the read is tried again in a minute
+        /// (as the Loops card's): once a minute at most, until one comes or another trigger reads.
+        private func homeInsulinReadFailed() {
+            scheduleHomeInsulinRetry()
+        }
+
+        /// No retry in the background: the foreground refreshes.
+        private func homeInsulinEnteredBackground() {
+            // the notification comes asynchronously: nothing to do when the app is back already
+            guard UIApplication.shared.applicationState == .background else { return }
+            cancelHomeInsulinRetry()
+            homeInsulinAwaitsForeground = true
+        }
+
+        /// The one foreground trigger: only back from the background (or after a refresh held back).
+        private func homeInsulinBecameActive() {
+            guard homeInsulinAwaitsForeground else { return }
+            homeInsulinAwaitsForeground = false
+            refreshHomeInsulin()
+        }
+
+        private func cancelHomeInsulinRetry() {
+            homeInsulinRetry?.cancel()
+            homeInsulinRetry = nil
+        }
+
+        /// A failed read's retry, a minute after it (any other refresh first cancels it).
+        private func scheduleHomeInsulinRetry() {
+            cancelHomeInsulinRetry()
+            guard UIApplication.shared.applicationState != .background else { return }
+            homeInsulinRetry = Task { [weak self] in
+                try? await Task.sleep(for: .seconds(TimeInterval.minutes(1)))
+                guard !Task.isCancelled else { return }
+                self?.homeInsulinRetry = nil
+                self?.refreshHomeInsulin()
+            }
+        }
+
+        private func setupData() async {
+            reasonsReadsStarted += 1
+            let read = reasonsReadsStarted
+            let dayStart = Date().addingTimeInterval(-.hours(24))
+            // 7.5 min more for the On board card: a row before its window counts up to the next one
+            // (`InsulinStatsEngine.iobSpans`)
+            let rows = await provider.reasons(since: dayStart.addingTimeInterval(-InsulinStatsEngine.iobMaximumSpan))
+            guard read > reasonsReadApplied else { return }
+            reasonsReadApplied = read
+            // the main chart's COB: the last 24 h as before (`DateFilter.day`, newest -> oldest), the last rows kept with
+            // 3 or fewer
+            let day = rows.filter { $0.date > dayStart }
+            if day.count > 3 {
+                iobData = day
+            }
+            onBoardRows = rows
+            refreshOnBoard()
+        }
+
+        // MARK: - On board card
+
+        /// The On board card's triggers besides the data's (`setupData`: a loop, a suggestion, the settings;
+        /// `setupGlucose`: a reading, the bands, the units): the foreground (its window is as of the build) and a time
+        /// change (the hours: midnight, DST, a time zone). No clock. Its lanes' toggles need no build (`Content.lanes`).
+        private func subscribeHomeOnBoard() {
+            observe(notification: UIApplication.didBecomeActiveNotification) { me in
+                await me.refreshOnBoard()
+            }
+            observe(notification: UIApplication.significantTimeChangeNotification) { me in
+                await me.onBoardTimeChanged()
+            }
+        }
+
+        /// Midnight, DST, a time zone: the hours. In the background the foreground builds it.
+        private func onBoardTimeChanged() {
+            guard UIApplication.shared.applicationState != .background else { return }
+            refreshOnBoard()
+        }
+
+        /// Builds the card from the last IOB rows and the readings, as of now to the minute (cheap: up to 1440 rows and
+        /// readings each, a 1-minute loop and CGM); published only when it changed (a loop's and its suggestion's builds
+        /// in the same minute: once). No card with 3 rows or fewer in its window (`hasRows`): none yet, or a loop
+        /// stopped long enough ago that the readings moved the window past them.
+        private func refreshOnBoard() {
+            let content = onBoardRows.map { rows in
+                HomeOnBoardCard.Content(
+                    iob: rows,
+                    readings: data.glucose.map { HomeOnBoardCard.Reading(date: $0.dateString, mgdl: $0.glucose) },
+                    bands: StatsBands(low: data.lowGlucose, high: data.highGlucose, units: data.units),
+                    units: data.units,
+                    now: Date(),
+                    calendar: .current
                 )
+            }
+            guard let content, content.hasRows else {
+                if homeOnBoard != nil {
+                    homeOnBoard = nil
+                }
+                return
+            }
+            if content != homeOnBoard {
+                homeOnBoard = content
             }
         }
 
@@ -771,8 +1279,7 @@ extension Home {
 
 extension Home.StateModel {
     private func glucoseDidUpdate() async {
-        await setupGlucose()
-        setupLoopStatsBackground()
+        setupGlucose()
     }
 
     private func suggestionDidUpdate(_ suggestion: Suggestion?) async {
@@ -780,7 +1287,6 @@ extension Home.StateModel {
         carbsRequired = suggestion?.carbsReq
         setStatusTitle()
         await setupOverrideHistory()
-        setupLoopStatsBackground()
         await setupData()
         setupCob()
     }
@@ -790,7 +1296,6 @@ extension Home.StateModel {
 
         data.lowGlucose = settings.low
         data.highGlucose = settings.high
-        overrideUnit = settings.overrideHbA1cUnit
         data.displayXgridLines = settings.xGridLines
         data.displayYgridLines = settings.yGridLines
         data.thresholdLines = settings.rulerMarks
@@ -814,7 +1319,6 @@ extension Home.StateModel {
         data.fpuAmounts = settings.fpuAmounts
         data.hidePredictions = settings.hidePredictions
         data.useCarbBars = settings.useCarbBars
-        skipGlucoseChart = settings.skipGlucoseChart
         displayDelta = settings.displayDelta
         autoisf = settings.autoisfEffective
         hours = max(min(settings.hours, 24), 2)
@@ -822,8 +1326,6 @@ extension Home.StateModel {
         displayExpiration = settings.displayExpiration
         displaySAGE = settings.displaySAGE
         ai = settings.ai
-        individual.sex = Sex.savedSettings(settings.sexSetting)
-        individual.age = Int((settings.birthDate.timeIntervalSinceNow.hours / (365 * 24)).rounded(.towardZero))
 
         allowManualTemp = !settings.closedLoop
         uploadStats = settings.uploadStats
@@ -834,7 +1336,7 @@ extension Home.StateModel {
         carbButton = settings.carbButton
         profileButton = settings.profileButton
 
-        await setupGlucose()
+        setupGlucose()
     }
 
     private func readFromPreferences() {
@@ -876,14 +1378,13 @@ extension Home.StateModel {
     private func carbsUpdated(_ carbsHistory: [CarbsEntry]) async {
         setupCarbs(carbsHistory)
         await setupAnnouncements()
-        setupMeals()
     }
 
     private func loopCompleted(_ loopOutcome: LoopOutcome) async {
         enactedSuggestion = loopOutcome.enactedSuggestion
         setStatusTitle()
+        refreshHomeLoops()
         await setupOverrideHistory()
-        setupLoopStatsBackground()
         await setupData()
     }
 }

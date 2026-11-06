@@ -432,75 +432,54 @@ struct Nutriments: Codable {
         ) ?? [:]
 
         var microsByNutrient: [MicroNutrient: MicronutrientValue] = [:]
+        // the key each was read from: of two keys of one substance (`vitamin-b9` and `folates`), the one ranked first
+        // (`openFoodFactsRank`), whatever the dictionary's order
+        var keysByNutrient: [MicroNutrient: (rank: Int, key: String)] = [:]
+        // salt, from the sodium: only when the product has no salt
+        var sodiumAsSalt: MicronutrientValue?
 
-        for (rawKey, rawValue) in raw {
-            // Skip unit-only fields
-            guard !rawKey.hasSuffix("_unit") else {
-                continue
-            }
-
+        // Only `x_100g`, as the macros above: the app scales `amountPer100` by the portion. OFF keeps it in the
+        // nutrient's base unit, g (converted from whatever was entered, IU and % DV included), so it is normalised from
+        // g. The other keys don't fit: `x_serving` is per serving, the bare `x` per `nutrition_data_per` (may be the
+        // serving), and `x_value` is in the entered `x_unit`. No `x_100g` (a per-serving label without a serving
+        // quantity): OFF couldn't compute it, the carbs are missing too, and the nutrient is left out.
+        for (rawKey, rawValue) in raw where rawKey.hasSuffix("_100g") {
             guard let decimal = rawValue.decimalValue else {
                 continue
             }
 
-            guard let micro = MicroNutrient(
+            let isSodium = MicroNutrient.openFoodFactsName(rawKey) == "sodium"
+            guard let micro = isSodium ? MicroNutrient.salt : MicroNutrient(
                 openFoodFactsKey: rawKey
             ) else {
                 continue
             }
 
-            // MARK: Read explicit OFF unit
-
-            let unitKey: String
-
-            if rawKey.contains("_100g") {
-                unitKey = rawKey.replacingOccurrences(
-                    of: "_100g",
-                    with: "_unit"
-                )
-            } else if rawKey.contains("_serving") {
-                unitKey = rawKey.replacingOccurrences(
-                    of: "_serving",
-                    with: "_unit"
-                )
-            } else {
-                unitKey = rawKey + "_unit"
-            }
-
-            let unitString = raw[unitKey]?
-                .stringValue?
-                .lowercased()
-
-            let sourceUnit: MicroNutrient.SourceUnit
-
-            switch unitString {
-            case "g":
-                sourceUnit = .g
-
-            case "mg":
-                sourceUnit = .mg
-
-            case "ug",
-                 "µg":
-                sourceUnit = .ug
-
-            case "iu":
-                sourceUnit = .iu
-
-            default:
-                sourceUnit = .unknown
-            }
-
             let normalized = micro.normalized(
                 value: decimal,
-                from: sourceUnit
+                from: .g
             )
 
+            guard !isSodium else {
+                let salt = normalized * MicroNutrient.saltPerSodium
+                sodiumAsSalt = MicronutrientValue(substance: .salt, amount: salt, amountPer100: salt)
+                continue
+            }
+
+            let rank = MicroNutrient.openFoodFactsRank(rawKey)
+            if let kept = keysByNutrient[micro], kept.rank < rank || (kept.rank == rank && kept.key < rawKey) {
+                continue
+            }
+            keysByNutrient[micro] = (rank, rawKey)
             microsByNutrient[micro] = MicronutrientValue(
                 substance: micro,
                 amount: normalized,
                 amountPer100: normalized
             )
+        }
+
+        if microsByNutrient[.salt] == nil, let sodiumAsSalt {
+            microsByNutrient[.salt] = sodiumAsSalt
         }
 
         micronutrient = Array(microsByNutrient.values)
@@ -572,7 +551,8 @@ struct AnyDecodable: Decodable {
         }
 
         if let double = value as? Double {
-            return Decimal(double)
+            // by its shortest description: `Decimal(Double)` turns 0.0006 into 0.0005999999999999998976
+            return Decimal(string: "\(double)") ?? Decimal(double)
         }
 
         if let int = value as? Int {
@@ -747,13 +727,12 @@ extension OpenFoodFactsProduct {
 // MARK: - OFF Key Mapping
 
 extension MicroNutrient {
-    init?(openFoodFactsKey rawKey: String) {
-        var key = rawKey
+    /// The nutrient's name in an OFF key, without the suffixes ("vitamin-c_100g" -> "vitamin_c")
+    static func openFoodFactsName(_ rawKey: String) -> String {
+        rawKey
             .lowercased()
             .replacingOccurrences(of: "-", with: "_")
             .replacingOccurrences(of: " ", with: "_")
-
-        key = key
             .replacingOccurrences(of: "_100g", with: "")
             .replacingOccurrences(of: "_serving", with: "")
             .replacingOccurrences(of: "_value", with: "")
@@ -762,8 +741,26 @@ extension MicroNutrient {
             .replacingOccurrences(of: "_µg", with: "")
             .replacingOccurrences(of: "_ug", with: "")
             .replacingOccurrences(of: "_g", with: "")
+    }
 
-        switch key {
+    /// Of a product's keys of one substance, the one read: the lowest. Open Food Facts lists folate as `vitamin-b9` and
+    /// as `folates`, niacin as `vitamin-b3` and as `vitamin-pp`: the vitamin's own name first.
+    static func openFoodFactsRank(_ rawKey: String) -> Int {
+        switch openFoodFactsName(rawKey) {
+        case "folate",
+             "folate_total",
+             "folates",
+             "folic_acid",
+             "vitamin_pp":
+            return 1
+        default:
+            return 0
+        }
+    }
+
+    /// Salt is read as salt; sodium (not mapped here) only stands in for a missing salt (`Nutriments`).
+    init?(openFoodFactsKey rawKey: String) {
+        switch MicroNutrient.openFoodFactsName(rawKey) {
         case "vitamin_a",
              "vitamin_a_rae":
             self = .vitaminA
@@ -778,7 +775,9 @@ extension MicroNutrient {
             self = .vitaminB2
 
         case "niacin",
-             "vitamin_b3":
+             "vitamin_b3",
+             // Open Food Facts' niacin ("vitamin PP")
+             "vitamin_pp":
             self = .vitaminB3
 
         case "pantothenate",
@@ -795,6 +794,7 @@ extension MicroNutrient {
 
         case "folate",
              "folate_total",
+             "folates",
              "folic_acid",
              "vitamin_b9":
             self = .vitaminB9

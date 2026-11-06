@@ -615,10 +615,13 @@ struct MainChartCanvas: View {
         }.frame(maxHeight: 20)
     }
 
+    // The dots follow the Statistics bands (`geom.glucoseBands`): red below low (very low + low),
+    // green in range (low...high, inclusive), orange above high (high + very high).
+
     private var lowGlucoseView: some View {
         Path { path in
             for rect in geom.glucoseDots {
-                if let glucose = rect.glucose, Decimal(glucose) <= data.lowGlucose {
+                if let glucose = rect.glucose, glucose < geom.glucoseBands.low {
                     path.addEllipse(in: rect.rect)
                 }
             }
@@ -628,9 +631,7 @@ struct MainChartCanvas: View {
     private var glucoseView: some View {
         Path { path in
             for rect in geom.glucoseDots {
-                if let glucose = rect.glucose, Decimal(glucose) > data.lowGlucose,
-                   Decimal(glucose) < data.highGlucose
-                {
+                if let glucose = rect.glucose, glucose >= geom.glucoseBands.low, glucose <= geom.glucoseBands.high {
                     path.addEllipse(in: rect.rect)
                 }
             }
@@ -640,7 +641,7 @@ struct MainChartCanvas: View {
     private var highGlucoseView: some View {
         Path { path in
             for rect in geom.glucoseDots {
-                if let glucose = rect.glucose, Decimal(glucose) >= data.highGlucose {
+                if let glucose = rect.glucose, glucose > geom.glucoseBands.high {
                     path.addEllipse(in: rect.rect)
                 }
             }
@@ -676,12 +677,12 @@ struct MainChartCanvas: View {
                     .compositingGroup()
                 )
 
-                let glucoseDecimal = Decimal(peak.glucose)
+                // the dots' rule (the Statistics bands)
                 let fillColour = {
-                    if glucoseDecimal < data.lowGlucose {
+                    if peak.glucose < geom.glucoseBands.low {
                         return Color.peakRed
                     }
-                    if glucoseDecimal > data.highGlucose {
+                    if peak.glucose > geom.glucoseBands.high {
                         return Color.peakOrange
                     }
                     return Color.peakGreen

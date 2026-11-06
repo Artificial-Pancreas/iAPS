@@ -63,6 +63,21 @@ final class StorageAssembly: Assembly {
         container.register(OverrideStorage.self) { r in
             OverrideStorage(appCoordinator: r.resolve(AppCoordinator.self)!)
         }
+        container.register(GlucoseStatistics.self) { r in
+            GlucoseStatistics(appCoordinator: r.resolve(AppCoordinator.self)!, source: CoreDataStorage())
+        }
+        container.register(PumpEventStore.self) { r in
+            PumpEventStore(appCoordinator: r.resolve(AppCoordinator.self)!)
+        }
+        container.register(InsulinStatsService.self) { r in
+            InsulinStatsService(appCoordinator: r.resolve(AppCoordinator.self)!, source: CoreDataStorage())
+        }
+        // one for the Home Loops card and the Loops screen: one day cache, the same numbers
+        container.register(HomeLoopsStore.self) { r in
+            let store = HomeLoopsStore(source: HomeLoopsCoreDataSource())
+            store.follow(r.resolve(AppCoordinator.self)!)
+            return store
+        }
         container.register(SettingsManager.self) { r in
             let storage = r.resolve(FileStorage.self)!
             let appCoordinator = r.resolve(AppCoordinator.self)!

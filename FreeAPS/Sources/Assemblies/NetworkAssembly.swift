@@ -54,7 +54,8 @@ final class NetworkAssembly: Assembly {
                 storage: r.resolve(FileStorage.self)!,
                 settingsManager: r.resolve(SettingsManager.self)!,
                 deviceDataManager: r.resolve(DeviceDataManager.self)!,
-                appCoordinator: r.resolve(AppCoordinator.self)!
+                appCoordinator: r.resolve(AppCoordinator.self)!,
+                statistics: r.resolve(GlucoseStatistics.self)!
             )
         }
         container.register(ProfileAndSettingsUploadManager.self) { r in

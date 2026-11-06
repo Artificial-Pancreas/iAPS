@@ -87,6 +87,7 @@ extension Settings {
                         Text("Insulin Sensitivities").navigationLink(to: .isfEditor, from: self)
                         Text("Carb Ratios").navigationLink(to: .crEditor, from: self)
                         Text("Target Glucose").navigationLink(to: .targetsEditor, from: self)
+                        Text("About You").navigationLink(to: .demographics(), from: self)
                     } header: { Text("Configuration") }
 
                     Section {
@@ -102,7 +103,7 @@ extension Settings {
                         Text("Contact Image").navigationLink(to: .contactTrick, from: self)
                         Text("Dynamic ISF").navigationLink(to: .dynamicISF, from: self)
                         Text("Fat And Protein Conversion").navigationLink(to: .fpuConfig, from: self)
-                        Text("Sharing").navigationLink(to: .sharing, from: self)
+                        Text("Sharing").navigationLink(to: .sharing(), from: self)
                         Text("UI/UX").navigationLink(to: .uiConfig, from: self)
                     } header: { Text("Extra Features") }
 
@@ -313,7 +314,9 @@ extension Settings {
             Alert(
                 title: Text("Are you sure?"),
                 message: Text(
-                    NSLocalizedString("All records in ", comment: "") + entity +
+                    NSLocalizedString("All records in ", comment: "") +
+                        // the PumpEvent wipe clears the pump sessions too
+                        (entity == PumpEventStore.Entity.events ? entity + ", " + PumpEventStore.Entity.sessions : entity) +
                         NSLocalizedString(" will be deleted!", comment: "")
                 ),
                 primaryButton: .destructive(Text("Yes"), action: { clearEntity(entity: entity) }),

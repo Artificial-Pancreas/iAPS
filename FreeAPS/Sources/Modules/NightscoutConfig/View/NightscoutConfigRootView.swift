@@ -222,15 +222,34 @@ extension NightscoutConfig {
                         Spacer()
                         DecimalTextField("1", value: $state.backFillInterval, formatter: daysFormatter, liveEditing: true)
                     }
-                    if state.backfilling {
+                    if let phase = state.backfillPhase, state.backfillKind == .glucose {
+                        switch phase {
+                        case .fetching: Text("Fetching readings...").foregroundStyle(.secondary)
+                        case .saving: Text("Saving readings...").foregroundStyle(.secondary)
+                        }
                         ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
                             .progressViewStyle(BackfillProgressViewStyle())
+                    } else if let result = state.backfillResult {
+                        Text(result).foregroundStyle(.secondary)
                     }
                     Button("Backfill glucose") { state.backfillGlucose() }
                         .disabled(state.url.isEmpty || state.connecting || state.backfilling)
+
+                    if let phase = state.backfillPhase, state.backfillKind == .insulin {
+                        switch phase {
+                        case .fetching: Text("Fetching insulin...").foregroundStyle(.secondary)
+                        case .saving: Text("Saving insulin...").foregroundStyle(.secondary)
+                        }
+                        ProgressView(value: min(max(state.backfillingProgress, 0), 1), total: 1.0)
+                            .progressViewStyle(BackfillProgressViewStyle())
+                    } else if let result = state.insulinBackfillResult {
+                        Text(result).foregroundStyle(.secondary)
+                    }
+                    Button("Backfill insulin") { state.backfillInsulin() }
+                        .disabled(state.url.isEmpty || state.connecting || state.backfilling)
                 }
-                header: { Text("Backfill glucose") }
-                footer: { Text("Fetches old glucose readings from Nightscout") }
+                header: { Text("Backfill from Nightscout") }
+                footer: { Text("Fetches old glucose readings and insulin from Nightscout.") }
 
                 if state.isUploadEnabled, state.cgmEnablesGlucoseUpload {
                     Section {
@@ -290,7 +309,8 @@ extension NightscoutConfig {
             ("tempTargets", NSLocalizedString("Temp targets", comment: "Upload entity")),
             ("loopStatus", NSLocalizedString("Loop status", comment: "Upload entity")),
             ("overrides", NSLocalizedString("Overrides", comment: "Upload entity")),
-            ("podAge", NSLocalizedString("Pod age", comment: "Upload entity")),
+            // the Site Changes, under the retired pod-age sync's name
+            ("podAge", NSLocalizedString("Site changes", comment: "Upload entity")),
             ("cgmState", NSLocalizedString("CGM state", comment: "Upload entity")),
             // pump status, phone battery and IOB
             ("pumpStatus", NSLocalizedString("Pump status", comment: "Upload entity"))
