@@ -28,6 +28,26 @@ protocol SyncSink: Sendable {
     func delete(_ records: [Record]) async throws
 }
 
+/// A sink whose deletes leave out the records `keeps` matches: the snapshot drops them (the diff counts them deleted),
+/// the remote keeps them. For records a sync no longer produces but must not remove from the remote (what an earlier
+/// version uploaded), and for append-only syncs (`keeps` all: no delete is ever sent).
+struct KeepingSink<Base: SyncSink>: SyncSink {
+    typealias Record = Base.Record
+
+    let base: Base
+    let keeps: @Sendable(Record) -> Bool
+
+    func upsert(_ items: [SyncUpsert<Record>]) async throws {
+        try await base.upsert(items)
+    }
+
+    func delete(_ records: [Record]) async throws {
+        let deleted = records.filter { !keeps($0) }
+        guard deleted.isNotEmpty else { return }
+        try await base.delete(deleted)
+    }
+}
+
 enum DataSyncError: Error {
     case sinkUnavailable
 }

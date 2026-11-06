@@ -60,6 +60,7 @@ import Swinject
         try await startService(resolver.resolve(LoopStatRecordStorage.self))
 
         try await startService(resolver.resolve(NightscoutAPIProvider.self))
+        // before DeviceDataManager too: its Site Changes come from pumpLifecycleEvents
         try await startService(resolver.resolve(NightscoutUploads.self))
         try await startService(resolver.resolve(PumpHistoryStorage.self))
         try await startService(resolver.resolve(GlucoseStorage.self))

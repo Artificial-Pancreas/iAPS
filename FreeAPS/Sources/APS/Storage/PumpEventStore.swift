@@ -1847,6 +1847,9 @@ struct PumpLifecycleEvent: Sendable, Equatable {
     let plugin: String
     let component: Component
     let date: Date
+    /// the driver's title ("Patch replace", "Pod Change (Dash)", "Prime 0.3U", "Set Change (fixed prime)"; localized
+    /// by some drivers): the Nightscout Site Change's `notes`, as Loop has it. nil when empty
+    var title: String? = nil
 }
 
 extension PumpLifecycleEvent {
@@ -1855,7 +1858,7 @@ extension PumpLifecycleEvent {
         guard case let .replaceComponent(componentType) = event.type,
               let component = Component(rawValue: componentType.rawValue)
         else { return nil }
-        self.init(plugin: plugin, component: component, date: event.date)
+        self.init(plugin: plugin, component: component, date: event.date, title: event.title.isEmpty ? nil : event.title)
     }
 }
 

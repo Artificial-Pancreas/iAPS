@@ -309,7 +309,8 @@ extension NightscoutConfig {
             ("tempTargets", NSLocalizedString("Temp targets", comment: "Upload entity")),
             ("loopStatus", NSLocalizedString("Loop status", comment: "Upload entity")),
             ("overrides", NSLocalizedString("Overrides", comment: "Upload entity")),
-            ("podAge", NSLocalizedString("Pod age", comment: "Upload entity")),
+            // the Site Changes, under the retired pod-age sync's name
+            ("podAge", NSLocalizedString("Site changes", comment: "Upload entity")),
             ("cgmState", NSLocalizedString("CGM state", comment: "Upload entity")),
             // pump status, phone battery and IOB
             ("pumpStatus", NSLocalizedString("Pump status", comment: "Upload entity"))

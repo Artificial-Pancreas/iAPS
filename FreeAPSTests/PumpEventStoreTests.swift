@@ -1242,6 +1242,21 @@ extension PumpEventStoreTests {
                 PumpLifecycleEvent(event(.replaceComponent(componentType: .reservoir)), plugin: "Dana"),
                 lifecycle("Dana", .reservoir, 5)
             )
+            // the driver's title (the Site Change's notes); an empty one is none
+            XCTAssertEqual(
+                PumpLifecycleEvent(
+                    NewPumpEvent(
+                        date: at(5),
+                        dose: nil,
+                        raw: Data(),
+                        title: "Patch replace",
+                        type: .replaceComponent(componentType: .pump)
+                    ),
+                    plugin: "Medtrum"
+                )?.title,
+                "Patch replace"
+            )
+            XCTAssertNil(PumpLifecycleEvent(event(.replaceComponent(componentType: .pump)), plugin: "Omni")?.title)
             XCTAssertNil(PumpLifecycleEvent(event(.prime), plugin: "Minimed"))
             XCTAssertNil(PumpLifecycleEvent(event(.rewind), plugin: "Minimed"))
             XCTAssertNil(PumpLifecycleEvent(event(nil), plugin: "Minimed"))
