@@ -384,6 +384,7 @@ extension Shape {
         } else {
             background {
                 fill(.ultraThinMaterial)
+                Color.clear
             }
         }
     }
