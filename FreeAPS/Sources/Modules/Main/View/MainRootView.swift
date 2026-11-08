@@ -34,11 +34,6 @@ extension Main {
             state.lightMode != LightMode.auto ? (state.lightMode == .light ? .light : .dark) : lightMode
         }
 
-        /// The scheme forced on the whole window, or nil to follow the system. The environment
-        /// overrides below only reach SwiftUI views; UIKit still resolves its colours from the
-        /// window's traits, so a hosted LoopKit screen (CGM and pump settings, their sheets) would
-        /// otherwise draw dark-scheme text on a light-scheme background whenever the iAPS setting
-        /// and the system setting differ.
         var preferredScheme: ColorScheme? {
             state.lightMode == .auto ? nil : colorScheme
         }
@@ -63,7 +58,7 @@ extension Main {
                     state.secondaryModalView ?? EmptyView().asAny()
                 }
                 .environment(\.colorScheme, colorScheme)
-                .preferredColorScheme(preferredScheme)
+                .preferredColorScheme(preferredScheme) // set it for UIKit as well
                 .fullScreenCover(isPresented: Binding(
                     get: { !hasSeenWelcome || showUpgradeNotice || !hasSeenSharingSetup },
                     set: { _ in } // dismissal is flag-driven; the cover content flips the flags
