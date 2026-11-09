@@ -95,6 +95,10 @@ extension UIUX {
                         }
                     }
                 } header: { Text("Light / Dark Mode") }
+
+                Section {
+                    Toggle("Animate backbround", isOn: $state.animatedBackground)
+                } header: { Text("Other") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationBarTitle("UI/UX")
