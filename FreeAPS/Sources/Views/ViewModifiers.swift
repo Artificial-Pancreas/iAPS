@@ -383,8 +383,7 @@ extension Shape {
             glassEffect(glass, in: self)
         } else {
             background {
-                fill(.ultraThinMaterial)
-                Color.clear
+                fill(.ultraThickMaterial.opacity(0.7))
             }
         }
     }
@@ -422,7 +421,7 @@ extension View {
             glassEffect(glass, in: shape)
         } else {
             background {
-                shape.fill(.ultraThinMaterial)
+                shape.fill(.ultraThickMaterial.opacity(0.7))
             }
         }
     }
