@@ -27,7 +27,7 @@ enum GlucoseSmoothing {
 
     /// Anything outside this (NaN, infinite, negative, far above what a CGM reports) is a filter fault, and the
     /// reading stays raw. A small positive undershoot is an overshoot at a turn, and is floored instead.
-    private static let plausibleSmoothedValues: ClosedRange<Double> = 0 ... 1000
+    static let plausibleSmoothedValues: ClosedRange<Double> = 0 ... 1000
 
     /// - Parameter glucose: **newest -> oldest**
     static func smooth(_ glucose: [BloodGlucose], using smoother: GlucoseSmoother) -> [BloodGlucose] {

@@ -10,6 +10,7 @@ extension Stat {
         case overview(Overview)
         case trace(Trace)
         case agp(AGP)
+        case goodBadDays(GoodBadDays)
         case daily(Daily)
         case hourOfDay(HourOfDay)
         case weekday(Weekday)
@@ -20,6 +21,7 @@ extension Stat {
             case .overview: return .overview
             case .trace: return .trace
             case .agp: return .agp
+            case .goodBadDays: return .goodBadDays
             case .daily: return .daily
             case .hourOfDay: return .hourOfDay
             case .weekday: return .weekday
@@ -39,10 +41,18 @@ extension Stat {
         /// By weekday's whole weeks (`StatsPeriod.weekdayPeriods`), a period of its own: picking one leaves the preferred
         /// period (the other views') as it is. 8 weeks every time Statistics opens, kept while it is open
         @Published private(set) var weekdayPeriod: StatsPeriod = .weeks8
+        /// Good & bad days' 14, 30 or 90 days (`StatsPeriod.usualDayPeriods`), a period of its own as By weekday's:
+        /// `goodBadDaysOpeningPeriod` every time Statistics opens, kept while it is open
+        @Published private(set) var goodBadDaysPeriod: StatsPeriod = Stat.StateModel.goodBadDaysOpeningPeriod
         @Published private(set) var glucoseContent: ViewContent<GlucoseContent> = .loading(previous: nil)
         @Published private(set) var insulinContent: ViewContent<Insulin> = .loading(previous: nil)
         @Published private(set) var mealsContent: ViewContent<Meals> = .loading(previous: nil)
         @Published private(set) var patchesContent: ViewContent<Patches> = .loading(previous: nil)
+        /// the CGM topic's three views, formatted for `cgmPick` from `cgmResult`
+        @Published private(set) var cgmContent: ViewContent<CGMReport> = .loading(previous: nil)
+        /// the CGM picked in the CGM topic's picker, kept while Statistics is open; nil (every time it opens), or one a
+        /// period lacks: the CGM with the newest reading (`CGMResult.shown`)
+        @Published private(set) var cgmPick: CGMPick?
         /// The Patches topic's naming (Patches, Pods or Sites); nil without a pump session in the last 120 days: the
         /// title menu has no Patches item. Loaded on its own (`loadPatchTopic`) when the screen comes up on another tab, and with every
         /// Patches read.
@@ -55,10 +65,12 @@ extension Stat {
         /// day picked neither waits for nor cancels them. Kept as it is when a reload gives the same items.
         @Published private(set) var traceSelector: [TraceSelectorItem] = []
         /// The Day tab's usual day: shown or not (off by default) and its baseline, the last 14 / 30 / 90 days ending
-        /// today (`StatsPeriod.usualDayPeriods`), both kept across launches. Changed only through `showUsualDay` and
-        /// `select(usualDayPeriod:)`, which (re)load it.
-        @Setting(\.statsUsualDay) var usualDayShown: Bool = false
-        @Setting(\.statsUsualDayPeriod) var usualDayPeriod: StatsPeriod = .days14
+        /// today (`StatsPeriod.usualDayPeriods`), both kept across launches on the phone (`StatsDisplayPreferences`).
+        /// Changed only through `showUsualDay` and `select(usualDayPeriod:)`, which (re)load it.
+        @Published private(set) var usualDayShown: Bool
+        @Published private(set) var usualDayPeriod: StatsPeriod
+        /// the usual day's picks, on the phone (UI-only, not in the settings)
+        private let displayPreferences: StatsDisplayPreferences
         /// The baseline, loaded on its own (`loadUsualDay`), like the selector: the same for every day stepped through,
         /// so a day picked neither reloads nor waits for it. nil while not shown, and until it comes in.
         @Published private(set) var usualDay: UsualDay?
@@ -77,6 +89,9 @@ extension Stat {
         /// the cell picked on By weekday's heatmap and its metric, kept across periods; observed only by the views showing
         /// them. No request carries them: the result has every cell and metric
         let weekdaySelection = WeekdaySelection()
+        /// Good & bad days' time picked and the day lists open, kept while Statistics is open (a day opened on the Day
+        /// tab and the menu back find them as they were); observed only by its views. No request carries them
+        let goodBadDaysSelection = GoodBadDaysSelection()
         /// the day picked on the Insulin tab's day chart (7–90 d), nil for yesterday, the last complete day (today has
         /// the Today period); otherwise the Days tab's rules. Observed only by its views
         let insulinDaySelection = DailySelection(opensOnLastCompleteDay: true)
@@ -93,6 +108,17 @@ extension Stat {
         private var carbEquivalentFactor = 0.5
         /// the current sex and birth date (Settings › Sharing): the Nutrients screen's reference intakes
         private var nutrientDemographics = NutrientReferences.Demographics(sexSetting: 3, birthDate: .distantPast)
+        /// the CGM topic's smoothing analyses, kept by key while Statistics is open; observed only by the Smoothing view
+        let cgmSmoothing = CGMSmoothingRuns()
+        /// the "Which CGM was this?" sheet's input and its writes (`CGMUnknownSheet`), reached through the report
+        let cgmUnknownEditor = CGMUnknownEditor()
+        /// the CGM topic's last result: a CGM picked is formatted from it, nothing is read
+        private var cgmResult: CGMResult?
+        /// the CGM topic's data generation (`CGMCacheKey.generation`): bumped by a readings change before the newest
+        /// minutes (`cgmChangeInvalidates`), and by a read of content older than those minutes (`cgmContentIsStale`)
+        private var cgmGeneration = 0
+        /// the newest readings change when the CGM topic's content was read: a smoothing result that saw fewer is noted
+        private var cgmReadingsSeq = 0
 
         /// what a computation was started for: its result is shown only while it still is what the screen shows
         private struct Request: Equatable, Sendable {
@@ -107,6 +133,8 @@ extension Stat {
 
         /// the refresh in flight; its seq is the request's
         private let refreshes = StatsLatestTask()
+        /// the refreshes started so far (each moves the seq on by one): the tests count them
+        var refreshCount: Int { refreshes.seq }
         /// the start of the day of the last refresh's request, nil before the first: the first interaction after a
         /// midnight passed on screen reads again (`refreshIfDayMovedOn`), there being no clock to catch it
         private var lastRequestDay: Date?
@@ -129,9 +157,18 @@ extension Stat {
         /// begin and end run one after the other, in order; nonisolated(unsafe) for the deinit only
         nonisolated(unsafe) private var sessionTask: Task<Void, Never>?
 
-        init(resolver: Resolver, period: StatsPeriod, tab: StatsTab) {
+        /// - Parameter displayPreferences: the usual day's picks; tests pass their own `UserDefaults`
+        init(
+            resolver: Resolver,
+            period: StatsPeriod,
+            tab: StatsTab,
+            displayPreferences: StatsDisplayPreferences = StatsDisplayPreferences()
+        ) {
             preferredPeriod = period
             self.tab = tab
+            self.displayPreferences = displayPreferences
+            usualDayShown = displayPreferences.usualDayShown
+            usualDayPeriod = displayPreferences.usualDayPeriod
             super.init(resolver: resolver)
             // opened on a tab: what entering it selects (`select(tab:)`; the onPick hooks below aren't wired yet, so
             // nothing reads); on the Day tab with 24 h (Home's On board card) the 24 hours instead of today
@@ -144,11 +181,13 @@ extension Stat {
             agpSelection.onPick = picked
             hourSelection.onPick = picked
             weekdaySelection.onPick = picked
+            goodBadDaysSelection.onPick = picked
             insulinHourSelection.onPick = picked
             mealsHourSelection.onPick = picked
             for selection in [dailySelection, insulinDaySelection, mealsDaySelection, nutrientDaySelection] {
                 selection.onPick = picked
             }
+            connectCGMUnknownEditor()
         }
 
         deinit {
@@ -182,6 +221,12 @@ extension Stat {
             }
             observeUI(appCoordinator.glucoseStatsChanged, dropInitial: false) { me, change in
                 me.patchChanges.noteGlucose(change)
+            }
+            // no refresh either: the CGM topic's next read computes it again
+            observeUI(appCoordinator.glucoseStatsChanged, dropInitial: true) { me, change in
+                if Self.cgmChangeInvalidates(change, now: Date()) {
+                    me.cgmGeneration += 1
+                }
             }
             // not dropInitial: a change between the read above and this registration is delivered (an unchanged
             // value returns early in settingsChanged)
@@ -222,7 +267,8 @@ extension Stat {
         private func becameActive() {
             guard inBackground else { return }
             inBackground = false
-            // the data went on meanwhile: the Patches topic's sessions are computed again
+            // the data went on meanwhile: the Patches topic's sessions are computed again (the CGM topic's when its
+            // content is old, `cgmContentIsStale`)
             invalidatePatches()
             guard shownPages.isUp else { return }
             refresh(showLoading: false)
@@ -254,27 +300,47 @@ extension Stat {
         }
 
         /// the period shown: the preferred one, or the nearest one the current tab offers (the preferred one on the Day
-        /// tab, which has none and ignores it; the only one on Weekly and "In range by day"); By weekday's own
+        /// tab, which has none and ignores it; the only one on Weekly and "In range by day"); By weekday's and Good & bad
+        /// days' own
         var period: StatsPeriod {
-            Self.shownPeriod(on: tab, preferred: preferredPeriod, weekday: weekdayPeriod)
+            Self.shownPeriod(on: tab, preferred: preferredPeriod, weekday: weekdayPeriod, goodBadDays: goodBadDaysPeriod)
         }
 
-        /// The period a tab shows: By weekday its own (`weekdayPeriod`), the others the nearest one they offer to the
-        /// preferred one.
-        nonisolated static func shownPeriod(on tab: StatsTab, preferred: StatsPeriod, weekday: StatsPeriod) -> StatsPeriod {
-            tab == .weekday ? nearest(weekday, in: tab.validPeriods) : nearest(preferred, in: tab.validPeriods)
+        /// Good & bad days' period when Statistics opens: 30 days, thirds of 10 days, recent enough to describe now.
+        nonisolated static let goodBadDaysOpeningPeriod: StatsPeriod = .days30
+
+        /// The period a tab shows: By weekday and Good & bad days their own (`weekdayPeriod`, `goodBadDaysPeriod`), the
+        /// others the nearest one they offer to the preferred one.
+        nonisolated static func shownPeriod(
+            on tab: StatsTab,
+            preferred: StatsPeriod,
+            weekday: StatsPeriod,
+            goodBadDays: StatsPeriod = Stat.StateModel.goodBadDaysOpeningPeriod
+        ) -> StatsPeriod {
+            switch tab {
+            case .weekday: return nearest(weekday, in: tab.validPeriods)
+            case .goodBadDays: return nearest(goodBadDays, in: tab.validPeriods)
+            default: return nearest(preferred, in: tab.validPeriods)
+            }
         }
 
-        /// A period picked on a tab: on By weekday its own period (one it offers), the preferred one left as it is; on
-        /// the others the preferred one, By weekday's left as it is.
+        /// A period picked on a tab: on By weekday or Good & bad days its own period (one it offers), the preferred one
+        /// left as it is; on the others the preferred one, the two own ones left as they are.
         nonisolated static func picking(
             _ period: StatsPeriod,
             on tab: StatsTab,
             preferred: StatsPeriod,
-            weekday: StatsPeriod
-        ) -> (preferred: StatsPeriod, weekday: StatsPeriod) {
-            guard tab == .weekday else { return (period, weekday) }
-            return (preferred, tab.validPeriods.contains(period) ? period : weekday)
+            weekday: StatsPeriod,
+            goodBadDays: StatsPeriod = Stat.StateModel.goodBadDaysOpeningPeriod
+        ) -> (preferred: StatsPeriod, weekday: StatsPeriod, goodBadDays: StatsPeriod) {
+            func own(_ current: StatsPeriod) -> StatsPeriod {
+                tab.validPeriods.contains(period) ? period : current
+            }
+            switch tab {
+            case .weekday: return (preferred, own(weekday), goodBadDays)
+            case .goodBadDays: return (preferred, weekday, own(goodBadDays))
+            default: return (period, weekday, goodBadDays)
+            }
         }
 
         /// A view picked (the title menu, `StatsViewMenu`); the view shown picked again reads again after a midnight.
@@ -308,6 +374,9 @@ extension Stat {
             case .weekday:
                 // entering By weekday selects no cell (no detail); the metric stays
                 weekdaySelection.clear()
+            case .goodBadDays:
+                // nothing: back from a day opened on the Day tab, the time and the open lists are as they were
+                break
             case .insulin:
                 // as the Days tab and By hour: the day it opens on (yesterday: today is the Today period's) and the
                 // current clock hour
@@ -316,7 +385,10 @@ extension Stat {
             case .meals:
                 mealsDaySelection.select(nil)
                 mealsHourSelection.select(Self.currentClockHour)
-            case .overview,
+            case .cgmOverview,
+                 .cgmSensors,
+                 .cgmSmoothing,
+                 .overview,
                  .patches,
                  .weekly: break
             }
@@ -353,7 +425,11 @@ extension Stat {
                 meals.select(nil)
                 nutrient.select(nil)
             case .agp,
+                 .cgmOverview,
+                 .cgmSensors,
+                 .cgmSmoothing,
                  .daily,
+                 .goodBadDays,
                  .hourOfDay,
                  .overview,
                  .patches,
@@ -381,6 +457,23 @@ extension Stat {
             }
         }
 
+        /// A day of Good & bad days' lists: the Day tab on that day (entering it selects today, `select(tab:)`, so the day
+        /// is picked after). The way back is the title menu: Good & bad days' period and selection are kept.
+        func openDay(_ day: Date) {
+            if tab != .trace {
+                tab = .trace
+                resetSelections { selectEntering(.trace) }
+            }
+            traceDay = Self.openedDay(day, today: Self.startOfToday, calendar: .current)
+            refresh(showLoading: true)
+        }
+
+        /// The Day tab's day for a day opened from a list: a past day from its start (today, or after it, as `.today`).
+        /// - Parameter today: the start of today
+        nonisolated static func openedDay(_ day: Date, today: Date, calendar: Calendar) -> TraceDay {
+            TraceDay.of(day, today: today, calendar: calendar)
+        }
+
         /// What the Day tab shows: the day picked, a past one kept inside the selector's days (midnight moves them on).
         var traceShownDay: TraceDay {
             traceDay.shown(today: Self.startOfToday, calendar: .current)
@@ -397,13 +490,24 @@ extension Stat {
 
         func select(period: StatsPeriod) {
             let shown = self.period
-            // By weekday's own, or the other views' (`picking`)
-            let picked = Self.picking(period, on: tab, preferred: preferredPeriod, weekday: weekdayPeriod)
+            // By weekday's or Good & bad days' own, or the other views' (`picking`)
+            let picked = Self.picking(
+                period,
+                on: tab,
+                preferred: preferredPeriod,
+                weekday: weekdayPeriod,
+                goodBadDays: goodBadDaysPeriod
+            )
             if picked.preferred != preferredPeriod {
                 preferredPeriod = picked.preferred
             }
             if picked.weekday != weekdayPeriod {
                 weekdayPeriod = picked.weekday
+            }
+            if picked.goodBadDays != goodBadDaysPeriod {
+                goodBadDaysPeriod = picked.goodBadDays
+                // another period's stretches: its time opens on the new main stretch (not a pick: no hook)
+                goodBadDaysSelection.showMainStretch()
             }
             if period != shown {
                 refresh(showLoading: true)
@@ -508,6 +612,8 @@ extension Stat {
 
         private func tearDown() {
             wentDown = true
+            // an analysis in flight stops with the screen
+            cgmSmoothing.cancel()
             guard let provider = sessionProvider else { return }
             sessionProvider = nil
             sessionTask = Task { [previous = self.sessionTask] in
@@ -530,7 +636,7 @@ extension Stat {
             self.settings = settings
             patchesGeneration += 1
             // down: coming up reads (`wentDown`); not up yet, it is opening: read
-            guard !wentDown, tab.usesBands else { return }
+            guard !wentDown, tab.usesSettings else { return }
             refresh(showLoading: true)
         }
 
@@ -564,7 +670,7 @@ extension Stat {
         /// settings
         private func isCurrent(_ request: Request) -> Bool {
             guard refreshes.isCurrent(request.seq), request.tab == tab, request.period == period else { return false }
-            guard request.tab.usesBands else { return true }
+            guard request.tab.usesSettings else { return true }
             return request.settings == settings && request.traceDay == currentTraceDay
         }
 
@@ -590,8 +696,13 @@ extension Stat {
                     mealsContent = .loading(previous: mealsContent.value)
                 case .patches:
                     patchesContent = .loading(previous: patchesContent.value)
+                case .cgmOverview,
+                     .cgmSensors,
+                     .cgmSmoothing:
+                    cgmContent = .loading(previous: cgmContent.value)
                 case .agp,
                      .daily,
+                     .goodBadDays,
                      .hourOfDay,
                      .overview,
                      .trace,
@@ -604,6 +715,8 @@ extension Stat {
             }
 
             let factor = carbEquivalentFactor
+            // Good & bad days' loop row: the slots by the setting's cadence
+            let allowOneMinuteLoop = appCoordinator.settings.value.allowOneMinuteLoop
             // the age at the request: a birthday moves it at midnight, read by the next refresh
             let references = request.tab == .meals
                 ? NutrientReferences(nutrientDemographics, now: requestedAt, calendar: .current)
@@ -614,6 +727,12 @@ extension Stat {
             let deliveringPlugin = pumpInfo.flatMap { KnownPlugins.hasActiveDeliveryUnit($0) ? $0.identifier : nil }
             let patchesKey = request.tab == .patches ? patchesCacheKey(request) : nil
             let patchChanges = self.patchChanges
+            // the CGM topic's content older than the newest minutes: read again (newer readings, a later now)
+            if request.tab.isCGM, Self.cgmContentIsStale(asOf: cgmResult?.asOf, now: requestedAt) {
+                self.cgmGeneration += 1
+            }
+            let cgmGeneration = self.cgmGeneration
+            let cgmReadingsSeq = appCoordinator.glucoseStatsChanged.value.seq
             let provider = self.provider
             let task = Task { [weak self] in
                 switch request.tab {
@@ -637,6 +756,16 @@ extension Stat {
                     let agp = await provider.agp(request.period, bands: request.settings.bands)
                     self?.show(request, in: \.glucoseContent) {
                         agp.isEmpty ? nil : .agp(AGP(agp, period: request.period, settings: request.settings))
+                    }
+
+                case .goodBadDays:
+                    let data = await provider.goodBadDays(
+                        request.period,
+                        bands: request.settings.bands,
+                        allowOneMinuteLoop: allowOneMinuteLoop
+                    )
+                    self?.show(request, in: \.glucoseContent) {
+                        data.isEmpty ? nil : .goodBadDays(GoodBadDays(data, settings: request.settings))
                     }
 
                 case .daily:
@@ -731,6 +860,30 @@ extension Stat {
                     self.patchesContent = patches.isEmpty
                         ? .empty
                         : .loaded(Patches(patches, settings: request.settings))
+
+                case .cgmOverview,
+                     .cgmSensors,
+                     .cgmSmoothing:
+                    let cgm: CGMResult
+                    do {
+                        cgm = try await provider.cgm(request.period, generation: cgmGeneration)
+                    } catch is CancellationError {
+                        // superseded by a newer read: nothing of this one is shown
+                        return
+                    } catch {
+                        self?.readFailed(
+                            request,
+                            in: \.cgmContent,
+                            shown: \.period,
+                            "Statistics: the CGM readings couldn't be read",
+                            error: error
+                        )
+                        return
+                    }
+                    guard let self, self.accepts(request) else { return }
+                    self.cgmResult = cgm
+                    self.cgmReadingsSeq = cgmReadingsSeq
+                    self.cgmContent = cgm.isEmpty ? .empty : .loaded(self.cgmReport(cgm, units: request.settings.units))
                 }
             }
             refreshes.adopt(task)
@@ -861,12 +1014,91 @@ extension Stat {
             }
         }
 
+        // MARK: - CGM
+
+        /// A CGM picked: formatted again from the result shown (a period without it shows the default); nothing is read.
+        func select(cgm pick: CGMPick) {
+            if pick != cgmPick {
+                cgmPick = pick
+                if let result = cgmResult, case .loaded = cgmContent {
+                    cgmContent = .loaded(cgmReport(result, units: settings.units))
+                }
+            }
+            refreshIfDayMovedOn()
+        }
+
+        /// The CGM topic's content for the pick, with the current smoothing setting, read only (the settings' mirror,
+        /// `appCoordinator.settings`: `settingsManager.settings` is read asynchronously).
+        private func cgmReport(_ result: CGMResult, units: GlucoseUnits) -> CGMReport {
+            CGMReport(
+                result,
+                pick: cgmPick,
+                units: units,
+                smoothing: SmoothingCandidate(appCoordinator.settings.value.glucoseSmoothing),
+                readingsSeq: cgmReadingsSeq,
+                editor: cgmUnknownEditor
+            )
+        }
+
+        /// The sheet reads the Unknown readings when it opens; a save or a clear reads the CGM topic again when it is
+        /// shown (the sessions are in its cache key), the Unknown readings moved to their CGMs.
+        private func connectCGMUnknownEditor() {
+            let provider = self.provider
+            cgmUnknownEditor.load = { try await provider.cgmUnknown() }
+            cgmUnknownEditor.save = { [weak self] sessions, replacing in
+                let saved = await provider.enterCGMSessions(sessions, replacing: replacing)
+                self?.enteredCGMSessionsChanged()
+                return saved
+            }
+            cgmUnknownEditor.clear = { [weak self] in
+                let cleared = await provider.clearEnteredCGMSessions()
+                self?.enteredCGMSessionsChanged()
+                return cleared
+            }
+        }
+
+        private func enteredCGMSessionsChanged() {
+            guard tab.isCGM else { return }
+            refresh(showLoading: true)
+        }
+
+        /// The newest minutes of readings, where a change (each new reading) doesn't make the CGM topic's content
+        /// stale: a change from before them (a backfill, an edit) does, and so does content older than them.
+        nonisolated static let cgmTrailingWindow: TimeInterval = .minutes(15)
+
+        /// A readings change from before the newest minutes, or of all the readings (no interval).
+        nonisolated static func cgmChangeInvalidates(_ change: StatsChange, now: Date) -> Bool {
+            guard let interval = change.interval else { return true }
+            return interval.start < now.addingTimeInterval(-cgmTrailingWindow)
+        }
+
+        /// Content read longer ago than the newest minutes; none read isn't stale.
+        nonisolated static func cgmContentIsStale(asOf: Date?, now: Date) -> Bool {
+            asOf.map { now.timeIntervalSince($0) > cgmTrailingWindow } ?? false
+        }
+
+        /// Analyse (or Analyse again): the smoothing replay of the content shown (its period and pick), off the main
+        /// actor; as of the readings now.
+        func analyseSmoothing() {
+            guard let report = cgmContent.value else { return }
+            let provider = self.provider
+            let readingsSeq = appCoordinator.glucoseStatsChanged.value.seq
+            cgmSmoothing.analyse(report.smoothing.key, readingsSeq: readingsSeq) { key, isCancelled, progress in
+                try await provider.smoothingReplay(key.period, pick: key.pick, isCancelled: isCancelled, progress: progress)
+            }
+        }
+
+        func cancelSmoothing() {
+            cgmSmoothing.cancel()
+        }
+
         // MARK: - Usual day
 
         /// The Day tab's toggle: shown, the baseline loads; hidden, it is dropped.
         func showUsualDay(_ shown: Bool) {
             if shown != usualDayShown {
                 usualDayShown = shown
+                displayPreferences.usualDayShown = shown
                 if shown {
                     loadUsualDay()
                 } else {
@@ -882,6 +1114,7 @@ extension Stat {
         func select(usualDayPeriod period: StatsPeriod) {
             if period != usualDayPeriod, StatsPeriod.usualDayPeriods.contains(period) {
                 usualDayPeriod = period
+                displayPreferences.usualDayPeriod = period
                 if usualDayShown {
                     loadUsualDay()
                 }

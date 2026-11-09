@@ -77,9 +77,15 @@ final class InsulinMealsTabsTests: XCTestCase {
     @MainActor func testTabsAndTheirPeriods() {
         XCTAssertEqual(
             StatsTab.allCases,
-            [.overview, .trace, .agp, .daily, .hourOfDay, .weekday, .weekly, .insulin, .patches, .meals]
+            [
+                .overview, .trace, .agp, .goodBadDays, .daily, .hourOfDay, .weekday, .weekly, .insulin, .patches,
+                .meals, .cgmOverview, .cgmSensors, .cgmSmoothing
+            ]
         )
-        XCTAssertEqual(StatsTab.allCases.filter { !$0.isGlucose }, [.insulin, .patches, .meals])
+        XCTAssertEqual(
+            StatsTab.allCases.filter { !$0.isGlucose && !$0.isCGM },
+            [.insulin, .patches, .meals]
+        )
         XCTAssertEqual(StatsTab.insulin.topic, .insulin)
         XCTAssertEqual(StatsTab.meals.topic, .meals)
         XCTAssertTrue(StatsTab.insulin.hasPeriodControl)
@@ -106,12 +112,12 @@ final class InsulinMealsTabsTests: XCTestCase {
         XCTAssertEqual(StatsViewMenu.title(StatsTopic.meals), "Meals")
     }
 
-    /// Four topics, Glucose first, in the title menu: Glucose's seven views in order (under its heading), then Insulin,
-    /// Patches and Meals, one view each; each view with a symbol, in its topic's list once. The title is the view shown,
-    /// a glucose view after its topic.
+    /// Five topics, Glucose first, in the title menu: Glucose's eight views in order (under its heading), then Insulin,
+    /// Patches and Meals, one view each, and CGM's four last; each view with a symbol, in its topic's list once. The title
+    /// is the view shown, a glucose or CGM view after its topic.
     @MainActor func testTopicsAndTheirViews() {
-        XCTAssertEqual(StatsTopic.allCases, [.glucose, .insulin, .patches, .meals])
-        XCTAssertEqual(StatsTopic.glucose.views, [.overview, .trace, .agp, .daily, .hourOfDay, .weekday, .weekly])
+        XCTAssertEqual(StatsTopic.allCases, [.glucose, .insulin, .patches, .meals, .cgm])
+        XCTAssertEqual(StatsTopic.glucose.views, [.overview, .trace, .agp, .goodBadDays, .daily, .hourOfDay, .weekday, .weekly])
         XCTAssertEqual(StatsTopic.insulin.views, [.insulin])
         XCTAssertEqual(StatsTopic.patches.views, [.patches])
         XCTAssertEqual(StatsTopic.meals.views, [.meals])
@@ -120,10 +126,13 @@ final class InsulinMealsTabsTests: XCTestCase {
             XCTAssertEqual(StatsTopic.allCases.filter { $0.views.contains(tab) }, [tab.topic], "\(tab)")
             XCTAssertNotNil(UIImage(systemName: StatsViewMenu.systemImage(tab)), "\(tab)")
         }
-        XCTAssertEqual(StatsTopic.allCases.map { StatsViewMenu.title($0) }, ["Glucose", "Insulin", "Patches", "Meals"])
+        XCTAssertEqual(
+            StatsTopic.allCases.map { StatsViewMenu.title($0) },
+            ["Glucose", "Insulin", "Patches", "Meals", "CGM"]
+        )
         XCTAssertEqual(
             StatsTopic.glucose.views.map { StatsViewMenu.title($0) },
-            ["Overview", "Day", "AGP", "In range by day", "By hour", "By weekday", "Weekly"]
+            ["Overview", "Day", "AGP", "Good & bad days", "In range by day", "By hour", "By weekday", "Weekly"]
         )
         XCTAssertEqual(
             StatsTab.allCases.map { StatsViewMenu.navigationTitle($0) },
@@ -131,13 +140,17 @@ final class InsulinMealsTabsTests: XCTestCase {
                 "Glucose · Overview",
                 "Glucose · Day",
                 "Glucose · AGP",
+                "Glucose · Good & bad days",
                 "Glucose · In range by day",
                 "Glucose · By hour",
                 "Glucose · By weekday",
                 "Glucose · Weekly",
                 "Insulin",
                 "Patches",
-                "Meals"
+                "Meals",
+                "CGM · Overview",
+                "CGM · Sensors",
+                "CGM · Smoothing"
             ]
         )
     }
@@ -2433,75 +2446,145 @@ final class InsulinMealsTabsTests: XCTestCase {
         XCTAssertEqual(InsulinCard.totalText(0), d("0.0"))
     }
 
-    // MARK: - Home card ranges
+    // MARK: - Home cards' display choices
 
-    /// The stats bar's range: Today or 24 h, decoded when present and one of them; an older build's 7–90 d (or
-    /// Statistics' periods, or an unknown value) starts on 24 h. The other cards have none: the keys of earlier builds
-    /// (the Loops and meal cards' ranges, the insulin card's, the stats bar's view) are ignored, never written again.
-    func testHomeStatsRangeDecode() throws {
+    /// An empty store of its own, removed after the test
+    private func displayPreferences() -> StatsDisplayPreferences {
+        let name = "test-stats-display-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: name)!
+        addTeardownBlock { defaults.removePersistentDomain(forName: name) }
+        return StatsDisplayPreferences(defaults: defaults)
+    }
+
+    /// Nothing stored (a fresh install's, a tester's after the choices left the settings): the stats bar on 24 h, both
+    /// On board lanes on, the usual day off over the last 14 days.
+    func testStatsDisplayPreferencesDefaults() {
         XCTAssertEqual(StatsPeriod.homeStatsRanges, [.today, .last24h])
+        let preferences = displayPreferences()
+        XCTAssertEqual(preferences.homeStatsRange, .last24h)
+        XCTAssertTrue(preferences.homeOnBoardGlucose)
+        XCTAssertTrue(preferences.homeOnBoardCOB)
+        XCTAssertFalse(preferences.usualDayShown)
+        XCTAssertEqual(preferences.usualDayPeriod, .days14)
+    }
+
+    /// Written and read back, also by another store on the same defaults (the next launch), under the keys.
+    func testStatsDisplayPreferencesRoundTrip() {
+        let preferences = displayPreferences()
         for range in StatsPeriod.homeStatsRanges {
-            let stored = try FreeAPSSettings.decodeFrom(json: #"{"homeStatsRange": "\#(range.rawValue)"}"#)
-            XCTAssertEqual(stored.homeStatsRange, range)
+            preferences.homeStatsRange = range
+            XCTAssertEqual(preferences.homeStatsRange, range)
         }
-        for range: StatsPeriod in [.days7, .days14, .days30, .days90, .weeks5, .weeks13] {
-            let older = try FreeAPSSettings.decodeFrom(json: #"{"homeStatsRange": "\#(range.rawValue)"}"#)
-            XCTAssertEqual(older.homeStatsRange, .last24h, "\(range)")
+        for period in StatsPeriod.usualDayPeriods {
+            preferences.usualDayPeriod = period
+            XCTAssertEqual(preferences.usualDayPeriod, period)
         }
-        XCTAssertEqual(try FreeAPSSettings.decodeFrom(json: #"{"homeStatsRange": "days365"}"#).homeStatsRange, .last24h)
+        preferences.homeStatsRange = .today
+        preferences.homeOnBoardGlucose = false
+        preferences.homeOnBoardCOB = false
+        preferences.usualDayShown = true
+        preferences.usualDayPeriod = .days30
 
-        // nothing stored: a fresh install's
-        let empty = try FreeAPSSettings.decodeFrom(json: "{}")
-        XCTAssertEqual(FreeAPSSettings().homeStatsRange, .last24h)
-        XCTAssertEqual(empty.homeStatsRange, .last24h)
+        let next = StatsDisplayPreferences(defaults: preferences.defaults)
+        XCTAssertEqual(next.homeStatsRange, .today)
+        XCTAssertFalse(next.homeOnBoardGlucose)
+        XCTAssertFalse(next.homeOnBoardCOB)
+        XCTAssertTrue(next.usualDayShown)
+        XCTAssertEqual(next.usualDayPeriod, .days30)
 
-        // an older build's file: the removed keys ignored, the rest read as before
-        let removed = ["homeStatsDisplay", "homeLoopsRange", "homeMealsRange", "homeInsulinRange"]
-        let oldFile = try FreeAPSSettings.decodeFrom(json: #"""
-        {"homeStatsRange": "today", "homeStatsDisplay": "averages", "homeLoopsRange": "days7", "homeMealsRange": "days90",
-         "homeInsulinRange": "days30", "hours": 9}
-        """#)
-        XCTAssertEqual(oldFile.homeStatsRange, .today)
-        XCTAssertEqual(oldFile.hours, 9)
-        for key in removed {
-            XCTAssertNil(oldFile.dictionaryRepresentation?[key], key)
-        }
-        // an older build's 7–90 d with them: 24 h
-        let olderDays = try FreeAPSSettings.decodeFrom(json: #"""
-        {"homeStatsRange": "days14", "homeStatsDisplay": "bar", "homeLoopsRange": "today", "homeMealsRange": "last24h"}
-        """#)
-        XCTAssertEqual(olderDays.homeStatsRange, .last24h)
-
-        // written and read back: the key is in the file, the removed ones aren't
-        var settings = FreeAPSSettings()
-        settings.homeStatsRange = .today
-        let written = try FreeAPSSettings.decodeFrom(json: settings.rawJSON)
-        XCTAssertEqual(written.homeStatsRange, .today)
-        XCTAssertNotNil(settings.dictionaryRepresentation?["homeStatsRange"])
-        for key in removed {
-            XCTAssertNil(settings.dictionaryRepresentation?[key], key)
+        typealias Key = StatsDisplayPreferences.Key
+        let defaults = preferences.defaults
+        XCTAssertEqual(defaults.string(forKey: Key.homeStatsRange), "today")
+        XCTAssertEqual(defaults.object(forKey: Key.homeOnBoardGlucose) as? Bool, false)
+        XCTAssertEqual(defaults.object(forKey: Key.homeOnBoardCOB) as? Bool, false)
+        XCTAssertEqual(defaults.object(forKey: Key.usualDayShown) as? Bool, true)
+        XCTAssertEqual(defaults.string(forKey: Key.usualDayPeriod), "days30")
+        let keys = [Key.homeStatsRange, Key.homeOnBoardGlucose, Key.homeOnBoardCOB, Key.usualDayShown, Key.usualDayPeriod]
+        for key in keys {
+            XCTAssertTrue(key.hasPrefix("iAPS.stats."), key)
         }
     }
 
-    /// A pick of the stats bar's range alone doesn't reload Home: the bar follows its own config, the Loops card's
-    /// doesn't change with it.
-    func testHomeStatsRangeFollowsItsOwnSetting() {
+    /// The stats bar's "Show TITR": off by default, kept, and a stored value of another type reads as off.
+    func testStatsDisplayPreferencesTITR() {
+        let preferences = displayPreferences()
+        XCTAssertFalse(preferences.homeStatsTITR)
+        preferences.homeStatsTITR = true
+        XCTAssertTrue(StatsDisplayPreferences(defaults: preferences.defaults).homeStatsTITR)
+        XCTAssertEqual(preferences.defaults.object(forKey: StatsDisplayPreferences.Key.homeStatsTITR) as? Bool, true)
+        XCTAssertTrue(StatsDisplayPreferences.Key.homeStatsTITR.hasPrefix("iAPS.stats."))
+        preferences.homeStatsTITR = false
+        XCTAssertFalse(preferences.homeStatsTITR)
+        preferences.defaults.set("on", forKey: StatsDisplayPreferences.Key.homeStatsTITR)
+        XCTAssertFalse(preferences.homeStatsTITR)
+    }
+
+    /// Only a value the choice offers: a stored one it doesn't (an older build's 7–90 d, another view's period, an
+    /// unknown raw value, another type) reads as the default, and one it doesn't offer is never written.
+    func testStatsDisplayPreferencesInvalidValues() {
+        typealias Key = StatsDisplayPreferences.Key
+        let preferences = displayPreferences()
+        let defaults = preferences.defaults
+        for raw in ["days7", "days14", "days90", "weeks13", "days365", ""] {
+            defaults.set(raw, forKey: Key.homeStatsRange)
+            XCTAssertEqual(preferences.homeStatsRange, .last24h, raw)
+        }
+        for raw in ["today", "last24h", "days7", "weeks8", "days365", ""] {
+            defaults.set(raw, forKey: Key.usualDayPeriod)
+            XCTAssertEqual(preferences.usualDayPeriod, .days14, raw)
+        }
+        defaults.set(3, forKey: Key.homeStatsRange)
+        XCTAssertEqual(preferences.homeStatsRange, .last24h)
+        defaults.set("off", forKey: Key.homeOnBoardGlucose)
+        defaults.set("off", forKey: Key.homeOnBoardCOB)
+        defaults.set("on", forKey: Key.usualDayShown)
+        XCTAssertTrue(preferences.homeOnBoardGlucose)
+        XCTAssertTrue(preferences.homeOnBoardCOB)
+        XCTAssertFalse(preferences.usualDayShown)
+
+        // not offered: the stored value stays
+        preferences.homeStatsRange = .today
+        preferences.homeStatsRange = .days7
+        XCTAssertEqual(preferences.homeStatsRange, .today)
+        XCTAssertEqual(defaults.string(forKey: Key.homeStatsRange), "today")
+        preferences.usualDayPeriod = .days30
+        preferences.usualDayPeriod = .last24h
+        XCTAssertEqual(preferences.usualDayPeriod, .days30)
+        XCTAssertEqual(defaults.string(forKey: Key.usualDayPeriod), "days30")
+    }
+
+    /// The display choices aren't settings: an older build's file with their keys (and the earlier builds' removed
+    /// ones) reads as before without them, and they are never written again. Their values aren't carried over: they
+    /// were never released, so they start at the defaults once.
+    func testStatsDisplayChoicesAreNotSettings() throws {
+        let moved = ["homeStatsRange", "homeOnBoardGlucose", "homeOnBoardCOB", "statsUsualDay", "statsUsualDayPeriod"]
+        let removed = ["homeStatsDisplay", "homeLoopsRange", "homeMealsRange", "homeInsulinRange", "skipGlucoseChart"]
+        let oldFile = try FreeAPSSettings.decodeFrom(json: #"""
+        {"homeStatsRange": "today", "homeOnBoardGlucose": false, "homeOnBoardCOB": false, "statsUsualDay": true,
+         "statsUsualDayPeriod": "days30", "homeStatsDisplay": "averages", "homeLoopsRange": "days7",
+         "homeMealsRange": "days90", "homeInsulinRange": "days30", "skipGlucoseChart": true, "hours": 9}
+        """#)
+        XCTAssertEqual(oldFile.hours, 9)
+        XCTAssertEqual(oldFile, try FreeAPSSettings.decodeFrom(json: #"{"hours": 9}"#))
+        for key in moved + removed {
+            XCTAssertNil(oldFile.dictionaryRepresentation?[key], key)
+            XCTAssertNil(FreeAPSSettings().dictionaryRepresentation?[key], key)
+        }
+    }
+
+    /// The stats bar's config: its range and the settings' stats part (the bands, the HbA1c unit); the Loops card's
+    /// follows the 1-minute loop alone, which the stats bar's doesn't.
+    func testHomeCardConfigs() {
         let settings = FreeAPSSettings()
-        var picked = settings
-        picked.homeStatsRange = .today
-        XCTAssertEqual(Home.ReloadSettings(settings), Home.ReloadSettings(picked))
-
-        var other = picked
-        other.hours = 12
-        XCTAssertNotEqual(Home.ReloadSettings(settings), Home.ReloadSettings(other))
-
-        XCTAssertEqual(Home.StatsConfig(picked).range, .today)
-        XCTAssertNotEqual(Home.StatsConfig(picked), Home.StatsConfig(settings))
-        XCTAssertEqual(Home.LoopsConfig(picked), Home.LoopsConfig(settings))
+        let stats = Stat.StatsSettings(settings)
+        XCTAssertNotEqual(
+            Home.StatsConfig(range: .today, settings: stats),
+            Home.StatsConfig(range: .last24h, settings: stats)
+        )
         var oneMinute = settings
         oneMinute.allowOneMinuteLoop.toggle()
         XCTAssertNotEqual(Home.LoopsConfig(oneMinute), Home.LoopsConfig(settings))
-        XCTAssertEqual(Home.StatsConfig(oneMinute), Home.StatsConfig(settings))
+        XCTAssertEqual(Stat.StatsSettings(oneMinute), stats)
         // the Loops card's one range
         XCTAssertEqual(Home.loopsRange, .last24h)
     }
@@ -2751,11 +2834,11 @@ final class InsulinMealsTabsTests: XCTestCase {
         }
     }
 
-    /// The lanes shown, from the top: glucose when on and with readings, COB when on and with carbs (a COB above 0),
-    /// IOB always; IOB taller the fewer lanes there are.
+    /// The lanes shown, from the top: glucose when on and with readings, COB when on (with carbs or not: flat at 0
+    /// without, the card keeps its shape), IOB always; IOB taller the fewer lanes there are.
     func testOnBoardLanes() {
-        func lanes(_ glucose: Bool, _ cob: Bool, readings: Bool, carbs: Bool = true) -> [HomeOnBoardCard.Lane] {
-            OnBoard.lanes(showGlucose: glucose, showCOB: cob, hasReadings: readings, hasCarbs: carbs)
+        func lanes(_ glucose: Bool, _ cob: Bool, readings: Bool) -> [HomeOnBoardCard.Lane] {
+            OnBoard.lanes(showGlucose: glucose, showCOB: cob, hasReadings: readings)
         }
         XCTAssertEqual(lanes(true, true, readings: true), [.glucose, .cob, .iob])
         XCTAssertEqual(lanes(true, true, readings: false), [.cob, .iob])
@@ -2763,10 +2846,6 @@ final class InsulinMealsTabsTests: XCTestCase {
         XCTAssertEqual(lanes(false, true, readings: true), [.cob, .iob])
         XCTAssertEqual(lanes(false, false, readings: true), [.iob])
         XCTAssertEqual(lanes(true, false, readings: false), [.iob])
-        // no carbs: no COB lane, whatever the toggle
-        XCTAssertEqual(lanes(true, true, readings: true, carbs: false), [.glucose, .iob])
-        XCTAssertEqual(lanes(false, true, readings: true, carbs: false), [.iob])
-        XCTAssertEqual(lanes(true, true, readings: false, carbs: false), [.iob])
 
         XCTAssertFalse(OnBoard.hasCarbs([]))
         XCTAssertFalse(OnBoard.hasCarbs([0, 0, 0]))
@@ -2847,7 +2926,8 @@ final class InsulinMealsTabsTests: XCTestCase {
         XCTAssertEqual(mmol.glucoseLevels.map(\.value), [70, 181])
         XCTAssertEqual(mmol.glucoseLevels.map(\.text), [d("3.9"), d("10.0")])
 
-        // no readings: no glucose lane, whatever the toggle; no carbs: no carbs lane
+        // no readings: no glucose lane, whatever the toggle; no carbs: the carbs lane all the same (flat at 0, its
+        // domain the 10 g minimum), and the menu's toggle with it
         let bare = OnBoard(
             iob: [IOBData(date: before(10), iob: 1, cob: 0), IOBData(date: before(5), iob: 0.5, cob: 0)],
             readings: [],
@@ -2857,7 +2937,13 @@ final class InsulinMealsTabsTests: XCTestCase {
             calendar: calendar
         )
         XCTAssertFalse(bare.hasCarbs)
-        XCTAssertEqual(bare.lanes(showGlucose: true, showCOB: true), [.iob])
+        XCTAssertEqual(bare.lanes(showGlucose: true, showCOB: true), [.cob, .iob])
+        XCTAssertEqual(bare.lanes(showGlucose: true, showCOB: false), [.iob])
+        XCTAssertEqual(bare.cob.map(\.value), [0, 0])
+        XCTAssertEqual(bare.cobDomain, 0 ... 10)
+        // the same shape as with carbs: the lane's height doesn't depend on them
+        let lanes = bare.lanes(showGlucose: true, showCOB: true)
+        XCTAssertEqual(lanes.map { OnBoard.height(of: $0, in: lanes) }, [48, 76])
         XCTAssertEqual(bare.negativeIOB, HomeLoopsCard.duration(0))
     }
 
@@ -2901,45 +2987,6 @@ final class InsulinMealsTabsTests: XCTestCase {
         )
         XCTAssertEqual(low.glucoseLevels.map(\.value), [70, 250])
         XCTAssertTrue(low.glucoseLevels.allSatisfy { low.glucoseDomain.contains($0.value) })
-    }
-
-    /// The card's lanes, on unless turned off; the removed scrolling chart's setting is ignored, never written again.
-    /// A toggle alone doesn't reload Home.
-    func testOnBoardSettingsDecode() throws {
-        let empty = try FreeAPSSettings.decodeFrom(json: "{}")
-        XCTAssertTrue(empty.homeOnBoardGlucose)
-        XCTAssertTrue(empty.homeOnBoardCOB)
-        XCTAssertTrue(FreeAPSSettings().homeOnBoardGlucose)
-        XCTAssertTrue(FreeAPSSettings().homeOnBoardCOB)
-
-        let off = try FreeAPSSettings.decodeFrom(json: #"{"homeOnBoardGlucose": false, "homeOnBoardCOB": false}"#)
-        XCTAssertFalse(off.homeOnBoardGlucose)
-        XCTAssertFalse(off.homeOnBoardCOB)
-        let one = try FreeAPSSettings.decodeFrom(json: #"{"homeOnBoardCOB": false}"#)
-        XCTAssertTrue(one.homeOnBoardGlucose)
-        XCTAssertFalse(one.homeOnBoardCOB)
-
-        // an older build's file: the removed key ignored, the rest read as before
-        let older = try FreeAPSSettings.decodeFrom(json: #"{"skipGlucoseChart": true, "hours": 9}"#)
-        XCTAssertEqual(older.hours, 9)
-        XCTAssertTrue(older.homeOnBoardGlucose)
-        XCTAssertNil(older.dictionaryRepresentation?["skipGlucoseChart"])
-
-        // written and read back
-        var settings = FreeAPSSettings()
-        settings.homeOnBoardGlucose = false
-        let written = try FreeAPSSettings.decodeFrom(json: settings.rawJSON)
-        XCTAssertFalse(written.homeOnBoardGlucose)
-        XCTAssertTrue(written.homeOnBoardCOB)
-        XCTAssertNotNil(settings.dictionaryRepresentation?["homeOnBoardGlucose"])
-        XCTAssertNotNil(settings.dictionaryRepresentation?["homeOnBoardCOB"])
-        XCTAssertNil(settings.dictionaryRepresentation?["skipGlucoseChart"])
-
-        // a toggle alone: no reload
-        var toggled = FreeAPSSettings()
-        toggled.homeOnBoardGlucose = false
-        toggled.homeOnBoardCOB = false
-        XCTAssertEqual(Home.ReloadSettings(FreeAPSSettings()), Home.ReloadSettings(toggled))
     }
 
     // MARK: - Today on the Insulin and Meals tabs
@@ -2997,10 +3044,15 @@ final class InsulinMealsTabsTests: XCTestCase {
         )
     }
 
-    /// Only today's boluses are kept with the day (the cached past days keep their hours alone), oldest -> newest.
-    func testOnlyTodayKeepsItsBoluses() {
+    /// Today keeps all its boluses, oldest -> newest; a cached past day only those that aren't SMBs (its SMBs are in
+    /// its hours), for Good & bad days. The Today card lists today's alone.
+    func testTodayKeepsAllItsBolusesAPastDayNotItsSMBs() {
         let days = insulinPeriod(.days7, now: clock(6, 12, 30)).days
-        XCTAssertTrue(days.dropLast().allSatisfy(\.boluses.isEmpty))
+        for day in days.dropLast() {
+            XCTAssertEqual(day.boluses.map(\.isSMB), [false])
+            XCTAssertEqual(day.boluses.map(\.units), [5])
+            XCTAssertEqual(day.smb, 0.5, accuracy: 1E-9)
+        }
         XCTAssertEqual(days.last?.boluses.map(\.date), [clock(6, 8), clock(6, 9)])
         XCTAssertEqual(days.last?.boluses.map(\.isSMB), [false, true])
         XCTAssertEqual(days.last?.boluses.map(\.units), [5, 0.5])

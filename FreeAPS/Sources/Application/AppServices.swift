@@ -56,6 +56,8 @@ import Swinject
         try await startService(resolver.resolve(PumpEventStore.self))
         // listens for the insulin data changes the store (and the Reasons save) send; its start() only registers observers
         try await startService(resolver.resolve(InsulinStatsService.self))
+        // before DeviceDataManager, which records the CGM sessions' events (buffered until this consumes them)
+        try await startService(resolver.resolve(CGMSessionStore.self))
         try await startService(resolver.resolve(DatabaseManager.self))
         try await startService(resolver.resolve(LoopStatRecordStorage.self))
 

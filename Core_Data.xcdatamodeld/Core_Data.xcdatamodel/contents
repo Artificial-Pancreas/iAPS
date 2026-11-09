@@ -48,6 +48,23 @@
             <fetchIndexElement property="date" type="Binary" order="ascending"/>
         </fetchIndex>
     </entity>
+    <entity name="CGMSession" representedClassName="CGMSession" syncable="YES" codeGenerationType="class">
+        <attribute name="cgmId" optional="YES" attributeType="String"/>
+        <attribute name="device" optional="YES" attributeType="String"/>
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="expectedLife" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="oneMinute" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="plugin" optional="YES" attributeType="String"/>
+        <attribute name="sensorId" optional="YES" attributeType="String"/>
+        <attribute name="sensorStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <fetchIndex name="byStartIndex">
+            <fetchIndexElement property="start" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>

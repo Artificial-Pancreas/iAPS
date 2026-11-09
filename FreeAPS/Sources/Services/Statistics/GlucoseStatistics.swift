@@ -46,6 +46,13 @@ struct PeriodDays: Sendable, Equatable {
     let days: [DayAggregate]
 }
 
+/// Good & bad days' glucose (`GlucoseStatistics.goodBadDays`): the result, and the GRI of every scored day, the day
+/// before the period's too (the previous day's GRI row).
+struct GoodBadDaysGlucose: Sendable, Equatable {
+    let result: GoodBadDaysResult
+    let gri: [StatsDayKey: Double]
+}
+
 /// The glucose statistics of Home, Statistics and the stats upload: reads the readings and runs the engine off the
 /// main thread, with a per-day aggregate cache of the complete days.
 ///
@@ -234,6 +241,28 @@ actor GlucoseStatistics: AppService, LifetimeOwner {
             }
         }
         return pooled
+    }
+
+    /// Good & bad days: the `count` complete days to yesterday (`GlucoseStatsEngine.completeDays`), scored from the
+    /// cached day aggregates, grouped and profiled from the readings (`GoodBadDaysEngine.result`). The day before them
+    /// is read too: its lows reach the first morning's low treatments, and its GRI is the first day's previous one. The
+    /// readings are held while a session is open, as the AGP's, and read first, so the days the cache misses come from
+    /// them. The engine runs off the actor.
+    /// - Parameter now: the caller's, so its other days (the factors') are the same ones across a midnight; nil for
+    ///   the service's
+    func goodBadDays(count: Int, bands: StatsBands, now: Date? = nil) async -> GoodBadDaysGlucose {
+        let tail = await readTail()
+        let ctx = tail.ctx
+        let period = StatsPeriod.usualDayPeriods.first { $0.calendarDayCount == count }
+        // the day before, then the period's
+        let days = count > 0 ? Engine.completeDays(count: count + 1, today: now ?? ctx.now, calendar: ctx.calendar) : []
+        guard let first = days.first, let last = days.last else {
+            return await Self.goodBadDays([], days: [], period: period, bands: bands, calendar: ctx.calendar)
+        }
+        let window = DateInterval(start: first.start, end: last.end)
+        let raw = await readings(Self.readRange(window, ctx), ctx, tail: tail.raw)
+        let aggregates = await dayAggregates(days, ctx, tail: tail.raw)
+        return await Self.goodBadDays(raw.points, days: aggregates, period: period, bands: bands, calendar: ctx.calendar)
     }
 
     /// Statistics opened: the readings Trace, AGP and Hour of day read are held (and kept current) until it closes.
@@ -717,6 +746,30 @@ actor GlucoseStatistics: AppService, LifetimeOwner {
         calendar: Calendar
     ) async -> WeekdayHours {
         Engine.weekdayHours(Engine.weigh(Engine.clean(points)), days: days, bands: bands, calendar: calendar)
+    }
+
+    /// - Parameter days: the day before the period, then the period's
+    private static func goodBadDays(
+        _ points: [GlucosePoint],
+        days: [DayAggregate],
+        period: StatsPeriod?,
+        bands: StatsBands,
+        calendar: Calendar
+    ) async -> GoodBadDaysGlucose {
+        let result = GoodBadDaysEngine.result(
+            period: period,
+            days: Array(days.dropFirst()),
+            readings: Engine.weigh(Engine.clean(points)),
+            bands: bands,
+            calendar: calendar
+        )
+        var gri: [StatsDayKey: Double] = [:]
+        for day in days {
+            if let scored = GoodBadDaysEngine.score(day, nightTIR: nil, bands: bands, calendar: calendar) {
+                gri[scored.key] = scored.gri.value
+            }
+        }
+        return GoodBadDaysGlucose(result: result, gri: gri)
     }
 
     // MARK: - Helpers

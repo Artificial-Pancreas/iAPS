@@ -8,6 +8,7 @@ extension Settings {
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var databaseManager: DatabaseManager!
         @Injected() private var pumpEventStore: PumpEventStore!
+        @Injected() private var cgmSessionStore: CGMSessionStore!
 
         @Setting(\.closedLoop) var closedLoop = false
         @Setting(\.debugOptions) var debugOptions = false
@@ -143,6 +144,9 @@ extension Settings {
                 case PumpEventStore.Entity.schedules:
                     // re-seeded from the current schedule
                     await pumpEventStore.wipeSchedules()
+                case CGMSessionStore.Entity.sessions:
+                    // through its writer, the entered and the backfilled sessions too: the current CGM's opens again
+                    await cgmSessionStore.wipe()
                 default:
                     await CoreDataStack.shared.deleteBatch(entity: entity)
                 }

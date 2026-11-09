@@ -159,7 +159,8 @@ struct HourInsulin: Sendable, Equatable {
     }
 }
 
-/// A bolus of today (`DayInsulin.boluses`): the Insulin tab's Today lists them.
+/// A bolus of a day (`DayInsulin.boluses`): the Insulin tab's Today lists today's, Good & bad days pairs the past
+/// days' with the meals.
 struct InsulinBolus: Sendable, Equatable {
     let date: Date
     /// U
@@ -198,7 +199,8 @@ struct DayInsulin: Sendable, Equatable {
     let coveredUntil: Date?
     /// when some covered time is before the oldest schedule record: that record's date
     let profileAssumedBefore: Date?
-    /// today's boluses (the SMBs too), oldest -> newest; none for a past day (the cache keeps its hours only)
+    /// the boluses, oldest -> newest: today's all (the SMBs too); a past day's (cached) only those that aren't SMBs
+    /// (`PumpEventRecord.isSMB`), a few a day: Good & bad days' late or no bolus
     let boluses: [InsulinBolus]
 
     /// covered time, or a bolus or a temp: without, "No pump data"
@@ -1171,8 +1173,8 @@ enum InsulinStatsEngine {
                 hasDeliveries: hasDeliveries,
                 coveredUntil: coveredUntil,
                 profileAssumedBefore: profileAssumedBefore,
-                // only today's: a past day is cached (its hours are enough); in `usableEvents`' order (by date)
-                boluses: isToday ? boluses : []
+                // a past day is cached: its SMBs (dozens a day) are in its hours only; in `usableEvents`' order (by date)
+                boluses: isToday ? boluses : boluses.filter { !$0.isSMB }
             )
         }
     }

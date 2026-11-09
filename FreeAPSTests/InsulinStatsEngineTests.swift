@@ -155,6 +155,32 @@ final class InsulinStatsEngineTests: XCTestCase, PumpEventRecordBuilders {
         XCTAssertEqual(pen.coveredSeconds, 0)
     }
 
+    /// A past day keeps its boluses that aren't SMBs (External Insulin too), oldest -> newest, for Good & bad days; its
+    /// SMBs only in its hours and totals, as before. Today keeps all of them.
+    func testAPastDayKeepsItsBolusesButNotItsSMBs() {
+        let events = [
+            bolus(clock(7, 40), 4),
+            bolus(clock(8), 0.3, smb: true),
+            bolus(clock(8, 5), 0.2, smb: true),
+            bolus(clock(12), 2, external: true),
+            bolus(clock(19), 0.4, smb: true)
+        ]
+        let past = dayInsulin(Self.day0, events: events, coverage: [coverage(clock(0), day(1))])
+        XCTAssertFalse(past.isToday)
+        XCTAssertEqual(past.boluses.map(\.date), [clock(7, 40), clock(12)])
+        XCTAssertEqual(past.boluses.map(\.units), [4, 2])
+        XCTAssertEqual(past.boluses.map(\.isExternal), [false, true])
+        XCTAssertFalse(past.boluses.contains(where: \.isSMB))
+        XCTAssertEqual(past.smb, 0.9, accuracy: accuracy)
+        XCTAssertEqual(past.bolus, 6, accuracy: accuracy)
+        XCTAssertEqual(past.hours[8].smb, 0.5, accuracy: accuracy)
+        XCTAssertEqual(past.hours[7].bolus, 4, accuracy: accuracy)
+
+        let today = dayInsulin(Self.day0, events: events, coverage: [coverage(clock(0), clock(20))], now: clock(20))
+        XCTAssertTrue(today.isToday)
+        XCTAssertEqual(today.boluses.map(\.isSMB), [false, true, true, false, true])
+    }
+
     func testCoverageEdges() {
         // the fill starts and ends exactly at the coverage edges; touching rows are one
         let rows = [coverage(clock(10), clock(11)), coverage(clock(11), clock(12)), coverage(clock(13), clock(13, 30))]

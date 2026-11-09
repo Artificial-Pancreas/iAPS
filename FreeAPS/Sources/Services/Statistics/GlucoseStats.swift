@@ -219,6 +219,80 @@ enum StatsPeriod: String, JSON, CaseIterable, Identifiable, Sendable, Hashable {
     }
 }
 
+/// The Home cards' and the Statistics screen's display choices, kept on the phone in `UserDefaults`: UI-only, so not
+/// in `FreeAPSSettings` (nor in the settings backup). A missing value, or one the choice doesn't offer (an unknown raw
+/// value, another period), reads as the default; a value the choice doesn't offer is never written. Tests pass a
+/// `UserDefaults(suiteName:)`.
+struct StatsDisplayPreferences {
+    /// "iAPS."-prefixed, as `IAPSconfig`'s keys
+    enum Key {
+        /// the stats bar's range (`StatsPeriod.homeStatsRanges`)
+        static let homeStatsRange = "iAPS.stats.home.range"
+        /// the stats bar's TITR: the tight part of its in-range segment and its figure ("Show TITR")
+        static let homeStatsTITR = "iAPS.stats.home.titr"
+        /// the On board card's glucose and carbs-on-board lanes
+        static let homeOnBoardGlucose = "iAPS.stats.home.onBoard.glucose"
+        static let homeOnBoardCOB = "iAPS.stats.home.onBoard.cob"
+        /// the Day tab's usual day: shown, and its baseline (`StatsPeriod.usualDayPeriods`)
+        static let usualDayShown = "iAPS.stats.day.usualDay"
+        static let usualDayPeriod = "iAPS.stats.day.usualDayPeriod"
+    }
+
+    let defaults: UserDefaults
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+    }
+
+    /// Today or 24 h (24 h by default)
+    var homeStatsRange: StatsPeriod {
+        get { period(Key.homeStatsRange, offered: StatsPeriod.homeStatsRanges) ?? .last24h }
+        nonmutating set { setPeriod(newValue, Key.homeStatsRange, offered: StatsPeriod.homeStatsRanges) }
+    }
+
+    /// off by default
+    var homeStatsTITR: Bool {
+        get { defaults.object(forKey: Key.homeStatsTITR) as? Bool ?? false }
+        nonmutating set { defaults.set(newValue, forKey: Key.homeStatsTITR) }
+    }
+
+    /// on by default
+    var homeOnBoardGlucose: Bool {
+        get { defaults.object(forKey: Key.homeOnBoardGlucose) as? Bool ?? true }
+        nonmutating set { defaults.set(newValue, forKey: Key.homeOnBoardGlucose) }
+    }
+
+    /// on by default
+    var homeOnBoardCOB: Bool {
+        get { defaults.object(forKey: Key.homeOnBoardCOB) as? Bool ?? true }
+        nonmutating set { defaults.set(newValue, forKey: Key.homeOnBoardCOB) }
+    }
+
+    /// off by default
+    var usualDayShown: Bool {
+        get { defaults.object(forKey: Key.usualDayShown) as? Bool ?? false }
+        nonmutating set { defaults.set(newValue, forKey: Key.usualDayShown) }
+    }
+
+    /// the last 14, 30 or 90 days (14 by default)
+    var usualDayPeriod: StatsPeriod {
+        get { period(Key.usualDayPeriod, offered: StatsPeriod.usualDayPeriods) ?? .days14 }
+        nonmutating set { setPeriod(newValue, Key.usualDayPeriod, offered: StatsPeriod.usualDayPeriods) }
+    }
+
+    private func period(_ key: String, offered: [StatsPeriod]) -> StatsPeriod? {
+        guard let raw = defaults.string(forKey: key), let period = StatsPeriod(rawValue: raw),
+              offered.contains(period)
+        else { return nil }
+        return period
+    }
+
+    private func setPeriod(_ period: StatsPeriod, _ key: String, offered: [StatsPeriod]) {
+        guard offered.contains(period) else { return }
+        defaults.set(period.rawValue, forKey: key)
+    }
+}
+
 enum HbA1cUnit: Sendable {
     case percent
     case mmolPerMol
@@ -399,6 +473,36 @@ struct DayAggregate: Sendable, Equatable {
     let histogram: GlucoseHistogram
 }
 
+/// The Glycemia Risk Index (Klonoff et al. 2022) of a histogram (`GlucoseStatsEngine.gri`): 0 best, 100 worst. Always
+/// on the standard ranges, never the Statistics low/high settings. The ranges and components are percents of the
+/// covered time.
+struct GlycemiaRiskIndex: Sendable, Equatable {
+    enum Zone: Int, CaseIterable, Sendable {
+        case a
+        case b
+        case c
+        case d
+        case e
+    }
+
+    /// below 54
+    let veryLow: Double
+    /// 54 up to the bottom of `tirRange`
+    let low: Double
+    /// above `tirRange` up to 250
+    let high: Double
+    /// above 250
+    let veryHigh: Double
+    /// `veryLow + 0.8 × low`
+    let hypo: Double
+    /// `veryHigh + 0.5 × high`
+    let hyper: Double
+    /// `3.0 × hypo + 1.6 × hyper`, capped at 100
+    let value: Double
+
+    var zone: Zone { GlucoseStatsEngine.griZone(value) }
+}
+
 /// Which rule gave E (`GlucoseStatsEngine.effectiveEndRule`).
 enum StatsEndRule: Sendable, Equatable {
     /// The data is current: E is the newest reading's end (clipped at the end of today). It stays so up to `stallsAt`,
@@ -455,6 +559,19 @@ struct GlucoseSummary: Sendable, Equatable, BandSharesProviding {
     var tirPercent: Int { displayedPercent(tirFraction, of: bands.tirRange) }
     /// The TITR every view shows; callers never round `titrFraction` themselves. Same rule as `tirPercent`.
     var titrPercent: Int { displayedPercent(titrFraction, of: bands.titrRange) }
+
+    /// The fraction of the covered time inside both the in-range band and TITR's range (`bands.titrRange`), 0...1:
+    /// the tight part the Home stats bar draws in its in-range segment. Its TITR figure is `titrPercent`, the standard
+    /// 70–140 share, so the two differ at the edges where the band doesn't contain 70–140: by the time in 70 up to
+    /// `low` (an 80–180 band leaves out 70–79) and in `high` up to 140 (a 70–120 one leaves out 121–140); a band that
+    /// misses 70–140 has no tight part. Any band from 70 or below to 140 or above (the default 70–180, mmol 3.9–10.0)
+    /// draws exactly the figure.
+    var tightInRangeFraction: Double {
+        let lower = Swift.max(bands.low, bands.titrRange.lowerBound)
+        let upper = Swift.min(bands.high, bands.titrRange.upperBound)
+        guard !isEmpty, lower <= upper else { return 0 }
+        return histogram.seconds(in: lower ... upper) / histogram.totalSeconds
+    }
 
     private func displayedPercent(_ fraction: Double, of range: ClosedRange<Int>) -> Int {
         range == bands.low ... bands.high ? percent(.inRange) : Int((fraction * 100).rounded())

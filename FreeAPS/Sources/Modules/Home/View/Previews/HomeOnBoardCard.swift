@@ -2,8 +2,9 @@ import Charts
 import SwiftUI
 
 /// The On board card on Home: the last 24 hours on one time axis, in lanes from the top: glucose (its toggle, with
-/// readings), carbs on board (its toggle, with carbs: a COB above 0) and insulin on board (always), each with its own
-/// grid and values on the trailing side, the hours under them; the time with a negative IOB in the last 24 hours below.
+/// readings), carbs on board (its toggle; flat at 0 with "No carbs logged" without carbs) and insulin on board
+/// (always), each with its own grid and values on the trailing side, the hours under them; the time with a negative IOB
+/// in the last 24 hours below.
 /// Not a link but its lanes and its Negative IOB row: a tap on the glucose lane opens Statistics › Glucose on the Day
 /// tab's 24 hours, on insulin on board Statistics › Insulin on Today, on carbs on board Statistics › Meals on Today, on
 /// the Negative IOB row Statistics › Insulin at 7 d on the Negative IOB card; a long-press picks the lanes
@@ -71,7 +72,8 @@ struct HomeOnBoardCard: View, Equatable {
         let glucoseLevels: [AxisLabel]
         /// oldest -> newest
         let cob: [Point]
-        /// a COB above 0 in the window: without, no carbs lane (and its toggle disabled)
+        /// a COB above 0 in the window: without, the carbs lane is flat at 0 with "No carbs logged" (the card keeps its
+        /// shape before the day's first carbs)
         let hasCarbs: Bool
         let cobDomain: ClosedRange<Double>
         let cobLabels: [AxisLabel]
@@ -183,14 +185,14 @@ struct HomeOnBoardCard: View, Equatable {
 
         // MARK: Lanes
 
-        /// The lanes shown, from the top: glucose when on and with readings, carbs on board when on and with carbs,
-        /// insulin on board always.
-        static func lanes(showGlucose: Bool, showCOB: Bool, hasReadings: Bool, hasCarbs: Bool) -> [Lane] {
+        /// The lanes shown, from the top: glucose when on and with readings, carbs on board when on (with carbs or
+        /// not), insulin on board always.
+        static func lanes(showGlucose: Bool, showCOB: Bool, hasReadings: Bool) -> [Lane] {
             var lanes: [Lane] = []
             if showGlucose, hasReadings {
                 lanes.append(.glucose)
             }
-            if showCOB, hasCarbs {
+            if showCOB {
                 lanes.append(.cob)
             }
             lanes.append(.iob)
@@ -198,7 +200,7 @@ struct HomeOnBoardCard: View, Equatable {
         }
 
         func lanes(showGlucose: Bool, showCOB: Bool) -> [Lane] {
-            Self.lanes(showGlucose: showGlucose, showCOB: showCOB, hasReadings: !glucose.isEmpty, hasCarbs: hasCarbs)
+            Self.lanes(showGlucose: showGlucose, showCOB: showCOB, hasReadings: !glucose.isEmpty)
         }
 
         /// The in-range band's edges, mg/dL: low and high, one when they are the same.
@@ -206,7 +208,7 @@ struct HomeOnBoardCard: View, Equatable {
             bands.low == bands.high ? [bands.low] : [bands.low, bands.high]
         }
 
-        /// Carbs in the window: a COB above 0 in a row (0 throughout: no carbs lane, its toggle disabled).
+        /// Carbs in the window: a COB above 0 in a row (0 throughout: the carbs lane flat, "No carbs logged").
         static func hasCarbs(_ values: [Double]) -> Bool {
             values.contains { $0 > 0 }
         }
@@ -341,7 +343,7 @@ struct HomeOnBoardCard: View, Equatable {
     }
 
     let content: Content
-    /// the long-press menu's toggles (`FreeAPSSettings.homeOnBoardGlucose`, `homeOnBoardCOB`)
+    /// the long-press menu's toggles (`StatsDisplayPreferences.homeOnBoardGlucose`, `homeOnBoardCOB`)
     let showGlucose: Bool
     let showCOB: Bool
     /// the Negative IOB row: Statistics › Insulin's Negative IOB card
@@ -426,7 +428,15 @@ struct HomeOnBoardCard: View, Equatable {
         Button(action: open(lane)) {
             switch lane {
             case .glucose: laneRow(glucoseChart, labels: content.glucoseLevels)
-            case .cob: laneRow(cobChart, labels: content.cobLabels)
+            case .cob:
+                laneRow(
+                    cobChart,
+                    labels: content.cobLabels,
+                    flat: content.hasCarbs ? nil : FlatLane(
+                        note: NSLocalizedString("No carbs logged", comment: "Home On board card: no carbs in its lane"),
+                        color: Color(.loopYellow).opacity(0.8)
+                    )
+                )
             case .iob: laneRow(iobChart, labels: content.iobLabels)
             }
         }
@@ -441,7 +451,19 @@ struct HomeOnBoardCard: View, Equatable {
         }
     }
 
-    private func laneRow<ChartView: View>(_ chart: ChartView, labels: [AxisLabel]) -> some View {
+    /// A lane with nothing to draw (the COB lane without carbs): a line at 0 and a note above it.
+    private struct FlatLane {
+        let note: String
+        let color: Color
+    }
+
+    /// - Parameter flat: drawn over the plot (the line inside it, not half clipped at its bottom edge, as a mark at 0
+    ///   would be)
+    private func laneRow<ChartView: View>(
+        _ chart: ChartView,
+        labels: [AxisLabel],
+        flat: FlatLane? = nil
+    ) -> some View {
         HStack(spacing: 0) {
             chart
                 .chartXScale(domain: content.window.start ... content.window.end)
@@ -466,6 +488,21 @@ struct HomeOnBoardCard: View, Equatable {
                                         .frame(width: axisWidth - 4, alignment: .leading)
                                         .position(x: plot.maxX + 4 + (axisWidth - 4) / 2, y: plot.minY + y)
                                 }
+                            }
+                            if let flat {
+                                // above the line at 0, below the middle gridline (0 ... 10 g: 5 g)
+                                VStack(spacing: 3) {
+                                    Text(flat.note)
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                        .lineLimit(1)
+                                        .minimumScaleFactor(0.8)
+                                    Rectangle()
+                                        .fill(flat.color)
+                                        .frame(height: 1.5)
+                                }
+                                .frame(width: plot.width, height: plot.height, alignment: .bottom)
+                                .position(x: plot.midX, y: plot.midY)
                             }
                         }
                     }
@@ -521,7 +558,8 @@ struct HomeOnBoardCard: View, Equatable {
         .chartYScale(domain: content.glucoseDomain)
     }
 
-    /// As the COB chart was: LoopYellow with its gradient, at 0.8.
+    /// As the COB chart was: LoopYellow with its gradient, at 0.8. Without carbs in the window: its grids alone, the
+    /// lane's row draws a LoopYellow line at 0 and "No carbs logged" above it (`FlatLane`).
     private var cobChart: some View {
         Chart {
             hourGrid
@@ -646,12 +684,11 @@ struct HomeOnBoardCard: View, Equatable {
 }
 
 /// The On board card's long-press menu (the card's `.contextMenu`, `HomeRootView`): the glucose and the carbs on board
-/// lanes (insulin on board always). The carbs toggle is disabled, still showing its setting, while the card has no
-/// carbs (`HomeOnBoardCard.Content.hasCarbs`).
+/// lanes (insulin on board always), with no title, as the stats bar's. The carbs toggle is always there: a lane without
+/// carbs is drawn flat (`HomeOnBoardCard.Content.hasCarbs`).
 struct HomeOnBoardMenu: View {
     let showGlucose: Bool
     let showCOB: Bool
-    let hasCarbs: Bool
     let setShowGlucose: @MainActor @Sendable(Bool) -> Void
     let setShowCOB: @MainActor @Sendable(Bool) -> Void
 
@@ -659,22 +696,17 @@ struct HomeOnBoardMenu: View {
     init(
         showGlucose: Bool,
         showCOB: Bool,
-        hasCarbs: Bool,
         setShowGlucose: @escaping @MainActor @Sendable(Bool) -> Void,
         setShowCOB: @escaping @MainActor @Sendable(Bool) -> Void
     ) {
         self.showGlucose = showGlucose
         self.showCOB = showCOB
-        self.hasCarbs = hasCarbs
         self.setShowGlucose = setShowGlucose
         self.setShowCOB = setShowCOB
     }
 
     var body: some View {
-        Section("Show") {
-            Toggle("Glucose", isOn: Binding(get: { [showGlucose] in showGlucose }, set: setShowGlucose))
-            Toggle("Carbs on board", isOn: Binding(get: { [showCOB] in showCOB }, set: setShowCOB))
-                .disabled(!hasCarbs)
-        }
+        Toggle("Glucose", isOn: Binding(get: { [showGlucose] in showGlucose }, set: setShowGlucose))
+        Toggle("Carbs on board", isOn: Binding(get: { [showCOB] in showCOB }, set: setShowCOB))
     }
 }

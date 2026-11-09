@@ -1150,6 +1150,29 @@ final class InsulinStatsServiceTests: XCTestCase, PumpEventRecordBuilders {
         ])
     }
 
+    /// Good & bad days' boluses: a cached past day keeps its boluses that aren't SMBs (External Insulin too), a few a day
+    /// (the 12 SMBs a day of the fixture in its hours only), and gives them from the cache without a read.
+    func testACachedPastDayKeepsItsBolusesButNotItsSMBs() async throws {
+        let f = Fixture(now: noon)
+        let history = twoWeeks(until: noon)
+        try await store(history, in: f)
+        let days = (-7 ... -1).map { DateInterval(start: at($0), end: at($0 + 1)) }
+        let cold = try await f.statistics.days(days)
+        await f.source.clearCalls()
+        let warm = try await f.statistics.days(days)
+        XCTAssertEqual(warm, cold)
+        let reads = await eventReads(f)
+        XCTAssertEqual(reads, [])
+
+        for (offset, day) in zip(-7 ... -1, warm) {
+            let meals = [8.0, 13, 19].map { at(offset, hours: $0) } + (offset == -6 ? [at(-6, hours: 21)] : [])
+            XCTAssertEqual(day.boluses.map(\.date), meals, "\(offset)")
+            XCTAssertFalse(day.boluses.contains(where: \.isSMB))
+            XCTAssertEqual(day.smb, 12 * (0.3 + Double(offset + 14) * 0.01), accuracy: 1E-6)
+        }
+        XCTAssertEqual(warm[1].boluses.last?.isExternal, true)
+    }
+
     func testTodayIsNeverCached() async throws {
         let f = Fixture(now: noon)
         var history = twoWeeks(until: noon)

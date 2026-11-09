@@ -714,6 +714,51 @@ final class GlucoseStatisticsCacheTests: XCTestCase {
         XCTAssertEqual(trace.points.last?.time, t)
     }
 
+    // MARK: - Good & bad days
+
+    /// The 14 complete days to yesterday, scored from the day cache and profiled from the readings, held from the day
+    /// before them (one read, the tail apart): the days the cache misses come from the held readings. Again, nothing is
+    /// read: the tail and the days are held or cached.
+    func testGoodBadDaysReadsOnlyTheMissingDaysAndReusesTheHeldReadings() async {
+        let data = points(from: day(-16), through: Self.at(0, hours: 12))
+        let f = await fixture(now: noonish, points: data)
+        await f.statistics.beginSession()
+        let glucose = await f.statistics.goodBadDays(count: 14, bands: bands)
+        let result = glucose.result
+        let head = DateInterval(start: day(-15).addingTimeInterval(-TimeInterval.hours(1)), end: tail.start)
+        var fetches = await f.source.fetches
+        XCTAssertEqual(fetches, [tail, head])
+
+        // the engine's, of the readings read: from the day before's lookback hour to its lookahead after yesterday
+        let readEnd = day(0).addingTimeInterval(GlucoseStatistics.Config.lookahead)
+        let w = Engine.weigh(Engine.clean(data.filter { $0.time >= head.start && $0.time < readEnd }))
+        let days = Engine.completeDays(count: 14, today: noonish, calendar: Self.berlin)
+        XCTAssertEqual(days.first?.start, day(-14))
+        XCTAssertEqual(days.last?.end, day(0))
+        let expected = GoodBadDaysEngine.result(
+            period: .days14,
+            days: Engine.dayAggregates(w, days: days),
+            readings: w,
+            bands: bands,
+            calendar: Self.berlin
+        )
+        XCTAssertEqual(result, expected)
+        XCTAssertEqual(result.scored, 14)
+        // the GRI of the day before too, for the first day's previous day
+        let before = Engine.dayAggregates(w, days: [DateInterval(start: day(-15), end: day(-14))])[0]
+        XCTAssertEqual(glucose.gri.count, 15)
+        XCTAssertEqual(
+            glucose.gri[StatsDayKey(day(-15), Self.berlin)],
+            GoodBadDaysEngine.score(before, nightTIR: nil, bands: bands, calendar: Self.berlin)?.gri.value
+        )
+
+        await f.source.clearFetches()
+        let again = await f.statistics.goodBadDays(count: 14, bands: bands)
+        fetches = await f.source.fetches
+        XCTAssertEqual(fetches, [])
+        XCTAssertEqual(again, glucose)
+    }
+
     // MARK: - Session
 
     func testLiveUpdateIsSplicedIntoTheHeldReadings() async {

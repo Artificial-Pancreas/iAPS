@@ -17,8 +17,9 @@ struct HomeStatsSnapshot: Equatable {
 }
 
 /// The stats card on Home: the band bar of its range (Today or 24 h, muted after the title), the in-range percent, the
-/// mean and CV, and the GMI of the last 90 days. A long-press picks the range (`HomeStatsRangeMenu`, the card's
-/// `.contextMenu` in `HomeRootView`); a tap opens the Statistics Overview.
+/// mean and CV, and the GMI of the last 90 days; with "Show TITR", the in-range segment's tight part darker and the TITR
+/// figure. A long-press picks the range and TITR (`HomeStatsRangeMenu`, the card's `.contextMenu` in `HomeRootView`); a
+/// tap opens the Statistics Overview.
 struct HomeStatsBar: View {
     /// What the card shows, formatted. The numbers are the Overview's (`Stat.Overview`), so the two never differ.
     ///
@@ -55,6 +56,12 @@ struct HomeStatsBar: View {
         /// "70–145": the header's detail where `inRangeRange` doesn't fit
         let inRangeBounds: String
         let segments: [BandSegment]
+        /// "48%": the TITR figure, 70–140 (`GlucoseSummary.titrPercent`, the Overview's), shown with "Show TITR"
+        let titr: String
+        /// the in-range segment's tight part, inside both the in-range band and 70–140
+        /// (`GlucoseSummary.tightInRangeFraction`), as a share of the segment, 0 ... 1, rounded to `fractionStep`; nil
+        /// without an in-range segment
+        let tightShare: Double?
         let mean: String
         /// "31%"
         let cv: String
@@ -79,9 +86,38 @@ struct HomeStatsBar: View {
             segments = overview.segments.map {
                 BandSegment(band: $0.band, fraction: ($0.fraction / Self.fractionStep).rounded() * Self.fractionStep)
             }
+            titr = overview.titr
+            tightShare = segments.contains { $0.band == .inRange } ? Self.tightShare(summary) : nil
             mean = overview.mean
             cv = overview.cv
             self.gmi = Self.gmiLine(gmi, settings: settings)
+        }
+
+        /// The tight part as a share of the in-range segment, rounded to `fractionStep`; nil without in-range time.
+        static func tightShare(_ summary: GlucoseSummary) -> Double? {
+            let inRange = summary.fraction(.inRange)
+            guard inRange > 0 else { return nil }
+            let share = Swift.min(summary.tightInRangeFraction / inRange, 1)
+            return (share / fractionStep).rounded() * fractionStep
+        }
+
+        /// The tight part in a bar `width` wide, laid out as the bar is (`StatsSplitBar`: its widths, 2 pt gaps, an
+        /// HStack, so mirrored right to left too): the widths of the segments before the in-range one, then `share` of
+        /// its width. On the segment's low side, where 70–140 is in a band from 70 or below (a band from above 70
+        /// leaves part of the tight time out of the segment, see `GlucoseSummary.tightInRangeFraction`); nil without an
+        /// in-range segment or a tight part.
+        static func tightPart(_ segments: [BandSegment], share: Double?, width: CGFloat) -> TightPart? {
+            guard let share, share > 0, let index = segments.firstIndex(where: { $0.band == .inRange })
+            else { return nil }
+            let widths = StatsSplitBar.widths(segments.map(\.fraction), total: width)
+            return TightPart(before: Array(widths[..<index]), width: widths[index] * CGFloat(share))
+        }
+
+        struct TightPart: Equatable {
+            /// the segments before the in-range one, pt
+            let before: [CGFloat]
+            /// pt
+            let width: CGFloat
         }
 
         /// The GMI line of the last 90 days' summary: its GMI in the Overview's format and HbA1c unit
@@ -108,6 +144,8 @@ struct HomeStatsBar: View {
     let content: Content
     /// the card's range setting: its header's range, its long-press menu's pick
     let range: StatsPeriod
+    /// the long-press menu's "Show TITR": the tight part on the bar and the TITR figure
+    let showTITR: Bool
     /// the Statistics Overview on the card's range
     let open: () -> Void
 
@@ -193,11 +231,46 @@ struct HomeStatsBar: View {
     }
 
     private var bar: some View {
-        BandBar(segments: content.segments, cornerRadius: 5)
+        BandBar(segments: content.segments, cornerRadius: Self.barCornerRadius)
+            .overlay {
+                if showTITR {
+                    tightPart
+                }
+            }
             .frame(height: 14)
     }
 
-    /// The GMI line on the left, the mean and CV on the right; one under the other when they don't fit (large text).
+    private static let barCornerRadius: CGFloat = 5
+    /// the tight part's shade of the in-range green: darker by this much (`brightness`), in light and dark mode
+    private static let tightDarkening = -0.2
+
+    /// The in-range segment's tight part, darker, over the bar: the other segments and their widths stay as they are.
+    /// An HStack with the bar's gaps, as the bar under it, so it mirrors with it right to left.
+    private var tightPart: some View {
+        GeometryReader { geometry in
+            if let part = Content.tightPart(content.segments, share: content.tightShare, width: geometry.size.width) {
+                HStack(spacing: StatsSplitBar.gap) {
+                    ForEach(part.before.indices, id: \.self) { index in
+                        Color.clear
+                            .frame(width: part.before[index])
+                    }
+                    tightShade(Rectangle())
+                        .frame(width: part.width)
+                    Spacer(minLength: 0)
+                }
+            }
+        }
+        .clipShape(RoundedRectangle(cornerRadius: Self.barCornerRadius))
+    }
+
+    private func tightShade<S: Shape>(_ shape: S) -> some View {
+        shape
+            .fill(GlucoseBand.inRange.color)
+            .brightness(Self.tightDarkening)
+    }
+
+    /// The GMI line on the left, the TITR figure (with "Show TITR"), the mean and CV on the right; where they don't
+    /// fit (large text), the GMI line and TITR above the mean and CV, then each on its own line.
     private var numbers: some View {
         ViewThatFits(in: .horizontal) {
             HStack(alignment: .firstTextBaseline, spacing: 8) {
@@ -205,17 +278,46 @@ struct HomeStatsBar: View {
                     gmiLine(gmi)
                 }
                 Spacer(minLength: 0)
+                if showTITR {
+                    titrFigure
+                }
                 averages
+            }
+            if showTITR, let gmi = content.gmi {
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(alignment: .firstTextBaseline, spacing: 8) {
+                        gmiLine(gmi)
+                        Spacer(minLength: 0)
+                        titrFigure
+                    }
+                    averages
+                }
             }
             VStack(alignment: .leading, spacing: 4) {
                 if let gmi = content.gmi {
                     gmiLine(gmi)
+                }
+                if showTITR {
+                    titrFigure
                 }
                 averages
             }
         }
         .font(.subheadline)
         .lineLimit(1)
+    }
+
+    /// The tight part's swatch and "TITR 48%"
+    private var titrFigure: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 5) {
+            tightShade(RoundedRectangle(cornerRadius: 2))
+                .frame(width: 9, height: 9)
+            number(
+                NSLocalizedString("TITR", comment: "Home stats bar: Time in Tight Range, 70-140 (\"TITR 48%\")"),
+                content.titr
+            )
+        }
+        .fixedSize()
     }
 
     /// "Mean 128 · CV 31%"
@@ -260,17 +362,27 @@ struct HomeStatsBar: View {
     @MainActor private static var inRangeTitle: String { StatsFormatting.name(.inRange) }
 }
 
-/// The stats bar's long-press menu (the card's `.contextMenu`, `HomeRootView`): its range, Today or 24 h.
+/// The stats bar's long-press menu (the card's `.contextMenu`, `HomeRootView`): its range, Today or 24 h, and "Show
+/// TITR" (off by default).
 struct HomeStatsRangeMenu: View {
     /// the card's range setting
     let range: StatsPeriod
+    let showTITR: Bool
     let select: @MainActor @Sendable(StatsPeriod) -> Void
+    let setShowTITR: @MainActor @Sendable(Bool) -> Void
 
-    // explicit: the synthesized memberwise init drops `@Sendable` from `select` in this target (Swift 5 mode, targeted
-    // concurrency), so passing a `@Sendable` closure to it warns
-    init(range: StatsPeriod, select: @escaping @MainActor @Sendable(StatsPeriod) -> Void) {
+    // explicit: the synthesized memberwise init drops `@Sendable` from the closures in this target (Swift 5 mode,
+    // targeted concurrency), so passing `@Sendable` closures to it warns
+    init(
+        range: StatsPeriod,
+        showTITR: Bool,
+        select: @escaping @MainActor @Sendable(StatsPeriod) -> Void,
+        setShowTITR: @escaping @MainActor @Sendable(Bool) -> Void
+    ) {
         self.range = range
+        self.showTITR = showTITR
         self.select = select
+        self.setShowTITR = setShowTITR
     }
 
     var body: some View {
@@ -283,5 +395,6 @@ struct HomeStatsRangeMenu: View {
             .pickerStyle(.inline)
             .labelsHidden()
         }
+        Toggle("Show TITR", isOn: Binding(get: { [showTITR] in showTITR }, set: setShowTITR))
     }
 }

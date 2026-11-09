@@ -1104,6 +1104,134 @@ final class GlucoseStatsEngineTests: XCTestCase {
         XCTAssertNotEqual(profile(at: day(1).addingTimeInterval(60)), current)
     }
 
+    // MARK: - AGP over a list of days
+
+    /// The days of a window, listed, give the window's AGP: across a 25-hour day, with readings across each midnight
+    /// (at :02, :07, …) and a lookback reading before the first day.
+    func testAGPOfAWindowsDaysIsTheWindowsAGP() {
+        let window = DateInterval(start: day(3), end: day(8))
+        let start = day(3).addingTimeInterval(-.hours(1) + .minutes(2))
+        let w = weighed(points(from: start, every: .minutes(5), count: 6 * 300) { Int16(80 + ($0 * 7) % 150) })
+        let days = StatsClock.calendarDays(in: window, calendar: calendar)
+        XCTAssertEqual(days.count, 5)
+        XCTAssertTrue(days.contains { $0.duration == .hours(25) })
+        XCTAssertEqual(Engine.agp(w, calendar: calendar, days: days), Engine.agp(w, calendar: calendar, clippedTo: window))
+        XCTAssertEqual(
+            Engine.agp(w, calendar: calendar, days: days, poolNeighbours: 0),
+            Engine.agp(w, calendar: calendar, clippedTo: window, poolNeighbours: 0)
+        )
+        XCTAssertEqual(Engine.agp(w, calendar: calendar, days: []), Array(repeating: nil, count: 96))
+    }
+
+    /// A reading across midnight gives each listed day its part, at the reading's own clock time; a day that isn't
+    /// listed gives nothing.
+    func testAGPOfAListOfDaysSplitsAReadingAcrossMidnight() {
+        let day0 = DateInterval(start: day(0), end: day(1))
+        let day1 = DateInterval(start: day(1), end: day(2))
+        let day2 = DateInterval(start: day(2), end: day(3))
+        let w = [
+            // 23:55 to 00:05
+            WeightedPoint(time: day(1).addingTimeInterval(-.minutes(5)), mgdl: 150, span: .minutes(10)),
+            WeightedPoint(time: day(1).addingTimeInterval(.minutes(5)), mgdl: 100, span: .minutes(5)),
+            WeightedPoint(time: day(2).addingTimeInterval(.hours(6)), mgdl: 200, span: .minutes(5))
+        ]
+        let first = Engine.agp(w, calendar: calendar, days: [day0], poolNeighbours: 0)
+        XCTAssertEqual(first[95]?.seconds ?? 0, 300, accuracy: 1E-9)
+        XCTAssertNil(first[0])
+
+        let second = Engine.agp(w, calendar: calendar, days: [day1], poolNeighbours: 0)
+        XCTAssertEqual(second[95]?.seconds ?? 0, 300, accuracy: 1E-9) // the 23:55 reading's minutes after midnight
+        XCTAssertEqual(second[95]?.p50 ?? 0, 150, accuracy: 1E-9)
+        XCTAssertEqual(second[0]?.seconds ?? 0, 300, accuracy: 1E-9)
+        XCTAssertNil(second[24])
+
+        // day 1 left out: its readings and its part of the 23:55 one aren't counted
+        let apart = Engine.agp(w, calendar: calendar, days: [day0, day2], poolNeighbours: 0)
+        XCTAssertEqual(apart[95]?.seconds ?? 0, 300, accuracy: 1E-9)
+        XCTAssertNil(apart[0])
+        XCTAssertEqual(apart[24]?.p50 ?? 0, 200, accuracy: 1E-9)
+        XCTAssertEqual(
+            Engine.agp(w, calendar: calendar, days: [day0, day1, day2]),
+            Engine.agp(w, calendar: calendar, clippedTo: DateInterval(start: day(0), end: day(3)))
+        )
+    }
+
+    /// A 25-hour day by its clock: the repeated hour 02:00–03:00 is in its bins twice, as in `agp` of the day.
+    func testAGPOfAListOfDaysOnA25HourDay() {
+        let day = DateInterval(start: Self.fallBack, end: StatsClock.endOfDay(Self.fallBack, calendar: calendar))
+        XCTAssertEqual(day.duration, .hours(25))
+        let w = (0 ..< 300).map { WeightedPoint(time: day.start.addingTimeInterval(Double($0) * 300), mgdl: 120, span: 300) }
+        let bins = Engine.agp(w, calendar: calendar, days: [day], poolNeighbours: 0)
+        XCTAssertEqual(bins[7]?.seconds ?? 0, 900, accuracy: 1E-9)
+        for bin in 8 ... 11 {
+            XCTAssertEqual(bins[bin]?.seconds ?? 0, 1800, accuracy: 1E-9, "\(bin)")
+        }
+        XCTAssertEqual(bins[12]?.seconds ?? 0, 900, accuracy: 1E-9)
+        XCTAssertEqual(bins, Engine.agp(w, calendar: calendar, clippedTo: day, poolNeighbours: 0))
+    }
+
+    // MARK: - Glycemia Risk Index
+
+    /// 1 % very low, 3 % low, 20 % high, 5 % very high: hypo 3.4, hyper 15, GRI 3.0 × 3.4 + 1.6 × 15 = 34.2, zone B.
+    func testGRIOfAFixture() {
+        let h = histogram([(50, 100), (60, 300), (120, 7100), (200, 2000), (300, 500)])
+        guard let gri = Engine.gri(h, bands: bands) else { return XCTFail("gri") }
+        XCTAssertEqual(gri.veryLow, 1, accuracy: 1E-9)
+        XCTAssertEqual(gri.low, 3, accuracy: 1E-9)
+        XCTAssertEqual(gri.high, 20, accuracy: 1E-9)
+        XCTAssertEqual(gri.veryHigh, 5, accuracy: 1E-9)
+        XCTAssertEqual(gri.hypo, 3.4, accuracy: 1E-9)
+        XCTAssertEqual(gri.hyper, 15, accuracy: 1E-9)
+        XCTAssertEqual(gri.value, 34.2, accuracy: 1E-9)
+        XCTAssertEqual(gri.zone, .b)
+        XCTAssertNil(Engine.gri(GlucoseHistogram(), bands: bands))
+    }
+
+    /// The standard edges, whatever the low/high settings: 53 very low, 54 and 69 low, 70 and 180 in range, 181 and 250
+    /// high, 251 very high; for mmol users 181 is in range (`tirRange` 70...181). Each value 5 % of the time.
+    func testGRIUsesTheStandardRangesNotTheSettings() {
+        let h = histogram([
+            (53, 100), (54, 100), (69, 100), (70, 100), (180, 100), (181, 100), (250, 100), (251, 100), (120, 1200)
+        ])
+        let settings = [
+            bands,
+            StatsBands(low: 80, high: 160, units: .mgdL),
+            StatsBands(low: 54, high: 250, units: .mgdL)
+        ]
+        for bands in settings {
+            guard let gri = Engine.gri(h, bands: bands) else { return XCTFail("gri") }
+            XCTAssertEqual(gri.veryLow, 5, accuracy: 1E-9)
+            XCTAssertEqual(gri.low, 10, accuracy: 1E-9)
+            XCTAssertEqual(gri.high, 10, accuracy: 1E-9)
+            XCTAssertEqual(gri.veryHigh, 5, accuracy: 1E-9)
+            XCTAssertEqual(gri.value, 3.0 * (5 + 0.8 * 10) + 1.6 * (5 + 0.5 * 10), accuracy: 1E-9)
+        }
+
+        let mmol = StatsBands(low: Decimal(string: "4.4")!.asMgdL, high: Decimal(string: "8.0")!.asMgdL, units: .mmolL)
+        XCTAssertEqual(mmol.tirRange, 70 ... 181)
+        guard let gri = Engine.gri(h, bands: mmol) else { return XCTFail("gri") }
+        XCTAssertEqual(gri.low, 10, accuracy: 1E-9)
+        XCTAssertEqual(gri.high, 5, accuracy: 1E-9) // 250 only
+        XCTAssertEqual(gri.veryHigh, 5, accuracy: 1E-9)
+    }
+
+    func testGRIIsCappedAndItsZoneEdges() {
+        guard let worst = Engine.gri(histogram([(40, 3600)]), bands: bands) else { return XCTFail("gri") }
+        XCTAssertEqual(worst.hypo, 100, accuracy: 1E-9)
+        XCTAssertEqual(worst.value, 100)
+        XCTAssertEqual(worst.zone, .e)
+        XCTAssertEqual(Engine.gri(histogram([(120, 3600)]), bands: bands)?.value, 0)
+
+        // on the whole-number GRI: A 0–20, B 21–40, C 41–60, D 61–80, E 81–100
+        let zones: [(Double, GlycemiaRiskIndex.Zone)] = [
+            (0, .a), (20, .a), (20.4, .a), (20.5, .b), (21, .b), (40, .b), (40.5, .c), (60, .c), (60.5, .d), (80, .d),
+            (80.5, .e), (81, .e), (100, .e)
+        ]
+        for (value, zone) in zones {
+            XCTAssertEqual(Engine.griZone(value), zone, "\(value)")
+        }
+    }
+
     // MARK: - AGP chart
 
     private func agpBin(_ index: Int, median: Double, p5: Double? = nil, p95: Double? = nil) -> AGPBin {
@@ -2798,6 +2926,30 @@ final class GlucoseStatsEngineTests: XCTestCase {
         XCTAssertEqual(tomorrow.last?.start, today)
     }
 
+    /// The N whole days to yesterday (the 25-hour one among them), the same all day long; By weekday's are N = 7 × weeks.
+    func testCompleteDaysEndYesterday() {
+        // Fri 30 Oct 2026
+        let today = day(10)
+        for count in [14, 30, 90] {
+            let days = Engine.completeDays(count: count, today: today.addingTimeInterval(.hours(14)), calendar: calendar)
+            XCTAssertEqual(days.count, count)
+            XCTAssertEqual(days.last?.end, today)
+            XCTAssertEqual(days.first?.start, calendar.date(byAdding: .day, value: -count, to: today))
+            for (day, next) in zip(days, days.dropFirst()) {
+                XCTAssertEqual(day.end, next.start)
+            }
+            XCTAssertEqual(days.filter { $0.duration == .hours(25) }.map(\.start), [Self.fallBack])
+            XCTAssertEqual(Engine.completeDays(count: count, today: today, calendar: calendar), days)
+            XCTAssertEqual(Engine.completeDays(count: count, today: day(11).addingTimeInterval(-1), calendar: calendar), days)
+        }
+        XCTAssertEqual(Engine.completeDays(count: 0, today: today, calendar: calendar), [])
+        XCTAssertEqual(Engine.completeDays(count: -1, today: today, calendar: calendar), [])
+        XCTAssertEqual(
+            Engine.completeDays(count: 28, today: today, calendar: calendar),
+            Engine.weekdayDays(weeks: 4, today: today, calendar: calendar)
+        )
+    }
+
     /// Every weekday pools its days of the period, each hour by the local clock: complete data gives each weekday its
     /// weeks' days, 4 h in each hour (the 25-hour day's repeated 02:00 an hour more), the whole period covered; today's
     /// readings and the lookback's aren't counted.
@@ -3456,11 +3608,14 @@ final class GlucoseStatsEngineTests: XCTestCase {
     func testTabsAndTheirPeriods() {
         XCTAssertEqual(
             StatsTab.allCases,
-            [.overview, .trace, .agp, .daily, .hourOfDay, .weekday, .weekly, .insulin, .patches, .meals]
+            [
+                .overview, .trace, .agp, .goodBadDays, .daily, .hourOfDay, .weekday, .weekly, .insulin, .patches,
+                .meals, .cgmOverview, .cgmSensors, .cgmSmoothing
+            ]
         )
         XCTAssertEqual(
             StatsTab.allCases.filter(\.isGlucose),
-            [.overview, .trace, .agp, .daily, .hourOfDay, .weekday, .weekly]
+            [.overview, .trace, .agp, .goodBadDays, .daily, .hourOfDay, .weekday, .weekly]
         )
         XCTAssertEqual(StatsTab.overview.validPeriods, StatsPeriod.homeRanges)
         XCTAssertEqual(StatsTab.trace.validPeriods, [])
@@ -3469,6 +3624,10 @@ final class GlucoseStatsEngineTests: XCTestCase {
         XCTAssertEqual(StatsTab.hourOfDay.validPeriods, [.days7, .days14, .days30, .days90])
         XCTAssertEqual(StatsTab.weekly.validPeriods, [.weeks13])
         XCTAssertEqual(StatsTab.weekday.validPeriods, [.weeks4, .weeks8, .weeks13])
+        XCTAssertEqual(StatsTab.allCases.filter(\.isCGM), [.cgmOverview, .cgmSensors, .cgmSmoothing])
+        for tab in StatsTab.allCases.filter(\.isCGM) {
+            XCTAssertEqual(tab.validPeriods, [.days7, .days14, .days30, .days90], "\(tab)")
+        }
         XCTAssertEqual(StatsTab.allCases.filter { !$0.hasPeriodControl }, [.trace, .daily, .weekly])
     }
 
@@ -3515,7 +3674,8 @@ final class GlucoseStatsEngineTests: XCTestCase {
         let picked = Model.picking(.weeks4, on: .weekday, preferred: .days14, weekday: .weeks8)
         XCTAssertEqual(picked.preferred, .days14)
         XCTAssertEqual(picked.weekday, .weeks4)
-        for tab in StatsTab.allCases where tab != .weekday {
+        // Good & bad days has a period of its own too (`GoodBadDaysTabsTests`)
+        for tab in StatsTab.allCases where tab != .weekday && tab != .goodBadDays {
             XCTAssertEqual(
                 Model.shownPeriod(on: tab, preferred: picked.preferred, weekday: picked.weekday),
                 Model.shownPeriod(on: tab, preferred: .days14, weekday: .weeks8),
@@ -5980,6 +6140,114 @@ final class GlucoseStatsEngineTests: XCTestCase {
         let none = summary(of: GlucoseHistogram(), duration: 3600, calendarDays: 1, daysWithData: 0)
         let empty = HomeStatsBar.Content(none, period: .today, settings: settings)
         XCTAssertTrue(empty.isEmpty)
+    }
+
+    // MARK: - Home stats bar: TITR
+
+    /// The stats bar's TITR split: the tight part drawn in the in-range segment is the time inside both the in-range
+    /// band and 70–140; the figure is the standard 70–140 share. They agree for a band containing 70–140 and part at
+    /// its edges otherwise: by the time in 70 up to the low edge, and in the high edge up to 140.
+    @MainActor func testHomeStatsBarTITRSplit() throws {
+        var freeAPSSettings = FreeAPSSettings()
+        freeAPSSettings.units = .mgdL
+        let settings = Stat.StatsSettings(freeAPSSettings)
+        // an hour at each, 6 h
+        let hours = histogram([(60, 3600), (75, 3600), (100, 3600), (130, 3600), (150, 3600), (200, 3600)])
+        func summary(_ bands: StatsBands) -> GlucoseSummary {
+            Engine.summary(
+                hours,
+                window: DateInterval(start: Self.day0, duration: hours.totalSeconds),
+                endRule: .stalled,
+                calendarDays: 1,
+                daysWithData: 1,
+                bands: bands
+            )
+        }
+
+        // 70–180 contains 70–140: drawn and figure the same, 75, 100 and 130 (3 of the 4 in-range hours)
+        let wide = summary(StatsBands(low: 70, high: 180, units: .mgdL))
+        XCTAssertEqual(wide.titrFraction, 3.0 / 6, accuracy: 1E-9)
+        XCTAssertEqual(wide.tightInRangeFraction, wide.titrFraction, accuracy: 1E-9)
+        XCTAssertEqual(HomeStatsBar.Content.tightShare(wide), 0.75)
+
+        // 80–180: the hour at 75 is TITR but not in range: drawn 2 h, the figure 3 h
+        let higher = summary(StatsBands(low: 80, high: 180, units: .mgdL))
+        XCTAssertEqual(higher.tightInRangeFraction, 2.0 / 6, accuracy: 1E-9)
+        XCTAssertEqual(higher.titrFraction, 3.0 / 6, accuracy: 1E-9)
+        XCTAssertEqual(try XCTUnwrap(HomeStatsBar.Content.tightShare(higher)), 0.667, accuracy: 1E-9)
+
+        // 70–120: the hour at 130 is TITR but above the range: drawn 2 h, all of the in-range segment
+        let lower = summary(StatsBands(low: 70, high: 120, units: .mgdL))
+        XCTAssertEqual(lower.tightInRangeFraction, 2.0 / 6, accuracy: 1E-9)
+        XCTAssertEqual(lower.titrFraction, 3.0 / 6, accuracy: 1E-9)
+        XCTAssertEqual(HomeStatsBar.Content.tightShare(lower), 1)
+
+        // 150–180 misses 70–140: no tight part, the figure as ever
+        let apart = summary(StatsBands(low: 150, high: 180, units: .mgdL))
+        XCTAssertEqual(apart.tightInRangeFraction, 0)
+        XCTAssertEqual(HomeStatsBar.Content.tightShare(apart), 0)
+        XCTAssertEqual(apart.titrFraction, 3.0 / 6, accuracy: 1E-9)
+
+        // mmol 3.9–10.0 (70...181) contains 3.9–7.8 (70...141): the same
+        let mmol = summary(StatsBands(low: 70, high: 180, units: .mmolL))
+        XCTAssertEqual(mmol.tightInRangeFraction, mmol.titrFraction, accuracy: 1E-9)
+
+        // no readings, no in-range time: none
+        let none = Engine.summary(
+            GlucoseHistogram(),
+            window: DateInterval(start: Self.day0, duration: 3600),
+            endRule: .stalled,
+            calendarDays: 1,
+            daysWithData: 0,
+            bands: bands
+        )
+        XCTAssertEqual(none.tightInRangeFraction, 0)
+        XCTAssertNil(HomeStatsBar.Content.tightShare(none))
+        XCTAssertNil(HomeStatsBar.Content.tightShare(summary(StatsBands(low: 210, high: 250, units: .mgdL))))
+
+        // on the card: the figure is the Overview's TITR; the segments and the main number are the Overview's, TITR
+        // shown or not (it is drawn over the bar)
+        let card = HomeStatsBar.Content(higher, period: .last24h, settings: settings)
+        let overview = Stat.Overview(higher, period: .last24h, settings: settings)
+        XCTAssertEqual(card.titr, overview.titr)
+        XCTAssertEqual(card.titr, StatsFormatting.percent(50))
+        XCTAssertEqual(card.inRangePercent, overview.inRangePercent)
+        XCTAssertEqual(card.segments.map(\.band), overview.segments.map(\.band))
+        XCTAssertEqual(try XCTUnwrap(card.tightShare), 0.667, accuracy: 1E-9)
+        XCTAssertNil(HomeStatsBar.Content(none, period: .today, settings: settings).tightShare)
+    }
+
+    /// Where the tight part is drawn: after the segments before the in-range one (the bar's widths; the overlay's HStack
+    /// has the bar's 2 pt gaps), its share of the segment's width.
+    @MainActor func testHomeStatsBarTightPart() throws {
+        let segments = [
+            BandSegment(band: .low, fraction: 0.25),
+            BandSegment(band: .inRange, fraction: 0.5),
+            BandSegment(band: .high, fraction: 0.25)
+        ]
+        // 202 pt: 198 for the segments, 49.5, 99, 49.5
+        let part = try XCTUnwrap(HomeStatsBar.Content.tightPart(segments, share: 0.75, width: 202))
+        XCTAssertEqual(part.before.count, 1)
+        XCTAssertEqual(part.before[0], 49.5, accuracy: 1E-9)
+        XCTAssertEqual(part.width, 74.25, accuracy: 1E-9)
+        // laid out with the gaps: from 51.5 pt, the in-range segment's start
+        XCTAssertEqual(part.before.reduce(0, +) + StatsSplitBar.gap * CGFloat(part.before.count), 51.5, accuracy: 1E-9)
+        // the segment first: from the bar's start
+        let first = try XCTUnwrap(HomeStatsBar.Content.tightPart(
+            [BandSegment(band: .inRange, fraction: 1)],
+            share: 0.5,
+            width: 100
+        ))
+        XCTAssertEqual(first.before, [])
+        XCTAssertEqual(first.width, 50, accuracy: 1E-9)
+        // none
+        XCTAssertNil(HomeStatsBar.Content.tightPart(segments, share: nil, width: 202))
+        XCTAssertNil(HomeStatsBar.Content.tightPart(segments, share: 0, width: 202))
+        XCTAssertNil(HomeStatsBar.Content.tightPart(
+            [BandSegment(band: .high, fraction: 1)],
+            share: 0.5,
+            width: 100
+        ))
     }
 
     // MARK: - Home stats bar: the GMI line

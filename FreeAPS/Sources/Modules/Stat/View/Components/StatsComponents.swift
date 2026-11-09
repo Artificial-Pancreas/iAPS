@@ -144,8 +144,8 @@ struct PeriodPicker: View {
 }
 
 /// The navigation title's menu (`.toolbarTitleMenu`, the title is `navigationTitle(_:)`): the Glucose views under a
-/// "Glucose" heading, then Insulin, Patches (or Pods, or Sites; only while there is a session, or it is shown) and Meals, each
-/// with its symbol, the one shown checked.
+/// "Glucose" heading, then Insulin, Patches (or Pods, or Sites; only while there is a session, or it is shown), Meals, and
+/// last the CGM views under a "CGM" heading, each with its symbol, the one shown checked.
 struct StatsViewMenu: View {
     @Binding var selection: StatsTab
     /// the Patches topic's naming; nil without a session in the last 120 days: no Patches item
@@ -168,6 +168,11 @@ struct StatsViewMenu: View {
         Section {
             item(.meals)
         }
+        Section(Self.title(StatsTopic.cgm)) {
+            ForEach(StatsTopic.cgm.views) { view in
+                item(view)
+            }
+        }
     }
 
     /// A toggle: checked when shown (the view shown picked again is a pick too, `Stat.StateModel.select(tab:)`)
@@ -177,10 +182,10 @@ struct StatsViewMenu: View {
         }
     }
 
-    /// The screen's title: "Glucose · Overview" for a glucose view (the topic, then the view), "Insulin", "Patches" (or
-    /// "Pods", "Sites"), "Meals".
+    /// The screen's title: "Glucose · Overview" for a glucose view (the topic, then the view), "CGM · Sensors" for a CGM
+    /// view, "Insulin", "Patches" (or "Pods", "Sites"), "Meals".
     static func navigationTitle(_ view: StatsTab, patches: PatchTopic? = nil) -> String {
-        guard view.isGlucose else { return title(view, patches: patches) }
+        guard view.isGlucose || view.isCGM else { return title(view, patches: patches) }
         return String(
             format: NSLocalizedString(
                 "%1$@ · %2$@",
@@ -197,6 +202,7 @@ struct StatsViewMenu: View {
         case .insulin: return NSLocalizedString("Insulin", comment: "Statistics topic")
         case .patches: return patchesTitle(patches)
         case .meals: return NSLocalizedString("Meals", comment: "Statistics topic")
+        case .cgm: return NSLocalizedString("CGM", comment: "Statistics topic: the CGM's own readings")
         }
     }
 
@@ -220,6 +226,10 @@ struct StatsViewMenu: View {
         case .overview: return NSLocalizedString("Overview", comment: "Statistics view")
         case .trace: return NSLocalizedString("Day", comment: "Statistics view: one day's readings")
         case .agp: return NSLocalizedString("AGP", comment: "Statistics view, the ambulatory glucose profile")
+        case .goodBadDays: return NSLocalizedString(
+                "Good & bad days",
+                comment: "Statistics view: the days scored by GRI, two groups of them compared"
+            )
         case .daily: return NSLocalizedString("In range by day", comment: "Statistics view: time in ranges day by day")
         case .hourOfDay: return NSLocalizedString("By hour", comment: "Statistics view: time in ranges by the hour of the day")
         case .weekday: return NSLocalizedString("By weekday", comment: "Statistics view: the weekdays, and each one's hours")
@@ -227,6 +237,12 @@ struct StatsViewMenu: View {
         case .insulin: return NSLocalizedString("Insulin", comment: "Statistics topic")
         case .patches: return patchesTitle(patches)
         case .meals: return NSLocalizedString("Meals", comment: "Statistics topic")
+        case .cgmOverview: return NSLocalizedString("Overview", comment: "Statistics view")
+        case .cgmSensors: return NSLocalizedString("Sensors", comment: "Statistics CGM view: sensor by sensor")
+        case .cgmSmoothing: return NSLocalizedString(
+                "Smoothing",
+                comment: "Statistics CGM view: what the loop saw under each setting"
+            )
         }
     }
 
@@ -235,6 +251,7 @@ struct StatsViewMenu: View {
         case .overview: return "chart.pie"
         case .trace: return "chart.xyaxis.line"
         case .agp: return "waveform.path"
+        case .goodBadDays: return "square.split.2x1"
         case .daily: return "chart.bar"
         case .hourOfDay: return "clock"
         case .weekday: return "square.grid.3x3"
@@ -242,6 +259,9 @@ struct StatsViewMenu: View {
         case .insulin: return "drop"
         case .patches: return "bandage"
         case .meals: return "fork.knife"
+        case .cgmOverview: return "sensor"
+        case .cgmSensors: return "timeline.selection"
+        case .cgmSmoothing: return "point.bottomleft.forward.to.point.topright.scurvepath"
         }
     }
 }
@@ -309,6 +329,8 @@ struct StatTile: View {
     /// why the value is provisional (`StatsFormatting.coverageNote` and the like), nil when it isn't
     var limitedNote: String?
     var style: Style = .primary
+    /// the compact style's unit: the lines it may wrap to (a grid row's tiles keep one height)
+    var unitLines = 1
 
     @ScaledMetric(relativeTo: .largeTitle) private var primarySize: CGFloat = 30
 
@@ -334,7 +356,7 @@ struct StatTile: View {
             if let unit, style == .compact {
                 unitText(unit)
                     .font(.caption)
-                    .lineLimit(1)
+                    .lineLimit(unitLines)
             }
             if let note {
                 Text(note)
@@ -363,14 +385,15 @@ struct StatTile: View {
 
 extension StatTile {
     /// A grid's tile (`StatsTileGrid`).
-    init(_ item: StatsTileItem, style: Style = .compact) {
+    init(_ item: StatsTileItem, style: Style = .compact, unitLines: Int = 1) {
         self.init(
             title: item.title,
             value: item.value,
             unit: item.unit,
             note: item.note,
             limitedNote: item.limitedNote,
-            style: style
+            style: style,
+            unitLines: unitLines
         )
     }
 

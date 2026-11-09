@@ -29,8 +29,6 @@ class FileStorageTests: XCTestCase {
         seed.lightMode = .dark
         seed.birthDate = Date(timeIntervalSince1970: 643_000_000)
         seed.loopEventsPlacement = .top
-        seed.homeStatsRange = .today
-        seed.statsUsualDayPeriod = .days30
         for keyPath in [
             \FreeAPSSettings.glucoseUploadSchedule,
             \.treatmentsAndLoopsUploadSchedule,

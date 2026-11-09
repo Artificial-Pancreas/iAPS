@@ -331,6 +331,56 @@ enum GlucoseStatsEngine {
         return percents
     }
 
+    // MARK: - Glycemia Risk Index
+
+    /// GRI's weight of the hypo component (Klonoff et al. 2022).
+    static let griHypoWeight = 3.0
+    /// GRI's weight of the hyper component.
+    static let griHyperWeight = 1.6
+    /// The low range's weight in the hypo component (very low counts in full).
+    static let griLowWeight = 0.8
+    /// The high range's weight in the hyper component (very high counts in full).
+    static let griHighWeight = 0.5
+    /// GRI's largest value: the published scale is 0...100.
+    static let griCap = 100.0
+    /// The width of each of GRI's five zones on the whole-number GRI: A 0–20, B 21–40, … E 81–100 (Klonoff et al.).
+    static let griZoneWidth = 20
+
+    /// The GRI of a histogram, nil without data. The ranges are the standard ones: very low below 54, low from 54 up to
+    /// the bottom of `tirRange`, high above `tirRange` up to 250, very high above 250. So the low/high settings never
+    /// change it; only the mmol users' `tirRange` top (181) moves the high range by its one value.
+    static func gri(_ h: GlucoseHistogram, bands: StatsBands) -> GlycemiaRiskIndex? {
+        let total = h.totalSeconds
+        guard total > 0 else { return nil }
+        func percent(_ range: ClosedRange<Int>) -> Double {
+            h.seconds(in: range) / total * 100
+        }
+        let tir = bands.tirRange
+        let veryLow = percent(0 ... StatsBands.veryLowBelow - 1)
+        let low = StatsBands.veryLowBelow < tir.lowerBound ? percent(StatsBands.veryLowBelow ... tir.lowerBound - 1) : 0
+        let high = tir.upperBound < StatsBands.veryHighAbove ? percent(tir.upperBound + 1 ... StatsBands.veryHighAbove) : 0
+        let veryHigh = percent(StatsBands.veryHighAbove + 1 ... GlucoseHistogram.maxValue)
+        let hypo = veryLow + griLowWeight * low
+        let hyper = veryHigh + griHighWeight * high
+        return GlycemiaRiskIndex(
+            veryLow: veryLow,
+            low: low,
+            high: high,
+            veryHigh: veryHigh,
+            hypo: hypo,
+            hyper: hyper,
+            value: Swift.min(griHypoWeight * hypo + griHyperWeight * hyper, griCap)
+        )
+    }
+
+    /// The zone of a GRI value, rounded to a whole number as the paper's zones are: A up to 20, B 21–40, C 41–60,
+    /// D 61–80, E 81–100 (an edge is in the zone below it: 20 is A, 20.5 is 21, B).
+    static func griZone(_ value: Double) -> GlycemiaRiskIndex.Zone {
+        let rounded = Int(Swift.max(value, 0).rounded())
+        let index = Swift.max(rounded - 1, 0) / griZoneWidth
+        return GlycemiaRiskIndex.Zone(rawValue: Swift.min(index, GlycemiaRiskIndex.Zone.allCases.count - 1)) ?? .e
+    }
+
     // MARK: - A1c estimates
 
     /// Glucose Management Indicator, %
@@ -366,7 +416,33 @@ enum GlucoseStatsEngine {
         let bins = clockHistograms(w, calendar: calendar, clippedTo: window, count: binCount) { minuteOfDay in
             minuteOfDay / binMinutes
         }
+        return agpBins(bins, binMinutes: binMinutes, poolNeighbours: poolNeighbours)
+    }
 
+    /// The AGP of a list of days (`agp`'s bins and pooling): each reading's overlap with each of the days goes to its
+    /// own clock time, so a reading across midnight into a day that isn't listed gives only its part in the listed one.
+    /// The days of a window, listed, give `agp` of that window.
+    /// - Parameter days: sorted oldest -> newest, not overlapping; need not be contiguous
+    static func agp(
+        _ w: [WeightedPoint],
+        calendar: Calendar,
+        days: [DateInterval],
+        binMinutes: Int = GlucoseStatsEngine.agpBinMinutes,
+        poolNeighbours: Int = 1
+    ) -> [AGPBin?] {
+        let binMinutes = Swift.max(binMinutes, 1)
+        let binCount = Swift.max(minutesPerDay / binMinutes, 1)
+        var bins = Array(repeating: GlucoseHistogram(), count: binCount)
+        forEachOverlap(w, days: days, calendar: calendar) { point, minute, _, seconds, startsInside in
+            bins[Swift.min(minute / binMinutes, binCount - 1)].add(point, seconds: seconds, startsInside: startsInside)
+        }
+        return agpBins(bins, binMinutes: binMinutes, poolNeighbours: poolNeighbours)
+    }
+
+    /// The AGP's bins from its clock histograms (one per bin, oldest minute first): each pooled with `poolNeighbours`
+    /// bins on either side (wrapping at midnight), nil for a bin without data.
+    static func agpBins(_ bins: [GlucoseHistogram], binMinutes: Int, poolNeighbours: Int) -> [AGPBin?] {
+        let binCount = bins.count
         let pool = Swift.max(poolNeighbours, 0)
         return (0 ..< binCount).map { index -> AGPBin? in
             var pooled = GlucoseHistogram()
@@ -1003,9 +1079,15 @@ enum GlucoseStatsEngine {
     /// weekday the same number of times; today counts once it is over. None without weeks.
     /// - Parameter today: the start of today
     static func weekdayDays(weeks: Int, today: Date, calendar: Calendar) -> [DateInterval] {
+        completeDays(count: Swift.max(weeks, 0) * 7, today: today, calendar: calendar)
+    }
+
+    /// The `count` whole calendar days (23, 24 or 25 h) to yesterday, oldest -> newest: today counts once it is over.
+    /// None without a count.
+    /// - Parameter today: a moment of today
+    static func completeDays(count: Int, today: Date, calendar: Calendar) -> [DateInterval] {
         let today = calendar.startOfDay(for: today)
-        let count = Swift.max(weeks, 0) * 7
-        return (0 ..< count).reversed().map { back in
+        return (0 ..< Swift.max(count, 0)).reversed().map { back in
             let start = StatsClock.dayStart(back + 1, before: today, calendar: calendar)
                 ?? today.addingTimeInterval(-.days(back + 1))
             return DateInterval(start: start, end: StatsClock.endOfDay(start, calendar: calendar))
@@ -1242,6 +1324,42 @@ enum GlucoseStatsEngine {
             histograms[index].add(point, seconds: seconds, startsInside: startsInside)
         }
         return histograms
+    }
+
+    /// Each reading's overlap with each of the days it touches, oldest -> newest: `body` gets the reading, its local
+    /// clock minute (0..<1440), the day's index, the seconds inside that day and whether the reading starts in it. A
+    /// reading across midnight is given once for each day; readings outside the days are skipped.
+    /// - Parameter days: sorted oldest -> newest, not overlapping
+    static func forEachOverlap(
+        _ w: [WeightedPoint],
+        days: [DateInterval],
+        calendar: Calendar,
+        _ body: (_ point: WeightedPoint, _ minute: Int, _ day: Int, _ seconds: Double, _ startsInside: Bool) -> Void
+    ) {
+        guard let first = days.first, let last = days.last else { return }
+        var offsets = ZoneOffsets(calendar.timeZone)
+        // the first day ending after the reading's start
+        var current = 0
+        var index = firstIndex(in: w, endingAfter: first.start)
+        while index < w.count, w[index].time < last.end {
+            let point = w[index]
+            index += 1
+            while current < days.count, days[current].end <= point.time {
+                current += 1
+            }
+            var minute: Int?
+            var day = current
+            while day < days.count, days[day].start < point.end {
+                let seconds = StatsIntervals.overlap(from: point.time, to: point.end, in: days[day])
+                if seconds > 0 {
+                    let clock = minute
+                        ?? StatsClock.minuteOfDay(point.time, secondsFromGMT: offsets.secondsFromGMT(for: point.time))
+                    minute = clock
+                    body(point, clock, day, seconds, point.time >= days[day].start && point.time < days[day].end)
+                }
+                day += 1
+            }
+        }
     }
 
     /// A zone's offset, kept from the moment it was looked up until the zone's next transition (the offset is the

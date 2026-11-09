@@ -305,7 +305,7 @@ extension NightscoutAPI {
     }
 }
 
-// MARK: - Insulin backfill (read-only, on demand)
+// MARK: - Insulin and CGM backfill (read-only, on demand)
 
 extension NightscoutAPI {
     /// One page of the treatments of one insulin query, newest first: at most `treatmentsPageSize`, the newest ones
@@ -331,6 +331,21 @@ extension NightscoutAPI {
         let items = query.queryItems + [
             URLQueryItem(name: "find[created_at][$lt]", value: date.formatted(.iso8601WithFractionalSeconds)),
             URLQueryItem(name: "count", value: "\(count)")
+        ]
+        return try await fetchLossy(Config.treatmentsPath, query: items, as: NightscoutInsulinTreatment.self)
+    }
+
+    /// One page of the CGM backfill's Sensor Start or Sensor Change treatments, newest first: at most
+    /// `treatmentsPageSize`, the newest ones with `created_at` in the interval (both ends included). Read leniently as
+    /// the insulin treatments are (`NightscoutInsulinTreatment`: the event type and the date are what is used).
+    func fetchCGMTreatments(
+        _ query: NightscoutCGMQuery,
+        dateInterval: DateInterval
+    ) async throws -> [NightscoutInsulinTreatment] {
+        let items = query.queryItems + [
+            URLQueryItem(name: "find[created_at][$gte]", value: dateInterval.start.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "find[created_at][$lte]", value: dateInterval.end.formatted(.iso8601WithFractionalSeconds)),
+            URLQueryItem(name: "count", value: "\(Config.treatmentsPageSize)")
         ]
         return try await fetchLossy(Config.treatmentsPath, query: items, as: NightscoutInsulinTreatment.self)
     }

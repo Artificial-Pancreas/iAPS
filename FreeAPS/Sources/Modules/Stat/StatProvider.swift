@@ -8,10 +8,21 @@ extension Stat {
         private let coreDataStorage = CoreDataStorage()
         /// the Patches topic's sessions, for the key they were computed for
         private let patchesCache = PatchesCache()
+        /// the CGM sessions: which CGM, and which sensor, gave the readings
+        private let cgmSessions: CGMSessionStore
+        /// the loop days (Good & bad days' loop row), Home's cache
+        private let homeLoops: HomeLoopsStore
+        /// whether Nightscout is configured: the Unknown card offers its backfill only then
+        private let nightscoutManager: NightscoutManager
+        /// the CGM topic's result, for the key it was computed for
+        private let cgmCache = CGMCache()
 
         required init(resolver: Resolver) {
             statistics = resolver.resolve(GlucoseStatistics.self)!
             insulinStatistics = resolver.resolve(InsulinStatsService.self)!
+            cgmSessions = resolver.resolve(CGMSessionStore.self)!
+            homeLoops = resolver.resolve(HomeLoopsStore.self)!
+            nightscoutManager = resolver.resolve(NightscoutManager.self)!
         }
 
         func summary(_ period: StatsPeriod, bands: StatsBands) async -> GlucoseSummary {
@@ -64,6 +75,106 @@ extension Stat {
         func weekday(_ period: StatsPeriod, bands: StatsBands) async -> WeekdayResult {
             let pooled = await statistics.weekdayHours(weeks: period.weekCount ?? 0, bands: bands)
             return WeekdayResult(pooled, period: period)
+        }
+
+        /// Good & bad days: the complete days to yesterday scored, grouped and profiled (the day aggregates from the cache,
+        /// the readings held, as the AGP's), and the factor rows from what is kept per day: the insulin days from their
+        /// cache, the meals and the pump sessions in one fetch each, the loop days from Home's cache, all at once.
+        /// Computed off the main actor; logs how long it took (90 d is the one to time).
+        func goodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) async -> GoodBadDaysData {
+            let started = Date()
+            let calendar = Calendar.current
+            let count = period.calendarDayCount ?? 0
+            // one `now` for every read: the glucose and the factors' days are the same across a midnight
+            async let glucose = statistics.goodBadDays(count: count, bands: bands, now: started)
+            var input = await goodBadDaysInput(
+                count: count,
+                allowOneMinuteLoop: allowOneMinuteLoop,
+                now: started,
+                calendar: calendar
+            )
+            let read = await glucose
+            input.gri = read.gri
+            let factors = GoodBadDaysEngine.factors(read.result, input: input, calendar: calendar)
+            let milliseconds = Int((Date().timeIntervalSince(started) * 1000).rounded())
+            debug(
+                .service,
+                "Statistics: good & bad days for \(period.rawValue), \(read.result.scored) days scored, in \(milliseconds) ms"
+            )
+            return GoodBadDaysData(
+                period: period,
+                result: read.result,
+                factors: factors,
+                sensorsRecordedFrom: input.sensors.flatMap(\.sessions).map(\.start).min()
+            )
+        }
+
+        /// The factor rows' data of the `count` complete days to yesterday (and the day before them): each read on its
+        /// own, at once; one that fails is nil (its rows unavailable), logged.
+        private func goodBadDaysInput(
+            count: Int,
+            allowOneMinuteLoop: Bool,
+            now: Date,
+            calendar: Calendar
+        ) async -> GoodBadDaysFactorInput {
+            let days = GlucoseStatsEngine.completeDays(count: count + 1, today: now, calendar: calendar)
+            guard let before = days.first, let last = days.last, days.count > 1 else { return GoodBadDaysFactorInput() }
+            let today = calendar.startOfDay(for: now)
+            // the meals of the period and the day before, and of the days `logsFatOrProtein` looks at
+            let fatOrProteinStart = StatsClock.dayStart(MealStatsEngine.fatOrProteinDays - 1, before: today, calendar: calendar)
+                ?? today
+            let mealsStart = Swift.min(before.start, fatOrProteinStart)
+            let storage = coreDataStorage
+            let insulinStatistics = self.insulinStatistics
+            let homeLoops = self.homeLoops
+            let cgmSessions = self.cgmSessions
+            async let mealPoints = Self.read("the carb entries") {
+                try await storage.fetchMealPoints(from: mealsStart, to: Swift.max(mealsStart, now))
+            }
+            // the period's days and the day before (the boluses before its first day's meals), from the cache
+            async let insulinDays = Self.read("the insulin") { try await insulinStatistics.days(days) }
+            async let sessionRecords = Self.read("the pump sessions") { try await Self.pumpSessions(now: now, storage: storage) }
+            // every CGM session (a few a month), as the CGM topic reads them: a sensor's first session can be long before
+            async let cgmSessionRecords = cgmSessions.sessions(
+                in: DateInterval(start: .distantPast, end: now.addingTimeInterval(.hours(1)))
+            )
+            // read to yesterday's end and the store's settle time (it is complete, so cached, then), not on into today
+            async let loopDays = homeLoops.days(
+                of: DateInterval(start: days[1].start, end: last.end),
+                now: Swift.min(now, last.end.addingTimeInterval(HomeLoopStats.Config.settleTime)),
+                allowOneMinuteLoop: allowOneMinuteLoop,
+                calendar: calendar
+            )
+
+            var input = GoodBadDaysFactorInput()
+            if let points = await mealPoints {
+                input.meals = points.filter { $0.actualDate >= before.start && $0.actualDate < last.end }
+                input.logsFatOrProtein = MealStatsEngine.logsFatOrProtein(points, now: now, calendar: calendar)
+            }
+            input.insulin = await insulinDays
+            input.sessions = await sessionRecords.map { PatchStatsEngine.sessions($0) }
+            let cgmRecords = await cgmSessionRecords
+            let joinedRecords = await Self.read("the readings at the entered CGM sessions") {
+                try await Self.sensorSessions(cgmRecords, storage: storage)
+            }
+            input.sensors = Self.goodBadDaysSensors(joinedRecords ?? cgmRecords)
+            input.loops = await loopDays.map { days in
+                Dictionary(days.map { (StatsDayKey($0.day.start, calendar), $0.slots) }, uniquingKeysWith: { first, _ in first })
+            }
+            if input.loops == nil {
+                warning(.service, "Statistics: the loop days couldn't be read for Good & bad days")
+            }
+            return input
+        }
+
+        /// A read of Good & bad days' data: nil when it failed, logged.
+        private static func read<Value>(_ what: String, _ body: () async throws -> Value) async -> Value? {
+            do {
+                return try await body()
+            } catch {
+                warning(.service, "Statistics: \(what) couldn't be read for Good & bad days", error: error)
+                return nil
+            }
         }
 
         /// The period's weeks against the period, ready to draw, and its summary: computed here, off the main actor. One
@@ -490,5 +601,548 @@ actor PatchesCache {
             }.map { ($0.id, $0) },
             uniquingKeysWith: { first, _ in first }
         )
+    }
+}
+
+// MARK: - The CGM topic
+
+extension Stat.Provider {
+    typealias CGMResult = Stat.CGMResult
+    typealias CGMPick = Stat.CGMPick
+    typealias CGMSource = Stat.CGMSource
+    typealias CGMSensor = Stat.CGMSensor
+    typealias CGMPickResult = Stat.CGMPickResult
+    typealias CGMCacheKey = Stat.CGMCacheKey
+    typealias CGMUnknownInput = Stat.CGMUnknownInput
+
+    /// The Dexcom G7's grace period, which its expected life (`KnownPlugins.cgmExpirationByPluginIdentifier`) includes:
+    /// an end within it isn't early.
+    static let dexcomG7Grace: TimeInterval = .hours(12)
+    /// The Dexcom G7's statistics id (`KnownPlugins.cgmIdForStatistics`).
+    static let dexcomG7Id = "dexcomG7"
+    /// A sensor that stopped more than this before its expected life (its grace left out) ended early: a few hours
+    /// either way is a change at a convenient time, not a failed sensor.
+    static let earlyEndMargin: TimeInterval = .hours(6)
+    /// The CGM topic reads the readings of this long before the period: an entered sensor ends just after its last
+    /// reading, so one that ended just before the period has that reading for how it ended (`sensor`); the next
+    /// reading counts within `CGMUnknownInference.splitGap` of it.
+    static let endCauseLead = CGMUnknownInference.splitGap
+    /// The replay reads the readings of this long before the period: the loop's window at its first loop time, which
+    /// holds the reference's lead-in too (`SmoothingReplay.replay`).
+    static let replayLookback = SmoothingReplay.liveWindow
+
+    /// The CGM topic: the period's readings and every session (`sensorSessions`), computed here, off the main actor,
+    /// and kept (`cgmCache`) while the period, the generation and the sessions stay. Logs how long a computation took.
+    func cgm(_ period: StatsPeriod, generation: Int) async throws -> CGMResult {
+        let calendar = Calendar.current
+        let now = Date()
+        let window = GlucoseStatsEngine.window(for: period, now: now, end: now, calendar: calendar)
+        let sessions = await cgmSessions.sessions(in: DateInterval(start: .distantPast, end: now.addingTimeInterval(.hours(1))))
+        // the Nightscout backfill's windows; nil: Nightscout isn't configured
+        let windows = await cgmSessions.backfillWindows()
+        let isConfigured = await nightscoutManager.isConfigured()
+        let backfillWindows = isConfigured ? windows : nil
+        let key = CGMCacheKey(
+            period: period,
+            windowStart: window.start,
+            generation: generation,
+            timeZone: calendar.timeZone.identifier,
+            sessions: sessions,
+            backfillWindows: backfillWindows
+        )
+        let storage = coreDataStorage
+        return try await cgmCache.result(key: key) {
+            // from a little before the period: the last reading of a sensor that ended just before it (`sensor`)
+            let readings = try await storage.fetchGlucosePoints(
+                from: window.start.addingTimeInterval(-Self.endCauseLead),
+                to: now.addingTimeInterval(1)
+            )
+            let joined = try await Self.sensorSessions(sessions, storage: storage, fetched: readings)
+            try Task.checkCancellation()
+            // on a GCD queue: the engine's fits run in parallel (`DispatchQueue.concurrentPerform`), blocking it
+            let result: CGMResult = await withCheckedContinuation { continuation in
+                DispatchQueue.global(qos: .userInitiated).async {
+                    continuation.resume(returning: Self.cgmResult(
+                        readings: readings,
+                        sessions: joined,
+                        period: period,
+                        window: DateInterval(start: window.start, end: now),
+                        generation: generation,
+                        backfillWindows: backfillWindows,
+                        now: now,
+                        calendar: calendar
+                    ))
+                }
+            }
+            let milliseconds = Int((Date().timeIntervalSince(now) * 1000).rounded())
+            debug(.service, "Statistics: CGM \(period.rawValue), \(readings.count) readings in \(milliseconds) ms")
+            return result
+        }
+    }
+
+    /// The "Which CGM was this?" sheet's input: the last 90 days (the topic's longest period, whatever is shown), the
+    /// Unknown readings among them and their probable sensors.
+    func cgmUnknown() async throws -> CGMUnknownInput {
+        let calendar = Calendar.current
+        let now = Date()
+        let window = GlucoseStatsEngine.window(for: .days90, now: now, end: now, calendar: calendar)
+        let readings = try await coreDataStorage.fetchGlucosePoints(from: window.start, to: now.addingTimeInterval(1))
+        let sessions = await cgmSessions.sessions(in: DateInterval(start: .distantPast, end: now.addingTimeInterval(.hours(1))))
+        try Task.checkCancellation()
+        return Self.cgmUnknownInput(readings: readings, sessions: sessions, window: DateInterval(start: window.start, end: now))
+    }
+
+    func enterCGMSessions(_ sessions: [CGMSessionRecord], replacing: DateInterval?) async -> Bool {
+        await cgmSessions.enter(sessions, replacing: replacing)
+    }
+
+    func clearEnteredCGMSessions() async -> Bool {
+        await cgmSessions.removeAllEntered()
+    }
+
+    /// The sessions as the CGM topic, Good & bad days' sensor rows and the smoothing replay take them: the entered ones
+    /// an earlier answer split within one sensor joined (`CGMUnknownInference.joinedEntered`), from the readings at
+    /// their boundaries (`joinWindows`: a fetch each, none without such a boundary, none for a window `fetched` holds).
+    /// - Parameter fetched: readings already read, oldest -> newest (the period's): a window inside their span is
+    ///   taken from them
+    static func sensorSessions(
+        _ sessions: [CGMSessionRecord],
+        storage: CoreDataStorage,
+        fetched: [GlucosePoint] = []
+    ) async throws -> [CGMSessionRecord] {
+        let windows = CGMUnknownInference.joinWindows(sessions)
+        guard windows.isNotEmpty else { return sessions }
+        var readings: [GlucosePoint] = []
+        for window in windows {
+            if let first = fetched.first, let last = fetched.last, first.time <= window.start, window.end <= last.time {
+                let lower = fetched.partitionIndex { $0.time >= window.start }
+                let upper = fetched.partitionIndex { $0.time >= window.end }
+                readings += fetched[lower ..< upper]
+            } else {
+                readings += try await storage.fetchGlucosePoints(from: window.start, to: window.end)
+            }
+        }
+        return CGMUnknownInference.joinedEntered(sessions, readings: readings)
+    }
+
+    /// The smoothing analysis: the readings of the pick from the loop's window before the period to now, its sessions,
+    /// replayed on a GCD queue (`SmoothingReplay.replay` blocks its thread while its loop times run in parallel).
+    func smoothingReplay(
+        _ period: StatsPeriod,
+        pick: CGMPick,
+        isCancelled: @escaping @Sendable() -> Bool,
+        progress: @escaping @Sendable(Double) -> Void
+    ) async throws -> SmoothingReplayResult? {
+        let calendar = Calendar.current
+        let now = Date()
+        let window = GlucoseStatsEngine.window(for: period, now: now, end: now, calendar: calendar)
+        let from = window.start.addingTimeInterval(-Self.replayLookback)
+        let readings = try await coreDataStorage.fetchGlucosePoints(from: from, to: now.addingTimeInterval(1))
+        let stored = await cgmSessions.sessions(in: DateInterval(start: from, end: now.addingTimeInterval(.hours(1))))
+        let sessions = try await Self.sensorSessions(stored, storage: coreDataStorage, fetched: readings)
+        guard !isCancelled() else { return nil }
+        let input = Self.replayInput(readings, sessions: sessions, pick: pick)
+        let replayed = DateInterval(start: window.start, end: now)
+        let started = Date()
+        let result: SmoothingReplayResult? = await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                continuation.resume(returning: SmoothingReplay.replay(
+                    readings: input.readings,
+                    sessions: input.sessions,
+                    period: replayed,
+                    now: now,
+                    isCancelled: isCancelled,
+                    progress: progress
+                ))
+            }
+        }
+        let milliseconds = Int((Date().timeIntervalSince(started) * 1000).rounded())
+        debug(
+            .service,
+            "Statistics: smoothing replay \(period.rawValue), \(input.readings.count) readings, " +
+                (result == nil ? "cancelled" : "\(result?.loopTimes ?? 0) loop times") + " in \(milliseconds) ms"
+        )
+        return result
+    }
+
+    // MARK: The result, pure
+
+    /// The sheet's input from the 90 days' readings and every session: the readings no recorded session covers (an
+    /// entered one is what the sheet changes), their probable sensors, the CGM entered for each.
+    static func cgmUnknownInput(
+        readings: [GlucosePoint],
+        sessions: [CGMSessionRecord],
+        window: DateInterval
+    ) -> CGMUnknownInput {
+        let recorded = sessions.filter { $0.source == .recorded }
+        let entered = sessions.filter { $0.source == .entered }
+        let cleaned = CGMStatsEngine.cleaned(
+            readings,
+            in: DateInterval(start: window.start, end: .distantFuture),
+            now: window.end
+        )
+        let unknown = CGMSessionAttribution.attribute(cleaned, to: recorded).unknown
+        let choices = CGMChoice.choices(recorded: recorded)
+        let sensors = CGMUnknownInference.sensors(
+            unknown,
+            allReadings: cleaned.map(\.time),
+            choices: choices,
+            readFrom: window.start
+        )
+        return CGMUnknownInput(
+            window: window,
+            sensors: sensors,
+            choices: choices,
+            unknownTimes: unknown.map(\.time),
+            recorded: recorded,
+            entered: CGMUnknownInference.entered(sensors, sessions: entered),
+            enteredSessions: entered.filter { $0.end.map { $0 > window.start } ?? true }.count
+        )
+    }
+
+    /// The pick of a session without a statistics id but with a name (AppGroup before its source is known): its plugin
+    /// after this, so it isn't any CGM's id.
+    static let pluginPickPrefix = "plugin:"
+
+    /// The pick a session's readings are: its CGM's id; without one its plugin (named by the session), Unknown when it
+    /// has no name either.
+    static func pick(of session: CGMSessionRecord) -> CGMPick {
+        if let cgmId = session.cgmId {
+            return .cgm(cgmId)
+        }
+        return session.name.isEmpty ? .unknown : .cgm(pluginPickPrefix + session.plugin)
+    }
+
+    /// Where a session's readings begin, as the sensor boundaries take it: its sensor's start, but never before the
+    /// session (a sensor inserted ahead, or a CGM switched to, gives the readings from the session's start; those
+    /// before it are the previous session's).
+    static func readingsStart(_ session: CGMSessionRecord) -> Date {
+        Swift.max(session.sensorStartOrStart, session.start)
+    }
+
+    /// The sensor boundaries of the sessions (`sensorBoundary(bySession:)`), ascending.
+    static func sensorBoundaries(_ sessions: [CGMSessionRecord]) -> [Date] {
+        sensorBoundary(bySession: sessions).values.sorted()
+    }
+
+    /// Each session's `readingsStart`, when a sensor began there (its own start at the session's) or a session came
+    /// before it (a new sensor, a CGM switched to); judged against every session (a sensor started ahead of a switch to
+    /// it follows the other CGM's session). Not the first session of a sensor already running when the recording
+    /// began, nor one opened without a known start after none: nothing changed in the readings there.
+    static func sensorBoundary(bySession sessions: [CGMSessionRecord]) -> [UUID: Date] {
+        let sorted = CGMSessionRules.ordered(sessions)
+        let tolerance = BloodGlucose.sessionTolerance
+        var boundaries: [UUID: Date] = [:]
+        for index in sorted.indices {
+            let session = sorted[index]
+            let sensorStartedThen = session.sensorStart.map {
+                $0 > session.start || abs($0.timeIntervalSince(session.start)) <= tolerance
+            } ?? false
+            // not after another session of the same sensor (an entered one up to its recording)
+            let followsAnother = index > 0 &&
+                (sorted[index - 1].end.map { session.start.timeIntervalSince($0) <= tolerance } ?? false) &&
+                !isSameSensor(sorted[index - 1], session)
+            if sensorStartedThen || followsAnother {
+                boundaries[session.id] = readingsStart(session)
+            }
+        }
+        return boundaries
+    }
+
+    /// Good & bad days' CGM sensors: the sessions of each sensor together (`mergedSensors`, the CGM topic's: a CGM
+    /// switched away and back is the same sensor), its start the sensor's own (`sensorStart`, the same within the
+    /// group; a session without one is a group of its own, not identified). Not the readings' boundary
+    /// (`sensorBoundary`): a switch to a sensor started the evening before counts its wear day from then, and is no change.
+    static func goodBadDaysSensors(_ sessions: [CGMSessionRecord]) -> [GoodBadDaysSensor] {
+        mergedSensors(sessions).map { group in
+            GoodBadDaysSensor(start: group[0].sensorStart, sessions: group.map(\.interval))
+        }
+    }
+
+    /// The same CGM, and sensor starts within the readings' session tolerance.
+    static func isSameSensor(_ one: CGMSessionRecord, _ other: CGMSessionRecord) -> Bool {
+        guard let cgmId = one.cgmId, cgmId == other.cgmId, let a = one.sensorStart, let b = other.sensorStart else {
+            return false
+        }
+        return abs(a.timeIntervalSince(b)) <= BloodGlucose.sessionTolerance
+    }
+
+    /// The sensor starts the engine takes for a CGM's sessions (`CGMStatsEngine.stats`): at each sensor's first
+    /// session's boundary only (a CGM switched away and back is the same sensor, its readings and days go on).
+    /// - Parameters:
+    ///   - boundaries: `sensorBoundary(bySession:)` of every session
+    ///   - firsts: the first session of each sensor (`mergedSensors` of every session)
+    static func sensorStarts(_ sessions: [CGMSessionRecord], boundaries: [UUID: Date], firsts: Set<UUID>) -> [Date] {
+        sessions.filter { firsts.contains($0.id) }.compactMap { boundaries[$0.id] }.sorted()
+    }
+
+    /// The sessions of one sensor together: the same CGM, and a sensor start within the readings' session tolerance of
+    /// the group's first one (a CGM switched away and back: a second row for the same sensor, `CGMSessionRules`; a
+    /// computed start moves by seconds); a session without either alone. Each group by start, the groups by their first
+    /// start.
+    static func mergedSensors(_ sessions: [CGMSessionRecord]) -> [[CGMSessionRecord]] {
+        var groups: [[CGMSessionRecord]] = []
+        for session in CGMSessionRules.ordered(sessions) {
+            guard let sensorStart = session.sensorStart, session.cgmId != nil else {
+                groups.append([session])
+                continue
+            }
+            let existing = groups.firstIndex { group in
+                group[0].cgmId == session.cgmId &&
+                    group[0].sensorStart.map { abs($0.timeIntervalSince(sensorStart)) <= BloodGlucose.sessionTolerance } ?? false
+            }
+            if let existing {
+                groups[existing].append(session)
+            } else {
+                groups.append([session])
+            }
+        }
+        return groups
+    }
+
+    /// The readings and the sessions the replay of a pick takes: a CGM its sessions' readings; Unknown the readings no
+    /// session names.
+    static func replayInput(
+        _ readings: [GlucosePoint],
+        sessions: [CGMSessionRecord],
+        pick: CGMPick
+    ) -> (readings: [GlucosePoint], sessions: [CGMSessionRecord]) {
+        let attribution = CGMSessionAttribution.attribute(readings, to: sessions)
+        let picked = attribution.bySession.filter { self.pick(of: $0.session) == pick }
+        let own = picked.flatMap(\.readings) + (pick == .unknown ? attribution.unknown : [])
+        return (own.sorted { $0.time < $1.time }, picked.map(\.session))
+    }
+
+    /// The CGM topic's result from the period's readings and every recorded session.
+    /// - Parameters:
+    ///   - readings: the period's (`window`), any order; those before it (`endCauseLead`) only date a sensor's last
+    ///     reading
+    ///   - window: the period's `[start, now]`
+    ///   - backfillWindows: the windows the Nightscout backfill ran over (`CGMSessionStore.backfillWindows`); nil:
+    ///     Nightscout isn't configured
+    static func cgmResult(
+        readings: [GlucosePoint],
+        sessions: [CGMSessionRecord],
+        period: StatsPeriod,
+        window: DateInterval,
+        generation: Int,
+        backfillWindows: [DateInterval]? = nil,
+        now: Date,
+        calendar: Calendar
+    ) -> CGMResult {
+        let attribution = CGMSessionAttribution.attribute(readings, to: sessions)
+        let unknownName = NSLocalizedString("Unknown", comment: "Statistics CGM: the readings from before the CGM was recorded")
+        // the entered sessions the sheet changes: in its 90 days (`cgmUnknown`)
+        let enteredFrom = GlucoseStatsEngine.window(for: .days90, now: now, end: now, calendar: calendar).start
+
+        // the readings and the sessions of each CGM, Unknown the remainder
+        var readingsByPick: [CGMPick: [GlucosePoint]] = [.unknown: attribution.unknown]
+        var sessionsByPick: [CGMPick: [CGMSessionRecord]] = [:]
+        for part in attribution.bySession {
+            let pick = self.pick(of: part.session)
+            readingsByPick[pick, default: []] += part.readings
+            sessionsByPick[pick, default: []].append(part.session)
+        }
+        let picked = readingsByPick.mapValues { CGMStatsEngine.cleaned($0, in: window, now: now) }
+        // the named CGMs by their first reading, Unknown last
+        func firstTime(_ pick: CGMPick) -> Date {
+            picked[pick]?.first?.time ?? .distantFuture
+        }
+        let named: [CGMPick] = picked.keys
+            .filter { pick in pick != .unknown && !(picked[pick] ?? []).isEmpty }
+            .sorted { firstTime($0) < firstTime($1) }
+        var cgms: [CGMSource] = named.map { pick in
+            CGMSource(pick: pick, name: sessionsByPick[pick]?.last?.name ?? unknownName)
+        }
+        if !(picked[.unknown] ?? []).isEmpty {
+            cgms.append(CGMSource(pick: .unknown, name: unknownName))
+        }
+
+        let sortedSessions = CGMSessionRules.ordered(sessions)
+        let boundaryBySession = sensorBoundary(bySession: sessions)
+        let groups = mergedSensors(sessions)
+        let firsts = Set(groups.map { $0[0].id })
+        // the period's readings, cleaned: the reading after a sensor's last
+        let periodCleaned = CGMStatsEngine.cleaned(readings, in: window, now: now)
+        // the readings of each session, by id
+        let readingsBySession = Dictionary(
+            attribution.bySession.map { ($0.session.id, $0.readings) },
+            uniquingKeysWith: { first, _ in first }
+        )
+
+        func pickResult(_ pick: CGMPick) -> CGMPickResult {
+            let points = picked[pick] ?? []
+            let starts: [Date] = pick == .unknown ? [] : sensorStarts(
+                sessionsByPick[pick] ?? [],
+                boundaries: boundaryBySession,
+                firsts: firsts
+            )
+            let (stats, residuals) = CGMStatsEngine.analysed(
+                readings: points,
+                sensorStarts: starts,
+                period: window,
+                now: now
+            )
+            // the sensors with readings on each sensor day (`CGMStatsEngine.sensorDay`), the readings and the starts
+            // walked together, each day of a sensor added once
+            var sensorsOnDay: [Int: Set<Date>] = [:]
+            var next = 0
+            var index = 0
+            var added: (day: Int, start: Int)?
+            while index < points.count {
+                defer { index += 1 }
+                let time = points[index].time
+                while next < starts.count, starts[next] <= time {
+                    next += 1
+                }
+                guard next > 0 else { continue }
+                let day = Int(time.timeIntervalSince(starts[next - 1]) / .days(1)) + 1
+                guard added.map({ $0.day != day || $0.start != next - 1 }) ?? true else { continue }
+                added = (day, next - 1)
+                sensorsOnDay[day, default: []].insert(starts[next - 1])
+            }
+            let sensors: [CGMSensor] = pick == .unknown ? [] : groups.filter { group in
+                self.pick(of: group[0]) == pick && group.contains { session in
+                    session.start < window.end && (session.end.map { $0 > window.start } ?? true)
+                }
+            }.map { group in
+                sensor(
+                    group,
+                    readingsBySession: readingsBySession,
+                    residuals: residuals,
+                    all: sortedSessions,
+                    readings: periodCleaned,
+                    window: window,
+                    now: now
+                )
+            }
+            return CGMPickResult(
+                stats: stats,
+                sensorsBySensorDay: sensorsOnDay.mapValues(\.count),
+                sensors: sensors.sorted { $0.start > $1.start }
+            )
+        }
+
+        var picks: [CGMPick: CGMPickResult] = [:]
+        for source in cgms {
+            picks[source.pick] = pickResult(source.pick)
+        }
+
+        return CGMResult(
+            period: period,
+            window: window,
+            asOf: now,
+            generation: generation,
+            cgms: cgms,
+            picks: picks,
+            recordingStart: sortedSessions.first { $0.source == .recorded }?.start,
+            enteredSessions: sessions.filter { session in
+                session.source == .entered && session.end.map { $0 > enteredFrom } ?? true
+            }.count,
+            hasEnteredSessions: sessions.contains { $0.source == .entered },
+            backfilledReadings: attribution.bySession.filter { $0.session.source == .backfilled }
+                .reduce(0) { count, part in count + part.readings.filter { $0.time >= window.start }.count },
+            // an Unknown reading the backfill could still name: in its days, outside every window it ran over
+            backfillCanName: backfillWindows.map { windows in
+                let from = Swift.max(now.addingTimeInterval(-NightscoutCGMBackfill.maxAge), window.start)
+                return attribution.unknown.contains { point in
+                    point.time >= from && !windows.contains { $0.contains(point.time) }
+                }
+            } ?? false
+        )
+    }
+
+    /// A sensor's row: its sessions' readings' noise in the period (their own fits: those of its CGM's segments it
+    /// shares, `CGMStatsEngine.noise(…reusing:)`), how it ended.
+    /// - Parameters:
+    ///   - readingsBySession: every session's readings, those before the period too
+    ///   - residuals: its CGM's (`CGMStatsEngine.analysed`)
+    ///   - readings: the period's, cleaned (`CGMStatsEngine.cleaned`): the reading after the sensor's last
+    private static func sensor(
+        _ group: [CGMSessionRecord],
+        readingsBySession: [UUID: [GlucosePoint]],
+        residuals: CGMSegmentResiduals,
+        all sorted: [CGMSessionRecord],
+        readings: [GlucosePoint],
+        window: DateInterval,
+        now: Date
+    ) -> CGMSensor {
+        let first = group[0]
+        let last = group[group.count - 1]
+        let ids = Set(group.map(\.id))
+        let points = group.flatMap { readingsBySession[$0.id] ?? [] }
+        // the next session, of another CGM, began where it ended
+        let tolerance = BloodGlucose.sessionTolerance
+        let next = last.end.flatMap { end in
+            sorted.first { !ids.contains($0.id) && abs($0.start.timeIntervalSince(end)) <= tolerance }
+        }
+        let life = last.expectedLife ?? first.expectedLife
+        // something ended it: its recorded end; no reading after its last, or a gap that holds a sensor change; the
+        // next reading another CGM's (or Unknown), a recorded session's or a recorded sensor's. Not an entered session
+        // of its CGM going straight on, its start inferred: an earlier answer's split. Its last reading whenever it
+        // was (one that ended just before the period has it there), the next one the period's.
+        let hasEndCause: Bool = {
+            guard last.end != nil, last.source != .recorded,
+                  let ownLast = CGMStatsEngine.cleaned(points, in: DateInterval(start: .distantPast, end: now), now: now)
+                  .last?.time
+            else { return true }
+            let after = readings.partitionIndex { $0.time > ownLast }
+            guard after < readings.count,
+                  readings[after].time.timeIntervalSince(ownLast) < CGMUnknownInference.splitGap
+            else { return true }
+            guard let holder = sorted.last(where: { $0.contains(readings[after].time) }),
+                  pick(of: holder) == pick(of: last)
+            else { return true }
+            return !CGMUnknownInference.hasInferredStart(holder, among: sorted)
+        }()
+        return CGMSensor(
+            id: first.id,
+            pick: pick(of: first),
+            name: last.name,
+            start: first.start,
+            sensorStart: first.sensorStart,
+            end: last.end,
+            expectedLife: life,
+            grace: life != nil && first.cgmId == dexcomG7Id ? dexcomG7Grace : 0,
+            noise: CGMStatsEngine.noise(readings: points, period: window, now: now, reusing: residuals),
+            endedAtCGMChange: next.map { pick(of: $0) != pick(of: last) } ?? false,
+            hasEndCause: hasEndCause,
+            isEntered: first.source == .entered,
+            isBackfilled: first.source == .backfilled
+        )
+    }
+}
+
+/// The CGM topic's result, kept for its key (`Stat.CGMCacheKey`): another key computes it again. A read for what is in
+/// flight awaits it; one for another key cancels it.
+actor CGMCache {
+    private var key: Stat.CGMCacheKey?
+    private var result: Stat.CGMResult?
+    private var inFlight: (key: Stat.CGMCacheKey, task: Task<Stat.CGMResult, Error>)?
+
+    func result(
+        key: Stat.CGMCacheKey,
+        compute: @escaping @Sendable() async throws -> Stat.CGMResult
+    ) async throws -> Stat.CGMResult {
+        if let result, self.key == key {
+            return result
+        }
+        if let inFlight, inFlight.key == key {
+            return try await inFlight.task.value
+        }
+        inFlight?.task.cancel()
+        let task = Task { try await compute() }
+        inFlight = (key, task)
+        defer {
+            if inFlight?.task == task {
+                inFlight = nil
+            }
+        }
+        let value = try await task.value
+        if inFlight?.task == task {
+            self.key = key
+            result = value
+        }
+        return value
     }
 }

@@ -2671,11 +2671,10 @@ extension PumpEventStoreTests {
     /// An earlier model, built in code from the app's: the earlier models are in no bundle, as on the device (the
     /// store's own model cache is the source). C4's (HEAD 769baef33) has the coverage rows' attributes,
     /// `PumpEvent.end`/`eventID` and `BasalScheduleRecord.timeZone`/`uploader`, that model edit 2 dropped; the one before
-    /// C2 (e2bcccbd9) has no `PumpSession` either. No subclass claimed: the app's classes stay the app model's (the
-    /// other tests' contexts).
+    /// C2 (e2bcccbd9) has no `PumpSession` either. Neither has `CGMSession`. No subclass claimed: the app's classes stay
+    /// the app model's (the other tests' contexts).
     private static func earlierModel(withSessions: Bool) throws -> NSManagedObjectModel {
-        let current = CoreDataStack.shared.persistentContainer.managedObjectModel
-        let model = try XCTUnwrap(current.copy() as? NSManagedObjectModel)
+        let model = try modelBeforeCGMSessions()
         if !withSessions {
             model.entities = model.entities.filter { $0.name != PumpEventStore.Entity.sessions }
         }
@@ -2690,6 +2689,14 @@ extension PumpEventStoreTests {
         events.properties += [attribute("end", .dateAttributeType), attribute("eventID", .stringAttributeType)]
         let schedules = try XCTUnwrap(model.entitiesByName[PumpEventStore.Entity.schedules])
         schedules.properties += [attribute("timeZone", .stringAttributeType), attribute("uploader", .stringAttributeType)]
+        return model
+    }
+
+    /// The model before `CGMSession`: the app's without it, built in code like `earlierModel`. No subclass claimed.
+    private static func modelBeforeCGMSessions() throws -> NSManagedObjectModel {
+        let current = CoreDataStack.shared.persistentContainer.managedObjectModel
+        let model = try XCTUnwrap(current.copy() as? NSManagedObjectModel)
+        model.entities = model.entities.filter { $0.name != CGMSessionStore.Entity.sessions }
         for entity in model.entities {
             entity.managedObjectClassName = NSStringFromClass(NSManagedObject.self)
         }
@@ -2735,15 +2742,32 @@ extension PumpEventStoreTests {
         return (directory, directory.appendingPathComponent("Core_Data.sqlite"))
     }
 
-    /// The model's hashes against the pins: the earlier models built in code are C4's and e2bcccbd9's exactly, and model
-    /// edit 2 changes `PumpEvent`'s and `BasalScheduleRecord`'s only (an accidental edit of another entity fails here).
+    /// The model's hashes against the pins: the earlier models built in code are C4's and e2bcccbd9's exactly, model
+    /// edit 2 changes `PumpEvent`'s and `BasalScheduleRecord`'s only, and `CGMSession` is added with the others unchanged
+    /// (an accidental edit of another entity fails here).
     func testModelHashesArePinned() throws {
         let current = CoreDataStack.shared.persistentContainer.managedObjectModel
         let current64 = current.entityVersionHashesByName.mapValues { $0.base64EncodedString() }
         var expected = Self.c4EntityVersionHashes
         expected[PumpEventStore.Entity.events] = "qwM6RmQAhNA2zObJHUKQDni6AkZ17fR/dVnCmrKk6PE="
         expected[PumpEventStore.Entity.schedules] = "pdCC28pquStQiNl/Hlwi2jC52hyS+s4veydSnvQbZTw="
+        expected[CGMSessionStore.Entity.sessions] = "hoGqcrvU2dhz6/Wmm8UExftd0AO8HZtU6mZGQb8Ufco="
         XCTAssertEqual(current64, expected)
+        XCTAssertEqual(
+            Set(current.entitiesByName[CGMSessionStore.Entity.sessions].map { Array($0.attributesByName.keys) } ?? []),
+            [
+                "cgmId", "device", "end", "expectedLife", "id", "name", "oneMinute", "plugin", "sensorId", "sensorStart",
+                "source", "start"
+            ]
+        )
+        XCTAssertEqual(
+            current.entitiesByName[CGMSessionStore.Entity.sessions]?.indexes.map { $0.elements.compactMap(\.property?.name) },
+            [["start"]]
+        )
+        XCTAssertEqual(
+            try Self.modelBeforeCGMSessions().entityVersionHashesByName.mapValues { $0.base64EncodedString() },
+            expected.filter { $0.key != CGMSessionStore.Entity.sessions }
+        )
         XCTAssertEqual(
             Set(current.entitiesByName[PumpEventStore.Entity.events].map { Array($0.attributesByName.keys) } ?? []),
             ["date", "durationMin", "isExternal", "isMutable", "isSMB", "kind", "rate", "source", "units"]
@@ -2930,7 +2954,8 @@ extension PumpEventStoreTests {
     func testModelEditsMigrateAStoreOfTheModelBeforeTheSessionsInPlace() throws {
         let current = CoreDataStack.shared.persistentContainer.managedObjectModel
         let previous = try Self.earlierModel(withSessions: false)
-        XCTAssertEqual(previous.entities.count, current.entities.count - 1)
+        // without `PumpSession` and `CGMSession`
+        XCTAssertEqual(previous.entities.count, current.entities.count - 2)
         let (directory, url) = try Self.temporaryStore()
         defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -3018,6 +3043,102 @@ extension PumpEventStoreTests {
         XCTAssertEqual(try Self.count(PumpEventStore.Entity.sessions, in: again), 0)
         XCTAssertEqual(try Self.count(PumpEventStore.Entity.events, in: again), 4)
         XCTAssertEqual(try Self.count("Override", in: again), 1)
+        try Self.closeStore(again)
+    }
+
+    /// `CGMSession` added to a store of the model before it, opened as the app opens it: every row of the other
+    /// entities is kept, `CGMSession` is there, empty, and round-trips a session. A downgrade drops it and keeps the
+    /// rest; the upgrade again works.
+    func testCGMSessionMigratesAStoreOfTheModelBeforeItInPlace() throws {
+        let current = CoreDataStack.shared.persistentContainer.managedObjectModel
+        let previous = try Self.modelBeforeCGMSessions()
+        XCTAssertEqual(previous.entities.count, current.entities.count - 1)
+        let (directory, url) = try Self.temporaryStore()
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        // the previous model's store: doses, a pump session, readings, and a row of an entity sorting after CGMSession
+        let session = pumpSession(7, "Medtrum", from: at(-60), to: nil, lastSeen: at(10))
+        let old = try Self.openStore(previous, at: url)
+        let context = old.viewContext
+        for (minutes, units) in [(0.0, 1.5), (5, 0.25)] {
+            let row = NSEntityDescription.insertNewObject(forEntityName: PumpEventStore.Entity.events, into: context)
+            row.setValue(at(minutes), forKey: "date")
+            row.setValue(PumpEventKind.bolus.rawValue, forKey: "kind")
+            row.setValue(PumpEventSource.pump.rawValue, forKey: "source")
+            row.setValue(units, forKey: "units")
+        }
+        let sessionRow = NSEntityDescription.insertNewObject(forEntityName: PumpEventStore.Entity.sessions, into: context)
+        sessionRow.setValue(session.id, forKey: "id")
+        sessionRow.setValue(session.source.rawValue, forKey: "source")
+        sessionRow.setValue(session.plugin, forKey: "plugin")
+        sessionRow.setValue(session.start, forKey: "start")
+        sessionRow.setValue(session.localStart, forKey: "localStart")
+        sessionRow.setValue(session.lastSeen, forKey: "lastSeen")
+        sessionRow.setValue(session.flags.rawValue, forKey: "flags")
+        for minutes in [0.0, 5] {
+            let reading = NSEntityDescription.insertNewObject(forEntityName: "Readings", into: context)
+            reading.setValue(at(minutes), forKey: "date")
+            reading.setValue(Int16(120), forKey: "glucose")
+        }
+        let fat = NSEntityDescription.insertNewObject(forEntityName: "Fat", into: context)
+        fat.setValue(at(-30), forKey: "date")
+        try context.save()
+        try Self.closeStore(old)
+
+        // upgrade: kept, and an empty CGMSession
+        let upgraded = try Self.openStore(current, at: url)
+        XCTAssertEqual(
+            try Self.objects(PumpEventStore.Entity.events, in: upgraded).compactMap { $0.value(forKey: "date") as? Date },
+            [at(0), at(5)]
+        )
+        XCTAssertEqual(try CoreDataPumpEventDatabase.sessionRows(in: upgraded.viewContext).map(\.value.id), [session.id])
+        XCTAssertEqual(
+            try Self.objects("Readings", in: upgraded).compactMap { $0.value(forKey: "date") as? Date },
+            [at(0), at(5)]
+        )
+        XCTAssertEqual(try Self.count("Fat", in: upgraded), 1)
+        XCTAssertEqual(try Self.count(CGMSessionStore.Entity.sessions, in: upgraded), 0)
+
+        // a session round-trips through the new entity
+        let cgm = CGMSessionRecord(
+            id: UUID(),
+            start: at(-3000),
+            end: at(0),
+            CGMSnapshot(
+                plugin: "G7CGMManager",
+                cgmId: "dexcomG7",
+                name: "Dexcom G7",
+                sensorStart: at(-3000),
+                expectedLife: .days(10),
+                oneMinute: true,
+                sensorId: "G7-A"
+            )
+        )
+        CGMSessionStore.apply(cgm, to: CGMSession(context: upgraded.viewContext))
+        try upgraded.viewContext.save()
+        upgraded.viewContext.reset()
+        XCTAssertEqual(
+            try CGMSessionStore.sessions(
+                in: DateInterval(start: .distantPast, end: .distantFuture),
+                context: upgraded.viewContext
+            ),
+            [cgm]
+        )
+        try Self.closeStore(upgraded)
+
+        // downgrade: the CGM sessions' table goes, the rest stays
+        let downgraded = try Self.openStore(previous, at: url)
+        XCTAssertNil(downgraded.managedObjectModel.entitiesByName[CGMSessionStore.Entity.sessions])
+        XCTAssertEqual(try Self.count(PumpEventStore.Entity.events, in: downgraded), 2)
+        XCTAssertEqual(try Self.count(PumpEventStore.Entity.sessions, in: downgraded), 1)
+        XCTAssertEqual(try Self.count("Readings", in: downgraded), 2)
+        try Self.closeStore(downgraded)
+
+        // and up again: empty CGM sessions, the rest kept
+        let again = try Self.openStore(current, at: url)
+        XCTAssertEqual(try Self.count(CGMSessionStore.Entity.sessions, in: again), 0)
+        XCTAssertEqual(try Self.count(PumpEventStore.Entity.sessions, in: again), 1)
+        XCTAssertEqual(try Self.count("Fat", in: again), 1)
         try Self.closeStore(again)
     }
 

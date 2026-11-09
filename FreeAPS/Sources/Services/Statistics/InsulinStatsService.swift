@@ -128,6 +128,13 @@ actor InsulinStatsService: AppService, LifetimeOwner {
         return try await self.days(Engine.lastDays(count, now: ctx.now, calendar: ctx.calendar), ctx)
     }
 
+    /// The whole calendar days given (none of them today), oldest -> newest, as `period` reads them (the complete ones
+    /// from the cache): Statistics' Good & bad days, the days its glucose is scored for.
+    /// - Throws: when a read failed (nothing from it is cached)
+    func days(_ days: [DateInterval]) async throws -> [DayInsulin] {
+        try await self.days(days, context())
+    }
+
     /// Statistics › Insulin › Today: the `InsulinStatsEngine.usualDays` days before today and today (`days(last:)`,
     /// Home's insulin card's days), the summary over them (no period: its calendar days are the days read) and the
     /// hours. So Today's usual by now is over the same 7 days as Home's, their complete ones (a 7 d period is 6 and

@@ -17,7 +17,8 @@ final class APSAssembly: Assembly {
                 calibrationService: r.resolve(CalibrationService.self)!,
                 router: r.resolve(Router.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
-                loopEventsStorage: r.resolve(LoopEventsStorage.self)!
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!,
+                cgmSessionStore: r.resolve(CGMSessionStore.self)!
             )
         }
         container.register(OverrideManager.self) { r in

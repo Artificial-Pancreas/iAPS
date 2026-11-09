@@ -132,6 +132,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     private let router: Router
     private let appCoordinator: AppCoordinator
     private let loopEventsStorage: LoopEventsStorage
+    private let cgmSessionStore: CGMSessionStore
 
     private let lifetime = Lifetime()
 
@@ -160,6 +161,13 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
     }
 
     private let latestCgmReadingDate: Locked<Date?> = Locked(nil)
+
+    // the Nightscout `device` of the newest reading batch, and the plugin that sent it: the CGM sessions' when the
+    // manager's own status names no device (LibreTransmitter's)
+    private let latestCgmDevice: Locked<(plugin: String, device: String)?> = Locked(nil)
+
+    // the CGM the session store was last told about (`recordCGMSession`)
+    private let lastRecordedCGM: Locked<CGMSnapshot?> = Locked(nil)
 
     // not using @PersistedProperty as an annotation directly because using a var breaks Sendable for DeviceDataManager
     private let rawCGMManagerStore = PersistedProperty<CGMManager.RawValue>(key: "CGMManagerState")
@@ -245,7 +253,8 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         calibrationService: CalibrationService,
         router: Router,
         appCoordinator: AppCoordinator,
-        loopEventsStorage: LoopEventsStorage
+        loopEventsStorage: LoopEventsStorage,
+        cgmSessionStore: CGMSessionStore
     ) {
         self.pumpHistoryStorage = pumpHistoryStorage
         self.deviceAlertManager = deviceAlertManager
@@ -258,6 +267,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         self.router = router
         self.appCoordinator = appCoordinator
         self.loopEventsStorage = loopEventsStorage
+        self.cgmSessionStore = cgmSessionStore
 
         // TODO: does this belong here?
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -276,6 +286,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         oldValue?.delegateQueue = nil
 
         setupCGM()
+        recordCGMSession(.manager, lastReadingAt: latestCgmReadingDate.value)
 
         rawCGMManager = cgmManager?.rawValue
         UserDefaults.standard.clearLegacyCGMManagerRawValue()
@@ -359,6 +370,8 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
 
             setupPump()
             setupCGM()
+            // the restored manager (or none)
+            recordCGMSession(.manager, lastReadingAt: latestCgmReadingDate.value)
         }
 
         appCoordinator.heartbeat
@@ -517,9 +530,27 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                 allowCalibrations = false
             }
 
+            let previousReadingDate = latestCgmReadingDate.value
             latestCgmReadingDate.mutate { $0 = values.map(\.date).max() }
 
-            let bloodGlucose = values.map { newGlucoseSample -> BloodGlucose in
+            // the readings' Nightscout `device`: the open session's once it holds the sensor's id (one string for a
+            // sensor), unless a reading's own HKDevice names another sensor; else the sample's, or the manager's
+            let manager = cgmManager
+            let managerDevice = manager?.cgmManagerStatus.device
+            let pinned = manager.flatMap { cgmSessionStore.currentDevice(plugin: $0.pluginIdentifier) }
+            let devices = values.map { sample in
+                let computed = manager.flatMap {
+                    KnownPlugins.nightscoutDevice(sample.device ?? managerDevice, cgmManager: $0)
+                }
+                return NightscoutCGMDevice.live(computed, ownDevice: sample.device != nil, session: pinned)
+            }
+            if let manager, let newest = values.indices.max(by: { values[$0].date < values[$1].date }),
+               let device = devices[newest]
+            {
+                latestCgmDevice.mutate { $0 = (manager.pluginIdentifier, device) }
+            }
+
+            let bloodGlucose = zip(values, devices).map { newGlucoseSample, device -> BloodGlucose in
                 let quantity = newGlucoseSample.quantity
                 let mgdl = quantity.doubleValue(for: .milligramsPerDeciliter)
                 let uncalibrated = Int(mgdl)
@@ -539,10 +570,13 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
                     noise: nil,
                     type: "sgv",
                     sessionStartDate: sessionStart,
+                    device: device
                 )
             }
 
             completion(bloodGlucose)
+            // a changed session start, source app or sensor; the new sensor's readings are in this batch
+            recordCGMSession(.updated, lastReadingAt: previousReadingDate)
         case .unreliableData:
             warning(.deviceManager, "CGM Manager - unreliable data")
             completion([])
@@ -1287,6 +1321,14 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
                 // libre manager emits sensorStart when it detects a new sensor
                 // the calibration service subscribes to this event to clear calibrations
                 appCoordinator.sendNewSensorDetected()
+                recordCGMSession(
+                    .sensorStarted(.init(
+                        date: event.date,
+                        warmup: event.warmupPeriod,
+                        sensorId: KnownPlugins.sensorId(of: event, cgmManager: cgmManager)
+                    )),
+                    lastReadingAt: latestCgmReadingDate.value
+                )
             }
         }
     }
@@ -1295,6 +1337,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         rawCGMManager = manager.rawValue
         dispatchCgmStatus()
+        // the session start may have moved
+        recordCGMSession(.updated, lastReadingAt: latestCgmReadingDate.value)
     }
 
     func credentialStoragePrefix(for _: CGMManager) -> String {
@@ -1581,6 +1625,47 @@ private extension BaseDeviceDataManager {
         )
 
         appCoordinator.setCgmStatus(status)
+    }
+
+    /// The current CGM to the CGM session store (`CGMSessionStore.record`: queued, returns at once). An `.updated` one
+    /// (it comes with every reading) only when it differs from the last one recorded (`CGMSnapshot.isSameState`): a few
+    /// property reads and a compare.
+    private func recordCGMSession(_ kind: CGMSessionEvent.Kind, lastReadingAt: Date?) {
+        let cgm = cgmManager.map { manager in
+            CGMSnapshot(
+                plugin: manager.pluginIdentifier,
+                cgmId: KnownPlugins.cgmIdForStatistics(for: manager),
+                name: manager.localizedTitle,
+                sensorStart: KnownPlugins.sessionStart(cgmManager: manager),
+                expectedLife: KnownPlugins.cgmExpirationByPluginIdentifier(manager),
+                oneMinute: KnownPlugins.isOneMinuteReadingsEnabled(for: manager),
+                sensorId: KnownPlugins.sensorId(cgmManager: manager),
+                device: cgmDevice(manager)
+            )
+        }
+        var changed = true
+        lastRecordedCGM.mutate { last in
+            if kind == .updated {
+                changed = !CGMSnapshot.isSameState(last, cgm)
+            }
+            if changed {
+                last = cgm
+            }
+        }
+        guard changed else { return }
+        cgmSessionStore.record(CGMSessionEvent(kind: kind, cgm: cgm, at: Date(), lastReadingAt: lastReadingAt))
+    }
+
+    /// The CGM session's Nightscout `device`: the manager's status device's, else the newest readings' when this
+    /// manager sent them, else as a reading without a device has it (the source app, the title).
+    private func cgmDevice(_ manager: CGMManager) -> String? {
+        if let device = manager.cgmManagerStatus.device {
+            return KnownPlugins.nightscoutDevice(device, cgmManager: manager)
+        }
+        if let latest = latestCgmDevice.value, latest.plugin == manager.pluginIdentifier {
+            return latest.device
+        }
+        return KnownPlugins.nightscoutDevice(nil, cgmManager: manager)
     }
 
     private func setupCGM() {

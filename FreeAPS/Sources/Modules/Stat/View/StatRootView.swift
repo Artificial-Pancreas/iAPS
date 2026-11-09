@@ -103,6 +103,15 @@ extension Stat {
                     .padding(.horizontal, 12)
                     .padding(.top, 4)
                 }
+                if state.tab.isCGM, let report = state.cgmContent.value, report.picker.isNotEmpty {
+                    // the CGM topic's picker, under the chips: hidden with one CGM
+                    CGMPickerControl(
+                        items: report.picker,
+                        selection: Binding(get: { report.pick }, set: { state.select(cgm: $0) })
+                    )
+                    .padding(.horizontal, 16)
+                    .padding(.top, 8)
+                }
             }
         }
 
@@ -151,8 +160,30 @@ extension Stat {
                 insulinTabContent
             } else if state.tab == .patches {
                 patchesTabContent
+            } else if state.tab.isCGM {
+                cgmTabContent
             } else {
                 mealsTabContent
+            }
+        }
+
+        /// The CGM topic's three views, one result.
+        @ViewBuilder private var cgmTabContent: some View {
+            StatsContentView(
+                content: state.cgmContent,
+                emptyText: "No CGM data in this period",
+                failedText: "The CGM readings couldn't be read."
+            ) { report in
+                if state.tab == .cgmSmoothing {
+                    CGMSmoothingView(
+                        report: report,
+                        runs: state.cgmSmoothing,
+                        analyse: { state.analyseSmoothing() },
+                        cancel: { state.cancelSmoothing() }
+                    )
+                } else {
+                    CGMView(report: report, tab: state.tab)
+                }
             }
         }
 
@@ -162,6 +193,8 @@ extension Stat {
             case .trace: "No CGM data in the last 90 days"
             // its weeks end yesterday: today's readings alone show nothing
             case .weekday: "No CGM data in these weeks: they end yesterday, today counts once it is over"
+            // its days end yesterday, and a day needs 70% CGM coverage
+            case .goodBadDays: "No day in this period has enough CGM data to be scored: the days end yesterday"
             default: "No CGM data in this period"
             }
             StatsContentView(content: glucoseContent, emptyText: emptyText) { glucose in
@@ -181,6 +214,12 @@ extension Stat {
                     )
                 case let .agp(agp):
                     AGPView(agp: agp, selection: state.agpSelection)
+                case let .goodBadDays(goodBadDays):
+                    GoodBadDaysView(
+                        model: goodBadDays,
+                        selection: state.goodBadDaysSelection,
+                        openDay: { state.openDay($0) }
+                    )
                 case let .daily(daily):
                     DailyView(daily: daily, selection: state.dailySelection)
                 case let .hourOfDay(hourOfDay):

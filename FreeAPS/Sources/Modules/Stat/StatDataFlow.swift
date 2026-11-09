@@ -363,6 +363,22 @@ enum Stat {
         }
     }
 
+    /// What Good & bad days shows, computed off the main actor (`Provider.goodBadDays`): the period's complete days
+    /// scored by GRI, the best and the worst third with their profiles and glucose rows (`GoodBadDaysEngine.result`),
+    /// and their factor rows (`GoodBadDaysEngine.factors`).
+    struct GoodBadDaysData: Equatable, Sendable {
+        /// one of `StatsPeriod.usualDayPeriods`
+        let period: StatsPeriod
+        let result: GoodBadDaysResult
+        /// in `GoodBadFactor`'s order; none without both thirds shown
+        var factors: [GoodBadDaysFactorRow] = []
+        /// the first CGM session's start (recorded, entered or backfilled): sensors started before weren't recorded
+        var sensorsRecordedFrom: Date?
+
+        /// no day of the period has enough CGM data to be scored
+        var isEmpty: Bool { result.scored == 0 }
+    }
+
     /// The periods the Insulin and Meals tabs compute (`InsulinStatsEngine.periodDays`: the engines don't special-case
     /// Today and 24 h). The Meals tab's Today is computed as 7 d; the Insulin tab's is labelled 7 d, its usual by now over
     /// the 7 days before today (`InsulinStatsService.today`: the 7 d period is 6 and today).
@@ -532,6 +548,163 @@ enum Stat {
         }
     }
 
+    /// The periods the CGM topic offers (`StatsTab.cgmOverview` …): no Today, its figures need hours of readings.
+    static let cgmPeriods: [StatsPeriod] = [.days7, .days14, .days30, .days90]
+
+    /// A pick of the CGM topic's picker: one CGM (its statistics id, `CGMSessionRecord.cgmId`), or the readings no
+    /// session with an id covers. Readings of different CGMs are never pooled.
+    enum CGMPick: Hashable, Sendable {
+        case cgm(String)
+        case unknown
+    }
+
+    /// A CGM with readings in the period: what the picker lists.
+    struct CGMSource: Equatable, Sendable, Identifiable {
+        let pick: CGMPick
+        /// the manager's title of its newest session ("Dexcom G7"); "Unknown" for the readings no session names
+        let name: String
+
+        var id: CGMPick { pick }
+    }
+
+    /// A sensor of the Sensors view: a CGM session, or several of the same CGM and sensor start (a CGM switched away
+    /// and back), merged (`Provider.mergedSensors`).
+    struct CGMSensor: Equatable, Sendable, Identifiable {
+        /// its first session's
+        let id: UUID
+        let pick: CGMPick
+        let name: String
+        /// the session's start (its first's)
+        let start: Date
+        /// the sensor's own start, nil when the CGM gives none (the session's start is used then)
+        let sensorStart: Date?
+        /// its last session's end; nil while it is in use
+        let end: Date?
+        /// from the sensor start, its grace included; nil when unknown
+        let expectedLife: TimeInterval?
+        /// the part of `expectedLife` that is grace (`Provider.dexcomG7Grace`): an end within it isn't early
+        let grace: TimeInterval
+        /// its readings' noise in the period
+        let noise: CGMNoise?
+        /// it ended where the next session, of another CGM, began
+        let endedAtCGMChange: Bool
+        /// something ended it (`Provider.sensor`): not an entered session of its CGM going on from it without a gap,
+        /// that session's start inferred (an earlier answer's split of one sensor)
+        var hasEndCause = true
+        /// its first session is one the user entered (`CGMSessionSource.entered`): its start inferred from the readings
+        var isEntered = false
+        /// its first session was named from Nightscout (`CGMSessionSource.backfilled`)
+        var isBackfilled = false
+
+        /// where its length counts from: its own start, else the session's
+        var lifeStart: Date { sensorStart ?? start }
+        var isInUse: Bool { end == nil }
+    }
+
+    /// What one pick shows (`CGMResult.picks`).
+    struct CGMPickResult: Equatable, Sendable {
+        let stats: CGMStats
+        /// by sensor day: the sensors with readings on it
+        let sensorsBySensorDay: [Int: Int]
+        /// newest first
+        let sensors: [CGMSensor]
+    }
+
+    /// What the CGM topic shows, computed off the main actor (`Provider.cgm`): the period's readings run through
+    /// `CGMStatsEngine.stats` once per CGM (attributed to the CGM sessions, `CGMSessionAttribution`), the sensors of
+    /// the sessions overlapping the period.
+    struct CGMResult: Equatable, Sendable {
+        let period: StatsPeriod
+        /// the period's `[start, now]`
+        let window: DateInterval
+        let asOf: Date
+        /// the data generation it was read for (`CGMCacheKey.generation`): the smoothing results are kept by it
+        let generation: Int
+        /// the CGMs with readings in the period: the named ones by their first reading, Unknown last
+        let cgms: [CGMSource]
+        /// each of `cgms`
+        let picks: [CGMPick: CGMPickResult]
+        /// the oldest recorded session's start: the readings before it are Unknown, unless entered; nil without one
+        let recordingStart: Date?
+        /// the entered sessions' parts (`CGMSessionSource.entered`, after a recorded session clipped them) in the
+        /// sheet's 90 days (`Provider.cgmUnknown`): "3 periods entered by you", Change
+        var enteredSessions = 0
+        /// any entered session, older ones too: Clear
+        var hasEnteredSessions = false
+        /// the period's readings a backfilled session names (`CGMSessionSource.backfilled`): "Nightscout named …"
+        var backfilledReadings = 0
+        /// Nightscout is configured and an Unknown reading lies in the backfill's days outside every window it ran
+        /// over: the Unknown card offers the backfill
+        var backfillCanName = false
+
+        /// no reading in the period: "No CGM data in this period"
+        var isEmpty: Bool { cgms.isEmpty }
+
+        /// The pick shown: the one asked for while the period has it, else the default (`defaultPick`); nil without
+        /// readings.
+        func shown(_ pick: CGMPick?) -> CGMPick? {
+            if let pick, cgms.contains(where: { $0.pick == pick }) {
+                return pick
+            }
+            return defaultPick
+        }
+
+        /// The named CGM with the newest reading in the period; Unknown only without a named one.
+        var defaultPick: CGMPick? {
+            let named = cgms.filter { $0.pick != .unknown }
+            let newest = named.max { first, second in
+                (picks[first.pick]?.stats.span?.end ?? .distantPast) < (picks[second.pick]?.stats.span?.end ?? .distantPast)
+            }
+            return newest?.pick ?? cgms.first?.pick
+        }
+    }
+
+    /// What the "Which CGM was this?" sheet starts from (`Provider.cgmUnknown`): the Unknown readings of the CGM topic's
+    /// longest period, the readings no recorded session covers (an entered one doesn't count: the answer is changed).
+    struct CGMUnknownInput: Equatable, Sendable {
+        /// the 90 days' `[start, now]`
+        let window: DateInterval
+        /// oldest first (`CGMUnknownInference.sensors`)
+        let sensors: [CGMProbableSensor]
+        /// the recorded sessions' CGMs first, then the ones iAPS knows (`CGMChoice.choices`)
+        let choices: [CGMChoice]
+        /// the Unknown readings' times, ascending
+        let unknownTimes: [Date]
+        /// the recorded sessions (`CGMUnknownInference.sessions`: a run starting with a recorded sensor is that sensor)
+        let recorded: [CGMSessionRecord]
+        /// by sensor: the CGM of the entered session holding its first reading
+        let entered: [Date: String]
+        /// the entered sessions' parts in the 90 days
+        let enteredSessions: Int
+
+        /// the Unknown readings' `[first, last]`; nil without them
+        var span: DateInterval? {
+            guard let first = unknownTimes.first, let last = unknownTimes.last else { return nil }
+            return DateInterval(start: first, end: last)
+        }
+
+        /// The time an answer covers, the entered sessions in it replaced: the Unknown readings' span, to just after
+        /// the last.
+        var replaced: DateInterval? {
+            span.map { DateInterval(start: $0.start, end: $0.end.addingTimeInterval(1)) }
+        }
+    }
+
+    /// What a CGM result depends on (`CGMCache`): another one computes it again.
+    struct CGMCacheKey: Equatable, Sendable {
+        let period: StatsPeriod
+        /// the period's first day: midnight moves it on
+        let windowStart: Date
+        /// the screen's: bumped by every readings change seen (`glucoseStatsChanged`), coming back from the background
+        /// or up again
+        let generation: Int
+        let timeZone: String
+        /// every recorded session: one that changed (a new sensor, an end) computes it again
+        let sessions: [CGMSessionRecord]
+        /// the Nightscout backfill's windows (nil: Nightscout isn't configured): the Unknown card's offer
+        var backfillWindows: [DateInterval]? = nil
+    }
+
     /// What a view shows: the previous content stays (dimmed) while the new one is computed.
     enum ViewContent<Value: Equatable>: Equatable {
         case loading(previous: Value?)
@@ -599,34 +772,38 @@ enum StatsFocus: Hashable, Sendable {
     case negativeIOB
 }
 
-/// The topics of Statistics, in the title menu (`StatsViewMenu`): Glucose (its seven views), Insulin, Patches (offered
-/// while the last 120 days hold a pod or patch) and Meals.
+/// The topics of Statistics, in the title menu (`StatsViewMenu`): Glucose (its eight views), Insulin, Patches (offered
+/// while the last 120 days hold a pod or patch), Meals and CGM (its three views).
 enum StatsTopic: String, CaseIterable, Identifiable, Sendable, Hashable {
     case glucose
     case insulin
     case patches
     case meals
+    case cgm
 
     var id: String { rawValue }
 
-    /// The views the topic offers, in the menu's order: Glucose's seven; Insulin, Patches and Meals one each.
+    /// The views the topic offers, in the menu's order: Glucose's eight; Insulin, Patches and Meals one each; CGM's three.
     var views: [StatsTab] {
         switch self {
         case .glucose: return StatsTab.allCases.filter(\.isGlucose)
         case .insulin: return [.insulin]
         case .patches: return [.patches]
         case .meals: return [.meals]
+        case .cgm: return StatsTab.allCases.filter(\.isCGM)
         }
     }
 }
 
 /// The views of Statistics: the Glucose topic's, in the menu's order, then the Insulin, Patches and Meals topics' (one
-/// each).
+/// each), then the CGM topic's.
 enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
     case overview
     /// "Day": one day's readings (`TraceView`)
     case trace
     case agp
+    /// "Good & bad days": the days scored by GRI, two groups of them compared (`GoodBadDaysView`)
+    case goodBadDays
     /// "In range by day": time in ranges day by day (`DailyView`)
     case daily
     /// "By hour": time in ranges by the hour of the day (`HourOfDayView`)
@@ -641,6 +818,12 @@ enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
     case patches
     /// the carbs per day and by time of day (`MealsView`)
     case meals
+    /// the CGM's coverage, gaps, noise, reversals, jitter and rate of change (`CGMView`)
+    case cgmOverview
+    /// sensor by sensor, and the noise by sensor day (`CGMView`)
+    case cgmSensors
+    /// what the loop saw under each smoothing setting, replayed on Analyse (`CGMSmoothingView`)
+    case cgmSmoothing
 
     var id: String { rawValue }
 
@@ -649,15 +832,26 @@ enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
         topic == .glucose
     }
 
+    /// a view of the CGM topic: one result for all three (`Stat.CGMResult`)
+    var isCGM: Bool {
+        topic == .cgm
+    }
+
     /// its numbers depend on the bands (the settings): the glucose views, and Patches (each one's time in range)
     var usesBands: Bool {
         isGlucose || self == .patches
+    }
+
+    /// what it shows depends on the settings: the bands' views, and the CGM topic's (in the glucose unit)
+    var usesSettings: Bool {
+        usesBands || isCGM
     }
 
     var topic: StatsTopic {
         switch self {
         case .agp,
              .daily,
+             .goodBadDays,
              .hourOfDay,
              .overview,
              .trace,
@@ -666,6 +860,9 @@ enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
         case .insulin: return .insulin
         case .patches: return .patches
         case .meals: return .meals
+        case .cgmOverview,
+             .cgmSensors,
+             .cgmSmoothing: return .cgm
         }
     }
 
@@ -673,7 +870,8 @@ enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// the preferred period). Weekly has one, its 13 weeks, and "In range by day" one, its 90 days (the chart
     /// scrolls through them): no period control, and they neither use nor change the preferred period either (it is
     /// always the nearest one offered). By weekday has whole weeks, a period of its own (`Stat.StateModel.weekdayPeriod`):
-    /// it neither uses nor changes the preferred one.
+    /// it neither uses nor changes the preferred one. Good & bad days has 14, 30 and 90 days (a group needs 5 days), a
+    /// period of its own too (`Stat.StateModel.goodBadDaysPeriod`).
     var validPeriods: [StatsPeriod] {
         switch self {
         case .overview: return StatsPeriod.homeRanges
@@ -683,9 +881,13 @@ enum StatsTab: String, CaseIterable, Identifiable, Sendable, Hashable {
         case .daily: return [.days90]
         case .weekly: return [.weeks13]
         case .weekday: return StatsPeriod.weekdayPeriods
+        case .goodBadDays: return StatsPeriod.usualDayPeriods
         case .insulin,
              .meals,
              .patches: return Stat.insulinAndMealsTabPeriods
+        case .cgmOverview,
+             .cgmSensors,
+             .cgmSmoothing: return Stat.cgmPeriods
         }
     }
 
@@ -708,6 +910,9 @@ protocol StatProvider: Provider {
     func hourOfDay(_ period: StatsPeriod, bands: StatsBands) async -> Stat.HourOfDayResult
     /// By weekday: one of `StatsPeriod.weekdayPeriods`, the whole weeks to yesterday
     func weekday(_ period: StatsPeriod, bands: StatsBands) async -> Stat.WeekdayResult
+    /// Good & bad days: one of `StatsPeriod.usualDayPeriods`, the complete days to yesterday; `allowOneMinuteLoop` sets
+    /// the loop row's slots. A failed insulin, meals, sessions or loops read marks only their rows unavailable
+    func goodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) async -> Stat.GoodBadDaysData
     /// the means and their Δ are shown, and so computed, in `units` (in mmol/L the difference of the displayed values)
     func weekly(_ period: StatsPeriod, bands: StatsBands, units: GlucoseUnits) async -> Stat.WeeklyResult
     /// the Insulin tab: Today (and 24 h, shown as Today) is computed as 7 d. Throws when the insulin data couldn't be
@@ -730,6 +935,27 @@ protocol StatProvider: Provider {
         changes: Stat.PatchChangeLog,
         currentPlugin: String?
     ) async throws -> Stat.PatchesResult
+    /// the CGM topic: every reading of the period, per CGM and all together, and the sensors. Kept for the period,
+    /// the generation and the sessions (`CGMCache`). Throws when the readings couldn't be read (a failed sessions read is
+    /// none: every reading Unknown)
+    func cgm(_ period: StatsPeriod, generation: Int) async throws -> Stat.CGMResult
+    /// The Unknown readings of the last 90 days, their probable sensors and the CGMs to name them by (the "Which CGM
+    /// was this?" sheet). Throws when the readings couldn't be read
+    func cgmUnknown() async throws -> Stat.CGMUnknownInput
+    /// The user's answer: entered sessions, replacing the entered ones in `replacing` (`CGMSessionStore.enter`).
+    /// Returns whether it was saved
+    func enterCGMSessions(_ sessions: [CGMSessionRecord], replacing: DateInterval?) async -> Bool
+    /// Every entered session goes (`CGMSessionStore.removeAllEntered`). Returns whether it succeeded
+    func clearEnteredCGMSessions() async -> Bool
+    /// The smoothing analysis of a pick's readings over the period (`SmoothingReplay.replay`), on a GCD queue (it blocks
+    /// its thread). nil when cancelled; `progress` is called from its threads (hop to the main actor asynchronously).
+    /// Throws when the readings couldn't be read
+    func smoothingReplay(
+        _ period: StatsPeriod,
+        pick: Stat.CGMPick,
+        isCancelled: @escaping @Sendable() -> Bool,
+        progress: @escaping @Sendable(Double) -> Void
+    ) async throws -> SmoothingReplayResult?
     func beginSession() async
     func endSession() async
 }

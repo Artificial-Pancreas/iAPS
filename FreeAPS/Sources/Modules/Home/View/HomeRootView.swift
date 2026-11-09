@@ -434,13 +434,14 @@ extension Home {
             }.offset(x: 5, y: 5)
         }
 
-        /// A long-press picks its range, Today or 24 h (Statistics never changes it); a tap opens Statistics on its
-        /// range.
+        /// A long-press picks its range, Today or 24 h (Statistics never changes it), and TITR; a tap opens Statistics
+        /// on its range.
         @ViewBuilder var preview: some View {
             if let stats = state.homeStats {
                 HomeStatsBar(
                     content: stats.content,
                     range: state.homeStatsRange,
+                    showTITR: state.homeStatsTITR,
                     open: { state.showModal(for: .statistics(period: state.homeStatsRange, tab: .overview)) }
                 )
                 // here, not in its body: its @ScaledMetric sizes read the size where it is created
@@ -450,7 +451,12 @@ extension Home {
                 // the card lifted with its background, its shape
                 .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 15))
                 .contextMenu {
-                    HomeStatsRangeMenu(range: state.homeStatsRange, select: { [state] in state.homeStatsRange = $0 })
+                    HomeStatsRangeMenu(
+                        range: state.homeStatsRange,
+                        showTITR: state.homeStatsTITR,
+                        select: { [state] in state.select(homeStatsRange: $0) },
+                        setShowTITR: { [state] in state.showHomeStatsTITR($0) }
+                    )
                 }
                 .addShadows()
                 .padding(.horizontal, 10)
@@ -499,9 +505,8 @@ extension Home {
                     HomeOnBoardMenu(
                         showGlucose: state.homeOnBoardGlucose,
                         showCOB: state.homeOnBoardCOB,
-                        hasCarbs: onBoard.hasCarbs,
-                        setShowGlucose: { [state] in state.homeOnBoardGlucose = $0 },
-                        setShowCOB: { [state] in state.homeOnBoardCOB = $0 }
+                        setShowGlucose: { [state] in state.showOnBoardGlucose($0) },
+                        setShowCOB: { [state] in state.showOnBoardCOB($0) }
                     )
                 }
                 .addShadows()

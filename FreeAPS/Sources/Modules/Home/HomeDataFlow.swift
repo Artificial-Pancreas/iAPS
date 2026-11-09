@@ -10,15 +10,11 @@ enum Home {
     /// range.
     static let gmiPeriod: StatsPeriod = .days90
 
-    /// What the stats bar depends on from the settings: its range, the bands (low/high and units) and the HbA1c unit.
+    /// What the stats bar depends on: its range (`StatsDisplayPreferences.homeStatsRange`), and from the settings the
+    /// bands (low/high and units) and the HbA1c unit.
     struct StatsConfig: Equatable, Sendable {
         let range: StatsPeriod
         let settings: Stat.StatsSettings
-
-        init(_ settings: FreeAPSSettings) {
-            range = settings.homeStatsRange
-            self.settings = Stat.StatsSettings(settings)
-        }
     }
 
     /// What the Loops card depends on from the settings: the 1-minute loop (the readings a loop can run on, the gaps'
@@ -28,33 +24,6 @@ enum Home {
 
         init(_ settings: FreeAPSSettings) {
             allowOneMinuteLoop = settings.allowOneMinuteLoop
-        }
-    }
-
-    /// The settings as Home's full reload (`settingsUpdated`) takes them: equal when only the stats bar's range, the On
-    /// board card's lanes, or the Statistics screen's own choices (the Day tab's "usual day" and its period), differ, so
-    /// a pick in the stats bar's or the On board card's menu, or in Statistics, doesn't reload Home. The bar follows its
-    /// own observer (`StatsConfig`), the card its `@Setting`s; `settings` keeps the previous values until another
-    /// setting changes (nothing on Home reads them there).
-    struct ReloadSettings: Equatable, Sendable {
-        let settings: FreeAPSSettings
-
-        init(_ settings: FreeAPSSettings) {
-            self.settings = settings
-        }
-
-        static func == (lhs: ReloadSettings, rhs: ReloadSettings) -> Bool {
-            withoutStatsBar(lhs.settings) == withoutStatsBar(rhs.settings)
-        }
-
-        private static func withoutStatsBar(_ settings: FreeAPSSettings) -> FreeAPSSettings {
-            var settings = settings
-            settings.homeStatsRange = .last24h
-            settings.homeOnBoardGlucose = true
-            settings.homeOnBoardCOB = true
-            settings.statsUsualDay = false
-            settings.statsUsualDayPeriod = .days14
-            return settings
         }
     }
 }

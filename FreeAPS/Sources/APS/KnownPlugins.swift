@@ -3,6 +3,7 @@ import DanaKit
 import EversenseKit
 import Foundation
 import G7SensorKit
+import HealthKit
 import LibreLoop
 import LibreTransmitter
 import LoopKit
@@ -81,6 +82,96 @@ enum KnownPlugins {
         default:
             return nil
         }
+    }
+
+    /// The sensor's serial where the manager holds it; nil otherwise (and while unknown). Not the Dexcom G5/G6
+    /// transmitter's id: a transmitter outlives sensors. The CGM sessions only (`CGMSessionStore`).
+    static func sensorId(cgmManager: CGMManager) -> String? {
+        let id: String? = switch cgmManager.pluginIdentifier {
+        case G7CGMManager.pluginIdentifier: (cgmManager as? G7CGMManager)?.sensorName
+        case LibreTransmitterManagerV3.pluginIdentifier: (cgmManager as? LibreTransmitterManagerV3)?.sensorInfoObservable
+            .sensorSerial
+        case LibreLoopCGMManager.pluginIdentifier: (cgmManager as? LibreLoopCGMManager)?.state.sensorSerial
+        default: nil
+        }
+        // LibreTransmitter's placeholders before a sensor reads
+        guard let id, !id.isEmpty, id != "-" else { return nil }
+        return id
+    }
+
+    /// The `device` of the readings iAPS uploads to Nightscout (`nightscoutDevice(_:plugin:sensorId:title:)`) for this
+    /// manager: its sensor's serial (`sensorId`), and as the title an AppGroup CGM's source app, else the manager's.
+    static func nightscoutDevice(_ device: HKDevice?, cgmManager: CGMManager) -> String? {
+        var title = cgmManager.localizedTitle
+        if let source = (cgmManager as? AppGroupCGM)?.appGroupSource,
+           let app = source.latestReadingFrom?.displayName ?? source.latestReadingFromOther
+        {
+            title = app
+        }
+        return nightscoutDevice(
+            device,
+            plugin: cgmManager.pluginIdentifier,
+            sensorId: sensorId(cgmManager: cgmManager),
+            title: title
+        )
+    }
+
+    /// The `device` of the readings iAPS uploads to Nightscout (`NightscoutCGMDevice.format`): Loop's
+    /// "<manufacturer> <model> <id>" from a reading's (or the manager's) `HKDevice`. Firmware and battery stay out, and
+    /// so does anything that changes within a sensor, so Nightscout's delta doesn't split by device:
+    /// - the G7: the reading's own sensor name (a batch can carry the previous sensor's readings), else the manager's;
+    /// - LibreLoop: "Abbott Libre 3 <the reading's serial>", always: its model and name say "Libre 3 Plus" only once
+    ///   the sensor's generation is known;
+    /// - LibreTransmitter: "Abbott LibreTransmitter <the sensor's serial>", always: its `HKDevice` names the bridge
+    ///   ("MiaomiaoClient", the bridge's maker once it connects) and no sensor;
+    /// - the others (the G5/G6: the transmitter's id is the name): the device as it is, with `sensorId`.
+    /// Without an `HKDevice`: `title`.
+    static func nightscoutDevice(_ device: HKDevice?, plugin: String, sensorId: String?, title: String?) -> String? {
+        switch plugin {
+        case G7CGMManager.pluginIdentifier:
+            return NightscoutCGMDevice.format(
+                device,
+                sensorId: NightscoutCGMDevice.clean(device?.name) ?? sensorId,
+                title: title
+            )
+        case LibreLoopCGMManager.pluginIdentifier:
+            return NightscoutCGMDevice.format(
+                Self.stableDevice(product: "Libre 3"),
+                sensorId: NightscoutCGMDevice.clean(device?.localIdentifier) ?? sensorId,
+                title: title
+            )
+        case LibreTransmitterManagerV3.pluginIdentifier:
+            return NightscoutCGMDevice.format(
+                Self.stableDevice(product: "LibreTransmitter"),
+                sensorId: sensorId,
+                title: title
+            )
+        default:
+            return NightscoutCGMDevice.format(device, sensorId: sensorId, title: title)
+        }
+    }
+
+    /// An Abbott sensor's device with only a fixed product: the same string for every reading of a sensor.
+    private static func stableDevice(product: String) -> HKDevice {
+        HKDevice(
+            name: product,
+            manufacturer: "Abbott",
+            model: nil,
+            hardwareVersion: nil,
+            firmwareVersion: nil,
+            softwareVersion: nil,
+            localIdentifier: nil,
+            udiDeviceIdentifier: nil
+        )
+    }
+
+    /// A `.sensorStart` event's sensor id: its device identifier, but nil for the Dexcom G5/G6 (the transmitter's).
+    static func sensorId(of event: PersistedCgmEvent, cgmManager: CGMManager?) -> String? {
+        let plugin = cgmManager?.pluginIdentifier
+        guard plugin != G5CGMManager.pluginIdentifier, plugin != G6CGMManager.pluginIdentifier,
+              !event.deviceIdentifier.isEmpty
+        else { return nil }
+        return event.deviceIdentifier
     }
 
     static func appURLByPluginIdentifier(pluginIdentifier: String) -> URL? {

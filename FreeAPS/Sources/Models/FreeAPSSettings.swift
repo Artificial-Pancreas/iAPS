@@ -135,15 +135,6 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var showCobChart: Bool = false
     // failed loops / device errors / missed readings on the main chart
     var loopEventsPlacement: LoopEventsPlacement = .hidden
-    // the stats bar on Home: its range, Today or 24 h, picked on the card (Statistics never changes it). The other Home
-    // cards have none: the Loops card shows the last 24 h, the insulin and meal cards Today
-    var homeStatsRange: StatsPeriod = .last24h
-    // the On board card on Home (the last 24 h): its glucose and carbs-on-board lanes, picked in its menu (IOB always)
-    var homeOnBoardGlucose: Bool = true
-    var homeOnBoardCOB: Bool = true
-    // the usual day on Statistics' Day tab: shown or not, and over which of the last 14 / 30 / 90 days
-    var statsUsualDay: Bool = false
-    var statsUsualDayPeriod: StatsPeriod = .days14
     var glucoseOverrideThreshold: Decimal = 100
     var glucoseOverrideThresholdActive: Bool = false
     var glucoseOverrideThresholdActiveDown: Bool = false
@@ -423,32 +414,6 @@ extension FreeAPSSettings: Decodable {
 
         if let loopEventsPlacement = try? container.decode(LoopEventsPlacement.self, forKey: .loopEventsPlacement) {
             settings.loopEventsPlacement = loopEventsPlacement
-        }
-
-        // only a range the card offers: an older build's 7–90 d (or Statistics' periods) start on 24 h
-        if let homeStatsRange = try? container.decode(StatsPeriod.self, forKey: .homeStatsRange),
-           StatsPeriod.homeStatsRanges.contains(homeStatsRange)
-        {
-            settings.homeStatsRange = homeStatsRange
-        }
-
-        if let homeOnBoardGlucose = try? container.decode(Bool.self, forKey: .homeOnBoardGlucose) {
-            settings.homeOnBoardGlucose = homeOnBoardGlucose
-        }
-
-        if let homeOnBoardCOB = try? container.decode(Bool.self, forKey: .homeOnBoardCOB) {
-            settings.homeOnBoardCOB = homeOnBoardCOB
-        }
-
-        if let statsUsualDay = try? container.decode(Bool.self, forKey: .statsUsualDay) {
-            settings.statsUsualDay = statsUsualDay
-        }
-
-        // only a period the Day tab's usual day offers
-        if let statsUsualDayPeriod = try? container.decode(StatsPeriod.self, forKey: .statsUsualDayPeriod),
-           StatsPeriod.usualDayPeriods.contains(statsUsualDayPeriod)
-        {
-            settings.statsUsualDayPeriod = statsUsualDayPeriod
         }
 
         if let addSourceInfoToGlucoseNotifications = try? container.decode(

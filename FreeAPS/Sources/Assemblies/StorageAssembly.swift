@@ -69,6 +69,9 @@ final class StorageAssembly: Assembly {
         container.register(PumpEventStore.self) { r in
             PumpEventStore(appCoordinator: r.resolve(AppCoordinator.self)!)
         }
+        container.register(CGMSessionStore.self) { _ in
+            CGMSessionStore()
+        }
         container.register(InsulinStatsService.self) { r in
             InsulinStatsService(appCoordinator: r.resolve(AppCoordinator.self)!, source: CoreDataStorage())
         }

@@ -17,6 +17,8 @@ protocol NightscoutManager: Sendable {
     func fetchProfile() async throws -> [FetchedNightscoutProfileStore]
     /// The insulin backfill: the insulin treatments and the basal schedules since `date`. Read-only GETs, on demand.
     func fetchInsulin(since date: Date) async -> AsyncStream<FetchInsulinProgress>
+    /// The CGM backfill's GETs (`NightscoutCGMBackfill.run`); nil when Nightscout isn't configured or reachable.
+    func cgmBackfillSource() async -> NightscoutCGMBackfillSource?
 }
 
 enum FetchInsulinProgress: Sendable {
@@ -350,6 +352,14 @@ actor BaseNightscoutManager: NightscoutManager {
                 continuation.finish()
             }
         }
+    }
+
+    func cgmBackfillSource() async -> NightscoutCGMBackfillSource? {
+        guard let nightscout = nightscoutAPI, isNetworkReachable else { return nil }
+        return NightscoutCGMBackfillSource(treatments: { query, interval in
+            debug(.nightscout, "CGM backfill: \(query) page \(interval.start) .. \(interval.end)")
+            return try await nightscout.fetchCGMTreatments(query, dateInterval: interval)
+        })
     }
 
     /// Every insulin query with its own pager, at once (a pager over merged results would end each page at the oldest

@@ -414,15 +414,7 @@ private struct AGPMarks: View, Equatable {
         let outer = AGPStyle.outer(isDark: isDark)
         let inner = AGPStyle.inner(isDark: isDark)
         Chart {
-            RuleMark(y: .value("Axis", Double(plot.axis.lowerBound)))
-                .lineStyle(StrokeStyle(lineWidth: 1))
-                .foregroundStyle(Color(.systemGray4))
-
-            ForEach(plot.dashed, id: \.self) { level in
-                RuleMark(y: .value("Level", Double(level)))
-                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
-                    .foregroundStyle(Color.secondary.opacity(0.5))
-            }
+            AGPFrameMarks(floor: plot.axis.lowerBound, dashed: plot.dashed)
 
             ForEach(plot.points, id: \.minute) { point in
                 AreaMark(
@@ -444,11 +436,7 @@ private struct AGPMarks: View, Equatable {
                 .foregroundStyle(inner)
             }
 
-            ForEach(plot.edges, id: \.self) { edge in
-                RuleMark(y: .value("Range edge", Double(edge)))
-                    .lineStyle(StrokeStyle(lineWidth: 1.5))
-                    .foregroundStyle(GlucoseBand.inRange.color)
-            }
+            AGPFrameMarks.Edges(edges: plot.edges)
 
             ForEach(plot.points, id: \.minute) { point in
                 LineMark(
@@ -460,19 +448,7 @@ private struct AGPMarks: View, Equatable {
                 .foregroundStyle(AGPStyle.median)
             }
         }
-        .chartXScale(domain: Stat.AGP.Plot.domain)
-        .chartYScale(domain: Double(plot.axis.lowerBound) ... Double(plot.axis.upperBound))
-        .chartXAxis {
-            StatsAxis.minutes(Stat.AGP.Plot.gridMinutes, ticks: plot.xTicks) { $0 }
-        }
-        .chartYAxis {
-            AxisMarks(position: .leading, values: plot.yLabels.map { Double($0.mgdl) }) { value in
-                AxisValueLabel {
-                    Text(value.as(Double.self).flatMap { mgdl in plot.yLabels.first { Double($0.mgdl) == mgdl }?.label } ?? "")
-                }
-            }
-        }
-        .chartLegend(.hidden)
+        .agpFrameAxes(axis: plot.axis, xTicks: plot.xTicks, yLabels: plot.yLabels)
         // the picking: no `chartXSelection` (its gesture takes every drag on the chart, and a vertical one has to reach
         // the scroll view and the sheet's swipe to dismiss); `ChartPicker` writes the minute under the finger into the
         // selection, which nothing here reads (it would re-render the marks on every move)
@@ -485,6 +461,65 @@ private struct AGPMarks: View, Equatable {
             }
         }
         .padding(.top, popoverHeight)
+    }
+}
+
+/// The AGP's frame, which Good & bad days' chart draws too: the axis rule and the dashed levels under the data, the
+/// range edges (`Edges`) over the bands.
+struct AGPFrameMarks: ChartContent {
+    /// mg/dL: the axis' floor
+    let floor: Int
+    /// mg/dL (`GlucoseStatsEngine.dashedLevels`)
+    let dashed: [Int]
+
+    var body: some ChartContent {
+        RuleMark(y: .value("Axis", Double(floor)))
+            .lineStyle(StrokeStyle(lineWidth: 1))
+            .foregroundStyle(Color(.systemGray4))
+
+        ForEach(dashed, id: \.self) { level in
+            RuleMark(y: .value("Level", Double(level)))
+                .lineStyle(StrokeStyle(lineWidth: 1, dash: [3, 3]))
+                .foregroundStyle(Color.secondary.opacity(0.5))
+        }
+    }
+
+    /// The in-range band's edges, solid, drawn over the bands.
+    struct Edges: ChartContent {
+        /// mg/dL
+        let edges: [Int]
+
+        var body: some ChartContent {
+            ForEach(edges, id: \.self) { edge in
+                RuleMark(y: .value("Range edge", Double(edge)))
+                    .lineStyle(StrokeStyle(lineWidth: 1.5))
+                    .foregroundStyle(GlucoseBand.inRange.color)
+            }
+        }
+    }
+}
+
+extension View {
+    /// The AGP's axes, which Good & bad days' chart has too: the minutes of the day, the glucose axis with its labelled
+    /// levels on the leading side; no legend.
+    func agpFrameAxes(
+        axis: ClosedRange<Int>,
+        xTicks: [Stat.AGP.Plot.Tick],
+        yLabels: [Stat.AGP.Plot.Level]
+    ) -> some View {
+        chartXScale(domain: Stat.AGP.Plot.domain)
+            .chartYScale(domain: Double(axis.lowerBound) ... Double(axis.upperBound))
+            .chartXAxis {
+                StatsAxis.minutes(Stat.AGP.Plot.gridMinutes, ticks: xTicks) { $0 }
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading, values: yLabels.map { Double($0.mgdl) }) { value in
+                    AxisValueLabel {
+                        Text(value.as(Double.self).flatMap { mgdl in yLabels.first { Double($0.mgdl) == mgdl }?.label } ?? "")
+                    }
+                }
+            }
+            .chartLegend(.hidden)
     }
 }
 

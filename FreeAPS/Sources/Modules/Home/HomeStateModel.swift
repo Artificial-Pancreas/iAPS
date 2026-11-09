@@ -5,6 +5,7 @@ import LoopKit
 import LoopKitUI
 import SwiftDate
 import SwiftUI
+import Swinject
 import UIKit
 
 extension Home {
@@ -75,14 +76,20 @@ extension Home {
         @Published var profileButton: Bool = true
         @Published var ai: Bool = false
 
-        // the stats bar's range, picked on a long-press: what its header shows and its tap opens Statistics on; the bar
-        // itself follows its config (`homeStatsConfig`), from the settings. The other cards have no range: the Loops
-        // card the last 24 h (`Home.loopsRange`), the insulin and meal cards Today
-        @Setting(\.homeStatsRange) var homeStatsRange: StatsPeriod = .last24h
+        /// the cards' menu picks, on the phone (UI-only, not in the settings)
+        private let displayPreferences: StatsDisplayPreferences
 
-        // the On board card, the last 24 h (no range of its own): its long-press menu's lanes
-        @Setting(\.homeOnBoardGlucose) var homeOnBoardGlucose: Bool = true
-        @Setting(\.homeOnBoardCOB) var homeOnBoardCOB: Bool = true
+        // the stats bar's range, picked on a long-press (`select(homeStatsRange:)`): what its header shows and its tap
+        // opens Statistics on; the bar itself follows its config (`homeStatsConfig`). The other cards have no range: the
+        // Loops card the last 24 h (`Home.loopsRange`), the insulin and meal cards Today
+        @Published private(set) var homeStatsRange: StatsPeriod
+        /// the stats bar's "Show TITR" (`showHomeStatsTITR`): drawn from the bar's result, no read of its own
+        @Published private(set) var homeStatsTITR: Bool
+
+        // the On board card, the last 24 h (no range of its own): its long-press menu's lanes (`showOnBoardGlucose`,
+        // `showOnBoardCOB`)
+        @Published private(set) var homeOnBoardGlucose: Bool
+        @Published private(set) var homeOnBoardCOB: Bool
         /// as of its last build (`refreshOnBoard`); nil without the IOB rows (more than 3 in its window)
         @Published private(set) var homeOnBoard: HomeOnBoardCard.Content?
         /// the last `reasons` read (`setupData`): the last 24 h and the 7.5 min before them; nil before the first
@@ -96,8 +103,10 @@ extension Home {
         /// the latest result for `homeStatsConfig`: the range's read with the GMI line's latest; nil until the range's
         /// first read
         @Published private(set) var homeStats: HomeStatsSnapshot?
-        /// the range and the settings the bar is computed for, from the settings; nil until they are delivered
+        /// the range and the settings the bar is computed for; nil until the settings are delivered
         private var homeStatsConfig: StatsConfig?
+        /// the bar's part of the settings (`homeStatsConfig`); nil until they are delivered
+        private var homeStatsSettings: Stat.StatsSettings?
         /// the range's latest read and its config: the GMI line's read lands beside it (`publishHomeStats`)
         private var homeStatsRangeResult: (summary: GlucoseSummary, config: StatsConfig)?
         /// the GMI line's latest read (`Home.gmiPeriod`), kept up to the next one lands; nil until the first one: no
@@ -218,6 +227,16 @@ extension Home {
             useCarbBars: false
         )
 
+        /// - Parameter displayPreferences: the cards' menu picks; tests pass their own `UserDefaults`
+        init(resolver: Resolver, displayPreferences: StatsDisplayPreferences = StatsDisplayPreferences()) {
+            self.displayPreferences = displayPreferences
+            homeStatsRange = displayPreferences.homeStatsRange
+            homeStatsTITR = displayPreferences.homeStatsTITR
+            homeOnBoardGlucose = displayPreferences.homeOnBoardGlucose
+            homeOnBoardCOB = displayPreferences.homeOnBoardCOB
+            super.init(resolver: resolver)
+        }
+
         override func subscribe() async {
             let fetchedSettings = await settingsManager.settings
             settings = fetchedSettings
@@ -288,9 +307,8 @@ extension Home {
                 await me.suggestionDidUpdate(suggestion)
             }
 
-            // not on a pick of the stats bar's range alone (`ReloadSettings`): the bar follows its own
-            observeUI(appCoordinator.settings, map: { ReloadSettings($0) }) { me, reload in
-                await me.settingsUpdated(reload.settings)
+            observeUI(appCoordinator.settings) { me, settings in
+                await me.settingsUpdated(settings)
             }
 
             observeUI(appCoordinator.preferences) { me, preferences in
@@ -691,8 +709,9 @@ extension Home {
         /// for there (or the background itself) waits for the foreground, where `didBecomeActive` is the one trigger
         /// (the observers' foreground replay is held back).
         private func subscribeHomeStats() {
-            observeUI(appCoordinator.settings, map: { StatsConfig($0) }) { me, config in
-                me.homeStatsConfigChanged(config)
+            observeUI(appCoordinator.settings, map: { Stat.StatsSettings($0) }) { me, settings in
+                me.homeStatsSettings = settings
+                me.homeStatsConfigChanged()
             }
             observeUI(appCoordinator.glucoseStatsChanged, dropInitial: true) { me, _ in
                 me.refreshHomeStats()
@@ -711,7 +730,9 @@ extension Home {
 
         /// The range or the stats settings changed (or were delivered for the first time). The GMI line is read again
         /// only for other bands (the HbA1c unit is formatting, `publishHomeStats`): not for another range.
-        private func homeStatsConfigChanged(_ config: StatsConfig) {
+        private func homeStatsConfigChanged() {
+            guard let settings = homeStatsSettings else { return }
+            let config = StatsConfig(range: homeStatsRange, settings: settings)
             guard config != homeStatsConfig else { return }
             let bandsChanged = config.settings.bands != homeStatsConfig?.settings.bands
             homeStatsConfig = config
@@ -719,6 +740,35 @@ extension Home {
             if bandsChanged {
                 refreshHomeStatsGMI()
             }
+        }
+
+        /// The stats bar's long-press menu: Today or 24 h, kept on the phone; the bar reads it.
+        func select(homeStatsRange range: StatsPeriod) {
+            guard range != homeStatsRange, StatsPeriod.homeStatsRanges.contains(range) else { return }
+            homeStatsRange = range
+            displayPreferences.homeStatsRange = range
+            homeStatsConfigChanged()
+        }
+
+        /// The stats bar's long-press menu: "Show TITR", kept on the phone.
+        func showHomeStatsTITR(_ shown: Bool) {
+            guard shown != homeStatsTITR else { return }
+            homeStatsTITR = shown
+            displayPreferences.homeStatsTITR = shown
+        }
+
+        /// The On board card's long-press menu: its glucose lane, kept on the phone.
+        func showOnBoardGlucose(_ shown: Bool) {
+            guard shown != homeOnBoardGlucose else { return }
+            homeOnBoardGlucose = shown
+            displayPreferences.homeOnBoardGlucose = shown
+        }
+
+        /// The On board card's long-press menu: its carbs-on-board lane, kept on the phone.
+        func showOnBoardCOB(_ shown: Bool) {
+            guard shown != homeOnBoardCOB else { return }
+            homeOnBoardCOB = shown
+            displayPreferences.homeOnBoardCOB = shown
         }
 
         /// Recomputes the stats bar: its range and the GMI line, each read at once, after its read in flight (once,

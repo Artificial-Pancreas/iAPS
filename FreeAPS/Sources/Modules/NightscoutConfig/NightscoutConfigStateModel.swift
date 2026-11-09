@@ -19,6 +19,7 @@ extension NightscoutConfig {
         @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
         @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
         @Injected() private var pumpEventStore: PumpEventStore!
+        @Injected() private var cgmSessionStore: CGMSessionStore!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -403,8 +404,70 @@ extension NightscoutConfig {
                 backfillPhase = .saving
                 backfillingProgress = 0.0
                 let stored = await storeBackfilledGlucose(fetched.glucose)
-                backfillResult = Self.backfillMessage(fetched, stored)
+                // the CGM of the readings no CGM session names, from the entries' device, over the days fetched
+                let named = await backfillCGMs(fetched, since: since)
+                backfillResult = [Self.backfillMessage(fetched, stored), named.flatMap(Self.cgmBackfillMessage)]
+                    .compactMap { $0 }.filter(\.isNotEmpty).joined(separator: "\n")
             }
+        }
+
+        /// The CGM backfill (`NightscoutCGMBackfill.run`) over the glucose backfill's complete time, from the entries
+        /// it fetched; nil when it didn't run (nothing fetched completely, Nightscout not reachable).
+        private func backfillCGMs(_ fetched: FetchedGlucose, since: Date) async -> NightscoutCGMBackfillOutcome? {
+            let from: Date
+            switch fetched.failure {
+            case .none: from = since
+            case let .pageFailed(reached?, _): from = reached
+            case .notConfigured,
+                 .notReachable,
+                 .pageFailed(nil, _): return nil
+            }
+            let now = Date()
+            guard let window = NightscoutCGMBackfill.window(from: from, now: now),
+                  let source = await nightscoutManager.cgmBackfillSource()
+            else { return nil }
+            let readings: [Date]
+            do {
+                readings = try await coreDataStorage.fetchGlucosePoints(from: window.start, to: window.end).map(\.time)
+            } catch {
+                return NightscoutCGMBackfillOutcome(failure: error.localizedDescription)
+            }
+            let sessions = await cgmSessionStore.sessions(in: DateInterval(start: .distantPast, end: .distantFuture))
+            let entries = fetched.glucose.compactMap { glucose -> NightscoutCGMSessions.Entry? in
+                guard glucose.type == GlucoseType.sgv.rawValue, let device = glucose.device else { return nil }
+                return NightscoutCGMSessions.Entry(date: glucose.dateString, device: device)
+            }
+            let store = cgmSessionStore!
+            return await NightscoutCGMBackfill.run(
+                entries: entries,
+                window: window,
+                readings: readings,
+                sessions: sessions,
+                source: source,
+                store: { await store.storeBackfilled($0, replacing: $1) }
+            )
+        }
+
+        /// "Nightscout named the CGM of 120 of 400 readings without one"; nil when none were without one
+        private static func cgmBackfillMessage(_ outcome: NightscoutCGMBackfillOutcome) -> String? {
+            if let failure = outcome.failure {
+                return String(
+                    format: NSLocalizedString(
+                        "Naming the CGMs failed: %@",
+                        comment: "Glucose backfill result: the CGM backfill's error"
+                    ),
+                    failure
+                )
+            }
+            guard outcome.unknown > 0 else { return nil }
+            return String(
+                format: NSLocalizedString(
+                    "Nightscout named the CGM of %1$d of %2$d readings without one",
+                    comment: "Glucose backfill result: the readings no CGM session covered, and those Nightscout named"
+                ),
+                outcome.named,
+                outcome.unknown
+            )
         }
 
         private func storeBackfilledGlucose(_ glucose: [BloodGlucose]) async -> CoreDataManager.GlucoseStoreOutcome {
@@ -649,9 +712,15 @@ extension NightscoutConfig {
             uploadingProgress = 0.0
 
             Task {
-                let readings = await coreDataStorage
-                    .fetchGlucose(interval: Date.now.subtractingTimeInterval(.days(self.uploadInterval)) as NSDate)
-                let bloodGlucose = readings.compactMap(Self.glucoseUpload)
+                let since = Date.now.subtractingTimeInterval(.days(self.uploadInterval))
+                let readings = await coreDataStorage.fetchGlucose(interval: since as NSDate)
+                // each reading with its recorded CGM session's Nightscout device, as the live upload sends it
+                let sessions = await cgmSessionStore.sessions(in: DateInterval(start: since, end: .distantFuture))
+                    .filter { $0.source == .recorded }
+                let bloodGlucose = readings.compactMap { reading in
+                    let device = reading.date.flatMap { CGMSessionAttribution.device(at: $0, sessions) }
+                    return Self.glucoseUpload(reading, device: device)
+                }
 
                 for await progress in await self.nightscoutManager.uploadOldGlucose(bloodGlucose: bloodGlucose) {
                     self.uploadingProgress = progress
@@ -663,7 +732,9 @@ extension NightscoutConfig {
         /// A stored reading as the live glucose upload sends it (`BloodGlucose.toNightscoutEntry`): a CGM reading as
         /// an sgv entry (no type: stored before the type was), a manual BG as an mbg entry; nil for the rest (an mbg
         /// came from Nightscout) and for a reading without a date or an id
-        nonisolated static func glucoseUpload(_ reading: ReadingsSnapshot) -> BloodGlucose? {
+        /// - Parameter device: the Nightscout `device` of the recorded CGM session covering it (`CGMSession.device`);
+        ///   nil: none covers it, it is uploaded without one
+        nonisolated static func glucoseUpload(_ reading: ReadingsSnapshot, device: String? = nil) -> BloodGlucose? {
             guard let date = reading.date,
                   let id = reading.id
             else {
@@ -679,7 +750,9 @@ extension NightscoutConfig {
                 type: reading.type ?? GlucoseType.sgv.rawValue,
                 activationDate: nil,
                 sessionStartDate: nil,
-                transmitterID: nil
+                transmitterID: nil,
+                // a CGM reading's: a manual BG came from no CGM
+                device: (reading.type ?? GlucoseType.sgv.rawValue) == GlucoseType.sgv.rawValue ? device : nil
             )
             return glucose.toNightscoutEntry != nil ? glucose : nil
         }

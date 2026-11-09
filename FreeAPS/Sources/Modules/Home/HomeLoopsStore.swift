@@ -140,6 +140,26 @@ actor HomeLoopsStore: LifetimeOwner {
         }
     }
 
+    /// The whole calendar days of `window` (Statistics' Good & bad days, its loop row), oldest -> newest: read up to
+    /// `now` as the card's days are, the complete ones from the cache (checked against the records' count); nil when
+    /// something couldn't be read.
+    func days(
+        of window: DateInterval,
+        now: Date,
+        allowOneMinuteLoop: Bool,
+        calendar: Calendar
+    ) async -> [HomeLoopStats.Day]? {
+        let calendar = StatsClock.frozen(calendar)
+        let read = DateInterval(start: window.start, end: max(window.start, now))
+        do {
+            return try await checkedDays(of: read, allowOneMinuteLoop: allowOneMinuteLoop, calendar: calendar)
+                .filter { $0.day.start >= window.start && $0.day.end <= window.end }
+        } catch {
+            debug(.service, "Loops: reading the loop days failed: \(error)")
+            return nil
+        }
+    }
+
     // MARK: - Days
 
     /// The window's days (`days(of:)`), the complete ones checked against the records' count: a change to them nothing
