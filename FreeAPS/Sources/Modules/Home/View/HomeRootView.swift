@@ -1394,7 +1394,13 @@ extension Home {
                     triggerUpdate.toggle()
                 }
             }
-            .onLongPressGesture { state.showModal(for: .overrideProfilesConfig) }
+            // Give the long press precedence over the button's normal tap action.
+            .highPriorityGesture(
+                LongPressGesture()
+                    .onEnded { _ in
+                        state.showModal(for: .overrideProfilesConfig)
+                    }
+            )
         }
 
         private func tempTargetTabItem(isTarget: Bool) -> some View {
