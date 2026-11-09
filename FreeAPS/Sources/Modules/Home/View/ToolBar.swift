@@ -37,3 +37,12 @@ import SwiftUI
         }
     }
 }
+
+extension EnvironmentValues {
+    var usesBottomBar: Bool {
+        if #available(iOS 27.1, *) {
+            return toolbarVerticalEdge == nil
+        }
+        return true
+    }
+}

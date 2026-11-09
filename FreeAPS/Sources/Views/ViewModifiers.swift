@@ -16,19 +16,22 @@ struct GlassEffectWhenAvailable: ViewModifier {
     }
 }
 
-@available(iOS 27.1, *) struct ToolbarEdgeAwareButton<Icon: View>: View {
-    @Environment(\.toolbarVerticalEdge) private var toolbarVerticalEdge
+struct ToolbarEdgeAwareButton<Icon: View>: View {
+    @Environment(\.usesBottomBar) private var usesBottomBar
 
     let action: () -> Void
     @ViewBuilder let icon: () -> Icon
 
     var body: some View {
+        let isVertical = !usesBottomBar
+        let iconSize: CGFloat = isVertical ? 30 : 28
+        let tapSize: CGFloat = isVertical ? 30 : 44
+
         Button(action: action) {
             icon()
-                .frame(
-                    width: toolbarVerticalEdge == nil ? 28 : 30,
-                    height: toolbarVerticalEdge == nil ? 28 : 30
-                )
+                .frame(width: iconSize, height: iconSize)
+                .frame(minWidth: tapSize, maxWidth: isVertical ? tapSize : .infinity, minHeight: tapSize)
+                .contentShape(Rectangle())
         }
         .labelStyle(.iconOnly)
     }
@@ -468,7 +471,7 @@ extension View {
     }
 
     var iOS27: Bool {
-        guard #available(iOS 27.0, *) else { return false }
+        guard #available(iOS 27.1, *) else { return false }
         return true
     }
 
