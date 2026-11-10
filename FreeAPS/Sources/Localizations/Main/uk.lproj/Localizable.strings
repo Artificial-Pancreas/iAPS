@@ -1524,6 +1524,16 @@ Enact a temp Basal or a temp target */
 
 "Fast" = "Швидкий";
 
+"Legacy" = "Спадкування";
+
+"Deprecated · until %@" = "Застаріло · до %@";
+
+"%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ вимкнув цю модель %2$@. Запити будуть невдалими; виберіть іншу модель.";
+
+"%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then." = "%1$@ не підтримує цю модель і закриє її %2$@. Виберіть іншу модель до цього.";
+
+"This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model." = "Цієї моделі більше немає в поточному асортименті %@. Він все ще працює, але пізніше може бути вилучено або недоступним для нових облікових записів; подумайте про вибір поточної моделі.";
+
 "Provider for AI Image Analysis" = "Постачальник Послуг Аналізу Зображень зі ШІ";
 
 "Food Search Provider Configuration" = "Конфігурація Постачальника Послуг Пошуку їжі";
@@ -2957,7 +2967,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Цільовий рівень для B30 має бути прийнятий";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Щоб розпочати адаптацію B30, потрібно активувати ціль EatingSoon Override (або тимчасову ціль). Ціль має бути нижче цього налаштування, щоб B30 почався. За замовчуванням 90 mg/dl. Якщо ви скасуєте ціль EatingSoon Target, базальна норма B30 припиниться.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Щоб розпочати адаптацію B30, потрібно активувати ціль EatingSoon Override (або тимчасову ціль). Ціль має бути нижче цього налаштування, щоб B30 почався. Default is 100 mg/dl (5.6 mmol/l). Якщо ви скасуєте ціль EatingSoon Target, базальна норма B30 припиниться.";
 
 /* */
 "Minimum Start Bolus size" = "Мінімальний початковий розмір Болюсу";
@@ -4127,3 +4137,7 @@ Enact a temp Basal or a temp target */
 "Crash" = "Аварії";
 "Simulate a crash?" = "Зімітувати аварію?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS миттєво зупиниться, і його потрібно відкрити знову. Якщо в розділі «Спільний доступ» увімкнено «Надсилати звіти про збої», звіт надсилається під час наступного запуску.";
+
+/* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
+"Convert fat and protein into carb equivalents" = "Перетворіть жири та білки на вуглеводні еквіваленти";
+"When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "Якщо вимкнено, жир і білок все ще зберігаються разом із їжею, але майбутні вуглеводи з них не створюються. Чи відображається на екрані «Додати вуглеводи» поля жиру та білка — це окреме налаштування в розділі «Налаштування» → «Інтерфейс користувача».";
