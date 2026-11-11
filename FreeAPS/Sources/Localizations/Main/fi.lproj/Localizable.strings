@@ -15,13 +15,13 @@
 "Continue without bolus" = "Jatka ilman lisäannosta";
 
 /* History View */
-"No data." = "No data.";
+"No data." = "Ei dataa.";
 
 /* Bolus View */
-"No Predictions. Failed loop suggestion." = "No Predictions. Failed loop suggestion.";
+"No Predictions. Failed loop suggestion." = "Ei ennustetta. Loop ehdotukset epäonnistuivat.";
 
 /* Bolus View */
-"New Glucose Missing" = "New Glucose Missing";
+"New Glucose Missing" = "Uusi verensokeriarvo puuttu";
 
 /* Continue after added meal without bolus */
 "Save Meal without bolus" = "Tallenna ateria ilman bolusta";
