@@ -176,15 +176,15 @@
 /* */
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Удаление записей из базы данных CoreData";
 
 /* */
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Все записи в ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " будут удалены!";
 
 /* Bottom target temp */
 
@@ -465,13 +465,13 @@ Enact a temp Basal or a temp target */
 "Pump config" = "Настройка помпы";
 
 /*  */
-"Incomplete pump setup" = "Incomplete pump setup";
+"Incomplete pump setup" = "Незавершенная настройка помпы";
 
 /*  */
-"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list).";
+"The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "Предыдущая настройка %@ не была завершена. Удалите её и перезапустите iAPS перед тем как снова добавить вашу помпу (в противном случае Ваш RileyLink может не отобразиться в списке устройств).";
 
 /*  */
-"Remove pump" = "Remove pump";
+"Remove pump" = "Удалить помпу";
 
 /*  */
 "Delivery limits" = "Предел подачи";
@@ -1019,7 +1019,7 @@ Enact a temp Basal or a temp target */
 "Additional notification types" = "Дополнительные уведомления";
 
 /* */
-"Miscellaneous" = "Miscellaneous";
+"Miscellaneous" = "Прочее";
 
 /* */
 "Unit override" = "Переопределение единицы";
@@ -1297,9 +1297,9 @@ Enact a temp Basal or a temp target */
 /* Food Type / Meal Note */
 "Note" = "Заметка";
 
-"Servings" = "Servings";
+"Servings" = "Порции";
 
-"Kilo Calories" = "Kilo Calories";
+"Kilo Calories" = "Килокалории";
 
 "Meals" = "Meals";
 
@@ -1308,120 +1308,120 @@ Enact a temp Basal or a temp target */
 
 "Micronutrients" = "Micronutrients";
 
-"Vitamin A" = "Vitamin A";
-"Vitamin B1 (Thiamine)" = "Vitamin B1 (Thiamine)";
-"Vitamin B2 (Riboflavin)" = "Vitamin B2 (Riboflavin)";
-"Vitamin B3 (Niacin)" = "Vitamin B3 (Niacin)";
-"Vitamin B5 (Pantothenic Acid)" = "Vitamin B5 (Pantothenic Acid)";
-"Vitamin B6" = "Vitamin B6";
-"Vitamin B7 (Biotin)" = "Vitamin B7 (Biotin)";
-"Vitamin B9 (Folate)" = "Vitamin B9 (Folate)";
-"Vitamin B12" = "Vitamin B12";
-"Vitamin C" = "Vitamin C";
-"Vitamin D" = "Vitamin D";
-"Vitamin E" = "Vitamin E";
-"Vitamin K" = "Vitamin K";
-"Calcium" = "Calcium";
-"Iron" = "Iron";
-"Magnesium" = "Magnesium";
-"Potassium" = "Potassium";
-"Zinc" = "Zinc";
-"Phosphorus" = "Phosphorus";
-"Copper" = "Copper";
-"Manganese" = "Manganese";
-"Selenium" = "Selenium";
-"Iodine" = "Iodine";
-"Salt" = "Salt";
+"Vitamin A" = "Витамин A";
+"Vitamin B1 (Thiamine)" = "Витамин B1 (Тиамин)";
+"Vitamin B2 (Riboflavin)" = "Витамин B2 (Рибофлавин)";
+"Vitamin B3 (Niacin)" = "Витамин B3 (Никотиновая кислота)";
+"Vitamin B5 (Pantothenic Acid)" = "Витамин B5 (Пантотеновая кислота)";
+"Vitamin B6" = "Витамин B6";
+"Vitamin B7 (Biotin)" = "Витамин B7 (Биотин)";
+"Vitamin B9 (Folate)" = "Витамин B9 (фолиевая кислота)";
+"Vitamin B12" = "Витамин B12";
+"Vitamin C" = "Витамин C";
+"Vitamin D" = "Витамин D";
+"Vitamin E" = "Витамин E";
+"Vitamin K" = "Витамин K";
+"Calcium" = "Кальций";
+"Iron" = "Железо";
+"Magnesium" = "Магний";
+"Potassium" = "Калий";
+"Zinc" = "Цинк";
+"Phosphorus" = "Фосфор";
+"Copper" = "Медь";
+"Manganese" = "Марганец";
+"Selenium" = "Селен";
+"Iodine" = "Йод";
+"Salt" = "Соль";
 
-"Allow Meal View Micronutrients and Dietary Fibers entries" = "Allow Meal View Micronutrients and Dietary Fibers entries";
+"Allow Meal View Micronutrients and Dietary Fibers entries" = "Разрешить просмотр микронутриентов и пищевых волокон в разделе «Прием пищи»";
 
 // --------- AI ---------
 /* */
 
-"Ask AI..." = "Ask AI...";
+"Ask AI..." = "Спросить ИИ...";
 
-"Search saved foods..." = "Search saved foods...";
+"Search saved foods..." = "Поиск по сохранённым продуктам...";
 
-"Search foods..." = "Search foods...";
+"Search foods..." = "Поиск продуктов...";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Сохранённые продукты";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Добавить продукты вручную";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "В порции";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "В 100г";
 
-"Per 100ml" = "Per 100ml";
+"Per 100ml" = "В 100мл";
 
-"This portion" = "This portion";
+"This portion" = "Эта порция";
 
 
-"Standard Serving" = "Standard Serving";
+"Standard Serving" = "Стандартная порция";
 
-"Food Name" = "Food Name";
+"Food Name" = "Название продукта";
 
-"Food" = "Food";
+"Food" = "Продукт";
 
-"Tag name" = "Tag name";
+"Tag name" = "Имя тега";
 
-"Add New Tag" = "Add New Tag";
+"Add New Tag" = "Добавить новый тег";
 
-"Tags" = "Tags";
+"Tags" = "Теги";
 
-"Show All Nutrients" = "Show All Nutrients";
+"Show All Nutrients" = "Показать все питательные вещества";
 
-"Calories" = "Calories";
+"Calories" = "Калории";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Быстрый доступ к часто используемым продуктам";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Поиск по базам данных или ввести описание для ИИ-анализа";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Отсканируйте штрихкод с упаковки продукта, чтобы получить информацию о питательных веществах";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Сделайте снимок для анализа пищевой ценности с помощью ИИ. Нажмите и удерживайте, чтобы выбрать изображение из библиотеки.";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Введите информацию о питательных веществах вручную";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Поместите рядом предмет для масштаба (монету, руку)";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Поместите в рамку целиком тарелку или упаковку";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Для лучшего результата используйте хорошее освещение";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Рекомендации для фото";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Ручное введение";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Анализ фото";
 
-"Photo (+ comment)" = "Photo (+ comment)";
+"Photo (+ comment)" = "Фото (+ комментарий)";
 
-"Library (+ comment)" = "Library (+ comment)";
+"Library (+ comment)" = "Библиотека (+ комментарий)";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Сканер штрихкода";
 
-"Text Search" = "Text Search";
+"Text Search" = "Поиск по тексту";
 
-"AI Image Analysis" = "AI Image Analysis";
+"AI Image Analysis" = "ИИ-анализ картинки";
 
-"Barcode" = "Barcode";
+"Barcode" = "Штрихкод";
 
-"AI Model Statistics" = "AI Model Statistics";
+"AI Model Statistics" = "Статистика модели ИИ";
 
-"Slide to Clear All Statistics" = "Slide to Clear All Statistics";
+"Slide to Clear All Statistics" = "Сдвиньте ползунок, чтобы очистить всю статистику";
 
-"Avg Time" = "Avg Time";
+"Avg Time" = "Среднее время";
 
-"Count" = "Count";
+"Count" = "Количество";
 
-"Statistics will appear here after you use AI models for food analysis." = "Statistics will appear here after you use AI models for food analysis.";
+"Statistics will appear here after you use AI models for food analysis." = "Здесь появится статистика после использования ИИ-моделей для анализа продуктов.";
 
-"No Statistics Yet" = "No Statistics Yet";
+"No Statistics Yet" = "Пока нет статистики";
 
-"Food Search Settings" = "Food Search Settings";
+"Food Search Settings" = "Настройки поиска продуктов";
 
-"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Оценки пищевой ценности с помощью ИИ являются приблизительными. Всегда консультируйтесь со своим врачом по поводу медицинских решений. По возможности проверяйте информацию о пищевой ценности. Используйте на свой страх и риск.";
 
 
 
@@ -1436,7 +1436,7 @@ Enact a temp Basal or a temp target */
 
 "AI Progress Animation" = "AI Progress Animation";
 
-"Miscellaneous" = "Miscellaneous";
+"Miscellaneous" = "Прочее";
 
 "AI Usage Statistics" = "AI Usage Statistics";
 
@@ -1537,48 +1537,48 @@ Enact a temp Basal or a temp target */
 
 "Food Search Provider Configuration" = "Food Search Provider Configuration";
 
-"Barcode Scanner" = "Barcode Scanner";
+"Barcode Scanner" = "Сканер штрихкода";
 
-"Photography Tips" = "Photography Tips";
+"Photography Tips" = "Рекомендации для фото";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Ручное введение";
 
-"Manual Entry" = "Manual Entry";
+"Manual Entry" = "Ручное введение";
 
-"Photo Analysis" = "Photo Analysis";
+"Photo Analysis" = "Анализ фото";
 
-"Text Search" = "Text Search";
+"Text Search" = "Поиск по тексту";
 
-"Place a reference object (coin, hand) for scale" = "Place a reference object (coin, hand) for scale";
+"Place a reference object (coin, hand) for scale" = "Поместите рядом предмет для масштаба (монету, руку)";
 
-"Include the full plate or package in frame" = "Include the full plate or package in frame";
+"Include the full plate or package in frame" = "Поместите в рамку целиком тарелку или упаковку";
 
-"Use good lighting for best results" = "Use good lighting for best results";
+"Use good lighting for best results" = "Для лучшего результата используйте хорошее освещение";
 
-"Enter nutrition information manually" = "Enter nutrition information manually";
+"Enter nutrition information manually" = "Введите информацию о питательных веществах вручную";
 
-"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Snap a picture for AI-powered nutrition analysis. Long-press to choose from library.";
+"Snap a picture for AI-powered nutrition analysis. Long-press to choose from library." = "Сделайте снимок для анализа пищевой ценности с помощью ИИ. Нажмите и удерживайте, чтобы выбрать изображение из библиотеки.";
 
-"Scan packaged foods for nutrition information" = "Scan packaged foods for nutrition information";
+"Scan packaged foods for nutrition information" = "Отсканируйте штрихкод с упаковки продукта, чтобы получить информацию о питательных веществах";
 
-"Search databases or describe food for AI analysis" = "Search databases or describe food for AI analysis";
+"Search databases or describe food for AI analysis" = "Поиск по базам данных или ввести описание для ИИ-анализа";
 
-"Quick access to your frequently used foods" = "Quick access to your frequently used foods";
+"Quick access to your frequently used foods" = "Быстрый доступ к часто используемым продуктам";
 
-"Food" = "Food";
+"Food" = "Продукт";
 
-"Food Name" = "Food Name";
+"Food Name" = "Название продукта";
 
 
-"This portion" = "This portion";
+"This portion" = "Эта порция";
 
-"Per 100g" = "Per 100g";
+"Per 100g" = "В 100г";
 
-"Per Serving" = "Per Serving";
+"Per Serving" = "В порции";
 
-"Add Food Manually" = "Add Food Manually";
+"Add Food Manually" = "Добавить продукты вручную";
 
-"Saved Foods" = "Saved Foods";
+"Saved Foods" = "Сохранённые продукты";
 
 "United States (USDA / FDA)" = "United States (USDA / FDA)";
 
@@ -1663,9 +1663,9 @@ Enact a temp Basal or a temp target */
 
 
 
-"Food Search Settings" = "Food Search Settings";
+"Food Search Settings" = "Настройки поиска продуктов";
 
-"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk.";
+"AI nutritional estimates are approximations only. Always consult with your healthcare provider for medical decisions. Verify nutritional information whenever possible. Use at your own risk." = "Оценки пищевой ценности с помощью ИИ являются приблизительными. Всегда консультируйтесь со своим врачом по поводу медицинских решений. По возможности проверяйте информацию о пищевой ценности. Используйте на свой страх и риск.";
 
 "Medical Disclaimer" = "Medical Disclaimer";
 
