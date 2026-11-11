@@ -1523,6 +1523,16 @@ Enact a temp Basal or a temp target */
 
 "Fast" = "Nhanh";
 
+"Legacy" = "Phiên bản cũ";
+
+"Deprecated · until %@" = "Đã ngừng hỗ trợ · đến %@";
+
+"%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ đã ngừng cung cấp mô hình này vào ngày %2$@. Các yêu cầu sẽ không thực hiện được. Vui lòng chọn mô hình khác.";
+
+"%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then." = "%1$@ đã ngừng hỗ trợ mô hình này và sẽ ngừng cung cấp vào ngày %2$@. Vui lòng chọn mô hình khác trước thời điểm đó.";
+
+"This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model." = "Mô hình này không còn nằm trong danh sách mô hình hiện tại của %@. Mô hình vẫn hoạt động nhưng có thể bị ngừng cung cấp hoặc không còn khả dụng cho tài khoản mới trong tương lai. Bạn nên cân nhắc chọn một mô hình hiện hành.";
+
 "Provider for AI Image Analysis" = "Nhà cung cấp phân tích hình ảnh AI";
 
 "Food Search Provider Configuration" = "Cấu hình tìm kiếm thực phẩm";
@@ -2954,7 +2964,7 @@ Enact a temp Basal or a temp target */
 "Target Level for B30 to be enacted" = "Mục tiêu để kích hoạt B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Cần kích hoạt Mục tiêu Ăn Sắp Tới (EatingSoon Override Target) hoặc Mục tiêu Tạm thời (Temporary Target) để bắt đầu điều chỉnh B30. Mục tiêu này phải thấp hơn giá trị được thiết lập tại đây thì B30 mới được kích hoạt. Mặc định là 90 mg/dl. Nếu bạn hủy Mục tiêu Ăn Sắp Tới này, tốc độ liều nền B30 sẽ dừng lại.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Cần kích hoạt mục tiêu ghi đè EatingSoon (hoặc mục tiêu tạm thời) để bắt đầu chế độ thích ứng B30. Giá trị mục tiêu phải thấp hơn mức được cài đặt tại đây thì B30 mới khởi động. Giá trị mặc định là 100 mg/dL (5,6 mmol/L). Nếu bạn hủy mục tiêu EatingSoon này, tốc độ liều nền B30 sẽ dừng.";
 
 /* */
 "Minimum Start Bolus size" = "Liều Bolus tối thiểu";
@@ -4125,3 +4135,7 @@ Enact a temp Basal or a temp target */
 "Crash" = "Sự cố";
 "Simulate a crash?" = "Mô phỏng sự cố?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS sẽ dừng ngay lập tức và bạn cần mở lại ứng dụng. Nếu tùy chọn “Gửi báo cáo sự cố” được bật trong mục Chia sẻ, báo cáo sẽ được gửi khi ứng dụng khởi chạy lần tiếp theo.";
+
+/* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
+"Convert fat and protein into carb equivalents" = "Quy đổi chất béo và chất đạm thành lượng carbs tương đương";
+"When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "Khi tắt, chất béo và chất đạm vẫn được lưu cùng bữa ăn, nhưng không tạo thêm các mục nhập carbs trong tương lai từ những thành phần này. Việc hiển thị các trường chất béo và chất đạm trên màn hình Thêm carbs được điều khiển bởi một cài đặt riêng trong Cài đặt → Giao diện người dùng.";
