@@ -71,7 +71,7 @@
 /*  */
 
 /* */
-"Log external insulin" = "Log external insulin";
+"Log external insulin" = "Kirjaa ulkoinen insuliini";
 
 /* Bolus progress view */
 "of" = "jostakin";
@@ -95,7 +95,7 @@
 "Suggested at" = "Ehdotettu klo";
 
 /* Headline in enacted pop up (at: at what time) */
-"Status at" = "Status at";
+"Status at" = "Tila klo";
 
 /* Bolus View Meal Summary Header */
 "Meal Summary" = "Aterian yhteenveto";
@@ -114,7 +114,7 @@
 "Fatty Meal" = "Rasvainen ruoka";
 
 /* Bolus option */
-"Hypo Treatment" = "Hypo Treatment";
+"Hypo Treatment" = "Hypohoito";
 
 /* For the  Bolus View pop-up */
 
@@ -123,7 +123,7 @@
 /* For the  Bolus View pop-up */
 
 /* Footer */
-"Carbs and previous insulin are included in the eventual glucose prediction." = "Carbs and previous insulin are included in the eventual glucose prediction.";
+"Carbs and previous insulin are included in the eventual glucose prediction." = "Hiilihydraatit ja aikaisempi insuliini sisältyvät lopulliseen verensokeriennusteeseen.";
 
 /* For the  Bolus View pop-up */
 
@@ -151,13 +151,13 @@
 "Add Carbs " = "Lisää hiilihydraatit ";
 
 /* Home View */
-"Override" = "Override";
+"Override" = "Tilapäisasetukset";
 
 /* Home View Message if no pump is connected */
-"No Pump" = "No Pump";
+"No Pump" = "Ei pumppua";
 
 /* Home View Message if open loop is active */
-"Open" = "Open";
+"Open" = "Avoin";
 
 /*  */
 
@@ -176,15 +176,15 @@
 /* */
 
 /* */
-"Delete CoreData database records" = "Delete CoreData database records";
+"Delete CoreData database records" = "Poista CoreData-tietokannan tietueet";
 
 /* */
 
 /* */
-"All records in " = "All records in ";
+"All records in " = "Kaikki kirjaukset kohteessa ";
 
 /* */
-" will be deleted!" = " will be deleted!";
+" will be deleted!" = " tullaan poistamaan!";
 
 /* Bottom target temp */
 
@@ -195,7 +195,7 @@
 "Cancel Temp Target" = "Peruuta väliaikainen tavoite";
 
 /*  */
-"Cancel Temporary Target" = "Cancel Temporary Target";
+"Cancel Temporary Target" = "Peruuta väliaikainen tavoite";
 
 /* Custom temp target */
 "Custom" = "Muokattu";
@@ -271,7 +271,7 @@
 "Autotune" = "Autotune";
 
 /* Debug option view Dynamic Variables */
-"Dynamic Variables" = "Dynamic Variables";
+"Dynamic Variables" = "Dynaamiset Muuttujat";
 
 /*  */
 "Basal profile" = "Perusinsuliiniprofiili";
@@ -310,7 +310,7 @@
 "Schedule" = "Aikataulu";
 
 /* */
-"(standard units / hour)" = "(standard units / hour)";
+"(standard units / hour)" = "(vakioyksiköt / tunti)";
 
 /*  */
 "starts at" = "aloitusaika";
@@ -403,19 +403,19 @@ Enact a temp Basal or a temp target */
 /* Recommended Insulin Fraction in preferences */
 
 /* Do you want to show bolus screen after added carbs? */
-"Skip Bolus screen after carbs" = "Skip Bolus screen after carbs";
+"Skip Bolus screen after carbs" = "Ohita Bolus-näyttö hiilihydraattien jälkeen";
 
 /* Allow remote control from NS */
-"Remote control" = "Remote control";
+"Remote control" = "Etähallinta";
 
 /* Allow remote control from NS */
-"Allow Remote control of iAPS" = "Allow Remote control of iAPS";
+"Allow Remote control of iAPS" = "Salli iAPSin etähallinta";
 
 /* Imported Profiles Alert */
 "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects." = "\nNow please verify all of your new settings thoroughly:\n\n* Basal Settings\n * Carb Ratios\n * Glucose Targets\n * Insulin Sensitivities\n * DIA\n\n in iAPS Settings > Configuration.\n\nBad or invalid profile settings could have disatrous effects.";
 
 /* Profile Import Alert */
-"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?";
+"This will replace some or all of your current pump settings. Are you sure you want to import profile settings from Nightscout?" = "Tämä korvaa jotkin tai kaikki nykyiset pumpun asetukset. Oletko varma, että haluat tuoda profiilin asetukset Nightscoutista?";
 
 /* Import Error */
 
@@ -423,22 +423,22 @@ Enact a temp Basal or a temp target */
 "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings" = "\nSettings were imported but the Basals couldn't be saved to pump (No pump). Check your basal settings and tap ´Save on Pump´ to sync the new basal settings";
 
 /* Import Error Headline */
-"Import Error" = "Import Error";
+"Import Error" = "Tuontivirhe";
 
 /* */
-"Yes, Import" = "Yes, Import";
+"Yes, Import" = "Kyllä, tuo";
 
 /* */
-"Import settings from Nightscout" = "Import settings from Nightscout";
+"Import settings from Nightscout" = "Tuo asetukset Nightscoutista";
 
 /* */
-"Import settings?" = "Import settings?";
+"Import settings?" = "Tuonnin asetukset?";
 
 /* */
-"Import from Nightscout" = "Import from Nightscout";
+"Import from Nightscout" = "Tuo asetukset Nightscoutista";
 
 /* */
-"Settings imported" = "Settings imported";
+"Settings imported" = "Asetukset tuotu";
 
 /* Import Error */
 "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted." = "\nMismatching glucose units in Nightscout and Pump Settings. Import settings aborted.";
@@ -456,67 +456,67 @@ Enact a temp Basal or a temp target */
 /* Add Simulator pump */
 
 /* View/Header when pod expired */
-"Replace" = "Replace";
+"Replace" = "Korvaa";
 
 /* Insulin model */
-"Model" = "Model";
+"Model" = "Malli";
 
 /*  */
-"Pump config" = "Pump config";
+"Pump config" = "Pumpun asetukset";
 
 /*  */
-"Incomplete pump setup" = "Incomplete pump setup";
+"Incomplete pump setup" = "Keskeneräiset pumpun asetukset";
 
 /*  */
 "The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list)." = "The previous setup for %@ did not finish fully/correctly. Remove it and restart iAPS before adding your pump again (otherwise your RileyLink device may not show up in the device list).";
 
 /*  */
-"Remove pump" = "Remove pump";
+"Remove pump" = "Poista pumppu";
 
 /*  */
-"Delivery limits" = "Delivery limits";
+"Delivery limits" = "Annostelurajat";
 
 /*  */
-"Duration of Insulin Action" = "Duration of Insulin Action";
+"Duration of Insulin Action" = "Insuliinin vaikutusaika";
 
 /* hours of duration of insulin activity */
-"hours" = "hours";
+"hours" = "tuntia";
 
 /* Max setting */
-"Max Basal" = "Max Basal";
+"Max Basal" = "Suurin perusinsuliini";
 
 /* Max setting */
-"Max Bolus" = "Max Bolus";
+"Max Bolus" = "Suurin bolus";
 
 /* Insulin alert message */
 "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing." = "Please verify that you have selected the correct insulin concentration before saving your settings.\n\nThe insulin vial or pen should indicate the concentration in units per milliliter (e.g., U100 indicates 100 units per milliliter, which is the standard concentration).\n\nAccurate selection is critical for proper dosing.";
 
 /* Insulin Concentration View */
-"Concentration" = "Concentration";
+"Concentration" = "Pitoisuus";
 
 /* Insulin Concentration View */
-"Insulin Concentration" = "Insulin Concentration";
+"Insulin Concentration" = "Insuliinin pitoisuus";
 
 /* Insulin Concentration View */
-"Change Insulin" = "Change Insulin";
+"Change Insulin" = "Vaihda insuliini";
 
 /* Insulin Concentration View */
-"Insulin diluted to" = "Insulin diluted to";
+"Insulin diluted to" = "Insuliini laimennettu";
 
 /* Insulin Concentration View */
-"standard concentration:" = "standard concentration:";
+"standard concentration:" = "vakio pitoisuus:";
 
 /* Insulin Concentration View */
-"units per ml" = "units per ml";
+"units per ml" = "yksikköä/ml";
 
 /* Insulin Concentration View */
-"Standard concentration (U 100)" = "Standard concentration (U 100)";
+"Standard concentration (U 100)" = "Vakiopitoisuus (U 100)";
 
 /* Insulin Concentration View */
-"Insulin concentration increased to" = "Insulin concentration increased to";
+"Insulin concentration increased to" = "Insuliinin pitoisuus suureni";
 
 /* Insulin Concentration View */
-"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Couldn't save to pump. Try again when pump isn't busy bolusing.";
+"Couldn't save to pump. Try again when pump isn't busy bolusing." = "Ei voitu tallentaa pumppuun. Yritä uudelleen, kun pumppu ei ole kiireinen.";
 
 /* Insulin Concentration View */
 "Saved" = "Saved";
@@ -665,58 +665,58 @@ Enact a temp Basal or a temp target */
 "Middleware" = "Middleware";
 
 /* Header */
-"History" = "History";
+"History" = "Historia";
 
 /* Nightscout option */
-"Upload" = "Upload";
+"Upload" = "Lataa";
 
 /* Nightscout option */
-"Allow Uploads" = "Allow Uploads";
+"Allow Uploads" = "Salli lataaminen";
 
 /* Type of CGM or glucose source */
-"Type" = "Type";
+"Type" = "Tyyppi";
 
 /* CGM */
-"CGM" = "CGM";
+"CGM" = "Sensori";
 
 /* CGM Transmitter ID */
-"Transmitter ID" = "Transmitter ID";
+"Transmitter ID" = "Lähettimen ID";
 
 /* Other CGM setting */
-"Other" = "Other";
+"Other" = "Muu";
 
 /* Whatch app alert */
-"Set temp targets presets on iPhone first" = "Set temp targets presets on iPhone first";
+"Set temp targets presets on iPhone first" = "Määritä tilapäisten tavoitteiden esiasetukset ensin iPhonella";
 
 /* Updating Watch app */
-"Updating..." = "Updating...";
+"Updating..." = "Päivitetään...";
 
 /* Header for Temp targets in Watch app */
-"Temp Targets" = "Temp Targets";
+"Temp Targets" = "Väliaikaiset tavoitteet";
 
 /* Delete carbs from data table and Nightscout */
-"Delete Carbs?" = "Delete Carbs?";
+"Delete Carbs?" = "Poista hiilihydraatit?";
 
 /* Delete insulin from pump history and Nightscout */
-"Delete Insulin?" = "Delete Insulin?";
+"Delete Insulin?" = "Poista insuliini?";
 
 /* Treatments list */
-"Treatments" = "Treatments";
+"Treatments" = "Hoidot";
 
 /* Add Insulin */
-"Add Insulin" = "Add Insulin";
+"Add Insulin" = "Lisää insuliini";
 
 /* Add Glucose */
-"Add Glucose" = "Add Glucose";
+"Add Glucose" = "Lisää verensokeri";
 
 /* New Glucose */
-"New Glucose" = "New Glucose";
+"New Glucose" = "Uusi verensokeri";
 
 /* Hypo Treatment Preset */
-"Treatment" = "Treatment";
+"Treatment" = "Hoito";
 
 /* Hypo Treatment Default Value */
-"Default  📉" = "Default  📉";
+"Default  📉" = "Oletus 📉";
 
 /* Hypo Treatment Default Value */
 "None" = "Ei mitään";
@@ -732,73 +732,73 @@ Enact a temp Basal or a temp target */
 /* */
 
 /* */
-"Calibrations" = "Calibrations";
+"Calibrations" = "Kalibroinnit";
 
 /* */
-"Create Events in Calendar" = "Create Events in Calendar";
+"Create Events in Calendar" = "Luo tapahtumia kalenteriin";
 
 /* */
-"Calendar" = "Calendar";
+"Calendar" = "Kalenteri";
 
 /* Automatic delivered treatments */
 
 /* External insulin treatments */
-"External" = "External";
+"External" = "Ulkoinen";
 
 /* */
-"Other" = "Other";
+"Other" = "Muu";
 
 /* */
-"Libre Transmitter" = "Libre Transmitter";
+"Libre Transmitter" = "Libre-lähetin";
 
 /* */
-"Libre Transmitters" = "Libre Transmitters";
+"Libre Transmitters" = "Libre-lähettimet";
 
 /* */
-"Bluetooth Transmitters" = "Bluetooth Transmitters";
+"Bluetooth Transmitters" = "Bluetooth-lähettimet";
 
 /* */
 
 /* Libre 2 Direct */
-"Libre 2 Direct" = "Libre 2 Direct";
+"Libre 2 Direct" = "Libre 2 Suora";
 
 /* */
-"Select the third party transmitter you want to connect to" = "Select the third party transmitter you want to connect to";
+"Select the third party transmitter you want to connect to" = "Valitse kolmannen osapuolen lähetin, johon haluat yhdistää";
 
 /* State was restored */
 
 /* The short unit display string for millimoles of glucose per liter */
-"mmol/L" = "mmol/L";
+"mmol/L" = "mmol/l";
 
 /* The short unit display string for milligrams of glucose per decilter */
-"mg/dL" = "mg/dL";
+"mg/dL" = "mg/dl";
 
 /* */
-"Add calibration" = "Add calibration";
+"Add calibration" = "Lisää kalibrointi";
 
 /* When adding capillary glucose meater reading */
-"Meter glucose" = "Meter glucose";
+"Meter glucose" = "Mittarin verensokeri";
 
 /* */
 "Info" = "Info";
 
 /*v*/
-"Slope" = "Slope";
+"Slope" = "Kaltevuus";
 
 /* */
-"Intercept" = "Intercept";
+"Intercept" = "Poikkeama";
 
 /* */
-"Chart" = "Chart";
+"Chart" = "Kuvaaja";
 
 /* */
-"Remove" = "Remove";
+"Remove" = "Poista";
 
 /* */
-"Remove Last" = "Remove Last";
+"Remove Last" = "Poista viimeisin";
 
 /* */
-"Remove All" = "Remove All";
+"Remove All" = "Poista kaikki";
 
 /* */
 
@@ -821,35 +821,35 @@ Enact a temp Basal or a temp target */
 /* */
 
 /* */
-"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors";
+"Your phone or app is not enabled for NFC communications, which is needed to pair to libre2 sensors" = "Puhelimessasi tai sovelluksessa ei ole NFC-yhteyttä käytössä, jota tarvitaan Libre 2 -sensoreiden yhdistämiseen";
 
 /* Bluetooth Power Off */
 
 /* Please turn on Bluetooth */
 
 /* No Libre Transmitter Selected */
-"No Libre Transmitter Selected" = "No Libre Transmitter Selected";
+"No Libre Transmitter Selected" = "Libre lähetintä ei valittu";
 
 /* Delete Transmitter and start anew. */
-"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Delete CGMManager and start anew. Your libreoopweb credentials will be preserved";
+"Delete CGMManager and start anew. Your libreoopweb credentials will be preserved" = "Poista CGMManager ja aloita uudelleen. Libreoopweb tunnuksesi säilytetään";
 
 /* Invalid libre checksum */
-"Invalid libre checksum" = "Invalid libre checksum";
+"Invalid libre checksum" = "Virheellinen libre checksum";
 
 /* Libre sensor was incorrectly read, CRCs were not valid */
-"Libre sensor was incorrectly read, CRCs were not valid" = "Libre sensor was incorrectly read, CRCs were not valid";
+"Libre sensor was incorrectly read, CRCs were not valid" = "Libre-sensori oli virheellisesti luettavissa, CRC ei ollut pätevä";
 
 /* Glucose */
-"Glucose" = "Glucose";
+"Glucose" = "Verensokeri";
 
 /* LOWALERT! */
-"LOWALERT!" = "LOWALERT!";
+"LOWALERT!" = "HÄLYTYS MATALA!";
 
 /* HIGHALERT! */
-"HIGHALERT!" = "HIGHALERT!";
+"HIGHALERT!" = "HÄLYTYS KORKEA!";
 
 /* (Snoozed)*/
-"(Snoozed)" = "(Snoozed)";
+"(Snoozed)" = "(Torkku)";
 
 /* Glucose: %@ */
 
@@ -1051,19 +1051,19 @@ Enact a temp Basal or a temp target */
 " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered." = " U of insulin was sent to iAPS. Verify in iAPS app or in Nightscout if the bolus was delivered.";
 
 /* Bolus shortcut. Error */
-"too small bolus amount" = "too small bolus amount";
+"too small bolus amount" = "liian pieni bolus määrä";
 
 /* Bolus shortcut. Error */
-"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Shortcuts are disabled in iAPS settings";
+"Bolus Shortcuts are disabled in iAPS settings" = "Bolus Pikakomennot on poistettu käytöstä iAPS-asetuksissa";
 
 /* Bolus shortcut */
-"Bolus Amount in U" = "Bolus Amount in U";
+"Bolus Amount in U" = "Bolusmäärä U";
 
 /* Bolus shortcut. Setting */
-"Allow iOS Bolus Shortcuts" = "Allow iOS Bolus Shortcuts";
+"Allow iOS Bolus Shortcuts" = "Salli iOS Bolus Pikakomennot";
 
 /* Bolus shortcut setting. Header */
-"iOS Shortcuts" = "iOS Shortcuts";
+"iOS Shortcuts" = "iOS Pikakomennot";
 
 /* Bolus shortcut. Pop-up */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
@@ -2642,7 +2642,7 @@ Enact a temp Basal or a temp target */
 "Man" = "Man";
 
 /* Sex dropdown menu option */
-"Other" = "Other";
+"Other" = "Muu";
 
 /* Sex dropdown menu option */
 "Secret" = "Secret";
@@ -2830,7 +2830,7 @@ Enact a temp Basal or a temp target */
 "NoneContactValue" = "Ei mitään";
 
 /* Contact Image, settings, Glucose (data to display) */
-"GlucoseContactValue" = "Glucose";
+"GlucoseContactValue" = "Verensokeri";
 
 /* Contact Image, settings, Eventual BG (data to display) */
 "EventualBGContactValue" = "Eventual BG";
