@@ -71,9 +71,10 @@ struct AutoISFHistoryView: View {
                     Text("Back").font(.system(size: 18))
                 }
             }
-            .tint(.blue).buttonStyle(.borderless)
+            .tint(.secondary).buttonStyle(.automatic)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(10)
+            .padding(.top, 10)
             // Title
             Text("History")
                 .padding(.bottom, 20)

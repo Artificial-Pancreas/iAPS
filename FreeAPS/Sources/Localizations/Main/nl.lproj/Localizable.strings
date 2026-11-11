@@ -1524,6 +1524,16 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 
 "Fast" = "Snel";
 
+"Legacy" = "Legacy";
+
+"Deprecated · until %@" = "Deprecated · until %@";
+
+"%1$@ shut this model down on %2$@. Requests will fail; please select another model." = "%1$@ shut this model down on %2$@. Requests will fail; please select another model.";
+
+"%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then." = "%1$@ has deprecated this model and will shut it down on %2$@. Please select another model before then.";
+
+"This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model." = "This model is no longer in %@'s current lineup. It still works, but may be retired or unavailable to new accounts later; consider selecting a current model.";
+
 "Provider for AI Image Analysis" = "Provider voor AI afbeeldingsanalyse";
 
 "Food Search Provider Configuration" = "Voedsel zoekmachine configuratie";
@@ -2955,7 +2965,7 @@ Je kunt maar één app tegelijk gebruiken die via bluetooth met de sensor commun
 "Target Level for B30 to be enacted" = "Doelwaarde voor activering van B30";
 
 /* */
-"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 90 mg/dl. If you cancel this EatingSoon Target, the B30 basal rate will stop." = "Om de B30-aanpassing te starten, moet een EatingSoon Override Target (of een tijdelijke doelwaarde) worden geactiveerd. De doelwaarde moet onder deze instelling liggen om B30 te laten starten. Standaard is dit 90 mg/dl. Let op: Als je de EatingSoon-doelwaarde annuleert, stopt de B30-basaalstand automatisch.";
+"An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop." = "An EatingSoon Override Target (or a Temporary Target) needs to be activated to start the B30 adaption. Target needs to be below this setting for B30 to start. Default is 100 mg/dl (5.6 mmol/l). If you cancel this EatingSoon Target, the B30 basal rate will stop.";
 
 /* */
 "Minimum Start Bolus size" = "Minimale bolus omvang";
@@ -4130,3 +4140,7 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Crash" = "Crash";
 "Simulate a crash?" = "Simulate a crash?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
+
+/* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
+"Convert fat and protein into carb equivalents" = "Convert fat and protein into carb equivalents";
+"When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface.";

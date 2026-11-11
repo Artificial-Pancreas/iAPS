@@ -5,9 +5,6 @@
       location = "group:FreeAPS.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Shims/LoopAlgorithm/LoopAlgorithm.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:RileyLinkKit/RileyLinkKit.xcodeproj">
    </FileRef>
    <FileRef
