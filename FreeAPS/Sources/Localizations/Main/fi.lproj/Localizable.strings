@@ -535,16 +535,16 @@ Enact a temp Basal or a temp target */
 /* Debug option, allow U50 and U10 (diluted insulin) */
 "Allow diluted insulin concentration settings" = "Allow diluted insulin concentration settings";
 /* Max setting */
-"Max Carbs" = "Max Carbs";
+"Max Carbs" = "Maksimi hiilihydraatit";
 
 /* Max carbs description */
 "Maximum amount of carbs (g) you can add each entry" = "Maximum amount of carbs (g) you can add each entry";
 
 /* */
-"Pump Settings" = "Pump Settings";
+"Pump Settings" = "Pumpun asetukset";
 
 /* Insulin unit per hour */
-"U/hr" = "U/hr";
+"U/hr" = "U/h";
 
 /* Unit in number of units delivered (keep the space character!) */
 " U" = " U";
@@ -556,7 +556,7 @@ Enact a temp Basal or a temp target */
 "U" = "U";
 
 /* Unit per hour with space */
-" U/hr" = " U/hr";
+" U/hr" = " U/h";
 
 /* Number of units per hour*/
 
@@ -587,19 +587,19 @@ Enact a temp Basal or a temp target */
 "Closed loop" = "Closed loop";
 
 /* */
-"Configuration" = "Configuration";
+"Configuration" = "Asetukset";
 
 /* */
-"Devices" = "Devices";
+"Devices" = "Laitteet";
 
 /*  */
-"Pump" = "Pump";
+"Pump" = "Pumppu";
 
 /* */
-"Watch" = "Watch";
+"Watch" = "Kello";
 
 /* */
-"Watch Configuration" = "Watch Configuration";
+"Watch Configuration" = "Kellon asetukset";
 
 /* */
 "Apple Watch" = "Apple Watch";
@@ -1069,15 +1069,15 @@ Enact a temp Basal or a temp target */
 "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS." = "If you enable this setting you will be able to use iOS shortcuts and its automations to trigger a bolus in iAPS.\n\nObserve that the iOS shortuts also works with Siri!\n\nIf you need to use Bolus Shorcuts, please make sure to turn off the listen for 'Hey Siri' setting in iPhone Siri settings, to avoid any inadvertant activaton of a bolus with Siri.\nIf you don't disable 'Hey Siri' the iAPS bolus shortcut can be triggered with the utterance 'Hey Siri, iAPS Bolus'.\n\nWhen triggered with Siri you will be asked for an amount and a confirmation before the bolus command can be sent to iAPS.";
 
 /* Bolus shortcut. Setting */
-"Max allowed bolus amount using shortcuts " = "Max allowed bolus amount using shortcuts ";
+"Max allowed bolus amount using shortcuts " = "Suurin sallittu bolusten määrä Pikakommennoilla ";
 
 /* Bolus shortcut. Error */
 
 /* Override Shortcut */
-"Activate an Override Preset" = "Activate an Override Preset";
+"Activate an Override Preset" = "Aktivoi mukautus";
 
 /* Override Shortcut */
-"Allow to activate an overrride preset." = "Allow to activate an overrride preset.";
+"Allow to activate an overrride preset." = "Salli mukautuksen esiasetuksen käyttöönotto.";
 
 /* Override Shortcut */
 "Which override preset would you like to activate?" = "Which override preset would you like to activate?";
@@ -1088,7 +1088,7 @@ Enact a temp Basal or a temp target */
 "The Profile Override" = "The Profile Override";
 
 /* Override Shortcut */
-"is now activated" = "is now activated";
+"is now activated" = "on nyt aktivoitu";
 
 /* Override Shortcut */
 "Cancel active override" = "Cancel active override";
@@ -1117,28 +1117,28 @@ Enact a temp Basal or a temp target */
 
 
 /* */
-"Schedule " = "Schedule ";
+"Schedule " = "Aikataulu ";
 
 /* */
 "tapped save schedules" = "tapped save schedules";
 
 /* */
-"Error" = "Error";
+"Error" = "Virhe";
 
 /* */
 "Some ui element was incorrectly specified" = "Some ui element was incorrectly specified";
 
 /* */
-"Success" = "Success";
+"Success" = "Onnistui";
 
 /* */
 "Schedules were saved successfully!" = "Schedules were saved successfully!";
 
 /* */
-"High Glucose Alarm active" = "High Glucose Alarm active";
+"High Glucose Alarm active" = "Korkea verensokeri hälytys aktivoitu";
 
 /* */
-"Low Glucose Alarm active" = "Low Glucose Alarm active";
+"Low Glucose Alarm active" = "Matala verensokeri hälytys aktivoitus";
 
 /* */
 "No Glucose Alarm active" = "No Glucose Alarm active";
@@ -1203,7 +1203,7 @@ Enact a temp Basal or a temp target */
 "Persist sensordata" = "Persist sensordata";
 
 /* */
-"Battery" = "Battery";
+"Battery" = "Akku";
 
 /* */
 "Also add source info" = "Also add source info";
@@ -1215,7 +1215,7 @@ Enact a temp Basal or a temp target */
 "Carbs Required" = "Carbs Required";
 
 /* */
-"Sounds" = "Sounds";
+"Sounds" = "Äänet";
 
 /* Sound for Hypo alert */
 "Hypoglycemia" = "Hypoglycemia";
@@ -1230,10 +1230,10 @@ Enact a temp Basal or a temp target */
 "Rapidly Descending" = "Rapidly Descending";
 
 /* Silent sound option */
-"Silent" = "Silent";
+"Silent" = "Äänetön";
 
 /* Option for no sound */
-"Silent" = "Silent";
+"Silent" = "Äänetön";
 
 /* Option for default notification sound */
 "Default" = "Default";
@@ -1983,7 +1983,7 @@ Enact a temp Basal or a temp target */
 "Warning" = "Varoitus";
 
 /* Error title */
-"Error" = "Error";
+"Error" = "Virhe";
 
 /* Manual temp basal mode */
 "Manual" = "Manual";
