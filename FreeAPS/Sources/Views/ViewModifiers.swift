@@ -127,13 +127,18 @@ struct TestTube: View {
     let colourOfSubstance: Color
     let materialOpacity: CGFloat
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
 
     var body: some View {
         UnevenRoundedRectangle.testTube
             .fill(
                 LinearGradient(
                     gradient: Gradient(stops: [
-                        Gradient.Stop(color: .clear /* .white.opacity(opacity*/, location: amount),
+                        Gradient.Stop(
+                            color: (reduceTransparency && colorScheme == .light) ? .white
+                                .opacity(0.91) : (reduceTransparency && colorScheme == .dark) ? .white.opacity(0.15) : .clear,
+                            location: amount
+                        ),
                         Gradient.Stop(color: colourOfSubstance, location: amount)
                     ]),
                     startPoint: .top,
@@ -175,12 +180,14 @@ struct ColouredBackground: View {
 
 struct LoopEllipse: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.accessibilityReduceTransparency) private var reduceTransparency
+
     let stroke: Color
     var body: some View {
         let shape = RoundedRectangle(cornerRadius: 15)
         shape
             .stroke(stroke, lineWidth: colorScheme == .light ? 2 : 0.7)
-            .glassEffectWhenAvailable(.clear, in: shape)
+            .glassEffectWhenAvailable(reduceTransparency ? .regular : .clear, in: shape)
             .background(
                 RoundedRectangle(cornerRadius: 15)
                     .fill(colorScheme == .light ? .white : .black)
