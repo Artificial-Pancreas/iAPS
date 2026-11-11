@@ -581,9 +581,9 @@ final class CGMUnknownTests: XCTestCase {
     }
 
     /// A Libre the old rule split in four at its jumps, entered so: read as one sensor, one session from the first
-    /// one's start (its id and sensor start) to the last one's end; one Sensors row, not ended early, one sensor day
-    /// 1. The readings fetched for it: the three boundaries, the two close ones in one window. Unjoined, the
-    /// fragments' rows and sensor days, the last one alone ended early (no reading after it).
+    /// one's start (its id and sensor start) to the last one's end; one Sensors row, one sensor day 1. The readings
+    /// fetched for it: the three boundaries, the two close ones in one window. Unjoined, the fragments' rows and sensor
+    /// days.
     @MainActor func testTouchingEnteredSessionsOfOneSensorAreJoined() {
         let points = readings([
             libre(4.5),
@@ -610,14 +610,10 @@ final class CGMUnknownTests: XCTestCase {
         let libre = result.picks[.cgm("libre3")]
         XCTAssertEqual(libre?.sensors.count, 1)
         XCTAssertEqual(libre?.sensorsBySensorDay[1], 1)
-        XCTAssertNil(libre?.sensors.first.map { Stat.CGMReport.sensorRow($0, now: now, units: .mgdL) }?.earlyText)
 
         let fragmented = topic(points, sessions, now: now).picks[.cgm("libre3")]
         XCTAssertEqual(fragmented?.sensorsBySensorDay[1], 4)
-        XCTAssertEqual(
-            fragmented?.sensors.map { Stat.CGMReport.sensorRow($0, now: now, units: .mgdL).earlyText },
-            ["Ended early", nil, nil, nil]
-        )
+        XCTAssertEqual(fragmented?.sensors.count, 4)
     }
 
     /// Never joined: across a recorded session, into a session whose start is a recorded sensor's, across a change of
@@ -644,36 +640,9 @@ final class CGMUnknownTests: XCTestCase {
         XCTAssertEqual(CGMUnknownInference.joinedEntered(fragments(long), readings: long).count, 2)
     }
 
-    /// Ended early when something ended it: a short entered sensor, then a 60-minute gap before the next one (as the
-    /// sheet makes it, from the warm-up before its first reading); not when the next one goes straight on from it,
-    /// its start inferred (too long together to be joined).
-    @MainActor func testEndedEarlyOnlyWhenSomethingEndedIt() {
-        let afterGap = readings([libre(3), libre(gapBefore: 60)])
-        let firsts = runFirsts(afterGap)
-        let warmupStart = firsts[1].addingTimeInterval(-.minutes(60) + 1)
-        let gapSessions = [
-            entered("libre3", start: firsts[0], end: warmupStart, sensorStart: firsts[0]),
-            entered("libre3", start: warmupStart, end: afterGap.last!.time.addingTimeInterval(1), sensorStart: warmupStart)
-        ]
-        let gapNow = afterGap.last!.time.addingTimeInterval(.hours(1))
-        let gapRows = topic(afterGap, gapSessions, now: gapNow).picks[.cgm("libre3")]?.sensors ?? []
-        XCTAssertEqual(gapRows.count, 2)
-        XCTAssertEqual(gapRows.last.map { Stat.CGMReport.sensorRow($0, now: gapNow, units: .mgdL).earlyText }, "Ended early")
-        XCTAssertEqual(gapRows.last?.hasEndCause, true)
-
-        let straightOn = readings([libre(3), libre(gapBefore: 3, offset: 40)])
-        let straightSessions = fragments(straightOn)
-        XCTAssertEqual(CGMUnknownInference.joinedEntered(straightSessions, readings: straightOn).count, 2)
-        let straightNow = straightOn.last!.time.addingTimeInterval(.hours(1))
-        let straightRows = topic(straightOn, straightSessions, now: straightNow).picks[.cgm("libre3")]?.sensors ?? []
-        XCTAssertEqual(straightRows.count, 2)
-        XCTAssertEqual(straightRows.last?.hasEndCause, false)
-        XCTAssertNil(straightRows.last.map { Stat.CGMReport.sensorRow($0, now: straightNow, units: .mgdL) }?.earlyText)
-    }
-
     /// A sensor whose readings all fall before the period, the next one going straight on from it inside the period:
-    /// its last reading is taken from before the period, so it isn't "no reading after" and not ended early.
-    @MainActor func testASensorEndingJustBeforeThePeriodIsNotEndedEarly() {
+    /// its session overlaps the period, so it has its row; its readings count nowhere.
+    @MainActor func testASensorEndingJustBeforeThePeriodHasItsRow() {
         let points = readings([libre(3), libre(gapBefore: 3, offset: 40)])
         let sessions = fragments(points)
         let second = sessions[1].start
@@ -692,8 +661,7 @@ final class CGMUnknownTests: XCTestCase {
         )
         let rows = result.picks[.cgm("libre3")]?.sensors ?? []
         XCTAssertEqual(rows.map(\.id), [sessions[1].id, sessions[0].id])
-        XCTAssertEqual(rows.last?.hasEndCause, false)
-        XCTAssertNil(rows.last.map { Stat.CGMReport.sensorRow($0, now: now, units: .mgdL) }?.earlyText)
+        XCTAssertNil(rows.last?.noise)
         // the readings before the period count nowhere else
         XCTAssertEqual(result.picks[.cgm("libre3")]?.stats.span?.start, second)
     }

@@ -2931,6 +2931,8 @@ Enact a temp Basal or a temp target */
 "Range" = "Range";
 /* Home stats bar: its long-press menu's toggle, the tight part of the in-range bar and its figure */
 "Show TITR" = "Show TITR";
+/* Home stats bar: its long-press menu's toggle, the GMI of the last 90 days ("90-day GMI 6.8%") */
+"Show GMI" = "Show GMI";
 /* Home stats bar: Time in Tight Range, 70-140 ("TITR 48%") */
 "TITR" = "TITR";
 /* Home stats bar: the GMI of the days with readings of the last 90 ("90-day GMI") */
@@ -5306,10 +5308,6 @@ Enact a temp Basal or a temp target */
 "Day 1 is the first 24 hours after a sensor start; under each day, the sensors with readings on it. A noisier first day is what pre-soaking (inserting the new sensor hours early) avoids." = "Day 1 is the first 24 hours after a sensor start; under each day, the sensors with readings on it. A noisier first day is what pre-soaking (inserting the new sensor hours early) avoids.";
 /* Statistics CGM Sensors: a sensor's noise ("0.18", "mmol/L") */
 "noise %1$@ %2$@" = "noise %1$@ %2$@";
-/* Statistics CGM Sensors: a sensor ended early by a change of CGM */
-"Ended at the CGM change" = "Ended at the CGM change";
-/* Statistics CGM Sensors: a sensor stopped more than 6 hours early */
-"Ended early" = "Ended early";
 /* Statistics CGM Smoothing: the period replayed */
 "Period" = "Period";
 /* Statistics CGM Smoothing: the readings' span and cadence ("29 d 14 h", "1-min") */
@@ -5509,7 +5507,7 @@ Enact a temp Basal or a temp target */
 /* Statistics CGM Unknown: what no sensor starts leaves out */
 "so no sensors, no sensor days" = "so no sensors, no sensor days";
 /* Statistics CGM Sensors: what a sensor's bar is */
-"The bar is the sensor’s time of its expected life, full at the end of its life. Ended early: it stopped more than 6 hours before. Why a sensor ended isn’t recorded." = "The bar is the sensor’s time of its expected life, full at the end of its life. Ended early: it stopped more than 6 hours before. Why a sensor ended isn’t recorded.";
+"The bar is the sensor’s time of its expected life, full at the end of its life." = "The bar is the sensor’s time of its expected life, full at the end of its life.";
 
 /* Statistics: Good & bad days (the days scored by GRI, two groups compared) and the GRI sheet */
 /* Statistics Good & bad days: what the day score is */

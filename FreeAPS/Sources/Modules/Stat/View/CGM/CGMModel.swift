@@ -239,8 +239,6 @@ extension Stat {
             let id: UUID
             let title: String
             let isInUse: Bool
-            /// "Ended early", "Ended at the CGM change"; nil when it didn't end early
-            let earlyText: String?
             /// its dates and its length: "Sun 11 Oct, 23:06 – Mon 26 Oct, 10:37 · 14 d 13 h"
             let span: String
             /// its length of its expected life (its grace left out), 0...1; nil when the life isn't known
@@ -872,7 +870,7 @@ extension Stat {
                 rows: rows,
                 emptyText: emptyText,
                 note: NSLocalizedString(
-                    "The bar is the sensor’s time of its expected life, full at the end of its life. Ended early: it stopped more than 6 hours before. Why a sensor ended isn’t recorded.",
+                    "The bar is the sensor’s time of its expected life, full at the end of its life.",
                     comment: "Statistics CGM Sensors: what a sensor's bar is"
                 ),
                 noiseDays: noiseDays,
@@ -883,20 +881,11 @@ extension Stat {
             )
         }
 
-        /// A sensor's row: its dates and length, its length of its expected life, how it ended, its noise.
-        ///
-        /// "Ended early": a sensor no longer in use, shorter than its life (its grace left out) by more than
-        /// `Provider.earlyEndMargin`, that something ended (`CGMSensor.hasEndCause`): its recorded session's end;
-        /// else a gap of `CGMUnknownInference.splitGap` or more after its last reading (a warm-up, the readings
-        /// stopped), no reading after it, or the next reading another CGM's (or Unknown), a recorded session's or a
-        /// recorded sensor's. Never when an entered session of its CGM goes straight on from it with an inferred
-        /// start. "Ended at the CGM change" instead when the next session, of another CGM, began where it ended.
+        /// A sensor's row: its dates and length, its length of its expected life (its grace left out), its noise.
         @MainActor static func sensorRow(_ sensor: CGMSensor, now: Date, units: GlucoseUnits) -> SensorRow {
             let end = sensor.end ?? now
             let length = Swift.max(end.timeIntervalSince(sensor.lifeStart), 0)
             let life = sensor.expectedLife.map { Swift.max($0 - sensor.grace, 0) }
-            let early = !sensor.isInUse && sensor.hasEndCause &&
-                life.map { length < $0 - Stat.Provider.earlyEndMargin } ?? false
             let endText = sensor.end.map { Stat.Patches.dayAndTime($0) }
                 ?? NSLocalizedString("now", comment: "Statistics CGM Sensors: the end of the sensor in use")
             let span = Stat.Patches.dayAndTime(sensor.lifeStart) + " – " + endText + " · " + CGMFormat.days(length)
@@ -910,23 +899,10 @@ extension Stat {
                     StatsFormatting.unit(units)
                 )
             }
-            var earlyText: String?
-            if early {
-                earlyText = sensor.endedAtCGMChange
-                    ? NSLocalizedString(
-                        "Ended at the CGM change",
-                        comment: "Statistics CGM Sensors: a sensor ended early by a change of CGM"
-                    )
-                    : NSLocalizedString(
-                        "Ended early",
-                        comment: "Statistics CGM Sensors: a sensor stopped more than 6 hours early"
-                    )
-            }
             return SensorRow(
                 id: sensor.id,
                 title: sensor.name,
                 isInUse: sensor.isInUse,
-                earlyText: earlyText,
                 span: span,
                 bar: life.flatMap { $0 > 0 ? Swift.min(length / $0, 1) : nil },
                 noise: noise,

@@ -230,6 +230,8 @@ struct StatsDisplayPreferences {
         static let homeStatsRange = "iAPS.stats.home.range"
         /// the stats bar's TITR: the tight part of its in-range segment and its figure ("Show TITR")
         static let homeStatsTITR = "iAPS.stats.home.titr"
+        /// the stats bar's GMI of the last 90 days ("Show GMI")
+        static let homeStatsGMI = "iAPS.stats.home.gmi"
         /// the On board card's glucose and carbs-on-board lanes
         static let homeOnBoardGlucose = "iAPS.stats.home.onBoard.glucose"
         static let homeOnBoardCOB = "iAPS.stats.home.onBoard.cob"
@@ -254,6 +256,12 @@ struct StatsDisplayPreferences {
     var homeStatsTITR: Bool {
         get { defaults.object(forKey: Key.homeStatsTITR) as? Bool ?? false }
         nonmutating set { defaults.set(newValue, forKey: Key.homeStatsTITR) }
+    }
+
+    /// on by default (and for a phone that kept its choices before this one)
+    var homeStatsGMI: Bool {
+        get { defaults.object(forKey: Key.homeStatsGMI) as? Bool ?? true }
+        nonmutating set { defaults.set(newValue, forKey: Key.homeStatsGMI) }
     }
 
     /// on by default

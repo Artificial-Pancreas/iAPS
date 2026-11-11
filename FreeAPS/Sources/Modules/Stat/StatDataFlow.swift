@@ -582,15 +582,10 @@ enum Stat {
         let end: Date?
         /// from the sensor start, its grace included; nil when unknown
         let expectedLife: TimeInterval?
-        /// the part of `expectedLife` that is grace (`Provider.dexcomG7Grace`): an end within it isn't early
+        /// the part of `expectedLife` that is grace (`Provider.dexcomG7Grace`): its bar leaves it out
         let grace: TimeInterval
         /// its readings' noise in the period
         let noise: CGMNoise?
-        /// it ended where the next session, of another CGM, began
-        let endedAtCGMChange: Bool
-        /// something ended it (`Provider.sensor`): not an entered session of its CGM going on from it without a gap,
-        /// that session's start inferred (an earlier answer's split of one sensor)
-        var hasEndCause = true
         /// its first session is one the user entered (`CGMSessionSource.entered`): its start inferred from the readings
         var isEntered = false
         /// its first session was named from Nightscout (`CGMSessionSource.backfilled`)

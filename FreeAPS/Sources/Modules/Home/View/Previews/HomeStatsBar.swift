@@ -17,9 +17,9 @@ struct HomeStatsSnapshot: Equatable {
 }
 
 /// The stats card on Home: the band bar of its range (Today or 24 h, muted after the title), the in-range percent, the
-/// mean and CV, and the GMI of the last 90 days; with "Show TITR", the in-range segment's tight part darker and the TITR
-/// figure. A long-press picks the range and TITR (`HomeStatsRangeMenu`, the card's `.contextMenu` in `HomeRootView`); a
-/// tap opens the Statistics Overview.
+/// mean and CV, and the GMI of the last 90 days ("Show GMI", on by default); with "Show TITR", the in-range segment's
+/// tight part darker and the TITR figure. A long-press picks the range, TITR and GMI (`HomeStatsRangeMenu`, the card's
+/// `.contextMenu` in `HomeRootView`); a tap opens the Statistics Overview.
 struct HomeStatsBar: View {
     /// What the card shows, formatted. The numbers are the Overview's (`Stat.Overview`), so the two never differ.
     ///
@@ -33,7 +33,8 @@ struct HomeStatsBar: View {
         /// 1e-3 of the bar: about 0.35 pt on a phone, below a pixel at 2x
         static let fractionStep = 1E-3
 
-        /// The GMI of the last 90 days, under the bar on the left: "90-day GMI 6.8 %", "37-day GMI 6.8 %".
+        /// The GMI of the last 90 days, under the bar (on the left, or under the rest on the right with TITR):
+        /// "90-day GMI 6.8%", "37-day GMI 51 mmol/mol".
         struct GMILine: Equatable {
             /// "90-day GMI", "37-day GMI": the days with readings of the 90
             let title: String
@@ -41,6 +42,9 @@ struct HomeStatsBar: View {
             let value: String
             /// "%", "mmol/mol"
             let unit: String
+            /// the unit is "%": shown with the value as the card's other percents ("6.8%", as "CV 31%"); mmol/mol
+            /// stands apart, muted
+            let isPercent: Bool
         }
 
         /// the range of this result
@@ -136,7 +140,8 @@ struct HomeStatsBar: View {
                     days
                 ),
                 value: StatsFormatting.a1c(percent, unit: settings.hbA1cUnit),
-                unit: StatsFormatting.a1cUnit(settings.hbA1cUnit)
+                unit: StatsFormatting.a1cUnit(settings.hbA1cUnit),
+                isPercent: settings.hbA1cUnit == .percent
             )
         }
     }
@@ -146,6 +151,8 @@ struct HomeStatsBar: View {
     let range: StatsPeriod
     /// the long-press menu's "Show TITR": the tight part on the bar and the TITR figure
     let showTITR: Bool
+    /// the long-press menu's "Show GMI": the GMI line (when `Content.gmi` has one)
+    let showGMI: Bool
     /// the Statistics Overview on the card's range
     let open: () -> Void
 
@@ -153,6 +160,9 @@ struct HomeStatsBar: View {
 
     /// a pick of another range, up to its read: the numbers dimmed
     private var isStale: Bool { content.period != range }
+
+    /// the GMI line shown: nil with "Show GMI" off
+    private var shownGMI: Content.GMILine? { showGMI ? content.gmi : nil }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -216,7 +226,7 @@ struct HomeStatsBar: View {
                 Text("No readings")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                if let gmi = content.gmi {
+                if let gmi = shownGMI {
                     gmiLine(gmi)
                         .font(.subheadline)
                         .lineLimit(1)
@@ -269,42 +279,59 @@ struct HomeStatsBar: View {
             .brightness(Self.tightDarkening)
     }
 
-    /// The GMI line on the left, the TITR figure (with "Show TITR"), the mean and CV on the right; where they don't
-    /// fit (large text), the GMI line and TITR above the mean and CV, then each on its own line.
     private var numbers: some View {
-        ViewThatFits(in: .horizontal) {
-            HStack(alignment: .firstTextBaseline, spacing: 8) {
-                if let gmi = content.gmi {
-                    gmiLine(gmi)
-                }
-                Spacer(minLength: 0)
-                if showTITR {
-                    titrFigure
-                }
-                averages
-            }
-            if showTITR, let gmi = content.gmi {
-                VStack(alignment: .leading, spacing: 4) {
-                    HStack(alignment: .firstTextBaseline, spacing: 8) {
-                        gmiLine(gmi)
-                        Spacer(minLength: 0)
-                        titrFigure
-                    }
-                    averages
-                }
-            }
-            VStack(alignment: .leading, spacing: 4) {
-                if let gmi = content.gmi {
-                    gmiLine(gmi)
-                }
-                if showTITR {
-                    titrFigure
-                }
-                averages
+        Group {
+            if showTITR {
+                numbersWithTITR
+            } else {
+                numbersWithoutTITR
             }
         }
         .font(.subheadline)
         .lineLimit(1)
+    }
+
+    /// The GMI line on the left, the mean and CV on the right; where they don't fit (large text), each on its own line.
+    private var numbersWithoutTITR: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                if let gmi = shownGMI {
+                    gmiLine(gmi)
+                }
+                Spacer(minLength: 0)
+                averages
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                if let gmi = shownGMI {
+                    gmiLine(gmi)
+                }
+                averages
+            }
+        }
+    }
+
+    /// The TITR figure, the mean and CV on the right, the GMI line under them, on the right too; where they don't fit
+    /// (large text), each on its own line, the GMI line last.
+    private var numbersWithTITR: some View {
+        ViewThatFits(in: .horizontal) {
+            VStack(alignment: .trailing, spacing: 4) {
+                HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    Spacer(minLength: 0)
+                    titrFigure
+                    averages
+                }
+                if let gmi = shownGMI {
+                    gmiLine(gmi)
+                }
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                titrFigure
+                averages
+                if let gmi = shownGMI {
+                    gmiLine(gmi)
+                }
+            }
+        }
     }
 
     /// The tight part's swatch and "TITR 48%"
@@ -338,18 +365,23 @@ struct HomeStatsBar: View {
         }
     }
 
-    /// "90-day GMI 6.8 %"
-    private func gmiLine(_ gmi: Content.GMILine) -> some View {
-        HStack(alignment: .firstTextBaseline, spacing: 4) {
-            Text(gmi.title)
-                .foregroundStyle(.secondary)
-            Text(gmi.value)
-                .fontWeight(.semibold)
-                .monospacedDigit()
-            Text(gmi.unit)
-                .foregroundStyle(.secondary)
+    /// "90-day GMI 6.8%", its percent as the card's others ("CV 31%"); "90-day GMI 51 mmol/mol", the unit muted
+    @ViewBuilder private func gmiLine(_ gmi: Content.GMILine) -> some View {
+        if gmi.isPercent {
+            number(gmi.title, gmi.value + gmi.unit)
+                .fixedSize()
+        } else {
+            HStack(alignment: .firstTextBaseline, spacing: 4) {
+                Text(gmi.title)
+                    .foregroundStyle(.secondary)
+                Text(gmi.value)
+                    .fontWeight(.semibold)
+                    .monospacedDigit()
+                Text(gmi.unit)
+                    .foregroundStyle(.secondary)
+            }
+            .fixedSize()
         }
-        .fixedSize()
     }
 
     // MARK: - Parts
@@ -362,27 +394,33 @@ struct HomeStatsBar: View {
     @MainActor private static var inRangeTitle: String { StatsFormatting.name(.inRange) }
 }
 
-/// The stats bar's long-press menu (the card's `.contextMenu`, `HomeRootView`): its range, Today or 24 h, and "Show
-/// TITR" (off by default).
+/// The stats bar's long-press menu (the card's `.contextMenu`, `HomeRootView`): its range, Today or 24 h, "Show TITR"
+/// (off by default) and "Show GMI" (on by default).
 struct HomeStatsRangeMenu: View {
     /// the card's range setting
     let range: StatsPeriod
     let showTITR: Bool
+    let showGMI: Bool
     let select: @MainActor @Sendable(StatsPeriod) -> Void
     let setShowTITR: @MainActor @Sendable(Bool) -> Void
+    let setShowGMI: @MainActor @Sendable(Bool) -> Void
 
     // explicit: the synthesized memberwise init drops `@Sendable` from the closures in this target (Swift 5 mode,
     // targeted concurrency), so passing `@Sendable` closures to it warns
     init(
         range: StatsPeriod,
         showTITR: Bool,
+        showGMI: Bool,
         select: @escaping @MainActor @Sendable(StatsPeriod) -> Void,
-        setShowTITR: @escaping @MainActor @Sendable(Bool) -> Void
+        setShowTITR: @escaping @MainActor @Sendable(Bool) -> Void,
+        setShowGMI: @escaping @MainActor @Sendable(Bool) -> Void
     ) {
         self.range = range
         self.showTITR = showTITR
+        self.showGMI = showGMI
         self.select = select
         self.setShowTITR = setShowTITR
+        self.setShowGMI = setShowGMI
     }
 
     var body: some View {
@@ -396,5 +434,6 @@ struct HomeStatsRangeMenu: View {
             .labelsHidden()
         }
         Toggle("Show TITR", isOn: Binding(get: { [showTITR] in showTITR }, set: setShowTITR))
+        Toggle("Show GMI", isOn: Binding(get: { [showGMI] in showGMI }, set: setShowGMI))
     }
 }

@@ -85,6 +85,8 @@ extension Home {
         @Published private(set) var homeStatsRange: StatsPeriod
         /// the stats bar's "Show TITR" (`showHomeStatsTITR`): drawn from the bar's result, no read of its own
         @Published private(set) var homeStatsTITR: Bool
+        /// the stats bar's "Show GMI" (`showHomeStatsGMI`): its GMI line is read either way, so it shows at once
+        @Published private(set) var homeStatsGMIShown: Bool
 
         // the On board card, the last 24 h (no range of its own): its long-press menu's lanes (`showOnBoardGlucose`,
         // `showOnBoardCOB`)
@@ -232,6 +234,7 @@ extension Home {
             self.displayPreferences = displayPreferences
             homeStatsRange = displayPreferences.homeStatsRange
             homeStatsTITR = displayPreferences.homeStatsTITR
+            homeStatsGMIShown = displayPreferences.homeStatsGMI
             homeOnBoardGlucose = displayPreferences.homeOnBoardGlucose
             homeOnBoardCOB = displayPreferences.homeOnBoardCOB
             super.init(resolver: resolver)
@@ -755,6 +758,13 @@ extension Home {
             guard shown != homeStatsTITR else { return }
             homeStatsTITR = shown
             displayPreferences.homeStatsTITR = shown
+        }
+
+        /// The stats bar's long-press menu: "Show GMI", kept on the phone.
+        func showHomeStatsGMI(_ shown: Bool) {
+            guard shown != homeStatsGMIShown else { return }
+            homeStatsGMIShown = shown
+            displayPreferences.homeStatsGMI = shown
         }
 
         /// The On board card's long-press menu: its glucose lane, kept on the phone.

@@ -434,8 +434,7 @@ private struct CGMComparisonCard: View {
 
 // MARK: - Sensors' cards
 
-/// A sensor: its CGM and its tags (in use, how it ended, entered, from Nightscout), its dates and length, its bar, its
-/// noise.
+/// A sensor: its CGM and its tags (in use, entered, from Nightscout), its dates and length, its bar, its noise.
 private struct CGMSensorRowView: View {
     let row: Stat.CGMReport.SensorRow
 
@@ -444,8 +443,7 @@ private struct CGMSensorRowView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            // the tags beside the name, under it when they don't fit ("FreeStyle Libre 3 / 3+" and "Ended at the CGM
-            // change")
+            // the tags beside the name, under it when they don't fit ("FreeStyle Libre 3 / 3+" and "From Nightscout")
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: 6) {
                     title
@@ -494,13 +492,13 @@ private struct CGMSensorRowView: View {
 
     @ViewBuilder private var tags: some View {
         if row.isInUse {
-            CGMTag(text: NSLocalizedString("In use", comment: "Statistics Patches: the one delivering now"), isAccent: true)
-        }
-        if let early = row.earlyText {
-            CGMTag(text: early)
+            CGMTag(text: NSLocalizedString("In use", comment: "Statistics Patches: the one delivering now"), style: .accent)
         }
         if row.isEntered {
-            CGMTag(text: NSLocalizedString("Entered by you", comment: "Statistics CGM Sensors: a sensor the user entered"))
+            CGMTag(
+                text: NSLocalizedString("Entered by you", comment: "Statistics CGM Sensors: a sensor the user entered"),
+                style: .muted
+            )
         }
         if row.isBackfilled {
             CGMTag(text: NSLocalizedString("From Nightscout", comment: "Statistics CGM Sensors: a sensor named from Nightscout"))
@@ -508,19 +506,34 @@ private struct CGMSensorRowView: View {
     }
 }
 
-/// A sensor's tag: "In use" filled in the accent colour, the others in grey.
+/// A sensor's tag: "In use" filled in the accent colour, the others in grey, "Entered by you" with its text muted.
 private struct CGMTag: View {
+    enum Style {
+        case accent
+        case plain
+        /// secondary text, as the screen's other muted text
+        case muted
+    }
+
     let text: String
-    var isAccent = false
+    var style: Style = .plain
 
     var body: some View {
         Text(text)
             .font(.caption.weight(.semibold))
-            .foregroundStyle(isAccent ? Color.white : Color.primary)
+            .foregroundStyle(foreground)
             .padding(.horizontal, 7)
             .padding(.vertical, 1)
-            .background(isAccent ? Color.accentColor : Color(.systemGray5), in: Capsule())
+            .background(style == .accent ? Color.accentColor : Color(.systemGray5), in: Capsule())
             .fixedSize()
+    }
+
+    private var foreground: Color {
+        switch style {
+        case .accent: return .white
+        case .plain: return .primary
+        case .muted: return .secondary
+        }
     }
 }
 

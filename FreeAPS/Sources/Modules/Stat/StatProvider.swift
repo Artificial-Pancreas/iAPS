@@ -616,17 +616,10 @@ extension Stat.Provider {
     typealias CGMUnknownInput = Stat.CGMUnknownInput
 
     /// The Dexcom G7's grace period, which its expected life (`KnownPlugins.cgmExpirationByPluginIdentifier`) includes:
-    /// an end within it isn't early.
+    /// a sensor's bar leaves it out.
     static let dexcomG7Grace: TimeInterval = .hours(12)
     /// The Dexcom G7's statistics id (`KnownPlugins.cgmIdForStatistics`).
     static let dexcomG7Id = "dexcomG7"
-    /// A sensor that stopped more than this before its expected life (its grace left out) ended early: a few hours
-    /// either way is a change at a convenient time, not a failed sensor.
-    static let earlyEndMargin: TimeInterval = .hours(6)
-    /// The CGM topic reads the readings of this long before the period: an entered sensor ends just after its last
-    /// reading, so one that ended just before the period has that reading for how it ended (`sensor`); the next
-    /// reading counts within `CGMUnknownInference.splitGap` of it.
-    static let endCauseLead = CGMUnknownInference.splitGap
     /// The replay reads the readings of this long before the period: the loop's window at its first loop time, which
     /// holds the reference's lead-in too (`SmoothingReplay.replay`).
     static let replayLookback = SmoothingReplay.liveWindow
@@ -652,11 +645,7 @@ extension Stat.Provider {
         )
         let storage = coreDataStorage
         return try await cgmCache.result(key: key) {
-            // from a little before the period: the last reading of a sensor that ended just before it (`sensor`)
-            let readings = try await storage.fetchGlucosePoints(
-                from: window.start.addingTimeInterval(-Self.endCauseLead),
-                to: now.addingTimeInterval(1)
-            )
+            let readings = try await storage.fetchGlucosePoints(from: window.start, to: now.addingTimeInterval(1))
             let joined = try await Self.sensorSessions(sessions, storage: storage, fetched: readings)
             try Task.checkCancellation()
             // on a GCD queue: the engine's fits run in parallel (`DispatchQueue.concurrentPerform`), blocking it
@@ -915,8 +904,7 @@ extension Stat.Provider {
 
     /// The CGM topic's result from the period's readings and every recorded session.
     /// - Parameters:
-    ///   - readings: the period's (`window`), any order; those before it (`endCauseLead`) only date a sensor's last
-    ///     reading
+    ///   - readings: the period's (`window`), any order
     ///   - window: the period's `[start, now]`
     ///   - backfillWindows: the windows the Nightscout backfill ran over (`CGMSessionStore.backfillWindows`); nil:
     ///     Nightscout isn't configured
@@ -962,8 +950,6 @@ extension Stat.Provider {
         let boundaryBySession = sensorBoundary(bySession: sessions)
         let groups = mergedSensors(sessions)
         let firsts = Set(groups.map { $0[0].id })
-        // the period's readings, cleaned: the reading after a sensor's last
-        let periodCleaned = CGMStatsEngine.cleaned(readings, in: window, now: now)
         // the readings of each session, by id
         let readingsBySession = Dictionary(
             attribution.bySession.map { ($0.session.id, $0.readings) },
@@ -1010,8 +996,6 @@ extension Stat.Provider {
                     group,
                     readingsBySession: readingsBySession,
                     residuals: residuals,
-                    all: sortedSessions,
-                    readings: periodCleaned,
                     window: window,
                     now: now
                 )
@@ -1053,48 +1037,21 @@ extension Stat.Provider {
     }
 
     /// A sensor's row: its sessions' readings' noise in the period (their own fits: those of its CGM's segments it
-    /// shares, `CGMStatsEngine.noise(…reusing:)`), how it ended.
+    /// shares, `CGMStatsEngine.noise(…reusing:)`).
     /// - Parameters:
-    ///   - readingsBySession: every session's readings, those before the period too
+    ///   - readingsBySession: every session's readings
     ///   - residuals: its CGM's (`CGMStatsEngine.analysed`)
-    ///   - readings: the period's, cleaned (`CGMStatsEngine.cleaned`): the reading after the sensor's last
     private static func sensor(
         _ group: [CGMSessionRecord],
         readingsBySession: [UUID: [GlucosePoint]],
         residuals: CGMSegmentResiduals,
-        all sorted: [CGMSessionRecord],
-        readings: [GlucosePoint],
         window: DateInterval,
         now: Date
     ) -> CGMSensor {
         let first = group[0]
         let last = group[group.count - 1]
-        let ids = Set(group.map(\.id))
         let points = group.flatMap { readingsBySession[$0.id] ?? [] }
-        // the next session, of another CGM, began where it ended
-        let tolerance = BloodGlucose.sessionTolerance
-        let next = last.end.flatMap { end in
-            sorted.first { !ids.contains($0.id) && abs($0.start.timeIntervalSince(end)) <= tolerance }
-        }
         let life = last.expectedLife ?? first.expectedLife
-        // something ended it: its recorded end; no reading after its last, or a gap that holds a sensor change; the
-        // next reading another CGM's (or Unknown), a recorded session's or a recorded sensor's. Not an entered session
-        // of its CGM going straight on, its start inferred: an earlier answer's split. Its last reading whenever it
-        // was (one that ended just before the period has it there), the next one the period's.
-        let hasEndCause: Bool = {
-            guard last.end != nil, last.source != .recorded,
-                  let ownLast = CGMStatsEngine.cleaned(points, in: DateInterval(start: .distantPast, end: now), now: now)
-                  .last?.time
-            else { return true }
-            let after = readings.partitionIndex { $0.time > ownLast }
-            guard after < readings.count,
-                  readings[after].time.timeIntervalSince(ownLast) < CGMUnknownInference.splitGap
-            else { return true }
-            guard let holder = sorted.last(where: { $0.contains(readings[after].time) }),
-                  pick(of: holder) == pick(of: last)
-            else { return true }
-            return !CGMUnknownInference.hasInferredStart(holder, among: sorted)
-        }()
         return CGMSensor(
             id: first.id,
             pick: pick(of: first),
@@ -1105,8 +1062,6 @@ extension Stat.Provider {
             expectedLife: life,
             grace: life != nil && first.cgmId == dexcomG7Id ? dexcomG7Grace : 0,
             noise: CGMStatsEngine.noise(readings: points, period: window, now: now, reusing: residuals),
-            endedAtCGMChange: next.map { pick(of: $0) != pick(of: last) } ?? false,
-            hasEndCause: hasEndCause,
             isEntered: first.source == .entered,
             isBackfilled: first.source == .backfilled
         )

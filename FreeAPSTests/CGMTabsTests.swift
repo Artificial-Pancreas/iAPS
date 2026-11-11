@@ -229,7 +229,7 @@ final class CGMTabsTests: XCTestCase {
     // MARK: - Sensors
 
     /// A CGM switched away and back is one sensor: its sessions merged by CGM and sensor start, in use from its first
-    /// start; the one between ended at the CGM change, early.
+    /// start; the one between ended at the change, a row with its dates, its bar and no tag.
     @MainActor func testSensorsMergedAcrossASwitch() {
         let g7Start = day(0.5)
         let sessions = [
@@ -257,9 +257,13 @@ final class CGMTabsTests: XCTestCase {
         XCTAssertTrue(g7.isInUse)
         XCTAssertEqual(g7.grace, Stat.Provider.dexcomG7Grace)
         let libre = result.picks[.cgm("libre3")]?.sensors.first
-        XCTAssertEqual(libre?.endedAtCGMChange, true)
+        XCTAssertEqual(libre?.end, day(3))
         let row = libre.map { Stat.CGMReport.sensorRow($0, now: now, units: .mmolL) }
-        XCTAssertEqual(row?.earlyText, "Ended at the CGM change")
+        XCTAssertEqual(row?.isInUse, false)
+        XCTAssertEqual(row?.isEntered, false)
+        XCTAssertEqual(row?.isBackfilled, false)
+        // from its sensor start: 1.1 of 14 days
+        XCTAssertEqual(row?.bar ?? 0, 1.1 / 14, accuracy: 1E-9)
 
         // the G7 picked: one sensor across the Libre 3's day, its sensor days going on
         let ownG7 = result.picks[.cgm("dexcomG7")]
@@ -268,18 +272,17 @@ final class CGMTabsTests: XCTestCase {
         XCTAssertEqual(result.picks[.cgm("libre3")]?.sensorsBySensorDay[1], 1)
     }
 
-    /// How a sensor ended: at a CGM change only when the other CGM's session began where it ended; more than 6 hours
-    /// before its life without the grace is early, within the grace isn't.
-    @MainActor func testSensorEndings() {
+    /// A sensor's row: its dates and length, its bar of its life without the grace (a G7's; none for another CGM), its
+    /// noise. How it ended isn't shown: a sensor well short of its life has its bar alone.
+    @MainActor func testSensorRows() {
         let sessions = [
             session("dexcomG7", name: "Dexcom G7", start: day(0.5), end: day(2), sensorStart: day(0.5), life: .days(10.5), id: 1),
             session("libre3", name: "Libre 3", start: day(2).addingTimeInterval(.hours(2)), end: nil, sensorStart: day(2), id: 2)
         ]
         let result = result(readings(from: window.start, to: now), sessions)
         let g7 = result.picks[.cgm("dexcomG7")]?.sensors.first
-        XCTAssertEqual(g7?.endedAtCGMChange, false)
         let row = g7.map { Stat.CGMReport.sensorRow($0, now: now, units: .mmolL) }
-        XCTAssertEqual(row?.earlyText, "Ended early")
+        XCTAssertEqual(row?.isInUse, false)
         // of its life without the grace: 1.5 of 10 days
         XCTAssertEqual(row?.bar ?? 0, 0.15, accuracy: 1E-9)
 
@@ -293,13 +296,10 @@ final class CGMTabsTests: XCTestCase {
                 end: day(-10).addingTimeInterval(length),
                 expectedLife: .days(10.5),
                 grace: Stat.Provider.dexcomG7Grace,
-                noise: CGMNoise(mgdl: 3, fraction: 0.02, count: 100),
-                endedAtCGMChange: false
+                noise: CGMNoise(mgdl: 3, fraction: 0.02, count: 100)
             )
         }
-        XCTAssertNil(Stat.CGMReport.sensorRow(sensor(length: .days(10.2)), now: now, units: .mgdL).earlyText)
-        XCTAssertNil(Stat.CGMReport.sensorRow(sensor(length: .days(10) - .hours(5)), now: now, units: .mgdL).earlyText)
-        XCTAssertEqual(Stat.CGMReport.sensorRow(sensor(length: .days(9)), now: now, units: .mgdL).earlyText, "Ended early")
+        XCTAssertEqual(Stat.CGMReport.sensorRow(sensor(length: .days(9)), now: now, units: .mgdL).bar ?? 0, 0.9, accuracy: 1E-9)
         // the dates and the length only, no life or grace; the bar full from the end of the life on; the noise
         let row9 = Stat.CGMReport.sensorRow(sensor(length: .days(9) + .hours(13)), now: now, units: .mgdL)
         let start = Stat.Patches.dayAndTime(day(-10))
@@ -318,8 +318,7 @@ final class CGMTabsTests: XCTestCase {
             end: nil,
             expectedLife: nil,
             grace: 0,
-            noise: nil,
-            endedAtCGMChange: false
+            noise: nil
         )
         let inUseRow = Stat.CGMReport.sensorRow(inUse, now: now, units: .mgdL)
         XCTAssertEqual(inUseRow.span, Stat.Patches.dayAndTime(day(4)) + " – now · 2 d 12 h")

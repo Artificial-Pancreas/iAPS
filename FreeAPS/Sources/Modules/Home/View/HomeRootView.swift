@@ -434,14 +434,15 @@ extension Home {
             }.offset(x: 5, y: 5)
         }
 
-        /// A long-press picks its range, Today or 24 h (Statistics never changes it), and TITR; a tap opens Statistics
-        /// on its range.
+        /// A long-press picks its range, Today or 24 h (Statistics never changes it), TITR and GMI; a tap opens
+        /// Statistics on its range.
         @ViewBuilder var preview: some View {
             if let stats = state.homeStats {
                 HomeStatsBar(
                     content: stats.content,
                     range: state.homeStatsRange,
                     showTITR: state.homeStatsTITR,
+                    showGMI: state.homeStatsGMIShown,
                     open: { state.showModal(for: .statistics(period: state.homeStatsRange, tab: .overview)) }
                 )
                 // here, not in its body: its @ScaledMetric sizes read the size where it is created
@@ -454,8 +455,10 @@ extension Home {
                     HomeStatsRangeMenu(
                         range: state.homeStatsRange,
                         showTITR: state.homeStatsTITR,
+                        showGMI: state.homeStatsGMIShown,
                         select: { [state] in state.select(homeStatsRange: $0) },
-                        setShowTITR: { [state] in state.showHomeStatsTITR($0) }
+                        setShowTITR: { [state] in state.showHomeStatsTITR($0) },
+                        setShowGMI: { [state] in state.showHomeStatsGMI($0) }
                     )
                 }
                 .addShadows()

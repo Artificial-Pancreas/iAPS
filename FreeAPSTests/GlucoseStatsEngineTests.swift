@@ -6259,7 +6259,7 @@ final class GlucoseStatsEngineTests: XCTestCase {
 
     /// The GMI line: shown from 14 days with readings on (the Overview's A1c rule), with the days in its title, 90 at
     /// most; hidden below 14, without readings, and without a 90-day summary. The value and the unit are the
-    /// Overview's.
+    /// Overview's; a "%" unit is shown with the value, mmol/mol apart.
     @MainActor func testHomeStatsBarGMILine() throws {
         var freeAPSSettings = FreeAPSSettings()
         freeAPSSettings.units = .mgdL
@@ -6271,6 +6271,8 @@ final class GlucoseStatsEngineTests: XCTestCase {
         XCTAssertEqual(line.title, "37-day GMI")
         XCTAssertEqual(line.value, StatsFormatting.a1c(GlucoseStatsEngine.gmiPercent(meanMgdl: 120), unit: .percent))
         XCTAssertEqual(line.unit, "%")
+        // shown with its value, as the card's other percents ("6.8%")
+        XCTAssertTrue(line.isPercent)
         // as the Overview of the same 90 days shows it
         let overview = Stat.Overview(ninetyDays(withData: 37), period: .days90, settings: settings)
         XCTAssertEqual(line.value, overview.gmi)
@@ -6302,6 +6304,8 @@ final class GlucoseStatsEngineTests: XCTestCase {
         XCTAssertEqual(ifcc.hbA1cUnit, .mmolPerMol)
         let mmol = try XCTUnwrap(HomeStatsBar.Content.gmiLine(ninetyDays(withData: 37), settings: ifcc))
         XCTAssertEqual(mmol.unit, "mmol/mol")
+        // its unit apart
+        XCTAssertFalse(mmol.isPercent)
         XCTAssertEqual(mmol.value, Stat.Overview(ninetyDays(withData: 37), period: .days90, settings: ifcc).gmi)
     }
 

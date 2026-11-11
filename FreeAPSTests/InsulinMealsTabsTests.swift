@@ -2456,14 +2456,16 @@ final class InsulinMealsTabsTests: XCTestCase {
         return StatsDisplayPreferences(defaults: defaults)
     }
 
-    /// Nothing stored (a fresh install's, a tester's after the choices left the settings): the stats bar on 24 h, both
-    /// On board lanes on, the usual day off over the last 14 days.
+    /// Nothing stored (a fresh install's, a tester's after the choices left the settings): the stats bar on 24 h, TITR
+    /// off, GMI on, both On board lanes on, the usual day off over the last 14 days.
     func testStatsDisplayPreferencesDefaults() {
         XCTAssertEqual(StatsPeriod.homeStatsRanges, [.today, .last24h])
         let preferences = displayPreferences()
         XCTAssertEqual(preferences.homeStatsRange, .last24h)
         XCTAssertTrue(preferences.homeOnBoardGlucose)
         XCTAssertTrue(preferences.homeOnBoardCOB)
+        XCTAssertFalse(preferences.homeStatsTITR)
+        XCTAssertTrue(preferences.homeStatsGMI)
         XCTAssertFalse(preferences.usualDayShown)
         XCTAssertEqual(preferences.usualDayPeriod, .days14)
     }
@@ -2517,6 +2519,32 @@ final class InsulinMealsTabsTests: XCTestCase {
         XCTAssertFalse(preferences.homeStatsTITR)
         preferences.defaults.set("on", forKey: StatsDisplayPreferences.Key.homeStatsTITR)
         XCTAssertFalse(preferences.homeStatsTITR)
+    }
+
+    /// The stats bar's "Show GMI": on by default, and so for a phone that kept the other choices before this one (the
+    /// range and TITR stored, not it); kept; a stored value of another type reads as on.
+    func testStatsDisplayPreferencesGMI() {
+        typealias Key = StatsDisplayPreferences.Key
+        let preferences = displayPreferences()
+        XCTAssertTrue(preferences.homeStatsGMI)
+        preferences.defaults.set("today", forKey: Key.homeStatsRange)
+        preferences.defaults.set(true, forKey: Key.homeStatsTITR)
+        let older = StatsDisplayPreferences(defaults: preferences.defaults)
+        XCTAssertTrue(older.homeStatsGMI)
+        XCTAssertEqual(older.homeStatsRange, .today)
+        XCTAssertTrue(older.homeStatsTITR)
+
+        preferences.homeStatsGMI = false
+        XCTAssertFalse(StatsDisplayPreferences(defaults: preferences.defaults).homeStatsGMI)
+        XCTAssertEqual(preferences.defaults.object(forKey: Key.homeStatsGMI) as? Bool, false)
+        XCTAssertTrue(Key.homeStatsGMI.hasPrefix("iAPS.stats."))
+        // its own key: the other choices stay
+        XCTAssertTrue(preferences.homeStatsTITR)
+        XCTAssertEqual(preferences.homeStatsRange, .today)
+        preferences.homeStatsGMI = true
+        XCTAssertTrue(preferences.homeStatsGMI)
+        preferences.defaults.set("off", forKey: Key.homeStatsGMI)
+        XCTAssertTrue(preferences.homeStatsGMI)
     }
 
     /// Only a value the choice offers: a stored one it doesn't (an older build's 7–90 d, another view's period, an
