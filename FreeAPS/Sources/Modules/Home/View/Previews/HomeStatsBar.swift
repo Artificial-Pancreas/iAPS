@@ -33,7 +33,7 @@ struct HomeStatsBar: View {
         /// 1e-3 of the bar: about 0.35 pt on a phone, below a pixel at 2x
         static let fractionStep = 1E-3
 
-        /// The GMI of the last 90 days, under the bar (on the left, or under the rest on the right with TITR):
+        /// The GMI of the last 90 days, under the bar (on the left, or under the TITR figure on the right with TITR):
         /// "90-day GMI 6.8%", "37-day GMI 51 mmol/mol".
         struct GMILine: Equatable {
             /// "90-day GMI", "37-day GMI": the days with readings of the 90
@@ -310,23 +310,26 @@ struct HomeStatsBar: View {
         }
     }
 
-    /// The TITR figure, the mean and CV on the right, the GMI line under them, on the right too; where they don't fit
-    /// (large text), each on its own line, the GMI line last.
+    /// The mean and CV on the left, the TITR figure on the right, the GMI line under the TITR figure, on the right too;
+    /// where they don't fit (large text), each on its own line, the GMI line last.
     private var numbersWithTITR: some View {
         ViewThatFits(in: .horizontal) {
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack(alignment: .firstTextBaseline, spacing: 8) {
+                    averages
                     Spacer(minLength: 0)
                     titrFigure
-                    averages
                 }
                 if let gmi = shownGMI {
-                    gmiLine(gmi)
+                    HStack(spacing: 0) {
+                        Spacer(minLength: 0)
+                        gmiLine(gmi)
+                    }
                 }
             }
             VStack(alignment: .leading, spacing: 4) {
-                titrFigure
                 averages
+                titrFigure
                 if let gmi = shownGMI {
                     gmiLine(gmi)
                 }
