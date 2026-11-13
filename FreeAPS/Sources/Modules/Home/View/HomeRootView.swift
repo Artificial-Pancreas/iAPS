@@ -25,7 +25,6 @@ extension Home {
         @State var displayAllNutrients = false
         @State private var bottomActionBarHeight: CGFloat = 0
         @State private var isBottomBarHidden = false
-        @State private var isScrolledDown = false
         @State private var homeScrollOffset: CGFloat = 0
 
         let buttonFont = Font.custom("TimeButtonFont", size: 14)
@@ -1038,8 +1037,13 @@ extension Home {
             ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
 
+        private var shouldHideBottomBar: Bool {
+            // Show the bar at the top even while deceleration or rubber-banding finishes.
+            isBottomBarHidden && homeScrollOffset < -1
+        }
+
         private var bottomBarAnimation: Animation? {
-            reduceMotion ? nil : .easeInOut(duration: 0.5)
+            reduceMotion ? nil : .easeInOut(duration: 0.2)
         }
 
         private func mainContent(_ geo: GeometryProxy) -> some View {
@@ -1049,7 +1053,6 @@ extension Home {
                 ScrollView {
                     VStack {
                         chart(geo)
-                            .id("HomeScrollTop")
                         timeSetting
                             .overlay { isfView }
                             // Reserve toolbar clearance at the top, then consume it as the user scrolls.
@@ -1076,13 +1079,11 @@ extension Home {
                     .onGeometryChange(for: CGFloat.self) { proxy in
                         proxy.frame(in: .named("HomeScrollView")).minY
                     } action: { scrollPosition in
-                        // Separate thresholds keep the back-to-top button stable near the top.
-                        isScrolledDown = scrollPosition < -80 || (isScrolledDown && scrollPosition <= -10)
                         homeScrollOffset = scrollPosition
                         let showsGlucose = scrollPosition < -550 &&
                             (state.iobs > 0 || state.carbData > 0) && !state.skipGlucoseChart
                         if displayGlucose != showsGlucose {
-                            withAnimation(.easeOut(duration: showsGlucose ? 0.3 : 0.4)) {
+                            withAnimation(.easeOut(duration: showsGlucose ? 0.3 : 0.2)) {
                                 displayGlucose = showsGlucose
                             }
                         }
@@ -1288,24 +1289,22 @@ extension Home {
         }
 
         // Tab bar buttons
-        private func actionBarLayout<Content: View>(
+        @ViewBuilder private func actionBarLayout<Content: View>(
             for content: Content,
             isOverride: Bool,
             isTarget: Bool
         ) -> some View {
-            ScrollViewReader { scrollProxy in
-                if #available(iOS 27.1, *) {
-                    ToolbarEdgeActionBarLayout(
-                        content: content,
-                        verticalBar: { verticalActionBar(isOverride: isOverride, isTarget: isTarget) },
-                        bottomBar: { bottomActionBar(isOverride: isOverride, isTarget: isTarget, scrollProxy: scrollProxy) }
-                    )
-                } else {
-                    content
-                        .safeAreaInset(edge: .bottom, spacing: 0) {
-                            bottomActionBar(isOverride: isOverride, isTarget: isTarget, scrollProxy: scrollProxy)
-                        }
-                }
+            if #available(iOS 27.1, *) {
+                ToolbarEdgeActionBarLayout(
+                    content: content,
+                    verticalBar: { verticalActionBar(isOverride: isOverride, isTarget: isTarget) },
+                    bottomBar: { bottomActionBar(isOverride: isOverride, isTarget: isTarget) }
+                )
+            } else {
+                content
+                    .safeAreaInset(edge: .bottom, spacing: 0) {
+                        bottomActionBar(isOverride: isOverride, isTarget: isTarget)
+                    }
             }
         }
 
@@ -1320,7 +1319,7 @@ extension Home {
             .background(.bar, in: RoundedRectangle(cornerRadius: 16))
         }
 
-        private func bottomActionBar(isOverride: Bool, isTarget: Bool, scrollProxy: ScrollViewProxy) -> some View {
+        private func bottomActionBar(isOverride: Bool, isTarget: Bool) -> some View {
             HStack(spacing: 0) {
                 actionBarItems(isOverride: isOverride, isTarget: isTarget)
             }
@@ -1339,39 +1338,16 @@ extension Home {
                     }
                     .allowsHitTesting(false)
             }
-            .opacity(isBottomBarHidden ? 0 : 1)
-            .allowsHitTesting(!isBottomBarHidden)
-            .accessibilityHidden(isBottomBarHidden)
-            .animation(bottomBarAnimation, value: isBottomBarHidden)
+            .opacity(shouldHideBottomBar ? 0 : 1)
+            .allowsHitTesting(!shouldHideBottomBar)
+            .accessibilityHidden(shouldHideBottomBar)
+            .animation(bottomBarAnimation, value: shouldHideBottomBar)
             .padding(.horizontal, 20)
             .padding(.vertical, 8)
             .onGeometryChange(for: CGFloat.self) { proxy in
                 proxy.size.height
             } action: { height in
                 bottomActionBarHeight = height
-            }
-            .overlay(alignment: .top) {
-                Button {
-                    isBottomBarHidden = false
-                    withAnimation(reduceMotion ? nil : .easeInOut(duration: 0.5)) {
-                        scrollProxy.scrollTo("HomeScrollTop", anchor: .top)
-                    }
-                } label: {
-                    Image(systemName: "chevron.up")
-                        .font(.body.weight(.semibold))
-                        .foregroundStyle(.primary)
-                        .frame(width: 44, height: 44)
-                        .background(.ultraThickMaterial, in: Capsule())
-                        .contentShape(Capsule())
-                }
-                .buttonStyle(.plain)
-                .accessibilityLabel("Back to top")
-                .accessibilityHint("Shows the chart.")
-                .opacity(isScrolledDown ? 1 : 0)
-                .allowsHitTesting(isScrolledDown)
-                .accessibilityHidden(!isScrolledDown)
-                .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: isScrolledDown)
-                .offset(y: -54)
             }
         }
 
