@@ -41,14 +41,9 @@ extension PumpSettingsEditor {
             }
         }
 
+        /// `false` with no pump: the limits are then only stored, and stay editable
         private func detectDanaPump() -> Bool {
-            guard let pump = appCoordinator.pumpInfo.value else {
-                // TODO: why true?
-                return true
-            }
-
-            // TODO: use plugin identifier instead (adda function to the KnownPlugins)
-            return pump.name.contains("Dana")
+            KnownPlugins.isDanaPump(pluginIdentifier: appCoordinator.pumpInfo.value?.identifier)
         }
 
         private func savePumpSettings(settings: PumpSettings) async throws -> PumpSettings {

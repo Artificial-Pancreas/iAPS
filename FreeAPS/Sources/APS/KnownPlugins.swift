@@ -207,6 +207,12 @@ enum KnownPlugins {
         }
     }
 
+    /// A Dana pump keeps its max basal and max bolus in its own (doctor's) settings: they can be read, not set.
+    /// `pluginIdentifier` is the pump manager's (`PumpDisplayInfo.identifier`), `nil` with no pump.
+    static func isDanaPump(pluginIdentifier: String?) -> Bool {
+        pluginIdentifier == DanaKitPumpManager.pluginIdentifier
+    }
+
     static func pumpModel(_ pumpManager: PumpManager) -> String? {
         switch pumpManager.pluginIdentifier {
         case MinimedPumpManager.pluginIdentifier:
