@@ -9,6 +9,15 @@ struct BasalProfileEntry: JSON, Equatable {
 
 extension [BasalProfileEntry] {
     static let initial: [BasalProfileEntry] = [BasalProfileEntry(start: "00:00:00", minutes: 0, rate: 1)]
+
+    /// The profile's rate at `date`: the last entry starting at or before that time of day.
+    /// A profile that does not start at midnight wraps: before its first entry the last one applies. Nil for an empty profile.
+    func scheduledRate(at date: Date, calendar: Calendar = .current) -> Decimal? {
+        let time = calendar.dateComponents([.hour, .minute], from: date)
+        let minutes = (time.hour ?? 0) * 60 + (time.minute ?? 0)
+        let entries = sorted { $0.minutes < $1.minutes }
+        return (entries.last { $0.minutes <= minutes } ?? entries.last)?.rate
+    }
 }
 
 extension BasalProfileEntry {

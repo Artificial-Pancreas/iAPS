@@ -38,6 +38,8 @@ extension Home {
         @Published var pumpSuspended = false
         @Published var statusTitle = ""
         @Published var tempRate: Decimal?
+        /// when the temp basal behind `tempRate` runs out; the view falls back to the scheduled rate from then on
+        @Published var tempRateEndDate: Date?
         @Published var tempTarget: TempTarget?
         @Published var setupPump = false
         @Published var eventualBG: Int?
@@ -458,19 +460,29 @@ extension Home {
             let lastTempBasal = Array(data.tempBasals.suffix(2))
             guard lastTempBasal.count == 2 else {
                 tempRate = nil
+                tempRateEndDate = nil
                 return
             }
 
             guard let lastRate = lastTempBasal[0].rate, let lastDuration = lastTempBasal[1].durationMin else {
                 tempRate = nil
+                tempRateEndDate = nil
                 return
             }
             let lastDate = lastTempBasal[0].timestamp
-            guard Date().timeIntervalSince(lastDate.addingTimeInterval(.minutes(lastDuration))) < 0 else {
+            let endDate = lastDate.addingTimeInterval(.minutes(lastDuration))
+            guard Date().timeIntervalSince(endDate) < 0 else {
                 tempRate = nil
+                tempRateEndDate = nil
                 return
             }
             tempRate = lastRate
+            tempRateEndDate = endDate
+        }
+
+        /// the basal profile's rate at `date`, nil while there is no profile
+        func scheduledBasalRate(at date: Date) -> Decimal? {
+            data.basalProfile.scheduledRate(at: date)
         }
 
         private func setupBoluses() {

@@ -392,3 +392,49 @@ final class TempTargetsStorageTests: XCTestCase {
         XCTAssertEqual(current?.duration, 90)
     }
 }
+
+final class ScheduledBasalRateTests: XCTestCase {
+    private let calendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(identifier: "UTC")!
+        return calendar
+    }()
+
+    private func at(hour: Int, minute: Int) -> Date {
+        calendar.date(from: DateComponents(year: 2026, month: 11, day: 14, hour: hour, minute: minute, second: 30))!
+    }
+
+    private func entry(_ minutes: Int, _ rate: Decimal) -> BasalProfileEntry {
+        BasalProfileEntry(start: String(format: "%02d:%02d:00", minutes / 60, minutes % 60), minutes: minutes, rate: rate)
+    }
+
+    func testEmptyProfileHasNoRate() {
+        XCTAssertNil([BasalProfileEntry]().scheduledRate(at: at(hour: 12, minute: 0), calendar: calendar))
+    }
+
+    func testSingleEntryAppliesAllDay() {
+        let profile = [entry(0, 0.8)]
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 0, minute: 0), calendar: calendar), 0.8)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 23, minute: 59), calendar: calendar), 0.8)
+    }
+
+    func testLastEntryStartedAtOrBeforeTheTime() {
+        let profile = [entry(0, 0.5), entry(6 * 60, 0.9), entry(22 * 60 + 30, 0.6)]
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 5, minute: 59), calendar: calendar), 0.5)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 6, minute: 0), calendar: calendar), 0.9)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 22, minute: 29), calendar: calendar), 0.9)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 22, minute: 30), calendar: calendar), 0.6)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 23, minute: 59), calendar: calendar), 0.6)
+    }
+
+    func testUnsortedEntries() {
+        let profile = [entry(12 * 60, 1.2), entry(0, 0.5), entry(6 * 60, 0.9)]
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 7, minute: 0), calendar: calendar), 0.9)
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 13, minute: 0), calendar: calendar), 1.2)
+    }
+
+    func testProfileNotStartingAtMidnightWraps() {
+        let profile = [entry(3 * 60, 0.7), entry(15 * 60, 1.1)]
+        XCTAssertEqual(profile.scheduledRate(at: at(hour: 1, minute: 0), calendar: calendar), 1.1)
+    }
+}
