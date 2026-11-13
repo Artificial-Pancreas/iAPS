@@ -275,3 +275,61 @@ extension LoopEventType {
         }
     }
 }
+
+/// A run of loop events of one type recorded cycle after cycle (a suspended pump adds one every loop),
+/// shown as one bar instead of a row of symbols.
+struct LoopEventSpan: Equatable {
+    let type: LoopEventType
+    /// oldest -> newest, at least two
+    let events: [LoopEvent]
+    let start: Date
+    let end: Date
+}
+
+extension LoopEvent {
+    /// the types whose repeats are collapsed into a span
+    static let collapsibleTypes: Set<LoopEventType> = [.pumpSuspended]
+
+    /// The longest pause between two events of a run. Longer than one loop cycle on purpose:
+    /// a cycle that had nothing to enact records nothing, so a run has holes.
+    static let spanMaxInterval: TimeInterval = 16 * 60
+
+    /// Splits the events into runs and the rest: two or more events of one collapsible type in a row,
+    /// each within `maxInterval` of the one before, make a span; an event of another type ends the run.
+    /// `singles` come back oldest -> newest.
+    static func collapsingRuns(
+        in events: [LoopEvent],
+        types: Set<LoopEventType> = collapsibleTypes,
+        maxInterval: TimeInterval = spanMaxInterval
+    ) -> (spans: [LoopEventSpan], singles: [LoopEvent]) {
+        var spans: [LoopEventSpan] = []
+        var singles: [LoopEvent] = []
+        var run: [LoopEvent] = []
+
+        func closeRun() {
+            if let first = run.first, let last = run.last, run.count >= 2 {
+                spans.append(LoopEventSpan(type: first.type, events: run, start: first.timestamp, end: last.timestamp))
+            } else {
+                singles.append(contentsOf: run)
+            }
+            run = []
+        }
+
+        for event in events.sorted(by: { $0.timestamp < $1.timestamp }) {
+            if let last = run.last,
+               event.type != last.type || event.timestamp.timeIntervalSince(last.timestamp) > maxInterval
+            {
+                closeRun()
+            }
+            if types.contains(event.type) {
+                run.append(event)
+            } else {
+                closeRun()
+                singles.append(event)
+            }
+        }
+        closeRun()
+
+        return (spans, singles)
+    }
+}
