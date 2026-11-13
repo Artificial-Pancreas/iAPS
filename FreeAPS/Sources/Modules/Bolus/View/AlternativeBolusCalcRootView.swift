@@ -186,11 +186,16 @@ extension Bolus {
                                 }
                             }
                         }
-                        label: { Text(exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus") }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .disabled(disabled)
-                            .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
-                            .tint(.white)
+                        label: {
+                            Bolus.enactLabel(
+                                exceededMaxBolus ? "Max Bolus exceeded!" : "Enact bolus",
+                                committing: state.committing
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .disabled(disabled)
+                        .listRowBackground(!disabled ? Color(.systemBlue) : Color(.systemGray4))
+                        .tint(.white)
                     }
                     footer: {
                         if (-1 * state.loopDate.timeIntervalSinceNow / 60) > state.loopReminder, let string = state.lastLoop() {
@@ -212,7 +217,8 @@ extension Bolus {
                                 Text("Continue without bolus")
                         }
                         .frame(maxWidth: .infinity, alignment: .center)
-                        .listRowBackground(Color(.systemBlue))
+                        .disabled(state.committing)
+                        .listRowBackground(!state.committing ? Color(.systemBlue) : Color(.systemGray4))
                         .tint(.white)
                     }
                     footer: {
@@ -249,7 +255,7 @@ extension Bolus {
         }
 
         private var disabled: Bool {
-            state.amount <= 0 || state.amount > state.maxBolus || state.amount <
+            state.committing || state.amount <= 0 || state.amount > state.maxBolus || state.amount <
                 state.minBolus || state.amount < state.bolusIncrement
         }
 
