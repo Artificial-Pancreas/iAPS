@@ -108,3 +108,53 @@ class FileStorageTests: XCTestCase {
         return result
     }
 }
+
+final class LoopEventFailureTests: XCTestCase {
+    func testNoPumpIsNotAnEvent() {
+        XCTAssertNil(LoopEvent.failure(APSError.pumpNotConfigured))
+        XCTAssertNil(LoopEvent.failure(APSError.invalidPumpState(message: "Pump not set")))
+        XCTAssertNil(LoopEventType(failure: APSError.pumpNotConfigured))
+        XCTAssertNil(LoopEventType(failure: APSError.invalidPumpState(message: "Pump not set")))
+    }
+
+    func testInvalidPumpStateMapping() {
+        XCTAssertEqual(LoopEventType(failure: APSError.invalidPumpState(message: "Pump suspended")), .pumpSuspended)
+        XCTAssertEqual(
+            LoopEventType(failure: APSError.invalidPumpState(message: "Basal delivery state is unavailable")),
+            .pumpError
+        )
+        XCTAssertEqual(
+            LoopEventType(failure: APSError.invalidPumpState(message: "Invalid basal delivery state: nil")),
+            .pumpError
+        )
+    }
+
+    func testOtherFailuresAreStillRecorded() {
+        let timestamp = Date(timeIntervalSince1970: 1_700_000_000)
+        let suspended = LoopEvent.failure(APSError.invalidPumpState(message: "Pump suspended"), timestamp: timestamp)
+        XCTAssertEqual(suspended?.type, .pumpSuspended)
+        XCTAssertEqual(suspended?.timestamp, timestamp)
+        XCTAssertEqual(LoopEvent.failure(APSError.glucoseError(message: "Glucose data is stale"))?.type, .glucoseData)
+        XCTAssertEqual(LoopEvent.failure(APSError.bolusInProgress(message: "busy"))?.type, .pumpBusy)
+        XCTAssertEqual(LoopEvent.failure(APSError.apsError(message: "no suggestion"))?.type, .algorithm)
+        XCTAssertEqual(LoopEvent.failure(NSError(domain: "test", code: 1))?.type, .loopFailed)
+        // a pump command failure is recorded by the device data manager, not here
+        XCTAssertNil(LoopEvent.failure(APSError.pumpError(NSError(domain: "test", code: 1))))
+    }
+
+    func testStoredPumpNotConfiguredEventsAreDropped() {
+        let now = Date()
+        let events = [
+            LoopEvent(id: "old", timestamp: now.addingTimeInterval(-27 * 3600), type: .pumpBusy),
+            LoopEvent(id: "noPump", timestamp: now.addingTimeInterval(-120), type: .pumpNotConfigured),
+            LoopEvent(id: "earlier", timestamp: now.addingTimeInterval(-180), type: .glucoseData),
+            LoopEvent(id: "later", timestamp: now.addingTimeInterval(-60), type: .pumpSuspended)
+        ]
+        XCTAssertEqual(BaseLoopEventsStorage.filterOldAndSort(events).map(\.id), ["later", "earlier"])
+    }
+
+    func testStoredPumpNotConfiguredEventStillDecodes() throws {
+        let data = Data(#""pumpNotConfigured""#.utf8)
+        XCTAssertEqual(try JSONDecoder().decode(LoopEventType.self, from: data), .pumpNotConfigured)
+    }
+}
