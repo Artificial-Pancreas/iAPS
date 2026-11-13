@@ -74,6 +74,8 @@ actor BaseFetchAnnouncementsManager: FetchAnnouncementsManager, LifetimeOwner, A
         guard settings.allowAnnouncements else {
             return
         }
+        // no Nightscout URL: nothing to fetch, and nothing to log every minute
+        guard await nightscoutManager.isConfigured() else { return }
         await withBackgroundTask("fetch announcements") {
             debug(
                 .nightscout,
