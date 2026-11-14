@@ -18,8 +18,8 @@ extension Home {
         @State var triggerUpdate = false
         @State var display = false
         @State var displayGlucose = false
-        @State var animateLoop = Date.distantPast
-        @State var animateTIR = Date.distantPast
+        @State var animateLoop = false
+        @State var animateTIR = false
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
         @State var displayDynamicHistory = false
@@ -315,13 +315,13 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
-                .blur(radius: animateTIRView ? 2 : 0)
+                .blur(radius: animateTIR ? 2 : 0)
                 .onTapGesture {
                     timeIsNowTIR()
                     state.showModal(for: .statistics)
                 }
                 .overlay {
-                    if animateTIRView {
+                    if animateTIR {
                         animation.asAny()
                     }
                 }
@@ -396,13 +396,13 @@ extension Home {
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
-                .blur(radius: animateLoopView ? 2.5 : 0)
+                .blur(radius: animateLoop ? 2.5 : 0)
                 .onTapGesture {
                     timeIsNowLoop()
                     state.showModal(for: .statistics)
                 }
                 .overlay {
-                    if animateLoopView {
+                    if animateLoop {
                         animation.asAny()
                     }
                 }
@@ -902,20 +902,22 @@ extension Home {
             state.overrideAutoISF == false
         }
 
-        private var animateLoopView: Bool {
-            -1 * animateLoop.timeIntervalSinceNow < 1.5
-        }
-
-        private var animateTIRView: Bool {
-            -1 * animateTIR.timeIntervalSinceNow < 1.5
-        }
-
+        /// The tapped card's blur and spinner, while the statistics screen opens. Cleared by its own task: nothing
+        /// else re-renders Home at the moment a time-based expiry would pass, so the spinner would stay
         private func timeIsNowLoop() {
-            animateLoop = Date.now
+            animateLoop = true
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1.5))
+                animateLoop = false
+            }
         }
 
         private func timeIsNowTIR() {
-            animateTIR = Date.now
+            animateTIR = true
+            Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1.5))
+                animateTIR = false
+            }
         }
 
         private var animation: any View {
