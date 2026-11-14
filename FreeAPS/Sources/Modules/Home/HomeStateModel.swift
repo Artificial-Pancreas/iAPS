@@ -38,6 +38,13 @@ extension Home {
         @Published var pumpSuspended = false
         @Published var statusTitle = ""
         @Published var tempRate: Decimal?
+        /// when the temp basal behind `tempRate` runs out; the view falls back to the scheduled rate from then on
+        @Published var tempRateEndDate: Date?
+        /// the pump manager's latest status; nil until it reports one, and without a pump
+        private var pumpStatus: PumpDisplayStatus?
+        /// what the pump history says is running: shown only while there is no pump status
+        private var historyTempBasal: TempBasalDisplay?
+        private var historyPumpSuspended = false
         @Published var tempTarget: TempTarget?
         @Published var setupPump = false
         @Published var eventualBG: Int?
@@ -156,6 +163,7 @@ extension Home {
             autotuneUpdated(appCoordinator.autotune.value)
 
             pumpHistory = appCoordinator.pumpHistory.value.reversed()
+            pumpStatus = appCoordinator.pumpStatus.value
 
             cgmSensorDays = appCoordinator.cgmStatus.value?.sensorDays
 
@@ -332,6 +340,8 @@ extension Home {
             if pumpStatus == nil {
                 setupPump = false
             }
+            self.pumpStatus = pumpStatus
+            updateBasalDisplay()
         }
 
         private func pumpInfoUpdated(_ pumpInfo: PumpDisplayInfo?) async {
@@ -455,22 +465,40 @@ extension Home {
             data.tempBasals = pumpHistory.filter {
                 $0.type == .tempBasal || $0.type == .tempBasalDuration
             }
-            let lastTempBasal = Array(data.tempBasals.suffix(2))
-            guard lastTempBasal.count == 2 else {
-                tempRate = nil
-                return
-            }
+            historyTempBasal = Self.runningTempBasal(in: data.tempBasals, at: Date())
+            updateBasalDisplay()
+        }
 
-            guard let lastRate = lastTempBasal[0].rate, let lastDuration = lastTempBasal[1].durationMin else {
-                tempRate = nil
-                return
-            }
+        /// the temp basal the pump history ends with, while it still runs at `date`
+        private static func runningTempBasal(in tempBasals: [PumpHistoryEvent], at date: Date) -> TempBasalDisplay? {
+            let lastTempBasal = Array(tempBasals.suffix(2))
+            guard lastTempBasal.count == 2,
+                  let lastRate = lastTempBasal[0].rate,
+                  let lastDuration = lastTempBasal[1].durationMin
+            else { return nil }
             let lastDate = lastTempBasal[0].timestamp
-            guard Date().timeIntervalSince(lastDate.addingTimeInterval(.minutes(lastDuration))) < 0 else {
-                tempRate = nil
-                return
+            let endDate = lastDate.addingTimeInterval(.minutes(lastDuration))
+            guard date < endDate else { return nil }
+            return TempBasalDisplay(rate: lastRate, startDate: lastDate, endDate: endDate)
+        }
+
+        /// The info panel's temp basal and "Pump suspended" are the pump manager's own state once it has reported one:
+        /// the pump history arrives later and goes stale. The history's values stand in until the first status.
+        private func updateBasalDisplay() {
+            if let pumpStatus {
+                tempRate = pumpStatus.tempBasal?.rate
+                tempRateEndDate = pumpStatus.tempBasal?.endDate
+                pumpSuspended = pumpStatus.isSuspended
+            } else {
+                tempRate = historyTempBasal?.rate
+                tempRateEndDate = historyTempBasal?.endDate
+                pumpSuspended = historyPumpSuspended
             }
-            tempRate = lastRate
+        }
+
+        /// the basal profile's rate at `date`, nil while there is no profile
+        func scheduledBasalRate(at date: Date) -> Decimal? {
+            data.basalProfile.scheduledRate(at: date)
         }
 
         private func setupBoluses() {
@@ -488,8 +516,8 @@ extension Home {
             let last = data.suspensions.last
             let tbr = data.tempBasals.first { $0.timestamp > (last?.timestamp ?? .distantPast) }
 
-            // TODO: should we read this from the pump manager instead?
-            pumpSuspended = tbr == nil && last?.type == .pumpSuspend
+            historyPumpSuspended = tbr == nil && last?.type == .pumpSuspend
+            updateBasalDisplay()
         }
 
         private func setupCob() {
