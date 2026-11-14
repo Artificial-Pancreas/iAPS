@@ -35,6 +35,8 @@ extension OpenAPS {
         static let glucose = "monitor/glucose.json"
         static let iob = "monitor/iob.json"
         static let cgmState = "monitor/cgm-state.json"
+        /// the pump's change events, the Nightscout Site Changes' source (`PumpChangeRecorder`)
+        static let pumpChanges = "monitor/pump-changes.json"
 
 //        static let dynamicVariables = "monitor/dynamicVariables.json"
         static let alertHistory = "monitor/alerthistory.json"
@@ -60,7 +62,9 @@ extension OpenAPS {
         static let uploadedTempTargets = "upload/uploaded-temptargets.json"
         static let uploadedGlucose = "upload/uploaded-glucose.json"
         static let uploadedCGMState = "upload/uploaded-cgm-state.json"
-        static let uploadedPodAge = "upload/uploaded-pod-age.json"
+        /// the Site Changes uploaded: from the pump's change events, and before them the pod-age sync's (one per
+        /// `podActivatedAt`), whose file it took over
+        static let uploadedSiteChanges = "upload/uploaded-pod-age.json"
         static let uploadedProfile = "upload/uploaded-profile.json"
         static let uploadedProfileToDatabase = "upload/uploaded-profile_database.json"
         static let uploadedPreferences = "upload/uploaded-preferences.json"

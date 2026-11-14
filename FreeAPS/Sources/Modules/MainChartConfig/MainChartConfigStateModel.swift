@@ -18,7 +18,6 @@ extension MainChartConfig {
         @Published var alwaysUseColors: Bool = false
         @Published var minimumSMB: Decimal = 0.3
         @Published var useInsulinBars: Bool = false
-        @Published var skipGlucoseChart: Bool = false
         @Published var hideInsulinBadge: Bool = false
         @Published var fpus: Bool = true
         @Published var fpuAmounts: Bool = false
@@ -45,7 +44,6 @@ extension MainChartConfig {
             subscribeSetting(\.chartGlucosePeaks, on: $chartGlucosePeaks) { self.chartGlucosePeaks = $0 }
             subscribeSetting(\.showPredictionsLegend, on: $showPredictionsLegend) { self.showPredictionsLegend = $0 }
             subscribeSetting(\.loopEventsPlacement, on: $loopEventsPlacement) { self.loopEventsPlacement = $0 }
-            subscribeSetting(\.skipGlucoseChart, on: $skipGlucoseChart) { self.skipGlucoseChart = $0 }
             subscribeSetting(\.alwaysUseColors, on: $alwaysUseColors) { self.alwaysUseColors = $0 }
             subscribeSetting(\.useFPUconversion, on: $useFPUconversion) { self.useFPUconversion = $0 }
             subscribeSetting(\.useInsulinBars, on: $useInsulinBars) { self.useInsulinBars = $0 }

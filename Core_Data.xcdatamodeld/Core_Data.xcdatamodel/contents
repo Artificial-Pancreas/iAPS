@@ -39,6 +39,32 @@
         <attribute name="variableKetoProtect" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <relationship name="overrides" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Override" inverseName="autoISF" inverseEntity="Override"/>
     </entity>
+    <entity name="BasalScheduleRecord" representedClassName="BasalScheduleRecord" renamingIdentifier="ZBasalScheduleRecord" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="entries" optional="YES" attributeType="String"/>
+        <attribute name="fingerprint" optional="YES" attributeType="String"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="CGMSession" representedClassName="CGMSession" syncable="YES" codeGenerationType="class">
+        <attribute name="cgmId" optional="YES" attributeType="String"/>
+        <attribute name="device" optional="YES" attributeType="String"/>
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="expectedLife" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="oneMinute" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="plugin" optional="YES" attributeType="String"/>
+        <attribute name="sensorId" optional="YES" attributeType="String"/>
+        <attribute name="sensorStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="source" optional="YES" attributeType="String"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <fetchIndex name="byStartIndex">
+            <fetchIndexElement property="start" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
     <entity name="Fat" representedClassName="Fat" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="enteredBy" optional="YES" attributeType="String"/>
@@ -72,13 +98,19 @@
         <attribute name="iob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="LoopStatRecord" representedClassName="LoopStatRecord" syncable="YES" codeGenerationType="class">
+    <entity name="LoopStatRecord" representedClassName="LoopStatRecord" versionHashModifier="statsIndex1" syncable="YES" codeGenerationType="class">
         <attribute name="duration" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="error" optional="YES" attributeType="String"/>
         <attribute name="interval" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="loopStatus" optional="YES" attributeType="String"/>
         <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <fetchIndex name="byStartIndex">
+            <fetchIndexElement property="start" type="Binary" order="ascending"/>
+        </fetchIndex>
+        <fetchIndex name="byEndIndex">
+            <fetchIndexElement property="end" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="Meals" representedClassName="Meals" syncable="YES">
         <attribute name="actualDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
@@ -220,13 +252,48 @@
         <attribute name="bolus" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="Readings" representedClassName="Readings" syncable="YES" codeGenerationType="class">
+    <entity name="PumpEvent" representedClassName="PumpEvent" renamingIdentifier="ZPumpEvent" syncable="YES" codeGenerationType="class">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="durationMin" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="isExternal" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isMutable" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="isSMB" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="kind" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="rate" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="units" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
+    </entity>
+    <entity name="PumpSession" representedClassName="PumpSession" syncable="YES" codeGenerationType="class">
+        <attribute name="activation" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="endReason" optional="YES" attributeType="String"/>
+        <attribute name="endReasonSource" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="filledUnits" optional="YES" attributeType="Double" usesScalarValueType="NO"/>
+        <attribute name="fillSource" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="flags" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="gaps" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="lastSeen" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="localStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="plugin" optional="YES" attributeType="String"/>
+        <attribute name="site" optional="YES" attributeType="String"/>
+        <attribute name="source" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="Readings" representedClassName="Readings" versionHashModifier="statsIndex1" syncable="YES" codeGenerationType="class">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="direction" optional="YES" attributeType="String"/>
         <attribute name="glucose" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
-    <entity name="Reasons" representedClassName="Reasons" syncable="YES" codeGenerationType="class">
+    <entity name="Reasons" representedClassName="Reasons" versionHashModifier="statsIndex1" syncable="YES" codeGenerationType="class">
         <attribute name="cob" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="cr" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="date" optional="YES" attributeType="Date" defaultDateTimeInterval="737559660" usesScalarValueType="NO"/>
@@ -244,6 +311,9 @@
         <attribute name="smb" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="target" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="tdd" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <fetchIndex name="byDateIndex">
+            <fetchIndexElement property="date" type="Binary" order="ascending"/>
+        </fetchIndex>
     </entity>
     <entity name="StatsData" representedClassName="StatsData" syncable="YES" codeGenerationType="class">
         <attribute name="lastrun" attributeType="Date" defaultDateTimeInterval="704497620" usesScalarValueType="NO"/>

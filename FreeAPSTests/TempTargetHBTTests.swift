@@ -219,8 +219,8 @@ final class TempTargetHBTTests: XCTestCase {
 
 // MARK: - storage
 
-/// BaseFileStorage under per-test file names, so the tests never touch the app's own files.
-private struct IsolatedFileStorage: FileStorage {
+/// BaseFileStorage under per-test file names, so the tests never touch the app's own files (also `DemographicsTests`).
+struct IsolatedFileStorage: FileStorage {
     let base = BaseFileStorage()
     let prefix = "test-temptargets-\(UUID().uuidString)-"
 

@@ -138,8 +138,8 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
         let carbs = min(quantityCarbs, settings.maxCarbs)
         let now = Date.now
 
-        await carbsStorage.storeCarbs(
-            [CarbsEntry(
+        await carbsStorage.storeMeal(
+            CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: now,
                 actualDate: now,
@@ -150,7 +150,7 @@ final class MealPresetIntentRequest: BaseIntentsRequest {
                 note: mealPreset.dish ?? "",
                 enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
-            )]
+            )
         )
 
         return "OK"

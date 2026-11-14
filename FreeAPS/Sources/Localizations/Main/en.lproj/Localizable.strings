@@ -1125,12 +1125,6 @@ Enact a temp Basal or a temp target */
 /* */
 "High" = "High";
 
-/* TIR Chart */
-"Very High" = "Very High";
-
-/* TIR Chart */
-"Very Low" = "Very Low";
-
 /* */
 "glucose" = "glucose";
 
@@ -1392,10 +1386,6 @@ Enact a temp Basal or a temp target */
 
 /* Food Type / Meal Note */
 "Note" = "Note";
-
-"Servings" = "Servings";
-
-"Kilo Calories" = "Kilo Calories";
 
 "Meals" = "Meals";
 
@@ -1710,13 +1700,6 @@ Enact a temp Basal or a temp target */
 
 "fat" = "fat";
 
-/* Display more macro nutrients */
-
-/* Additional nutrient */
-"more nutrient" = "more nutrient";
-
-/* Additional nutrients */
-"more nutrients" = "more nutrients";
 
 
 /* */
@@ -2540,6 +2523,465 @@ Enact a temp Basal or a temp target */
 /* Headline Statistics */
 "Statistics" = "Statistics";
 
+/* Statistics: the glucose views (Overview, "Day", AGP, "In range by day", "By hour", "By weekday", "Weekly") */
+"Overview" = "Overview";
+/* Statistics tab: the ambulatory glucose profile */
+"AGP" = "AGP";
+"24 h" = "24 h";
+"7 d" = "7 d";
+"14 d" = "14 d";
+"30 d" = "30 d";
+"90 d" = "90 d";
+/* Statistics period of 5 weeks */
+"1 mo" = "1 mo";
+/* Statistics period of 13 weeks */
+"3 mo" = "3 mo";
+/* Statistics period: a number of whole weeks (By weekday's 4, 8 and 13 weeks) */
+"%d wk" = "%d wk";
+
+/* Statistics: the glucose bands */
+"Very low" = "Very low";
+"In range" = "In range";
+"Very high" = "Very high";
+
+/* Statistics: the Overview */
+"Time in ranges" = "Time in ranges";
+"in your range" = "in your range";
+"Per day" = "Per day";
+"Standard ranges" = "Standard ranges";
+"Mean" = "Mean";
+"GMI" = "GMI";
+"eA1c" = "eA1c";
+"CGM coverage" = "CGM coverage";
+"Days with data" = "Days with data";
+/* Statistics limited data: the marker's popover title */
+"Limited data" = "Limited data";
+/* Statistics limited data: the CGM coverage is below 70% */
+"CGM readings cover less than 70% of this period, so these numbers may not represent it." = "CGM readings cover less than 70% of this period, so these numbers may not represent it.";
+/* Statistics limited data: the A1c estimates from fewer than 14 days */
+"GMI and eA1c are meant for 14 or more days with readings; this period has fewer." = "GMI and eA1c are meant for 14 or more days with readings; this period has fewer.";
+/* Statistics limited data: the AGP (and the Day tab's usual day) from fewer than 14 days */
+"A glucose profile is meant for 14 or more days with readings; this period has fewer." = "A glucose profile is meant for 14 or more days with readings; this period has fewer.";
+"No CGM data in this period" = "No CGM data in this period";
+/* Statistics Day tab: none of the last 90 days has a reading */
+"No CGM data in the last 90 days" = "No CGM data in the last 90 days";
+/* Statistics, time in 70-180 (or 3.9-10.0) */
+"TIR %@" = "TIR %@";
+/* Statistics, time in 70-140 (or 3.9-7.8) */
+"TITR %@" = "TITR %@";
+/* Statistics days with data: days with readings, days of the period */
+"%d of %d" = "%d of %d";
+/* Statistics date range of Today: from, to */
+"Today, %@–%@" = "Today, %@–%@";
+/* Statistics date range of the last 24 hours: from */
+"%@ – now" = "%@ – now";
+/* Statistics date range: first and last day */
+"%@ – %@" = "%@ – %@";
+/* Statistics durations */
+"0 m" = "0 m";
+"<1 m" = "<1 m";
+"%d m" = "%d m";
+"%d h %02d m" = "%d h %02d m";
+
+/* Statistics: the Trace */
+"Today so far" = "Today so far";
+"This day" = "This day";
+"Min–max" = "Min–max";
+/* Statistics Trace, the end of the last 24 hours on the time axis */
+"now" = "now";
+/* Statistics Trace: the day picked, the days of the period */
+"Day %d of %d" = "Day %d of %d";
+/* Statistics Trace: the CGM coverage percent */
+"CGM coverage %@" = "CGM coverage %@";
+/* Statistics Day tab: the usual day (the AGP of the last 14, 30 or 90 days behind the day's readings) */
+"Usual day" = "Usual day";
+/* Statistics Day tab: the usual day's key, the days of its baseline */
+"Usual · last %d days" = "Usual · last %d days";
+/* Statistics Day tab: the usual day isn't drawn; the days with readings, the days of its baseline */
+"Too few days with readings for a usual day: %1$d of the last %2$d." = "Too few days with readings for a usual day: %1$d of the last %2$d.";
+
+/* Statistics: the AGP */
+"Glucose profile" = "Glucose profile";
+/* Statistics AGP: the days of the period */
+"%d days" = "%d days";
+/* Statistics AGP: the mean glucose and the CV in one tile */
+"Mean / CV" = "Mean / CV";
+/* Statistics AGP: the 50th percentile */
+"Median" = "Median";
+/* Statistics AGP legend: the in-range band */
+"Your range %@" = "Your range %@";
+/* Statistics AGP: the days with readings, "9 of 14" */
+"Days with data %@" = "Days with data %@";
+/* Statistics AGP: the time picked, and its stepper */
+"Selected time" = "Selected time";
+/* Statistics AGP legend: a percentile band, the lower and the upper percentile */
+"%1$d–%2$d%%" = "%1$d–%2$d%%";
+
+/* Statistics: the Days tab */
+"Day by day" = "Day by day";
+/* Statistics Daily: the CGM coverage of the day */
+"Coverage" = "Coverage";
+/* Statistics Daily: the time below your range, its low end */
+"Below %@" = "Below %@";
+
+/* Statistics: the By hour tab */
+"By hour" = "By hour";
+"Ranges by hour of day" = "Ranges by hour of day";
+"When it happens" = "When it happens";
+/* Statistics By hour: the days of the period, the hour's data */
+"%1$d days · %2$d hours of data" = "%1$d days · %2$d hours of data";
+"%d days · 1 hour of data" = "%d days · 1 hour of data";
+"%d days · less than 1 hour of data" = "%d days · less than 1 hour of data";
+/* Statistics By hour, when it happens: below your range, above it, the hour most in it */
+"Lows" = "Lows";
+"Highs" = "Highs";
+"Most in range" = "Most in range";
+/* Statistics By hour, when it happens: your range's low or high end, the share of that hour */
+"below %1$@ · %2$@ of that hour" = "below %1$@ · %2$@ of that hour";
+"above %1$@ · %2$@ of that hour" = "above %1$@ · %2$@ of that hour";
+/* Statistics By hour, when it happens: the share of that hour */
+"%@ of that hour in your range" = "%@ of that hour in your range";
+
+/* Statistics: the By weekday tab (the weekdays, and each one's hours) */
+"By weekday" = "By weekday";
+"In range by weekday" = "In range by weekday";
+"By weekday and hour" = "By weekday and hour";
+"Weekdays vs weekends" = "Weekdays vs weekends";
+/* Statistics By weekday: the days of each weekday in the period, "8" or "2–3" */
+"%@ of each weekday" = "%@ of each weekday";
+/* Statistics: a range of counts, the fewest and the most ("2–3") */
+"%1$d–%2$d" = "%1$d–%2$d";
+/* Statistics limited data: By weekday with fewer of some weekday than the period holds */
+"Some weekdays have fewer days with readings than the period holds, so one day weighs a lot." = "Some weekdays have fewer days with readings than the period holds, so one day weighs a lot.";
+/* Statistics By weekday: the period's days, its weeks, the unit, your range's low and high end */
+"The %1$d days to yesterday: %2$d of each weekday (today counts once it is over). Mean in %3$@; low below %4$@, high above %5$@." = "The %1$d days to yesterday: %2$d of each weekday (today counts once it is over). Mean in %3$@; low below %4$@, high above %5$@.";
+/* Statistics By weekday with limited data: the first day with readings, the days of each weekday ("2–3"), the period's weeks */
+"Recorded since %1$@: %2$@ of each weekday so far, not the %3$d the period holds, so one day weighs a lot." = "Recorded since %1$@: %2$@ of each weekday so far, not the %3$d the period holds, so one day weighs a lot.";
+/* Statistics By weekday with limited data: the days of each weekday with readings ("6–8"), the period's weeks */
+"Readings on %1$@ of each weekday, not the %2$d the period holds, so one day weighs a lot." = "Readings on %1$@ of each weekday, not the %2$d the period holds, so one day weighs a lot.";
+/* Statistics By weekday, a weekday at the larger text sizes: its mean with its unit, the percent low and high */
+"%1$@ · %2$@ low · %3$@ high" = "%1$@ · %2$@ low · %3$@ high";
+/* Statistics By weekday with limited data, a weekday at the larger text sizes: its numbers, its days with readings */
+"%1$@ · %2$d days" = "%1$@ · %2$d days";
+/* Statistics By weekday: a value and its unit ("7.4 mmol/L", "62% in range") */
+"%1$@ %2$@ (value unit)" = "%1$@ %2$@";
+/* Statistics By weekday: a run of weekdays, its first and last ("Mon–Fri") */
+"%1$@–%2$@ (weekday range)" = "%1$@–%2$@";
+/* Statistics By weekday: no readings in its weeks, which end yesterday (today's readings alone show nothing) */
+"No CGM data in these weeks: they end yesterday, today counts once it is over" = "No CGM data in these weeks: they end yesterday, today counts once it is over";
+/* Statistics By weekday heatmap: its metrics ("Mean" reuses the existing key) */
+"Time in range" = "Time in range";
+"Time low" = "Time low";
+/* Statistics By weekday heatmap key: what the in-range steps measure */
+"%% in range" = "%% in range";
+/* Statistics By weekday heatmap key: what the low steps measure, your range's low end */
+"%% below %@" = "%% below %@";
+/* Statistics By weekday heatmap key: a hatched cell, its hours of data */
+"under %d h of readings" = "under %d h of readings";
+/* Statistics By weekday heatmap: the period's days of each weekday (its weeks) */
+"Each cell pools that hour over the period's %d days of its weekday; tap one for its numbers. Usual: the same hours on the other six days." = "Each cell pools that hour over the period's %d days of its weekday; tap one for its numbers. Usual: the same hours on the other six days.";
+/* Statistics By weekday heatmap at the larger text sizes (3-hour blocks) */
+"At this text size a cell is 3 hours, the whole day in view. Usual: the same hours on the other six days." = "At this text size a cell is 3 hours, the whole day in view. Usual: the same hours on the other six days.";
+/* Statistics By weekday, the cell picked: its days with readings, its readings, their time */
+"%1$d days · %2$@ readings (%3$@)" = "%1$d days · %2$@ readings (%3$@)";
+/* Statistics By weekday, the cell picked: the weekday's days with readings */
+"%d days · no readings" = "%d days · no readings";
+/* Statistics By weekday, the cell picked: the low metric's unit, your range's low end */
+"low, below %@" = "low, below %@";
+/* Statistics By weekday, the cell picked: the mean's unit ("mmol/L mean") */
+"%@ mean" = "%@ mean";
+/* Statistics By weekday, the cell picked: under the hatching's hours of data */
+"Few readings: under %d hours of data in this hour, so take it as a hint." = "Few readings: under %d hours of data in this hour, so take it as a hint.";
+/* Statistics By weekday, the cell picked at the larger text sizes (3-hour blocks): under the hatching's hours of data */
+"Few readings: under %d hours of data in this block, so take it as a hint." = "Few readings: under %d hours of data in this block, so take it as a hint.";
+/* Statistics By weekday, the cell picked: the hours of the usual */
+"Usual: %@ on the other days of the week." = "Usual: %@ on the other days of the week.";
+/* Statistics By weekday, the workdays or the weekend: their days with readings */
+"in range · %d days" = "in range · %d days";
+/* Statistics By weekday, weekdays vs weekends: your range's low and high end ("Mean, %@" reuses the existing key) */
+"Low, below %@" = "Low, below %@";
+"High, above %@" = "High, above %@";
+/* Statistics By weekday, weekdays vs weekends: the weekend's days ("Saturday and Sunday") */
+"The weekend follows your region: %@ here." = "The weekend follows your region: %@ here.";
+
+/* Statistics: the Weekly tab */
+"Weekly" = "Weekly";
+"Week vs. period average" = "Week vs. period average";
+/* Statistics Weekly: the weeks of the period, its first and last day */
+"%1$d weeks · %2$@" = "%1$d weeks · %2$@";
+/* Statistics Weekly chart: the in-range band with its unit */
+"In your range %@" = "In your range %@";
+/* Statistics Weekly chart: the unit */
+"Mean glucose · %@" = "Mean glucose · %@";
+/* Statistics Weekly chart: the period's value */
+"average %@" = "average %@";
+/* Statistics Weekly legend */
+"Better than average" = "Better than average";
+"Worse than average" = "Worse than average";
+"Period average" = "Period average";
+/* Statistics Weekly: the table of the weeks, its columns */
+"Weeks" = "Weeks";
+"In range · Δ" = "In range · Δ";
+"Mean · Δ" = "Mean · Δ";
+/* Statistics Weekly: the week ending today */
+"includes today" = "includes today";
+/* Statistics Weekly: a week without readings */
+"no data" = "no data";
+
+/* Statistics: the Insulin tab ("Insulin" and the tab row's divider reuse existing keys) */
+"Total daily dose" = "Total daily dose";
+/* Statistics Insulin: the days with pump data, \"5 of 7\" */
+"Days with pump data %@" = "Days with pump data %@";
+/* Statistics Insulin and Meals: no complete day yet (rule a: today isn't averaged) */
+"Needs one complete day" = "Needs one complete day";
+/* Statistics: the unit of a daily time or count */
+"per day" = "per day";
+/* Statistics Insulin: the TDD */
+"%@ U per day" = "%@ U per day";
+/* Statistics Insulin: the unit of a daily amount */
+"U per day" = "U per day";
+/* Statistics Insulin: the basal insulin, and its card */
+"Basal" = "Basal";
+/* Statistics Insulin: the basal as a share of the schedule */
+"Basal vs scheduled" = "Basal vs scheduled";
+/* Statistics Insulin: the scheduled basal */
+"Scheduled" = "Scheduled";
+/* Statistics Insulin: the time at zero basal */
+"Zero basal" = "Zero basal";
+/* Statistics Insulin: the time with a negative IOB */
+"Negative IOB" = "Negative IOB";
+/* Statistics Insulin: the date of the oldest basal schedule known */
+"Profile assumed before %@: the oldest known basal schedule is used" = "Profile assumed before %@: the oldest known basal schedule is used";
+/* Statistics limited data: the pump data doesn't cover every complete day */
+"Pump data doesn't cover every complete day of this period, so these numbers may not represent it." = "Pump data doesn't cover every complete day of this period, so these numbers may not represent it.";
+/* Statistics Insulin chart legend: the TDD */
+"Average %@ U" = "Average %@ U";
+/* Statistics Insulin chart legend: the dot above a day */
+"Partial pump data" = "Partial pump data";
+/* Statistics Insulin: the selected day */
+"so far" = "so far";
+/* Statistics Insulin day: the time the pump data covers, the day's hours */
+"Pump data for %1$@ of %2$d h" = "Pump data for %1$@ of %2$d h";
+/* Statistics Insulin day: covered less than half, left out of the TDD */
+"Not in the average" = "Not in the average";
+/* Statistics Insulin day: the basal as a share of the schedule */
+"vs scheduled" = "vs scheduled";
+/* Statistics Insulin day: some of it before the oldest basal schedule known */
+"Profile assumed" = "Profile assumed";
+/* Statistics Insulin day: no bolus, temp or covered time */
+"No pump data" = "No pump data";
+/* Statistics Insulin: by hour */
+"By hour of day" = "By hour of day";
+/* Statistics Insulin: the basal schedule */
+"Scheduled basal" = "Scheduled basal";
+/* Statistics Insulin by hour: the unit */
+"U per hour" = "U per hour";
+/* Statistics Insulin by hour: the time at zero basal */
+"Zero basal · per day" = "Zero basal · per day";
+/* Statistics Insulin by hour: one day averaged, the hour's data */
+"1 day · %d hours of data" = "1 day · %d hours of data";
+"1 day · 1 hour of data" = "1 day · 1 hour of data";
+"1 day · less than 1 hour of data" = "1 day · less than 1 hour of data";
+/* Statistics Insulin: the basal vs scheduled chart */
+"by hour" = "by hour";
+/* Statistics Insulin: basal above and below the schedule */
+"More than scheduled" = "More than scheduled";
+"Less than scheduled" = "Less than scheduled";
+/* Statistics Insulin: the period has no pump data */
+"No pump data in this period" = "No pump data in this period";
+/* Statistics Insulin: a failed read */
+"The pump data couldn't be read." = "The pump data couldn't be read.";
+
+/* Statistics: the Meals tab ("Meals", "Carbs", "Fat", "Protein" and "g" reuse existing keys) */
+"Days with entries %@" = "Days with entries %@";
+/* Statistics Meals: only today has carb entries, no complete day to average */
+"No entries on a complete day yet" = "No entries on a complete day yet";
+/* Statistics Meals by time of day: one day averaged */
+"1 day" = "1 day";
+/* Statistics Meals: the carbs per day */
+"%@ g per day" = "%@ g per day";
+/* Statistics Meals: an amount in grams */
+"%@ g" = "%@ g";
+/* Statistics Meals: the unit of a daily amount */
+"g per day" = "g per day";
+/* Statistics Meals: the carb equivalents of the fat and protein */
+"Carb equivalents" = "Carb equivalents";
+/* Statistics Meals: the carb entries, and the carbs per entry */
+"Entries" = "Entries";
+"Per entry" = "Per entry";
+/* Statistics limited data: not every complete day has carb entries */
+"Carbs weren't logged on every complete day of this period, so the per-day numbers may not represent it." = "Carbs weren't logged on every complete day of this period, so the per-day numbers may not represent it.";
+/* Statistics Meals chart legend: the carbs per day */
+"Average %@ g" = "Average %@ g";
+/* Statistics Meals: the entries of a day */
+"1 entry" = "1 entry";
+"%d entries" = "%d entries";
+/* Statistics Meals day: an entry's fat and protein, with their unit */
+"fat %1$@ · protein %2$@" = "fat %1$@ · protein %2$@";
+/* Statistics Meals day: the carb equivalents, short */
+"Carb equiv." = "Carb equiv.";
+/* Statistics Meals day: no entry */
+"No carb entries" = "No carb entries";
+/* Statistics Meals: by time of day */
+"By time of day" = "By time of day";
+/* Statistics Meals by time of day: the legend */
+"Carbs per day, by entry time" = "Carbs per day, by entry time";
+/* Statistics Meals by time of day: the days with an entry in that hour, the days averaged */
+"on %1$d of %2$d days" = "on %1$d of %2$d days";
+/* Statistics Meals by time of day: the days with an entry in that hour, of one day averaged */
+"on %d of 1 day" = "on %d of 1 day";
+/* Statistics Meals: the days with an entry in that hour, the days averaged */
+"entries on %1$d of %2$d days" = "entries on %1$d of %2$d days";
+/* Statistics Meals: the days with an entry in that hour, of one day averaged */
+"entries on %d of 1 day" = "entries on %d of 1 day";
+/* Statistics Meals by time of day: the hour's share */
+"Share of carbs" = "Share of carbs";
+/* Statistics Meals: the hours with the most carbs */
+"Most carbs" = "Most carbs";
+/* Statistics Meals, most carbs: the carbs per entry */
+"%@ each" = "%@ each";
+/* Statistics Meals: the period has no carb entries */
+"No carb entries in this period" = "No carb entries in this period";
+/* Statistics Meals: a failed read */
+"The carb entries couldn't be read." = "The carb entries couldn't be read.";
+
+/* Statistics: the Meals tab's fiber, vitamins and minerals ("Fiber", "Per day", "Not in the average", "Today", "so far", "per day", "No carb entries" and the nutrients' names reuse existing keys) */
+/* Statistics Meals: the way to the Nutrients screen */
+"Vitamins and minerals" = "Vitamins and minerals";
+/* Statistics Meals: the way to the Nutrients screen, the complete days counted of the complete days */
+"Nutrient data on %1$d of %2$d days" = "Nutrient data on %1$d of %2$d days";
+/* Statistics Nutrients: the title */
+"Nutrients" = "Nutrients";
+/* Statistics Nutrients: the complete days counted, "9 of 13" */
+"Days with nutrient data %@" = "Days with nutrient data %@";
+/* Statistics limited data: too few days with nutrient data for most of their carbs */
+"A day counts when foods with nutrient data make up at least 80% of its carbs. Not enough days of this period do, so the per-day numbers may not represent it." = "A day counts when foods with nutrient data make up at least 80% of its carbs. Not enough days of this period do, so the per-day numbers may not represent it.";
+/* Statistics Nutrients: no complete day whose foods with nutrient data make up 80% of its carbs */
+"No day with enough nutrient data yet" = "No day with enough nutrient data yet";
+/* Statistics Nutrients: no entry of the period has nutrient data */
+"No nutrient data in this period" = "No nutrient data in this period";
+/* Statistics Nutrients: where nutrient data comes from */
+"Foods added from food search or a preset carry fiber, vitamins and minerals. Carbs entered as a number don't." = "Foods added from food search or a preset carry fiber, vitamins and minerals. Carbs entered as a number don't.";
+/* Statistics Nutrients: where the sex and the birth date are set */
+"Settings › About You" = "Settings › About You";
+/* Statistics Nutrients: without the sex or the birth date, the button that sets them */
+"Set sex and birth date for reference intakes" = "Set sex and birth date for reference intakes";
+/* Statistics Nutrients: a vitamin, its other name under it */
+"Vitamin B1" = "Vitamin B1";
+"Vitamin B2" = "Vitamin B2";
+"Vitamin B3" = "Vitamin B3";
+"Vitamin B5" = "Vitamin B5";
+"Vitamin B7" = "Vitamin B7";
+"Vitamin B9" = "Vitamin B9";
+/* Statistics Nutrients: a vitamin's other name */
+"Thiamine" = "Thiamine";
+"Riboflavin" = "Riboflavin";
+"Niacin" = "Niacin";
+"Pantothenic acid" = "Pantothenic acid";
+"Biotin" = "Biotin";
+"Folate" = "Folate";
+/* Statistics Nutrients: a group of rows */
+"Vitamins" = "Vitamins";
+"Minerals" = "Minerals";
+/* Statistics Nutrients: an amount and its unit (g, mg, µg) */
+"%1$@ %2$@" = "%1$@ %2$@";
+/* Statistics Nutrients: an amount above 0 below the smallest one shown, "0.01" */
+"< %@" = "< %@";
+/* Statistics Nutrients: salt above its limit, "5 g" */
+"Above the %@ limit" = "Above the %@ limit";
+/* Statistics Nutrients legend: the bar's tick */
+"Reference intake = 100%" = "Reference intake = 100%";
+/* Statistics Nutrients legend: the bar's tick, salt's alone */
+"Salt limit = 100%" = "Salt limit = 100%";
+/* Statistics Nutrients legend: salt's excess */
+"Above the salt limit" = "Above the salt limit";
+/* Statistics Nutrients: what the percentages compare with, the age in years, where it is set */
+"EFSA reference intakes for a woman, %1$d (%2$@). Salt: the 5 g a day limit." = "EFSA reference intakes for a woman, %1$d (%2$@). Salt: the 5 g a day limit.";
+"EFSA reference intakes for a man, %1$d (%2$@). Salt: the 5 g a day limit." = "EFSA reference intakes for a man, %1$d (%2$@). Salt: the 5 g a day limit.";
+/* Statistics Nutrients: what salt's percentage compares with, without the sex or the birth date */
+"Salt: the EFSA limit of 5 g a day." = "Salt: the EFSA limit of 5 g a day.";
+/* Statistics Nutrients: salt per day as a share of its limit, "152%", "5 g" */
+"%1$@ of the %2$@ limit" = "%1$@ of the %2$@ limit";
+/* Statistics Nutrients: the amount per day as a share of the reference intake, "26%", "25 g" */
+"%1$@ of the %2$@ reference intake" = "%1$@ of the %2$@ reference intake";
+/* Statistics Nutrients chart legend: the nutrient's bars of the counted days */
+"%@, days in the average" = "%@, days in the average";
+/* Statistics Nutrients chart legend: the amount per day */
+"Average %@" = "Average %@";
+/* Statistics Nutrients chart legend: the reference intake per day */
+"Reference %@" = "Reference %@";
+/* Statistics Nutrients chart legend: salt's limit per day */
+"Limit %@" = "Limit %@";
+/* Statistics Nutrients day: an entry without nutrient data */
+"no nutrient data" = "no nutrient data";
+/* Statistics Nutrients day: an entry with nutrient data that doesn't list this nutrient */
+"not listed" = "not listed";
+/* Statistics Nutrients day: none of its entries has nutrient data */
+"No nutrient data on this day's entries" = "No nutrient data on this day's entries";
+/* Statistics Nutrients day: today, its entries with nutrient data of its entries ("4 entries") */
+"So far · nutrient data on %1$d of %2$@ · averaged from midnight" = "So far · nutrient data on %1$d of %2$@ · averaged from midnight";
+/* Statistics Nutrients day: its entries with nutrient data of its entries ("4 entries") */
+"In the average · nutrient data on %1$d of %2$@" = "In the average · nutrient data on %1$d of %2$@";
+/* Statistics Nutrients day: below 80%, the share of its carbs with nutrient data ("62%") */
+"Not in the average · foods with nutrient data are %@ of the carbs" = "Not in the average · foods with nutrient data are %@ of the carbs";
+/* Statistics Nutrients day: a supplement alone, or fat and protein only */
+"Not in the average · no carbs on this day" = "Not in the average · no carbs on this day";
+
+/* Home stats bar: its long-press menu's section */
+"Range" = "Range";
+/* Home stats bar: its long-press menu's toggle, the tight part of the in-range bar and its figure */
+"Show TITR" = "Show TITR";
+/* Home stats bar: its long-press menu's toggle, the GMI of the last 90 days ("90-day GMI 6.8%") */
+"Show GMI" = "Show GMI";
+/* Home stats bar: Time in Tight Range, 70-140 ("TITR 48%") */
+"TITR" = "TITR";
+/* Home stats bar: the GMI of the days with readings of the last 90 ("90-day GMI") */
+"%d-day GMI" = "%d-day GMI";
+
+/* Home Loops card */
+"No loops" = "No loops";
+"Max gap" = "Max gap";
+/* Home Loops card: loops counted */
+"1 loop" = "1 loop";
+"%@ loops" = "%@ loops";
+/* Home Loops card: CGM readings counted ("123 loops · 432 readings") */
+"1 reading" = "1 reading";
+"%@ readings" = "%@ readings";
+/* Home Loops card: the loops that ran, of those due ("1,234 of 1,300 loops") */
+"%@ of 1 loop" = "%@ of 1 loop";
+"%1$@ of %2$@ loops" = "%1$@ of %2$@ loops";
+/* Home Loops card durations: minutes, whole hours, hours and minutes */
+"%d min" = "%d min";
+"%d h" = "%d h";
+"%1$d h %2$d min" = "%1$d h %2$d min";
+
+/* Home meal card: the energy of the carbs, fat and protein, and its unit */
+"Energy" = "Energy";
+"kcal" = "kcal";
+/* Home meal card: the nutrient data's coverage, today's entries */
+"Data on %1$d of %2$d entries" = "Data on %1$d of %2$d entries";
+"Data on %d of 1 entry" = "Data on %d of 1 entry";
+
+/* Statistics Insulin Today: the card's title, today's insulin up to now */
+"Insulin so far" = "Insulin so far";
+
+/* Home insulin card, Today ("Insulin", "Today", "U" and "%@ U" reuse existing keys) */
+/* Home insulin card: the daily average of the last 7 days, "32.5 U daily avg" */
+"daily avg" = "daily avg";
+/* Home insulin card: the daily average over fewer than 7 complete days, "5 d avg" */
+"%d d avg" = "%d d avg";
+/* Home insulin card: the usual insulin by this clock time */
+"usual" = "usual";
+/* Home insulin card: under today's insulin, yesterday's by this clock time, "14:35" */
+"yesterday by %@" = "yesterday by %@";
+
+/* Home On board card, the last 24 h ("Glucose", "Negative IOB", " U" and " g" reuse existing keys) */
+"On board" = "On board";
+/* Home On board card long-press menu: the lanes shown */
+"Carbs on board" = "Carbs on board";
+/* Home On board card: the carbs on board lane without carbs in the last 24 h */
+"No carbs logged" = "No carbs logged";
+
 /* Option in preferences */
 
 /* Low Glucose Threshold in Statistics settings */
@@ -2547,9 +2989,6 @@ Enact a temp Basal or a temp target */
 
 /* High Glucose Threshold in Statistics settings */
 "High" = "High";
-
-/* In Range */
-"In Range" = "In Range";
 
 /* Display % */
 
@@ -2561,9 +3000,6 @@ Enact a temp Basal or a temp target */
 
 /* */
 "Threshold lines (Low / High)" = "Threshold lines (Low / High)";
-
-/* */
-"Standing / Laying TIR Chart" = "Standing / Laying TIR Chart";
 
 /* */
 
@@ -2582,22 +3018,7 @@ Enact a temp Basal or a temp target */
 
 /* */
 
-/* Average BG = */
-"Average" = "Average";
-
 /* TIR Preview Headline */
-
-/* Average Loop Interval in minutes */
-"Average Interval" = "Average Interval";
-
-/* Median BG */
-"Median" = "Median";
-
-/* CGM readings in statView */
-"Readings" = "Readings";
-
-/* CGM readings in statView */
-"Readings / 24h" = "Readings / 24h";
 
 /* Days of saved readings*/
 "Days" = "Days";
@@ -2631,12 +3052,6 @@ Enact a temp Basal or a temp target */
 "Success = Started / Completed (loops)" = "Success = Started / Completed (loops)";
 
 /* Loop Statistics pop-up */
-"Most Frequent Error" = "Most Frequent Error";
-
-/* Loop Statistics pop-up */
-
-/* Average loop interval */
-"Interval" = "Interval";
 
 /* Median loop interval */
 "Duration" = "Duration";
@@ -2672,33 +3087,6 @@ Enact a temp Basal or a temp target */
 
 /* HbA1c for all glucose storage days */
 "all" = "all";
-
-/* IOB View */
-"Insulin on Board" = "Insulin on Board";
-
-/* Active Insulin View */
-"Time with negative insulin" = "Time with negative insulin";
-
-/* Active Insulin View */
-"Insulin compared to yesterday" = "Insulin compared to yesterday";
-
-/* Active Insulin View */
-"Insulin compared to average" = "Insulin compared to average";
-
-/* Active Insulin View */
-"Average Insulin 10 days" = "Average Insulin 10 days";
-
-/* Active Insulin View */
-"TDD yesterday" = "TDD yesterday";
-
-/* Active Insulin View */
-"TDD 2 days ago" = "TDD 2 days ago";
-
-/* Active Insulin View */
-"TDD 3 days ago" = "TDD 3 days ago";
-
-/* COB View */
-"Carbohydrates on Board" = "Carbohydrates on Board";
 
 /* UI/UX-setting */
 "Display COB Chart" = "Display COB Chart";
@@ -2817,7 +3205,6 @@ Enact a temp Basal or a temp target */
 "If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default." = "If you enable Online Backup and Statistics, a daily backup of your settings and statistics is uploaded to open-iaps.app — letting you restore them on a new phone and contributing to the community statistics.\n\nEverything is uploaded anonymously. There is no name, email, or anything that ties the data to you — only a random recovery token stored on your phone. Off by default.";
 "Demographics" = "Demographics";
 "Height" = "Height";
-"Prefer not to say" = "Prefer not to say";
 "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous." = "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous.";
 "Why are these required for log upload?" = "Why are these required for log upload?";
 "Why we ask about sex" = "Why we ask about sex";
@@ -3613,9 +4000,6 @@ Enact a temp Basal or a temp target */
 /* UI/UX option */
 
 /* UI/UX option */
-"Never display the small glucose chart when scrolling" = "Never display the small glucose chart when scrolling";
-
-/* UI/UX option */
 
 /* UI/UX option */
 "Display Glucose Delta" = "Display Glucose Delta";
@@ -4162,7 +4546,6 @@ Enact a temp Basal or a temp target */
 "Failed to process image for analysis" = "Failed to process image for analysis";
 "Finished in" = "Finished in";
 "First Hour SMBs are Off (24 hours)" = "First Hour SMBs are Off (24 hours)";
-"HbA1C" = "HbA1C";
 "Header" = "Header";
 "IOB" = "IOB";
 "Invalid API URL" = "Invalid API URL";
@@ -4264,7 +4647,7 @@ Enact a temp Basal or a temp target */
 
 "Loop status" = "Loop status";
 
-"Pod age" = "Pod age";
+"Site changes" = "Site changes";
 
 "CGM state" = "CGM state";
 
@@ -4448,3 +4831,896 @@ Enact a temp Basal or a temp target */
 /* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
 "Convert fat and protein into carb equivalents" = "Convert fat and protein into carb equivalents";
 "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface.";
+/* --- Nightscout config: glucose backfill --- */
+"Fetching readings..." = "Fetching readings...";
+"Saving readings..." = "Saving readings...";
+"Nightscout is not configured" = "Nightscout is not configured";
+"No network connection" = "No network connection";
+"Nightscout returned no readings" = "Nightscout returned no readings";
+"Imported 1 reading" = "Imported 1 reading";
+"Imported %d readings" = "Imported %d readings";
+/* Glucose backfill result: date, error */
+"Stopped at %@: %@" = "Stopped at %@: %@";
+"Saving failed: %@" = "Saving failed: %@";
+"Fetching failed: %@" = "Fetching failed: %@";
+"Nightscout ignored the requested date range" = "Nightscout ignored the requested date range";
+
+/* --- Nightscout config: insulin backfill --- */
+"Backfill from Nightscout" = "Backfill from Nightscout";
+"Backfill insulin" = "Backfill insulin";
+"Fetches old glucose readings and insulin from Nightscout." = "Fetches old glucose readings and insulin from Nightscout.";
+"Fetching insulin..." = "Fetching insulin...";
+"Saving insulin..." = "Saving insulin...";
+"Nightscout returned no insulin" = "Nightscout returned no insulin";
+"Imported 1 insulin record" = "Imported 1 insulin record";
+"Imported %d insulin records" = "Imported %d insulin records";
+/* Insulin backfill result: records inside the pump's own history */
+"%d records skipped: iAPS has them" = "%d records skipped: iAPS has them";
+/* Insulin backfill result: records in the time the pump history file covers */
+"%d records from the last 24 h left out" = "%d records from the last 24 h left out";
+"Imported %d basal schedules" = "Imported %d basal schedules";
+"No basal schedules in Nightscout" = "No basal schedules in Nightscout";
+"Fetching basal schedules failed: %@" = "Fetching basal schedules failed: %@";
+"Saving basal schedules failed: %@" = "Saving basal schedules failed: %@";
+
+/* --- Settings › Demographics, and the share toggles in Settings › Sharing --- */
+/* Sex dropdown menu option: none chosen (was "Prefer not to say") */
+"Not set" = "Not set";
+"About You" = "About You";
+"Born" = "Born";
+"Body" = "Body";
+"Used for reference intakes in Statistics › Nutrients." = "Used for reference intakes in Statistics › Nutrients.";
+"Reference intakes in Statistics › Nutrients need Woman or Man and your birth date." = "Reference intakes in Statistics › Nutrients need Woman or Man and your birth date.";
+"Stored on this phone. Settings › Sharing sets whether the daily statistics include your sex and age; with Online Backup on, the settings backup includes all of these." = "Stored on this phone. Settings › Sharing sets whether the daily statistics include your sex and age; with Online Backup on, the settings backup includes all of these.";
+/* Demographics: what is shared */
+"Nothing shared" = "Nothing shared";
+"Sex shared" = "Sex shared";
+"Age shared" = "Age shared";
+"Sex and age shared" = "Sex and age shared";
+/* Demographics: nothing is uploaded */
+"Off" = "Off";
+/* Sharing: the birth date, "14 March 1985" */
+"Born %@" = "Born %@";
+/* Demographics: the birth date back to not set */
+"Clear birth date" = "Clear birth date";
+/* Demographics: the birth date set to the day the wheel shows, "1 Jan 1996" */
+"Set to %@" = "Set to %@";
+"Share sex and age" = "Share sex and age";
+"Age" = "Age";
+"Edit in Settings › About You" = "Edit in Settings › About You";
+"These toggles set what the daily statistics include. The settings backup includes your sex, birth date, weight and height either way." = "These toggles set what the daily statistics include. The settings backup includes your sex, birth date, weight and height either way.";
+"The previous day’s log is uploaded after midnight." = "The previous day’s log is uploaded after midnight.";
+"Needs sex (Woman or Man) and age shared above." = "Needs sex (Woman or Man) and age shared above.";
+"Daily Log upload needs your sex (Woman or Man) and your age shared. Turn it back on once they are." = "Daily Log upload needs your sex (Woman or Man) and your age shared. Turn it back on once they are.";
+/* Statistics › Nutrients: the sheet setting the sex and the birth date */
+"Reference intakes" = "Reference intakes";
+"Reference intakes use Woman or Man. Saved in Settings › About You. The daily statistics include them only if you turn that on in Settings › Sharing; with Online Backup on, the settings backup includes them." = "Reference intakes use Woman or Man. Saved in Settings › About You. The daily statistics include them only if you turn that on in Settings › Sharing; with Online Backup on, the settings backup includes them.";
+
+/* --- Statistics: Today on the Insulin and Meals tabs (and Nutrients) --- */
+/* Statistics Insulin and Meals, 7–90 d: today's column picked, the button to the Today period */
+"Show Today" = "Show Today";
+/* Statistics Insulin Today: the insulin of the period's complete days by this clock time ("14:35", "7 d") */
+"Usual by %1$@ · %2$@" = "Usual by %1$@ · %2$@";
+/* Statistics Insulin Today: the column of the usual by now */
+"Usual" = "Usual";
+/* Statistics Insulin Today: a usual by now, "8.2 U" */
+"usual %@" = "usual %@";
+/* Statistics Insulin Today by hour: the outlined bar of the current hour */
+"This hour so far" = "This hour so far";
+/* Statistics Insulin Today by hour: the usual by hour, over the period ("7 d") */
+"Usual · %@" = "Usual · %@";
+/* Statistics Insulin Today: the basal so far card's title */
+"Basal so far" = "Basal so far";
+/* Statistics Insulin Today: the scheduled basal so far, "12.0 U" */
+"of %@" = "of %@";
+"Boluses" = "Boluses";
+"No boluses so far" = "No boluses so far";
+/* Statistics Insulin Today: the SMBs so far */
+"1 SMB" = "1 SMB";
+"%d SMBs" = "%d SMBs";
+/* Statistics Meals Today */
+"Carbs so far" = "Carbs so far";
+"No entries" = "No entries";
+/* Statistics Nutrients Today */
+"So far" = "So far";
+/* Statistics Nutrients Today: today's entries with nutrient data of its entries ("3 entries") */
+"Nutrient data on %1$d of %2$@" = "Nutrient data on %1$d of %2$@";
+"No carb entries so far today" = "No carb entries so far today";
+"No nutrient data so far today" = "No nutrient data so far today";
+
+/* Home Loops card: today's share under the midnight tick ("Today 97.3%") */
+"Today %@" = "Today %@";
+
+/* Loops screen ("Loops", "Close", "Today", "Other", "Gap", "now" and "%d days" reuse existing keys) */
+"By day" = "By day";
+"95–100 %" = "95–100 %";
+"90–95" = "90–95";
+"75–90" = "75–90";
+"under 75" = "under 75";
+"of loops ran" = "of loops ran";
+"Failed loops" = "Failed loops";
+"No loop ran" = "No loop ran";
+"Median loop" = "Median loop";
+"Longest gaps" = "Longest gaps";
+"No gap of 15 min or more" = "No gap of 15 min or more";
+"Why loops failed" = "Why loops failed";
+"Every loop ran" = "Every loop ran";
+"The loops couldn't be read." = "The loops couldn't be read.";
+"The whole day" = "The whole day";
+"Through the day" = "Through the day";
+"no loop ran" = "no loop ran";
+"no CGM readings" = "no CGM readings";
+"No loop started when one was due" = "No loop started when one was due";
+/* Loops screen: today up to the read's time ("14:35") */
+"So far, until %@" = "So far, until %@";
+/* Loops screen: the detail without a day picked */
+"Last %d days" = "Last %d days";
+/* Loops screen: the first of the last 30 days, today */
+"%1$@ – %2$@, today so far" = "%1$@ – %2$@, today so far";
+/* Loops screen: loops per day ("271 a day") */
+"%@ a day" = "%@ a day";
+/* Loops screen: the strip of the 30 days */
+"By time of day, all %d days" = "By time of day, all %d days";
+/* Loops screen: the loops due that didn't run ("12 loops") */
+"%@ missed or failed" = "%@ missed or failed";
+/* Loops screen: a cause's most frequent text, the other texts of it */
+"%1$@ (and %2$d more)" = "%1$@ (and %2$d more)";
+/* Statistics By weekday: a day without readings */
+"no readings" = "no readings";
+
+/* Statistics title: the topic, the view ("Glucose · Overview") */
+"%1$@ · %2$@" = "%1$@ · %2$@";
+/* Statistics view: time in ranges day by day */
+"In range by day" = "In range by day";
+
+/* --- Statistics: the IOB cards on the Insulin tab --- */
+/* Statistics Insulin: the IOB card's title */
+"Insulin on board" = "Insulin on board";
+/* Statistics Insulin: the IOB card's detail */
+"by time of day" = "by time of day";
+/* Statistics Insulin IOB card: no IOB rows to draw */
+"No IOB data" = "No IOB data";
+/* Statistics Insulin IOB card legend: a line per complete day */
+"Each day" = "Each day";
+/* Statistics Insulin IOB card legend: today below zero */
+"Today, negative" = "Today, negative";
+/* Statistics Insulin IOB card legend: the region below zero */
+"Negative" = "Negative";
+/* Statistics Insulin IOB card: one complete day, drawn as a line */
+"The percentile bands need 3 complete days: the day is drawn as a line." = "The percentile bands need 3 complete days: the day is drawn as a line.";
+/* Statistics Insulin IOB card: two complete days, drawn as lines */
+"The percentile bands need 3 complete days: the days are drawn as lines." = "The percentile bands need 3 complete days: the days are drawn as lines.";
+/* Statistics Insulin IOB card, Today */
+"The usual needs 3 complete days." = "The usual needs 3 complete days.";
+/* Statistics Insulin Negative IOB: the share of the IOB time below zero, "6%" */
+"%@ of the time" = "%@ of the time";
+/* Statistics Insulin Negative IOB: the mean IOB below zero */
+"Mean depth" = "Mean depth";
+/* Statistics Insulin Negative IOB: the lowest IOB */
+"Lowest" = "Lowest";
+/* Statistics Insulin Negative IOB: the lowest IOB's unit, its day and time ("U · Tue 28 Oct, 03:15") */
+"U · %1$@, %2$@" = "U · %1$@, %2$@";
+/* Statistics Insulin Negative IOB Today: the lowest IOB's unit and time ("U · 03:15") */
+"U · %@" = "U · %@";
+/* Statistics Insulin Negative IOB by hour: the unit */
+"minutes per day" = "minutes per day";
+/* Statistics Patches detail: no gaps */
+"none" = "none";
+/* Statistics Insulin day: the lowest IOB below zero */
+"Lowest IOB" = "Lowest IOB";
+/* Statistics Insulin by hour: the time with a negative IOB */
+"Negative IOB · per day" = "Negative IOB · per day";
+/* Statistics limited data: the IOB rows don't cover every complete day */
+"IOB data doesn't cover every complete day of this period, so these numbers may not represent it." = "IOB data doesn't cover every complete day of this period, so these numbers may not represent it.";
+
+/* --- Statistics: the Patches topic --- */
+/* Statistics topic: Omnipod pods */
+"Pods" = "Pods";
+/* Statistics Patches: the unit of a count of one pod */
+"pod" = "pod";
+/* Statistics Patches: the unit of a count of pods */
+"pods" = "pods";
+/* Statistics Patches: the list of the pods */
+"Pod by pod" = "Pod by pod";
+/* Statistics Patches Today: the pod delivering now */
+"Pod in use" = "Pod in use";
+/* Statistics Patches Today: no pod delivering */
+"No pod in use" = "No pod in use";
+/* Statistics Patches Today: the pod in use against the ones before it */
+"Against previous pods" = "Against previous pods";
+/* Statistics Patches: the insulin of each pod */
+"Per pod" = "Per pod";
+/* Statistics Patches Today: the pod in use's column */
+"This pod" = "This pod";
+/* Statistics Patches detail: the pod's own */
+"this pod" = "this pod";
+/* Statistics Patches: none in the period */
+"No pods in this period" = "No pods in this period";
+/* Statistics topic: the pump's patches */
+"Patches" = "Patches";
+/* Statistics Patches: the unit of a count of one patch */
+"patch" = "patch";
+/* Statistics Patches: the unit of a count of patches */
+"patches" = "patches";
+/* Statistics Patches: the list of the patches */
+"Patch by patch" = "Patch by patch";
+/* Statistics Patches Today: the patch delivering now */
+"Patch in use" = "Patch in use";
+/* Statistics Patches Today: no patch delivering */
+"No patch in use" = "No patch in use";
+/* Statistics Patches Today: the patch in use against the ones before it */
+"Against previous patches" = "Against previous patches";
+/* Statistics Patches: the insulin of each patch */
+"Per patch" = "Per patch";
+/* Statistics Patches Today: the patch in use's column */
+"This patch" = "This patch";
+/* Statistics Patches detail: the patch's own */
+"this patch" = "this patch";
+/* Statistics Patches: none in the period */
+"No patches in this period" = "No patches in this period";
+/* Statistics topic: a tube pump's infusion sites */
+"Sites" = "Sites";
+/* Statistics Patches: the unit of a count of one site */
+"site" = "site";
+/* Statistics Patches: the unit of a count of sites */
+"sites" = "sites";
+/* Statistics Patches: the list of the sites */
+"Site by site" = "Site by site";
+/* Statistics Patches Today: the site delivering now */
+"Site in use" = "Site in use";
+/* Statistics Patches Today: no site delivering */
+"No site in use" = "No site in use";
+/* Statistics Patches Today: the site in use against the ones before it */
+"Against previous sites" = "Against previous sites";
+/* Statistics Patches: the insulin of each site */
+"Per site" = "Per site";
+/* Statistics Patches Today: the site in use's column */
+"This site" = "This site";
+/* Statistics Patches detail: the site's own */
+"this site" = "this site";
+/* Statistics Patches Today: sites before the one in use, none worn as long */
+"No earlier site reached this age yet" = "No earlier site reached this age yet";
+/* Statistics Patches Today: no site before the one in use reached its age */
+"No earlier sites to compare yet" = "No earlier sites to compare yet";
+/* Statistics Patches detail: External Insulin in a site's time ("2.0 U") */
+"+ %@ pen, not from the pump" = "+ %@ pen, not from the pump";
+/* Statistics Patches: none in the period */
+"No sites in this period" = "No sites in this period";
+/* Statistics Patches: a session's pump and its kind, in a mixed history ("Omnipod pod", "Dana site"); translate the value, the key's "(pump kind)" only keeps it apart */
+"%1$@ %2$@ (pump kind)" = "%1$@ %2$@";
+/* Statistics Patches Today: the time recorded of one whose activation isn't known ("1 d 4 h") */
+"recorded for %@" = "recorded for %@";
+/* Statistics Patches Today: the one in use, its activation unknown */
+"Its activation isn't known, so neither is its age: it isn't compared with earlier ones." = "Its activation isn't known, so neither is its age: it isn't compared with earlier ones.";
+/* Statistics Patches Today: the one in use, nothing covered yet */
+"No pump data for it yet: it is compared with the ones before it once there is." = "No pump data for it yet: it is compared with the ones before it once there is.";
+/* Statistics Patches: partial ones other than those activated before the recording */
+"Other marked ones count from where their pump data starts: recorded late, or their activation isn't known." = "Other marked ones count from where their pump data starts: recorded late, or their activation isn't known.";
+/* Statistics Patches: the dashed start of the wear bar, recorded late */
+"Dashed: before its pump data begins." = "Dashed: before its pump data begins.";
+/* Statistics Patches: the wear bar of one whose activation isn't known */
+"A short dashed lead: its activation isn't known." = "A short dashed lead: its activation isn't known.";
+/* Statistics Patches: the ones that ended */
+"%d ended" = "%d ended";
+/* Statistics Patches: the one in use and the ones ended ("11 ended") */
+"1 in use · %@" = "1 in use · %@";
+/* Statistics Patches: the wear time's mean, the shortest ("1 d 17 h") */
+"mean · shortest %@" = "mean · shortest %@";
+/* Statistics Patches: no wear time yet */
+"none ended yet" = "none ended yet";
+/* Statistics Patches: the wear time of the only one ended */
+"1 ended" = "1 ended";
+/* Statistics Patches: the time from activation to the end */
+"Wear time" = "Wear time";
+/* Statistics Patches: the insulin of each, the most ("184") */
+"U · most %@ U" = "U · most %@ U";
+/* Statistics Patches: no ended one recorded from its activation */
+"U · none recorded whole" = "U · none recorded whole";
+/* Statistics Patches: the mean glucose and its unit ("6.3 mmol/L mean") */
+"%1$@ %2$@ mean" = "%1$@ %2$@ mean";
+/* Statistics Patches: the sessions picked, the oldest one's activation day ("Mon 28 Sep") */
+"Each one overlapping the period counts whole: the oldest here began %@." = "Each one overlapping the period counts whole: the oldest here began %@.";
+/* Statistics Patches: the recording's start ("Mon 26 Oct, 09:00") */
+"The pump data is recorded since %@; one activated before has its numbers from then on." = "The pump data is recorded since %@; one activated before has its numbers from then on.";
+/* Statistics Patches: the mean glucose's header, its unit */
+"Mean, %@" = "Mean, %@";
+/* Statistics Patches by wear day: what a row is */
+"Day 1 is the first 24 hours from activation. Each row pools the time in that day; the one in use counts in the days it has reached." = "Day 1 is the first 24 hours from activation. Each row pools the time in that day; the one in use counts in the days it has reached.";
+/* Statistics Patches: what the wear bar shows (Medtrum, Omnipod) */
+"The bar: the wear from activation, the tick at 3 days; a notch is a gap in the pump data." = "The bar: the wear from activation, the tick at 3 days; a notch is a gap in the pump data.";
+/* Statistics Patches: what the wear bar shows */
+"The bar: the wear from activation; a notch is a gap in the pump data." = "The bar: the wear from activation; a notch is a gap in the pump data.";
+/* Statistics Patches: the dashed start of the wear bar */
+"Dashed: before the recording began." = "Dashed: before the recording began.";
+/* Statistics Patches: the wear of the one in use */
+"%@ so far" = "%@ so far";
+/* Statistics Patches: a partial one's numbers start ("Mon 26 Oct") */
+"recorded from %@" = "recorded from %@";
+/* Statistics Patches: the badge of the one in use */
+"In use" = "In use";
+/* Statistics Patches detail: the activation */
+"Activated" = "Activated";
+/* Statistics Patches detail: the recording's start */
+"Recorded from" = "Recorded from";
+/* Statistics Patches detail: the coverage's end, in use */
+"Last pump data" = "Last pump data";
+/* Statistics Patches detail: the coverage's end */
+"Last delivery" = "Last delivery";
+/* Statistics Patches detail: no grace used, the wear ("2 d 17 h") */
+"none · ended at %@" = "none · ended at %@";
+/* Statistics Patches detail: the time past 3 days */
+"Grace used" = "Grace used";
+/* Statistics Patches detail: the gaps in the coverage */
+"Gaps in pump data" = "Gaps in pump data";
+/* Statistics Patches detail: the gaps, their time ("2 · 45 m") */
+"%1$d · %2$@" = "%1$d · %2$@";
+/* Statistics Patches: the one in use's activation */
+"Since %@" = "Since %@";
+/* Statistics Patches detail: the one in use */
+"in use" = "in use";
+/* Statistics Patches detail: the CGM's share of the time ("97%") */
+"CGM data %@ of the time" = "CGM data %@ of the time";
+/* Statistics Patches detail: the CV's unit */
+"variation" = "variation";
+/* Statistics Patches detail: the loops per slot */
+"of expected" = "of expected";
+/* Statistics Patches Today: the end of the 3 days */
+"Expires" = "Expires";
+/* Statistics Patches Today: the end of the grace */
+"Grace ends" = "Grace ends";
+/* Statistics Patches Today: the time with a negative IOB per day */
+"Negative IOB per day" = "Negative IOB per day";
+/* Statistics Patches Today: the age */
+"%@ old" = "%@ old";
+/* Statistics Patches Today: the activation ("Tue 27 Oct, 19:40") */
+"since %@" = "since %@";
+/* Statistics Patches Today: the usual's age and how many it is over ("2 d 19 h", 10) */
+"by %1$@ · %2$d before" = "by %1$@ · %2$d before";
+/* Statistics Patches Today: what the usual is (10, "2 d 19 h") */
+"Usual: the %1$d before this one, each up to the same age (%2$@); one that ended sooner is left out." = "Usual: the %1$d before this one, each up to the same age (%2$@); one that ended sooner is left out.";
+/* Statistics Patches: a wear day */
+"Day %d" = "Day %d";
+/* Statistics Patches: a day and a time ("Tue 27 Oct, 19:40") */
+"%1$@, %2$@" = "%1$@, %2$@";
+/* Statistics duration: days, hours and minutes */
+"%1$d d %2$d h %3$02d m" = "%1$d d %2$d h %3$02d m";
+/* Statistics duration: days and hours */
+"%1$d d %2$d h" = "%1$d d %2$d h";
+/* Statistics Patches Today: the day of a time */
+"today" = "today";
+/* Statistics Patches Today: the day of a time */
+"tomorrow" = "tomorrow";
+/* Statistics Patches Today: a time to come */
+"in %@" = "in %@";
+/* Statistics Patches Today: a time passed */
+"%@ ago" = "%@ ago";
+/* Statistics Patches: the list's order */
+"newest first" = "newest first";
+/* Statistics Patches: the card of the wear days */
+"By wear day" = "By wear day";
+/* Statistics Patches by wear day: the insulin header */
+"Insulin per 24 h" = "Insulin per 24 h";
+/* Statistics Patches detail by wear day: the insulin column */
+"U / 24 h" = "U / 24 h";
+/* Statistics Patches Today by wear day: the insulin column */
+"U/24 h" = "U/24 h";
+/* Statistics Patches: the time in range under a number */
+"in range" = "in range";
+/* Statistics Patches detail: External Insulin in its time ("2.0 U") */
+"+ %@ pen, not from the pod" = "+ %@ pen, not from the pod";
+/* Statistics Patches detail: External Insulin in its time ("2.0 U") */
+"+ %@ pen, not from the patch" = "+ %@ pen, not from the patch";
+/* Statistics Patches: the wear day the one in use is in */
+"Day %d so far" = "Day %d so far";
+/* Statistics Patches Today: no pod before the one in use reached its age */
+"No earlier pods to compare yet" = "No earlier pods to compare yet";
+/* Statistics Patches Today: no patch before the one in use reached its age */
+"No earlier patches to compare yet" = "No earlier patches to compare yet";
+/* Statistics Patches Today: pods before the one in use, none worn as long */
+"No earlier pod reached this age yet" = "No earlier pod reached this age yet";
+/* Statistics Patches Today: patches before the one in use, none worn as long */
+"No earlier patch reached this age yet" = "No earlier patch reached this age yet";
+
+/* --- Statistics: the CGM topic --- */
+/* Statistics CGM: a CGM's cadence ("5-min") */
+"%d-min" = "%d-min";
+/* Statistics CGM: the Dexcom G5, short */
+"G5" = "G5";
+/* Statistics CGM: the Dexcom G6, short */
+"G6" = "G6";
+/* Statistics CGM: the Dexcom G7, short */
+"G7" = "G7";
+/* Statistics CGM: the FreeStyle Libre 3, short */
+"Libre 3" = "Libre 3";
+/* Statistics CGM: a FreeStyle Libre through LibreTransmitter, short */
+"Libre 2" = "Libre 2";
+/* Statistics CGM: the Eversense, short */
+"Eversense" = "Eversense";
+/* Statistics CGM: the CGM simulator, short */
+"Simulator" = "Simulator";
+/* Statistics CGM: the Medtronic Enlite, short */
+"Enlite" = "Enlite";
+/* Statistics CGM: xDrip4iOS as the CGM, short */
+"xDrip" = "xDrip";
+/* Statistics CGM: Glucose Direct as the CGM, short */
+"Glucose Direct" = "Glucose Direct";
+/* Statistics CGM: the picker's menu button, the CGM shown ("Libre 3") */
+"CGM: %@" = "CGM: %@";
+/* Statistics CGM limited data: the readings' span ("1 d 20 h") */
+"Under 3 days of readings: %@. Noise, reversals and jitter need more to settle." = "Under 3 days of readings: %@. Noise, reversals and jitter need more to settle.";
+/* Statistics CGM Overview: the first card, All CGMs */
+"Readings" = "Readings";
+/* Statistics CGM Unknown: what its readings are (the recording's start, "Mon 12 Oct, 10:20"; the count) */
+"Readings from before iAPS recorded which CGM was in use. Recording started on %1$@; these %2$@ readings came earlier. They count in the Glucose statistics as always; here they are kept apart from the named CGMs." = "Readings from before iAPS recorded which CGM was in use. Recording started on %1$@; these %2$@ readings came earlier. They count in the Glucose statistics as always; here they are kept apart from the named CGMs.";
+/* Statistics CGM Unknown: what its readings are, no recording yet */
+"Readings from before iAPS recorded which CGM was in use. They count in the Glucose statistics as always; here they are kept apart from the named CGMs." = "Readings from before iAPS recorded which CGM was in use. They count in the Glucose statistics as always; here they are kept apart from the named CGMs.";
+/* Statistics CGM Unknown: the readings' span ("3 d 4 h") */
+"%@ in this period" = "%@ in this period";
+/* Statistics CGM Unknown: the sensor starts */
+"Sensor starts" = "Sensor starts";
+/* Statistics CGM Unknown: no sensor starts */
+"Not known" = "Not known";
+/* Statistics CGM Unknown: the recording's start ("12 Oct") */
+"before %@" = "before %@";
+/* Statistics CGM: the readings' cadence ("5 min", "1 and 5 min") */
+"every %@" = "every %@";
+/* Statistics CGM: the longest gap and all of them ("1 h 05 m", "4 h 20 m") */
+"longest %1$@ · %2$@ in all" = "longest %1$@ · %2$@ in all";
+/* Statistics CGM: the gaps tile */
+"Gaps" = "Gaps";
+/* Statistics CGM: the noise tile */
+"Noise" = "Noise";
+/* Statistics CGM: the noise's unit and its share of the level ("mmol/L", "2.3%") */
+"%1$@ · %2$@ of the level" = "%1$@ · %2$@ of the level";
+/* Statistics CGM: the reversals tile */
+"Reversals" = "Reversals";
+/* Statistics CGM: a count per day */
+"%d a day" = "%d a day";
+/* Statistics CGM: the reference's reversals per day (the body's turns) */
+"%d in the reference" = "%d in the reference";
+/* Statistics CGM: the delta jitter tile */
+"Delta jitter" = "Delta jitter";
+/* Statistics CGM: the jitter's unit, of the 5-minute delta ("mmol/L") */
+"%@ · the 5-min delta" = "%@ · the 5-min delta";
+/* Statistics CGM Overview: what the first card's numbers are (the turns' threshold, "0.2 mmol/L (3 mg/dL)") */
+"Expected: one per cadence from the first reading to the last; a gap is over 5 min and over 1.5 cadences between two readings, a shorter one only lowers the coverage. Noise: the readings about their own local trend. Reversals: turns of the 5-minute series of at least %@; the reference is the after-the-fact centred fit, its turns the body’s." = "Expected: one per cadence from the first reading to the last; a gap is over 5 min and over 1.5 cadences between two readings, a shorter one only lowers the coverage. Noise: the readings about their own local trend. Reversals: turns of the 5-minute series of at least %@; the reference is the after-the-fact centred fit, its turns the body’s.";
+/* Statistics CGM: the readings and their cadence ("8,123", "every 5 min") */
+"%1$@ readings, %2$@" = "%1$@ readings, %2$@";
+/* Statistics CGM rate of change: under 1 mg/dL a minute */
+"Slow" = "Slow";
+/* Statistics CGM rate of change: 1–2 mg/dL a minute */
+"Moderate" = "Moderate";
+/* Statistics CGM rate of change: 3 mg/dL a minute or more */
+"Very fast" = "Very fast";
+/* Statistics CGM rate of change: a band's range ("0.3") */
+"under %@" = "under %@";
+/* Statistics CGM rate of change: the last band's range ("0.8") */
+"%@ and over" = "%@ and over";
+/* Statistics CGM: the fastest rise ("+0.8") */
+"Rise %@" = "Rise %@";
+/* Statistics CGM: the fastest fall ("−0.9") */
+"fall %@" = "fall %@";
+/* Statistics CGM: the fastest rise and fall */
+"Fastest" = "Fastest";
+/* Statistics CGM: the rate of change's unit ("mmol/L") */
+"%@ per 5 min" = "%@ per 5 min";
+/* Statistics CGM rate of change: what it is (the bands' edges, "0.3, 0.6, 0.8 mmol/L") */
+"The 15-minute least-squares slope at each reading, as the 5-minute change the loop works with (1, 2, 3 mg/dL per minute are %@ per 5 min)." = "The 15-minute least-squares slope at each reading, as the 5-minute change the loop works with (1, 2, 3 mg/dL per minute are %@ per 5 min).";
+/* Statistics CGM By CGM: the cadence */
+"Cadence" = "Cadence";
+/* Statistics CGM By CGM: the cadence ("5") */
+"%@ min" = "%@ min";
+/* Statistics CGM By CGM: the reversals' unit */
+"a day / reference" = "a day / reference";
+/* Statistics CGM Sensors: none in the period */
+"No sensor in this period." = "No sensor in this period.";
+/* Statistics CGM Unknown: the recording's start ("Mon 12 Oct, 10:20") */
+"Sensors weren’t recorded before %@." = "Sensors weren’t recorded before %@.";
+/* Statistics CGM Unknown: no sensors */
+"Sensors weren’t recorded." = "Sensors weren’t recorded.";
+/* Statistics CGM Sensors: the first sensor day */
+"Day 1" = "Day 1";
+/* Statistics CGM Sensors: day 1's noise ("0.24", "mmol/L") */
+"%1$@ %2$@ on the first day" = "%1$@ %2$@ on the first day";
+/* Statistics CGM Sensors: the later days' noise ("0.17") */
+"against %@ from day 2 on" = "against %@ from day 2 on";
+/* Statistics CGM Sensors: the sensors with a day 1 */
+"%d sensors" = "%d sensors";
+/* Statistics CGM Sensors: what the noise by sensor day is */
+"Day 1 is the first 24 hours after a sensor start; under each day, the sensors with readings on it. A noisier first day is what pre-soaking (inserting the new sensor hours early) avoids." = "Day 1 is the first 24 hours after a sensor start; under each day, the sensors with readings on it. A noisier first day is what pre-soaking (inserting the new sensor hours early) avoids.";
+/* Statistics CGM Sensors: a sensor's noise ("0.18", "mmol/L") */
+"noise %1$@ %2$@" = "noise %1$@ %2$@";
+/* Statistics CGM Smoothing: the period replayed */
+"Period" = "Period";
+/* Statistics CGM Smoothing: the readings' span and cadence ("29 d 14 h", "1-min") */
+"%1$@ of readings · %2$@" = "%1$@ of readings · %2$@";
+/* Statistics CGM Smoothing: the settings compared */
+"Options" = "Options";
+/* Statistics CGM Smoothing: the settings compared (8) */
+"%d compared" = "%d compared";
+/* Statistics CGM Smoothing: the settings compared */
+"none, Savitzky-Golay 1–3 passes, Kalman Calm, Balanced, Responsive, Exponential" = "none, Savitzky-Golay 1–3 passes, Kalman Calm, Balanced, Responsive, Exponential";
+/* Statistics CGM Smoothing: the current setting */
+"Your setting" = "Your setting";
+/* Statistics CGM Smoothing: where the setting is */
+"Settings → CGM → Smoothing" = "Settings → CGM → Smoothing";
+/* Statistics CGM Smoothing: Savitzky-Golay's passes */
+"1 pass" = "1 pass";
+/* Statistics CGM Smoothing: Savitzky-Golay's passes */
+"%d passes" = "%d passes";
+/* Statistics CGM Smoothing: minutes ("+3") */
+"%@ m" = "%@ m";
+/* Statistics CGM Smoothing: the reversals' unit */
+"a day" = "a day";
+/* Statistics CGM Smoothing: the delta jitter */
+"Jitter" = "Jitter";
+/* Statistics CGM Smoothing: deltas against a clear move */
+"Wrong way" = "Wrong way";
+/* Statistics CGM Smoothing: the wrong-way deltas' unit */
+"deltas" = "deltas";
+/* Statistics CGM Smoothing: percentage points ("+5") */
+"%@ pt" = "%@ pt";
+/* Statistics CGM Smoothing: the trend table (the reference's reversals, 42; the moving rate, "0.06 mmol/L") */
+"No smoothing: the figures for the readings as they came. Below it, each option’s change from them. Reversals: turns of the delta the loop saw (%1$d a day in the reference, the body’s own). Jitter: how much the 5-minute delta jumps from one loop to the next. Wrong way: deltas pointing against a clear move (%2$@ a minute or more)." = "No smoothing: the figures for the readings as they came. Below it, each option’s change from them. Reversals: turns of the delta the loop saw (%1$d a day in the reference, the body’s own). Jitter: how much the 5-minute delta jumps from one loop to the next. Wrong way: deltas pointing against a clear move (%2$@ a minute or more).";
+/* Statistics CGM Smoothing: the trend table (the moving rate, "0.06 mmol/L") */
+"No smoothing: the figures for the readings as they came. Below it, each option’s change from them. Reversals: turns of the delta the loop saw. Jitter: how much the 5-minute delta jumps from one loop to the next. Wrong way: deltas pointing against a clear move (%@ a minute or more)." = "No smoothing: the figures for the readings as they came. Below it, each option’s change from them. Reversals: turns of the delta the loop saw. Jitter: how much the 5-minute delta jumps from one loop to the next. Wrong way: deltas pointing against a clear move (%@ a minute or more).";
+/* Statistics CGM Smoothing: the lag */
+"Lag" = "Lag";
+/* Statistics CGM Smoothing: the low crossing delay's unit */
+"cross" = "cross";
+/* Statistics CGM Smoothing: the nadir miss */
+"Nadir" = "Nadir";
+/* Statistics CGM Smoothing: the nadir miss's unit */
+"miss" = "miss";
+/* Statistics CGM Smoothing: the level error */
+"Level" = "Level";
+/* Statistics CGM Smoothing: the errors' unit */
+"error" = "error";
+/* Statistics CGM Smoothing: the delta error */
+"Delta" = "Delta";
+/* Statistics CGM Smoothing: the reference table ("3.9 mmol/L", "mmol/L") */
+"The reference: a centred, robust local fit over ±20 minutes of the raw readings, known only afterwards. Lag: the shift that best lines the loop’s values up with it. Low cross: how much later than the reference the loop’s value went below %1$@. Nadir miss: how far it was from the bottom of a dip (%2$@). Level and delta error: the typical error of the newest value and of the 5-minute delta." = "The reference: a centred, robust local fit over ±20 minutes of the raw readings, known only afterwards. Lag: the shift that best lines the loop’s values up with it. Low cross: how much later than the reference the loop’s value went below %1$@. Nadir miss: how far it was from the bottom of a dip (%2$@). Level and delta error: the typical error of the newest value and of the 5-minute delta.";
+/* Statistics CGM Smoothing: the ranking at another reference width (15, "Savitzky-Golay · 1 pass", "Exponential") */
+"Against a ±%1$d min reference, %2$@ ranks above %3$@ on the delta error" = "Against a ±%1$d min reference, %2$@ ranks above %3$@ on the delta error";
+/* Statistics CGM Smoothing: the ranking at another reference width (15, "Kalman filter · Calm", "Exponential") */
+"Against a ±%1$d min reference, %2$@ ranks above %3$@ on the lag" = "Against a ±%1$d min reference, %2$@ ranks above %3$@ on the lag";
+/* Statistics CGM Smoothing: the reference width callout */
+"The ranking changes with the reference" = "The ranking changes with the reference";
+/* Statistics CGM Smoothing: the reference scored against (20) */
+"The tables are against the ±%d min reference." = "The tables are against the ±%d min reference.";
+/* Statistics CGM Sensors: the list of the sensors */
+"Sensor by sensor" = "Sensor by sensor";
+/* Statistics CGM Unknown: the card's title */
+"Unknown CGM" = "Unknown CGM";
+/* Statistics CGM Overview: the coverage's unit */
+"of expected readings" = "of expected readings";
+/* Statistics CGM Overview: the rate of change card */
+"Rate of change" = "Rate of change";
+/* Statistics CGM Overview: the comparison of the CGMs */
+"By CGM" = "By CGM";
+/* Statistics CGM Sensors: the noise by sensor day card */
+"Noise by sensor day" = "Noise by sensor day";
+/* Statistics CGM Smoothing: the analysis card */
+"What the loop saw" = "What the loop saw";
+/* Statistics CGM Smoothing: what the analysis does */
+"Replays the period as the loop ran it. At each loop time it takes the 24 hours of readings the loop had, smooths them with each option, thins them to one per 4.5 minutes as oref gets them, and works out the deltas oref works out. Only the values the loop had at that moment count, never ones revised later." = "Replays the period as the loop ran it. At each loop time it takes the 24 hours of readings the loop had, smooths them with each option, thins them to one per 4.5 minutes as oref gets them, and works out the deltas oref works out. Only the values the loop had at that moment count, never ones revised later.";
+/* Statistics CGM Smoothing: the analysis's read failed */
+"The readings couldn’t be read." = "The readings couldn’t be read.";
+/* Statistics CGM Smoothing: before the analysis */
+"Takes a few seconds for 30 days, off the main screen; the other views stay open meanwhile. Nothing is changed: it only compares." = "Takes a few seconds for 30 days, off the main screen; the other views stay open meanwhile. Nothing is changed: it only compares.";
+/* Statistics CGM Smoothing: starts the analysis */
+"Analyse" = "Analyse";
+/* Statistics CGM Smoothing: the analysis running (8) */
+"Replaying %d options" = "Replaying %d options";
+/* Statistics CGM Smoothing: how the analysis runs */
+"Every option at each loop time, in parallel, off the main screen" = "Every option at each loop time, in parallel, off the main screen";
+/* Statistics CGM Smoothing: the reference-free table */
+"The trend the loop saw" = "The trend the loop saw";
+/* Statistics CGM Smoothing: the table against the reference */
+"Against the reference" = "Against the reference";
+/* Statistics CGM Smoothing: the reference is known only afterwards */
+"after the fact" = "after the fact";
+/* Statistics CGM Smoothing: the current setting's badge */
+"Current" = "Current";
+/* Statistics CGM view: sensor by sensor */
+"Sensors" = "Sensors";
+/* Statistics CGM: the readings couldn't be read */
+"The CGM readings couldn't be read." = "The CGM readings couldn't be read.";
+/* Statistics duration: whole days */
+"%d d" = "%d d";
+/* Statistics CGM Unknown: what its readings are, some after the recording began (the count) */
+"Readings no recorded CGM session covers: from before iAPS recorded which CGM was in use, or from a time no CGM was recorded. These %@ readings count in the Glucose statistics as always; here they are kept apart from the named CGMs." = "Readings no recorded CGM session covers: from before iAPS recorded which CGM was in use, or from a time no CGM was recorded. These %@ readings count in the Glucose statistics as always; here they are kept apart from the named CGMs.";
+/* Statistics CGM By CGM: what a column is */
+"Each column is that CGM’s own readings; Unknown is the readings no recorded CGM session covers." = "Each column is that CGM’s own readings; Unknown is the readings no recorded CGM session covers.";
+/* Statistics CGM Smoothing: the results are older than the readings ("14:35") */
+"Analysed at %@; newer readings since." = "Analysed at %@; newer readings since.";
+/* Statistics CGM Smoothing: runs the analysis again with the newer readings */
+"Analyse again" = "Analyse again";
+/* Statistics CGM Unknown: opens the sheet to name the CGM of the Unknown readings */
+"Which CGM was this?" = "Which CGM was this?";
+/* Statistics CGM Unknown: opens the sheet with what the user entered */
+"Change" = "Change";
+/* Statistics CGM Unknown: removes every session the user entered */
+"Clear what you entered" = "Clear what you entered";
+/* Statistics CGM Unknown: the confirmation's title */
+"Clear what you entered?" = "Clear what you entered?";
+/* Statistics CGM Unknown: what clearing does */
+"The readings you named go back to Unknown. The recorded CGM sessions stay." = "The readings you named go back to Unknown. The recorded CGM sessions stay.";
+/* Statistics CGM: the card of the sessions the user entered */
+"Entered by you" = "Entered by you";
+/* Statistics CGM: what the entered sessions are */
+"Readings no recorded CGM session covers, named by you. A recorded session always wins over them." = "Readings no recorded CGM session covers, named by you. A recorded session always wins over them.";
+/* Statistics CGM Unknown sheet: the way, one CGM for all */
+"One CGM" = "One CGM";
+/* Statistics CGM Unknown sheet: the way, a switch date */
+"A switch" = "A switch";
+/* Statistics CGM Unknown sheet: the way, sensor by sensor */
+"By sensor" = "By sensor";
+/* Statistics CGM Unknown sheet: the save failed */
+"The answer couldn’t be saved." = "The answer couldn’t be saved.";
+/* Statistics CGM Unknown sheet: no Unknown readings */
+"Every reading of the last 90 days has a recorded CGM." = "Every reading of the last 90 days has a recorded CGM.";
+/* Statistics CGM Unknown sheet: the way picker's label */
+"Way" = "Way";
+/* Statistics CGM Unknown sheet: the one CGM way */
+"Every Unknown reading becomes this CGM’s, sensor by sensor as iAPS found them." = "Every Unknown reading becomes this CGM’s, sensor by sensor as iAPS found them.";
+/* Statistics CGM Unknown sheet: the CGM before the switch */
+"Until" = "Until";
+/* Statistics CGM Unknown sheet: the switch's date and time */
+"Switched" = "Switched";
+/* Statistics CGM Unknown sheet: the switch way */
+"The first CGM’s readings until the date and time, the second’s from it, sensor by sensor as iAPS found them." = "The first CGM’s readings until the date and time, the second’s from it, sensor by sensor as iAPS found them.";
+/* Statistics CGM Unknown sheet: no probable sensors */
+"No run of readings long enough for a sensor: name them with One CGM." = "No run of readings long enough for a sensor: name them with One CGM.";
+/* Statistics CGM Unknown sheet: every sensor's suggested CGM */
+"Use the suggestions for all" = "Use the suggestions for all";
+/* Statistics CGM Unknown sheet: how the suggestions are made */
+"Suggestions only: 1-minute readings, or a sensor longer than 11 days, suggest a Libre; about 10 days of 5-minute readings a Dexcom. A Libre 2 can read every 5 minutes and a G6 can be restarted, so check each one." = "Suggestions only: 1-minute readings, or a sensor longer than 11 days, suggest a Libre; about 10 days of 5-minute readings a Dexcom. A Libre 2 can read every 5 minutes and a G6 can be restarted, so check each one.";
+/* Statistics CGM Unknown sheet: the sensors' list (12) */
+"%d probable sensors, newest first" = "%d probable sensors, newest first";
+/* Statistics CGM Unknown sheet: what a probable sensor is */
+"A sensor is a run of readings between gaps of 30 minutes, jumps in the level across a missed reading or more, and changes of cadence; a dropout under 2 hours is joined again when both parts fit in one sensor’s life. Its start is its first reading less its CGM’s warm-up when the gap before it holds one, else its first reading." = "A sensor is a run of readings between gaps of 30 minutes, jumps in the level across a missed reading or more, and changes of cadence; a dropout under 2 hours is joined again when both parts fit in one sensor’s life. Its start is its first reading less its CGM’s warm-up when the gap before it holds one, else its first reading.";
+/* Statistics CGM Unknown sheet: a sensor's median cadence (5) */
+"every %d min" = "every %d min";
+/* Statistics CGM Unknown sheet: a sensor's readings stay Unknown */
+"Leave Unknown" = "Leave Unknown";
+/* Statistics CGM Unknown sheet: the readings ("1,234", "3 Aug", "Mon 12 Oct, 10:20") */
+"%1$@ Unknown readings in the last 90 days, %2$@ – %3$@." = "%1$@ Unknown readings in the last 90 days, %2$@ – %3$@.";
+/* Statistics CGM Unknown sheet: what saving does to the entered sessions */
+"Saving replaces what you entered for them." = "Saving replaces what you entered for them.";
+/* Statistics CGM Unknown sheet: a suggestion's confidence */
+"likely" = "likely";
+/* Statistics CGM Unknown sheet: a suggestion's confidence */
+"possible" = "possible";
+/* Statistics CGM Unknown sheet: why a Libre is suggested */
+"readings every minute" = "readings every minute";
+/* Statistics CGM Unknown sheet: why a Libre is suggested */
+"longer than a Dexcom lasts" = "longer than a Dexcom lasts";
+/* Statistics CGM Unknown sheet: why a Dexcom is suggested */
+"about a Dexcom’s 10 days" = "about a Dexcom’s 10 days";
+/* Statistics CGM Unknown sheet: a suggestion taken from the neighbouring sensor */
+"as the sensor next to it" = "as the sensor next to it";
+/* Statistics CGM Unknown sheet: a sensor's suggestion ("Dexcom G7", "possible", "about a Dexcom’s 10 days") */
+"Suggested: %1$@ (%2$@: %3$@)" = "Suggested: %1$@ (%2$@: %3$@)";
+/* Statistics CGM Unknown sheet: the CGM the user entered for a sensor */
+"You entered: %@" = "You entered: %@";
+/* Statistics CGM Unknown: the sessions the user entered, one */
+"1 period entered by you" = "1 period entered by you";
+/* Statistics CGM Unknown: the sessions the user entered (3) */
+"%d periods entered by you" = "%d periods entered by you";
+/* Statistics CGM Unknown sheet: saving with every sensor left Unknown */
+"Remove what you entered for these readings?" = "Remove what you entered for these readings?";
+/* Statistics CGM Unknown sheet: a sensor cut at the start of the readings read */
+"Began before the last 90 days: its start isn’t known" = "Began before the last 90 days: its start isn’t known";
+/* Statistics CGM Unknown: the sessions the user entered, none in the last 90 days */
+"What you entered is older than 90 days." = "What you entered is older than 90 days.";
+/* Statistics CGM Unknown: the readings the Nightscout backfill named (the count) */
+"Nightscout named the CGM of %@ more readings of this period: they count with their CGMs." = "Nightscout named the CGM of %@ more readings of this period: they count with their CGMs.";
+/* Statistics CGM Unknown: what the Nightscout glucose backfill can do for them */
+"Backfilling glucose from Nightscout also names their CGM, where Nightscout’s entries say which it was." = "Backfilling glucose from Nightscout also names their CGM, where Nightscout’s entries say which it was.";
+/* Statistics CGM Sensors: a sensor named from Nightscout */
+"From Nightscout" = "From Nightscout";
+/* Glucose backfill result: the CGM backfill's error */
+"Naming the CGMs failed: %@" = "Naming the CGMs failed: %@";
+/* Glucose backfill result: the readings no CGM session covered, and those Nightscout named */
+"Nightscout named the CGM of %1$d of %2$d readings without one" = "Nightscout named the CGM of %1$d of %2$d readings without one";
+/* Glucose backfill result: why naming the CGMs failed */
+"the sessions could not be saved" = "the sessions could not be saved";
+/* Statistics CGM Unknown: what no sensor starts leaves out */
+"so no sensors, no sensor days" = "so no sensors, no sensor days";
+/* Statistics CGM Sensors: what a sensor's bar is */
+"The bar is the sensor’s time of its expected life, full at the end of its life." = "The bar is the sensor’s time of its expected life, full at the end of its life.";
+
+/* Statistics: Good & bad days (the days scored by GRI, two groups compared) and the GRI sheet */
+/* Statistics Good & bad days: what the day score is */
+"Days are ranked by GRI, the Glycemia Risk Index: 0 is best, 100 worst." = "Days are ranked by GRI, the Glycemia Risk Index: 0 is best, 100 worst.";
+/* Statistics Good & bad days: the standard TIR range, the user's range */
+"GRI and the in-range share use the standard ranges (%1$@), not your %2$@, so your settings never move a day between groups." = "GRI and the in-range share use the standard ranges (%1$@), not your %2$@, so your settings never move a day between groups.";
+/* Statistics Good & bad days: what the chart shows */
+"The median and the middle half (25–75%) of each group’s days, by time of day." = "The median and the middle half (25–75%) of each group’s days, by time of day.";
+/* Statistics Good & bad days limited data: a group with few days */
+"Under %d days in a group: the profile and the figures are provisional." = "Under %d days in a group: the profile and the figures are provisional.";
+/* Statistics Good & bad days: the days with the lowest GRI */
+"Best third" = "Best third";
+/* Statistics Good & bad days: the best third, a column */
+"Best" = "Best";
+/* Statistics Good & bad days: "lower on the best third" */
+"the best third" = "the best third";
+/* Statistics Good & bad days: the days with the highest GRI */
+"Worst third" = "Worst third";
+/* Statistics Good & bad days: the worst third, a column */
+"Worst" = "Worst";
+/* Statistics Good & bad days: "lower on the worst third" */
+"the worst third" = "the worst third";
+/* Statistics Good & bad days: a group and its days ("Best third (10)") */
+"%1$@ (%2$d)" = "%1$@ (%2$d)";
+/* Statistics Good & bad days: a day's TIR */
+"in range %@" = "in range %@";
+/* Statistics Good & bad days: a day's GRI and its zone */
+"GRI %1$@ · %2$@" = "GRI %1$@ · %2$@";
+/* Statistics Good & bad days: the thirds' days */
+"%1$d best · %2$d worst · %3$d in between" = "%1$d best · %2$d worst · %3$d in between";
+/* Statistics Good & bad days: the best third's GRI and TIR ranges ("12–24", "81–93%") */
+"Best third: GRI %1$@, in range %2$@" = "Best third: GRI %1$@, in range %2$@";
+/* Statistics Good & bad days: the worst third's GRI and TIR ranges ("38–71", "40–62%") */
+"Worst third: GRI %1$@, in range %2$@" = "Worst third: GRI %1$@, in range %2$@";
+/* Statistics Good & bad days: a day under 70% CGM coverage */
+"1 day with too little CGM data left out" = "1 day with too little CGM data left out";
+/* Statistics Good & bad days: days under 70% CGM coverage */
+"%d days with too little CGM data left out" = "%d days with too little CGM data left out";
+/* Statistics Good & bad days: no stretch where the medians differ much ("20", "mg/dL") */
+"The medians are within %1$@ %2$@ of each other all day." = "The medians are within %1$@ %2$@ of each other all day.";
+/* Statistics Good & bad days: the main stretch, both medians, the unit, the lower group */
+"Medians differ most %1$@: %2$@ vs %3$@ %4$@, lower on %5$@" = "Medians differ most %1$@: %2$@ vs %3$@ %4$@, lower on %5$@";
+/* Statistics Good & bad days: the main stretch, both medians, the unit */
+"Medians differ most %1$@: %2$@ vs %3$@ %4$@" = "Medians differ most %1$@: %2$@ vs %3$@ %4$@";
+/* Statistics Good & bad days: a group under the minimum */
+"Too few days: each group needs at least %d" = "Too few days: each group needs at least %d";
+/* Statistics Good & bad days: the thirds of too few days */
+"%1$d of %2$d days scored, so each third has %3$d." = "%1$d of %2$d days scored, so each third has %3$d.";
+/* Statistics Good & bad days: the Glycemia Risk Index */
+"GRI" = "GRI";
+/* Statistics Good & bad days: TIR of 00:00–06:00 */
+"In range at night" = "In range at night";
+/* Statistics Good & bad days legend: the stretches */
+"Medians differ most" = "Medians differ most";
+/* Statistics Good & bad days */
+"Good vs bad days" = "Good vs bad days";
+/* Statistics Good & bad days */
+"Glucose on those days" = "Glucose on those days";
+/* Statistics Good & bad days */
+"median (IQR)" = "median (IQR)";
+/* Statistics Good & bad days */
+"Difference" = "Difference";
+/* Statistics Good & bad days */
+"Tap a day to open it in Day. A run of bad days in one stretch can be a settings change, not the factors above." = "Tap a day to open it in Day. A run of bad days in one stretch can be a settings change, not the factors above.";
+/* Statistics GRI sheet: its title */
+"Glycemia Risk Index (GRI)" = "Glycemia Risk Index (GRI)";
+/* Statistics GRI sheet */
+"GRI sums up a day’s glucose in one number from 0 to 100. Lower is better." = "GRI sums up a day’s glucose in one number from 0 to 100. Lower is better.";
+/* Statistics GRI sheet: where it comes from */
+"It was developed by Klonoff and colleagues (2022). Diabetes clinicians ranked hundreds of glucose profiles by how much each one worried them, and GRI is the formula that best matched their ranking." = "It was developed by Klonoff and colleagues (2022). Diabetes clinicians ranked hundreds of glucose profiles by how much each one worried them, and GRI is the formula that best matched their ranking.";
+/* Statistics GRI sheet: a section */
+"The formula" = "The formula";
+/* Statistics GRI sheet: the formula */
+"GRI = 3.0 × very low + 2.4 × low + 1.6 × very high + 0.8 × high, each as a % of the time with CGM data. It is capped at 100." = "GRI = 3.0 × very low + 2.4 × low + 1.6 × very high + 0.8 × high, each as a % of the time with CGM data. It is capped at 100.";
+/* Statistics GRI sheet: a section */
+"The ranges" = "The ranges";
+/* Statistics GRI sheet: a range ("54 mg/dL") */
+"Very low: below %@" = "Very low: below %@";
+/* Statistics GRI sheet: a range ("54–69 mg/dL") */
+"Low: %@" = "Low: %@";
+/* Statistics GRI sheet: a range ("181–250 mg/dL") */
+"High: %@" = "High: %@";
+/* Statistics GRI sheet: a range ("250 mg/dL") */
+"Very high: above %@" = "Very high: above %@";
+/* Statistics GRI sheet: a section */
+"The two components" = "The two components";
+/* Statistics GRI sheet */
+"Hypo component: very low + 0.8 × low" = "Hypo component: very low + 0.8 × low";
+/* Statistics GRI sheet */
+"Hyper component: very high + 0.5 × high" = "Hyper component: very high + 0.5 × high";
+/* Statistics GRI sheet: the components' weights */
+"GRI = 3.0 × hypo + 1.6 × hyper: time spent low counts about twice as much as time spent high, and very low most of all." = "GRI = 3.0 × hypo + 1.6 × hyper: time spent low counts about twice as much as time spent high, and very low most of all.";
+/* Statistics GRI sheet: a section */
+"The zones" = "The zones";
+/* Statistics GRI sheet: the zones */
+"Zones: A 0–20 · B 21–40 · C 41–60 · D 61–80 · E 81–100. Zone A is the lowest risk." = "Zones: A 0–20 · B 21–40 · C 41–60 · D 61–80 · E 81–100. Zone A is the lowest risk.";
+/* Statistics GRI sheet: the user's range ("70–145 mg/dL") */
+"GRI always uses these standard ranges, not your Statistics range (%@). Changing your range doesn’t change a day’s GRI or its group." = "GRI always uses these standard ranges, not your Statistics range (%@). Changing your range doesn’t change a day’s GRI or its group.";
+/* Statistics GRI sheet: GRI of a single day */
+"GRI was designed for 14 days or more. Here it is worked out for each day, to rank the days against each other." = "GRI was designed for 14 days or more. Here it is worked out for each day, to rank the days against each other.";
+/* Statistics view: the days scored by GRI, two groups of them compared */
+"Good & bad days" = "Good & bad days";
+/* Statistics Good & bad days: no day scored */
+"No day in this period has enough CGM data to be scored: the days end yesterday" = "No day in this period has enough CGM data to be scored: the days end yesterday";
+
+/* Statistics: Good & bad days, what was different on those days (the factor rows) */
+/* Statistics Good & bad days: the factor card's intro ("the worst third", "the best third", 5) */
+"Each row: both groups’ median and middle half, then how %1$@ differs from %2$@. A row needs %3$d days with a value in each group." = "Each row: both groups’ median and middle half, then how %1$@ differs from %2$@. A row needs %3$d days with a value in each group.";
+/* Statistics Good & bad days: the SMB, zero basal and basal rows */
+"What you and the loop did" = "What you and the loop did";
+/* Statistics Good & bad days: the pump site's rows */
+"Site" = "Site";
+/* Statistics Good & bad days: a section */
+"Loop and CGM" = "Loop and CGM";
+/* Statistics Good & bad days: the meal rows ("70 mg/dL", 30) */
+"Low treatments are left out: carb entries made during a low (below %1$@), or within %2$d min after it ends." = "Low treatments are left out: carb entries made during a low (below %1$@), or within %2$d min after it ends.";
+/* Statistics Good & bad days: the insulin rows' days */
+"Days with pump data for at least half of the day." = "Days with pump data for at least half of the day.";
+/* Statistics Good & bad days: the loop rows are a result, not a cause */
+"These follow glucose: a bad day brings more corrections and more time at zero basal." = "These follow glucose: a bad day brings more corrections and more time at zero basal.";
+/* Statistics: a failed read */
+"The pump sessions couldn't be read." = "The pump sessions couldn't be read.";
+/* Statistics: a failed read */
+"The loop records couldn't be read." = "The loop records couldn't be read.";
+/* Statistics Good & bad days: a factor */
+"Largest meal" = "Largest meal";
+/* Statistics Good & bad days: its start */
+"Last meal" = "Last meal";
+/* Statistics Good & bad days: carbs from 21:00 */
+"Late carbs" = "Late carbs";
+/* Statistics Good & bad days: a factor */
+"Fat + protein" = "Fat + protein";
+/* Statistics Good & bad days: the day before's late carbs */
+"Late carbs the evening before" = "Late carbs the evening before";
+/* Statistics Good & bad days: a factor */
+"Total insulin" = "Total insulin";
+/* Statistics Good & bad days: a factor */
+"Bolus share" = "Bolus share";
+/* Statistics Good & bad days: a factor */
+"Meals with a late or no bolus" = "Meals with a late or no bolus";
+/* Statistics Good & bad days: a factor */
+"Time at zero basal" = "Time at zero basal";
+/* Statistics Good & bad days: the wear day */
+"Site day" = "Site day";
+/* Statistics Good & bad days: a factor */
+"Site change that day" = "Site change that day";
+/* Statistics Good & bad days: the sensor's rows */
+"CGM sensor" = "CGM sensor";
+/* Statistics Good & bad days: the CGM sensor's day */
+"Sensor day" = "Sensor day";
+/* Statistics Good & bad days: a factor */
+"Sensor change that day" = "Sensor change that day";
+/* Statistics Good & bad days: a factor */
+"Loop success" = "Loop success";
+/* Statistics Good & bad days: a factor */
+"Weekend days" = "Weekend days";
+/* Statistics Good & bad days: a factor */
+"Previous day’s GRI" = "Previous day’s GRI";
+/* Statistics Good & bad days: late carbs */
+"Entries from %@ to midnight." = "Entries from %@ to midnight.";
+/* Statistics Good & bad days: the site day */
+"The wear day at noon, counted from the change." = "The wear day at noon, counted from the change.";
+/* Statistics Good & bad days: the sensor day, the first CGM session's start ("4 Oct") */
+"At noon; sensors started before %@ weren’t recorded." = "At noon; sensors started before %@ weren’t recorded.";
+/* Statistics Good & bad days: the late or no bolus row ("10 g", 15) */
+"Meals of %1$@ or more with no bolus by %2$d min after the start. Moderately reliable: a meal entered at bolus time hides a late bolus." = "Meals of %1$@ or more with no bolus by %2$d min after the start. Moderately reliable: a meal entered at bolus time hides a late bolus.";
+/* Statistics Good & bad days: a yes/no row ("Best 4 of 10 days · Worst 5 of 5 days") */
+"%1$@ %2$d of %3$d days · %4$@ %5$d of %6$d days" = "%1$@ %2$d of %3$d days · %4$@ %5$d of %6$d days";
+/* Statistics Good & bad days: a factor row, both groups' median (IQR), their days */
+"%1$@ %2$@ (%3$@) · %4$@ %5$@ (%6$@) · n %7$d / %8$d" = "%1$@ %2$@ (%3$@) · %4$@ %5$@ (%6$@) · n %7$d / %8$d";
+/* Statistics Good & bad days: a day without meal entries */
+"no meals logged on 1 day" = "no meals logged on 1 day";
+/* Statistics Good & bad days: the days without meal entries */
+"no meals logged on %d days" = "no meals logged on %d days";
+/* Statistics Good & bad days: a difference's direction */
+"later" = "later";
+/* Statistics Good & bad days: a difference's direction */
+"more" = "more";
+/* Statistics Good & bad days: a difference's direction */
+"earlier" = "earlier";
+/* Statistics Good & bad days: a difference's direction */
+"less" = "less";
+/* Statistics Good & bad days: no difference */
+"the same" = "the same";
+/* Statistics Good & bad days */
+"What was different on those days" = "What was different on those days";
+/* Statistics Good & bad days */
+"Differences between these groups of days, not causes. Small groups differ by chance." = "Differences between these groups of days, not causes. Small groups differ by chance.";
+
+/* Statistics: Good & bad days, the evening before's days without meals */
+/* Statistics Good & bad days: a day whose day before has no meal entries */
+"no meals logged the day before on 1 day" = "no meals logged the day before on 1 day";
+/* Statistics Good & bad days: the days whose day before has no meal entries */
+"no meals logged the day before on %d days" = "no meals logged the day before on %d days";

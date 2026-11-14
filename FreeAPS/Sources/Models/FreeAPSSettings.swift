@@ -48,7 +48,6 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var xGridLines: Bool = true
     var yGridLines: Bool = true
     var yGridLabels: Bool = true
-    var oneDimensionalGraph: Bool = false
     var rulerMarks: Bool = false
     var inRangeAreaFill: Bool = false
     var secondaryChartBackdrop: Bool = true
@@ -99,7 +98,6 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var minumimPrediction: Bool = true
     var minimumSMB: Decimal = 0.3
     var useInsulinBars: Bool = false
-    var skipGlucoseChart: Bool = false
     var birthDate = Date.distantPast
     var sexSetting: Int = 3
     // Demographics — weight stored canonically in kg, height in cm (0 = unset).
@@ -108,6 +106,19 @@ struct FreeAPSSettings: JSON, Equatable, Sendable {
     var height: Decimal = 0
     var weightInLb: Bool = false
     var heightInFtIn: Bool = false
+    // whether the daily Statistics upload carries the sex and the age (Settings › Sharing); a value set is not shared
+    // until its toggle is on, and a value cleared in Settings › Demographics turns its toggle off
+    // (`DemographicsSharing.settingSex`, `settingBirthDate`). The settings backup carries all the demographics (the
+    // weight and the height too) either way.
+    var shareSex: Bool = false
+    var shareAge: Bool = false
+    /// The share toggles were set from the values, and the birth date turned into a day, once
+    /// (`DataMigrations.migrateDemographicsSharing`): it runs while the settings file lacks this key (an older
+    /// build's), whatever its value, so a file this build wrote without the migration (a fresh install, a restored
+    /// older backup: false) is never migrated. A downgrade drops the key (older builds don't know it), so the next
+    /// upgrade runs the migration again, from the values as they are then: a toggle turned off since comes back on
+    /// while its value is set, and the birth date is converted again (`DemographicsSharing.legacyBirthDay`).
+    var demographicsSharingMigrated: Bool = false
     var displayDelta: Bool = false
     var profileID: String = "Hypo Treatment"
     var allowDilution: Bool = false
@@ -468,10 +479,6 @@ extension FreeAPSSettings: Decodable {
             settings.yGridLabels = yGridLabels
         }
 
-        if let oneDimensionalGraph = try? container.decode(Bool.self, forKey: .oneDimensionalGraph) {
-            settings.oneDimensionalGraph = oneDimensionalGraph
-        }
-
         if let rulerMarks = try? container.decode(Bool.self, forKey: .rulerMarks) {
             settings.rulerMarks = rulerMarks
         }
@@ -624,10 +631,6 @@ extension FreeAPSSettings: Decodable {
             settings.useInsulinBars = useInsulinBars
         }
 
-        if let skipGlucoseChart = try? container.decode(Bool.self, forKey: .skipGlucoseChart) {
-            settings.skipGlucoseChart = skipGlucoseChart
-        }
-
         if let birthDate = try? container.decode(Date.self, forKey: .birthDate) {
             settings.birthDate = birthDate
         }
@@ -650,6 +653,18 @@ extension FreeAPSSettings: Decodable {
 
         if let heightInFtIn = try? container.decode(Bool.self, forKey: .heightInFtIn) {
             settings.heightInFtIn = heightInFtIn
+        }
+
+        if let shareSex = try? container.decode(Bool.self, forKey: .shareSex) {
+            settings.shareSex = shareSex
+        }
+
+        if let shareAge = try? container.decode(Bool.self, forKey: .shareAge) {
+            settings.shareAge = shareAge
+        }
+
+        if let demographicsSharingMigrated = try? container.decode(Bool.self, forKey: .demographicsSharingMigrated) {
+            settings.demographicsSharingMigrated = demographicsSharingMigrated
         }
 
         if let displayDelta = try? container.decode(Bool.self, forKey: .displayDelta) {
@@ -1097,5 +1112,253 @@ enum KalmanResponsiveness: String, JSON, Identifiable, CaseIterable {
         case .balanced: return 1
         case .responsive: return 1.5
         }
+    }
+}
+
+// MARK: - Demographics
+
+/// The sex and the birth date (Settings › Demographics, stored on the phone with the weight and the height) and which
+/// of the two the daily Statistics upload carries (Settings › Sharing): the rules both screens and the uploads follow.
+/// The settings backup carries all of them, the weight and the height too, whatever the toggles.
+struct DemographicsSharing: Equatable, Sendable {
+    /// `FreeAPSSettings.sexSetting`: 0 woman, 1 man, 2 other, 3 not set (the default)
+    var sexSetting: Int
+    /// `.distantPast` until set; otherwise a day, kept at 12:00 UTC (`birthCalendar`). Stored as it is: read as a day
+    /// (`birthDay`), so a value not kept so (a restored older backup, the raw editor) reads as the right day too.
+    var birthDate: Date
+    var shareSex: Bool
+    var shareAge: Bool
+
+    init(sexSetting: Int = 3, birthDate: Date = .distantPast, shareSex: Bool = false, shareAge: Bool = false) {
+        self.sexSetting = sexSetting
+        self.birthDate = birthDate
+        self.shareSex = shareSex
+        self.shareAge = shareAge
+    }
+
+    init(_ settings: FreeAPSSettings) {
+        self.init(
+            sexSetting: settings.sexSetting,
+            birthDate: settings.birthDate,
+            shareSex: settings.shareSex,
+            shareAge: settings.shareAge
+        )
+    }
+
+    /// Woman, Man or Other
+    var isSexSet: Bool { (0 ... 2).contains(sexSetting) }
+    var isBirthDateSet: Bool { birthDate != .distantPast }
+
+    /// Shared: the toggle on and the value set (clearing a value in Settings › Demographics or the Reference intakes
+    /// sheet turns its toggle off, `settingSex`, `settingBirthDate`; one cleared otherwise, by a restored backup or
+    /// the raw editor, may leave it on).
+    var sharesSex: Bool { shareSex && isSexSet }
+    var sharesAge: Bool { shareAge && isBirthDateSet }
+
+    /// The sex set, in the same settings update as Sex sharing turned off when it is Not set (Other is set: kept).
+    func settingSex(_ sexSetting: Int) -> DemographicsSharing {
+        var updated = self
+        updated.sexSetting = sexSetting
+        if !updated.isSexSet { updated.shareSex = false }
+        return updated
+    }
+
+    /// The birth date set (a day, `birthDate(day:)`) or cleared (`.distantPast`), in the same settings update as Age
+    /// sharing turned off when cleared.
+    func settingBirthDate(_ birthDate: Date) -> DemographicsSharing {
+        var updated = self
+        updated.birthDate = birthDate
+        if !updated.isBirthDateSet { updated.shareAge = false }
+        return updated
+    }
+
+    /// The reference intakes (Statistics › Nutrients) need Woman or Man and the birth date.
+    var setsReferenceIntakes: Bool {
+        Sex.savedSettings(sexSetting).hasHormonalSignal && isBirthDateSet
+    }
+
+    /// The Daily Log upload needs the sex shared as Woman or Man and the age shared, 1 to 120 years.
+    func qualifiesForLogs(now: Date, calendar: Calendar) -> Bool {
+        guard sharesSex, sharesAge, Sex.savedSettings(sexSetting).hasHormonalSignal,
+              let age = Self.age(birthDate: birthDate, now: now, calendar: calendar)
+        else { return false }
+        return (1 ... 120).contains(age)
+    }
+
+    /// In whole years: from the birth day (`birthDay`, in `birthCalendar`) to today in `calendar`'s time zone (the
+    /// phone's), so a birthday starts at midnight wherever the phone is; nil when the birth date is not set. Today is
+    /// read in the Gregorian calendar, as the birth day is: the phone's calendar may be another, whose years aren't the
+    /// Gregorian ones (Buddhist 2569, Japanese Reiwa 8, Islamic 1448 in 2026).
+    static func age(birthDate: Date, now: Date, calendar: Calendar) -> Int? {
+        guard birthDate != .distantPast else { return nil }
+        var gregorian = Calendar(identifier: .gregorian)
+        gregorian.timeZone = calendar.timeZone
+        let born = birthCalendar.dateComponents(
+            [.year, .month, .day],
+            from: birthDay(birthDate, timeZone: calendar.timeZone)
+        )
+        let today = gregorian.dateComponents([.year, .month, .day], from: now)
+        return gregorian.dateComponents([.year], from: born, to: today).year
+    }
+
+    // MARK: The Statistics upload
+
+    /// `Statistics.sex`: the setting when shared, otherwise 3 (not set).
+    var statisticsSex: Int { sharesSex ? sexSetting : 3 }
+
+    /// `Statistics.dob`: the birth date (as its day, `birthDay`) when shared, otherwise `.distantPast` (what an unset
+    /// birth date always sent).
+    var statisticsBirthDate: Date { sharesAge ? Self.birthDay(birthDate) : .distantPast }
+
+    // MARK: Settings › Demographics
+
+    /// The Sharing row's summary: "Off" while nothing is uploaded (`uploading`, the Online Backup and Statistics
+    /// toggle, off), otherwise "Nothing shared", "Sex shared", "Age shared", "Sex and age shared".
+    func summary(uploading: Bool) -> String {
+        guard uploading else { return NSLocalizedString("Off", comment: "Demographics: nothing is uploaded") }
+        switch (sharesSex, sharesAge) {
+        case (false, false): return NSLocalizedString("Nothing shared", comment: "Demographics: none is shared")
+        case (true, false): return NSLocalizedString("Sex shared", comment: "Demographics: what is shared")
+        case (false, true): return NSLocalizedString("Age shared", comment: "Demographics: what is shared")
+        case (true, true): return NSLocalizedString("Sex and age shared", comment: "Demographics: what is shared")
+        }
+    }
+
+    /// The birth date the wheel starts on and edits (`BirthDateField`): its day (`birthDay`), nil when not set.
+    var shownBirthDay: Date? { isBirthDateSet ? Self.birthDay(birthDate) : nil }
+
+    /// The Reference intakes sheet (Statistics › Nutrients) saves Woman or Man with a birth date.
+    static func canSaveReferenceIntakes(sex: Sex, birthDate: Date?) -> Bool {
+        sex.hasHormonalSignal && birthDate.map { $0 != .distantPast } == true
+    }
+
+    // MARK: The birth date as a day
+
+    /// The calendar a birth date is kept and read in: Gregorian, UTC. The date is a day, not a moment: kept at 12:00
+    /// UTC of that day and read in UTC, it is the same day wherever the phone is, then or later (the old date picker
+    /// kept the phone's midnight, which reads as the day before anywhere west of where it was entered).
+    static let birthCalendar: Calendar = {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = TimeZone(secondsFromGMT: 0)!
+        return calendar
+    }()
+
+    /// The day picked (its year, month and day in `birthCalendar`, the calendar the picker shows) at 12:00 UTC.
+    static func birthDate(day: Date) -> Date {
+        let components = birthCalendar.dateComponents([.year, .month, .day], from: day)
+        return birthCalendar.date(from: DateComponents(
+            year: components.year,
+            month: components.month,
+            day: components.day,
+            hour: 12
+        )) ?? day
+    }
+
+    /// A day at 12:00 UTC (to the second): what `birthDate(day:)` keeps.
+    static func isKeptAsDay(_ birthDate: Date) -> Bool {
+        let noon = birthCalendar.startOfDay(for: birthDate).addingTimeInterval(.hours(12))
+        return abs(birthDate.timeIntervalSince(noon)) < 1
+    }
+
+    /// The day a stored birth date is read as, by every reader (the age, the upload, the texts, the wheel), writing
+    /// nothing: one kept as a day (`isKeptAsDay`, 12:00 UTC) as it is, wherever the phone is (at UTC+12 too, where
+    /// it is a midnight); `.distantPast` as it is; any other (an older build's, from a restored backup, or the raw
+    /// editor's) as `legacyBirthDay` converts it in the phone's zone `timeZone`. The stored value is rewritten only by
+    /// the migration (`FreeAPSSettings.migratingDemographicsSharing`) or a day picked.
+    /// A day off: a legacy date never migrated (a restored older backup after the migration, the raw editor) entered
+    /// at midnight in a UTC+12 zone is 12:00 UTC of the day before, so it reads as that day, one day early, the phone
+    /// at UTC+12 too (where `legacyBirthDay` would give the day). The kept day checked first is deliberate: a day this
+    /// build kept reads as it is in every zone.
+    static func birthDay(_ birthDate: Date, timeZone: TimeZone = .current) -> Date {
+        guard birthDate != .distantPast, !isKeptAsDay(birthDate) else { return birthDate }
+        return legacyBirthDay(birthDate, timeZone: timeZone)
+    }
+
+    /// A birth date from before the day was kept (settings from an older build, or a backup made by one; converted
+    /// once, by `FreeAPSSettings.migratingDemographicsSharing`, and read so by `birthDay`) as its day at 12:00 UTC. The
+    /// old date picker kept midnight in the zone it was entered in, which `timeZone` (the phone's at the migration, or
+    /// at the read) may no longer be:
+    /// 1. midnight in `timeZone` (that day's offset, DST included; the day's start where midnight was skipped): that
+    ///    day, entered here (New Zealand or Fiji with the phone still there);
+    /// 2. exactly 12:00:00 UTC: kept as it is, a day this build kept (an older build dropped the flag: a downgrade,
+    ///    then this build again);
+    /// 3. otherwise the UTC day 12 hours later: right for midnight in any zone from UTC−11 to UTC+11 (entered in
+    ///    Berlin, read in New York).
+    /// A day off: a UTC+12 midnight (12:00 UTC of the day before) read outside UTC+12, a UTC+13, UTC+14 or UTC−12
+    /// one read outside its zone, one read 24 hours east of where it was entered (UTC−11 read at UTC+13: midnight
+    /// there too), and a downgrade then upgrade with the phone at UTC+12 (its 12:00 UTC is midnight there, rule 1).
+    static func legacyBirthDay(_ birthDate: Date, timeZone: TimeZone) -> Date {
+        guard birthDate != .distantPast else { return birthDate }
+        // to the second (a JSON round trip drifts a date by a millisecond or two)
+        let moment = Date(timeIntervalSinceReferenceDate: birthDate.timeIntervalSinceReferenceDate.rounded())
+        var local = Calendar(identifier: .gregorian)
+        local.timeZone = timeZone
+        let day: DateComponents
+        if local.startOfDay(for: moment) == moment {
+            day = local.dateComponents([.year, .month, .day], from: moment)
+        } else if birthCalendar.startOfDay(for: moment).addingTimeInterval(.hours(12)) == moment {
+            return birthDate
+        } else {
+            day = birthCalendar.dateComponents([.year, .month, .day], from: moment.addingTimeInterval(.hours(12)))
+        }
+        return birthCalendar.date(from: DateComponents(
+            year: day.year,
+            month: day.month,
+            day: day.day,
+            hour: 12
+        )) ?? birthDate
+    }
+
+    /// The birth picker's range: 1 January 1920 to today, as days (`birthCalendar`).
+    static func birthDateRange(now: Date = Date(), timeZone: TimeZone = .current) -> ClosedRange<Date> {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = timeZone
+        let today = calendar.dateComponents([.year, .month, .day], from: now)
+        let start = birthCalendar.date(from: DateComponents(year: 1920, month: 1, day: 1, hour: 12)) ?? now
+        let end = birthCalendar.date(from: DateComponents(
+            year: today.year,
+            month: today.month,
+            day: today.day,
+            hour: 12
+        )) ?? now
+        return start ... Swift.max(start, end)
+    }
+
+    /// Where the birth wheel starts while not set: 1 January 30 years before this year (within `birthDateRange`), as
+    /// a day. Not a birth date until the wheel is turned or "Set to" under it takes this day (`BirthDateField`).
+    static func birthWheelStart(now: Date = Date(), timeZone: TimeZone = .current) -> Date {
+        let range = birthDateRange(now: now, timeZone: timeZone)
+        let year = birthCalendar.component(.year, from: range.upperBound) - 30
+        let day = birthCalendar.date(from: DateComponents(year: year, month: 1, day: 1, hour: 12)) ?? range.upperBound
+        return Swift.min(Swift.max(day, range.lowerBound), range.upperBound)
+    }
+}
+
+extension FreeAPSSettings {
+    /// The sex, the birth date and their share toggles, read and written together: Settings › Demographics writes them
+    /// in one update (`DemographicsSharing.settingSex`, `settingBirthDate`: a value cleared turns its toggle off).
+    var demographics: DemographicsSharing {
+        get { DemographicsSharing(self) }
+        set {
+            sexSetting = newValue.sexSetting
+            birthDate = newValue.birthDate
+            shareSex = newValue.shareSex
+            shareAge = newValue.shareAge
+        }
+    }
+
+    /// Once, at the start, in a settings file without the `demographicsSharingMigrated` key (an older build's; see
+    /// `DataMigrations.migrateDemographicsSharing`): each value set then stays shared as it was (the sex if Woman, Man
+    /// or Other, the age if a birth date is set), whether Online Backup is on or not, and the birth date, whatever it
+    /// is, becomes its day (`DemographicsSharing.legacyBirthDay`, the phone's zone `timeZone`). Values set later start
+    /// not shared.
+    func migratingDemographicsSharing(timeZone: TimeZone = .current) -> FreeAPSSettings {
+        let values = demographics
+        var migrated = self
+        migrated.shareSex = values.isSexSet
+        migrated.shareAge = values.isBirthDateSet
+        migrated.birthDate = DemographicsSharing.legacyBirthDay(birthDate, timeZone: timeZone)
+        migrated.demographicsSharingMigrated = true
+        return migrated
     }
 }

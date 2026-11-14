@@ -17,8 +17,8 @@ final class CarbPresetIntentRequest: BaseIntentsRequest {
 
         let carbs = min(Decimal(quantityCarbs), settings.maxCarbs)
 
-        await carbsStorage.storeCarbs(
-            [CarbsEntry(
+        await carbsStorage.storeMeal(
+            CarbsEntry(
                 id: UUID().uuidString,
                 createdAt: dateAdded,
                 actualDate: dateAdded,
@@ -29,7 +29,7 @@ final class CarbPresetIntentRequest: BaseIntentsRequest {
                 note: "with shortcut",
                 enteredBy: CarbsEntry.shortcut,
                 isFPU: (quantityFat > 0 || quantityProtein > 0) ? true : false
-            )]
+            )
         )
         var resultDisplay: String
         resultDisplay = "\(carbs) g carbs"

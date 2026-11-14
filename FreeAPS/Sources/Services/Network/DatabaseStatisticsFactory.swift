@@ -9,6 +9,7 @@ actor DatabaseStatisticsFactory {
     private let settingsManager: SettingsManager
     private let deviceDataManager: DeviceDataManager
     private let appCoordinator: AppCoordinator
+    private let statistics: GlucoseStatistics
 
     private let coreDataStorage = CoreDataStorage()
 
@@ -16,12 +17,14 @@ actor DatabaseStatisticsFactory {
         storage: FileStorage,
         settingsManager: SettingsManager,
         deviceDataManager: DeviceDataManager,
-        appCoordinator: AppCoordinator
+        appCoordinator: AppCoordinator,
+        statistics: GlucoseStatistics
     ) {
         self.storage = storage
         self.settingsManager = settingsManager
         self.deviceDataManager = deviceDataManager
         self.appCoordinator = appCoordinator
+        self.statistics = statistics
     }
 }
 
@@ -92,75 +95,22 @@ extension DatabaseStatisticsFactory {
         } else if preferences.curve.rawValue == "ultra-rapid" {
             iPa = 50
         }
-        // CGM Readings
-        let glucose_24 = await coreDataStorage.fetchGlucose(interval: DateFilter.day.startDate) // Day
-        let glucose_7 = await coreDataStorage.fetchGlucose(interval: DateFilter.week.startDate) // Week
-        let glucose_30 = await coreDataStorage.fetchGlucose(interval: DateFilter.month.startDate) // Month
-        let glucose = await coreDataStorage.fetchGlucose(interval: DateFilter.total.startDate) // Total
-
-        // First date
-        let previous = glucose.last?.date ?? Date()
-        // Last date (recent)
-        let current = glucose.first?.date ?? Date()
-        // Total time in days
-        let numberOfDays = current.timeIntervalSince(previous) / 8.64E4
-
-        // Get glucose computations for every case
-        let oneDayGlucose = glucoseStats(glucose_24, settings: settings)
-        let sevenDaysGlucose = glucoseStats(glucose_7, settings: settings)
-        let thirtyDaysGlucose = glucoseStats(glucose_30, settings: settings)
-        let totalDaysGlucose = glucoseStats(glucose, settings: settings)
-
-        let median = Durations(
-            day: Self.roundDecimal(Decimal(oneDayGlucose.median), 1),
-            week: Self.roundDecimal(Decimal(sevenDaysGlucose.median), 1),
-            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.median), 1),
-            total: Self.roundDecimal(Decimal(totalDaysGlucose.median), 1)
+        // CGM readings: the rolling windows before E, from the statistics engine
+        let bands = StatsBands(low: settings.low, high: settings.high, units: units)
+        let hbA1cUnit = HbA1cUnit.resolve(units: units, override: settings.overrideHbA1cUnit)
+        let day = await statistics.summary(rolling: .hours(24), bands: bands)
+        let week = await statistics.summary(rolling: .days(7), bands: bands)
+        let month = await statistics.summary(rolling: .days(30), bands: bands)
+        let total = await statistics.summary(rolling: .days(90), bands: bands)
+        let glucose = Self.glucoseNumbers(
+            day: day,
+            week: week,
+            month: month,
+            total: total,
+            units: units,
+            hbA1cUnit: hbA1cUnit
         )
 
-        let overrideHbA1cUnit = settings.overrideHbA1cUnit
-
-        let hbs = Durations(
-            day: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                Self.roundDecimal(Decimal(oneDayGlucose.ifcc), 1) : Self.roundDecimal(Decimal(oneDayGlucose.ngsp), 1),
-            week: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                Self.roundDecimal(Decimal(sevenDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(sevenDaysGlucose.ngsp), 1),
-            month: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                Self.roundDecimal(Decimal(thirtyDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(thirtyDaysGlucose.ngsp), 1),
-            total: ((units == .mmolL && !overrideHbA1cUnit) || (units == .mgdL && overrideHbA1cUnit)) ?
-                Self.roundDecimal(Decimal(totalDaysGlucose.ifcc), 1) : Self.roundDecimal(Decimal(totalDaysGlucose.ngsp), 1)
-        )
-
-        // Get TIR computations for every case
-        let oneDay_: (TIR: Double, hypos: Double, hypers: Double, normal_: Double) = tir(glucose_24, settings: settings)
-        let sevenDays_: (TIR: Double, hypos: Double, hypers: Double, normal_: Double) = tir(glucose_7, settings: settings)
-        let thirtyDays_: (TIR: Double, hypos: Double, hypers: Double, normal_: Double) = tir(glucose_30, settings: settings)
-        let totalDays_: (TIR: Double, hypos: Double, hypers: Double, normal_: Double) = tir(glucose, settings: settings)
-
-        let tir = Durations(
-            day: Self.roundDecimal(Decimal(oneDay_.TIR), 1),
-            week: Self.roundDecimal(Decimal(sevenDays_.TIR), 1),
-            month: Self.roundDecimal(Decimal(thirtyDays_.TIR), 1),
-            total: Self.roundDecimal(Decimal(totalDays_.TIR), 1)
-        )
-        let hypo = Durations(
-            day: Decimal(oneDay_.hypos),
-            week: Decimal(sevenDays_.hypos),
-            month: Decimal(thirtyDays_.hypos),
-            total: Decimal(totalDays_.hypos)
-        )
-        let hyper = Durations(
-            day: Decimal(oneDay_.hypers),
-            week: Decimal(sevenDays_.hypers),
-            month: Decimal(thirtyDays_.hypers),
-            total: Decimal(totalDays_.hypers)
-        )
-        let normal = Durations(
-            day: Decimal(oneDay_.normal_),
-            week: Decimal(sevenDays_.normal_),
-            month: Decimal(thirtyDays_.normal_),
-            total: Decimal(totalDays_.normal_)
-        )
         let range = Threshold(
             low: units == .mmolL ? Self.roundDecimal(settings.low.asMmolL, 1) :
                 Self.roundDecimal(settings.low, 0),
@@ -168,34 +118,12 @@ extension DatabaseStatisticsFactory {
                 Self.roundDecimal(settings.high, 0)
         )
         let TimeInRange = TIRs(
-            TIR: tir,
-            Hypos: hypo,
-            Hypers: hyper,
+            TIR: glucose.tir,
+            Hypos: glucose.hypos,
+            Hypers: glucose.hypers,
             Threshold: range,
-            Euglycemic: normal
+            Euglycemic: glucose.euglycemic
         )
-        let avgs = Durations(
-            day: Self.roundDecimal(Decimal(oneDayGlucose.average), 1),
-            week: Self.roundDecimal(Decimal(sevenDaysGlucose.average), 1),
-            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.average), 1),
-            total: Self.roundDecimal(Decimal(totalDaysGlucose.average), 1)
-        )
-        let avg = Averages(Average: avgs, Median: median)
-        // Standard Deviations
-        let standardDeviations = Durations(
-            day: Self.roundDecimal(Decimal(oneDayGlucose.sd), 1),
-            week: Self.roundDecimal(Decimal(sevenDaysGlucose.sd), 1),
-            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.sd), 1),
-            total: Self.roundDecimal(Decimal(totalDaysGlucose.sd), 1)
-        )
-        // CV = standard deviation / sample mean x 100
-        let cvs = Durations(
-            day: Self.roundDecimal(Decimal(oneDayGlucose.cv), 1),
-            week: Self.roundDecimal(Decimal(sevenDaysGlucose.cv), 1),
-            month: Self.roundDecimal(Decimal(thirtyDaysGlucose.cv), 1),
-            total: Self.roundDecimal(Decimal(totalDaysGlucose.cv), 1)
-        )
-        let variance = Variance(SD: standardDeviations, CV: cvs)
 
         // Loops
         let oneDayLoops = await CoreDataStack.shared.persistentContainer.performBackgroundTask { context in
@@ -217,7 +145,7 @@ extension DatabaseStatisticsFactory {
             errors: oneDayLoops.errors,
             mostFrequentErrorType: oneDayLoops.mostFrequentErrorType,
             mostFrequentErrorAmount: oneDayLoops.mostFrequentErrorAmount,
-            readings: Int(oneDayGlucose.readings),
+            readings: glucose.readings,
             success_rate: oneDayLoops.success_rate,
             avg_interval: oneDayLoops.avg_interval,
             median_interval: oneDayLoops.median_interval,
@@ -239,8 +167,6 @@ extension DatabaseStatisticsFactory {
             total_average: Self.roundDecimal(tddTotalAverage, 1)
         )
 
-        let hbA1cUnit = !overrideHbA1cUnit ? (units == .mmolL ? "mmol/mol" : "%") : (units == .mmolL ? "%" : "mmol/mol")
-
         return Statistics(
             created_at: Date(),
             iPhone: await UIDevice.current.getDeviceId,
@@ -257,17 +183,20 @@ extension DatabaseStatisticsFactory {
             insulinType: insulin_type.rawValue,
             peakActivityTime: iPa,
             Carbs_24h: carbTotal,
-            GlucoseStorage_Days: Decimal(roundDouble(numberOfDays, 1)),
+            GlucoseStorage_Days: glucose.storageDays,
             Statistics: Stats(
                 Distribution: TimeInRange,
-                Glucose: avg,
-                HbA1c: hbs, Units: Units(Glucose: units.rawValue, HbA1c: hbA1cUnit),
+                Glucose: glucose.averages,
+                HbA1c: glucose.hbA1c,
+                GMI: glucose.gmi,
+                Units: Units(Glucose: units.rawValue, HbA1c: glucose.a1cUnit, GMI: glucose.a1cUnit),
                 LoopCycles: loopstat,
                 Insulin: insulin,
-                Variance: variance
+                Variance: glucose.variance
             ),
-            dob: settings.birthDate,
-            sex: settings.sexSetting,
+            // only what Settings › Sharing shares (`DemographicsSharing`)
+            dob: settings.demographics.statisticsBirthDate,
+            sex: settings.demographics.statisticsSex,
             Memory: MemoryMetricsService.snapshot(full: true)
         )
     }
@@ -380,75 +309,84 @@ extension DatabaseStatisticsFactory {
         Bundle.main.gitBranch ?? "Unknown"
     }
 
-    private func glucoseStats(_ fetchedGlucose: [ReadingsSnapshot], settings: FreeAPSSettings)
-        -> (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
-    {
-        // First date
-        let last = fetchedGlucose.last?.date ?? Date()
-        // Last date (recent)
-        let first = fetchedGlucose.first?.date ?? Date()
-        // Total time in days
-        let numberOfDays = first.timeIntervalSince(last) / 8.64E4
-        let denominator = numberOfDays < 1 ? 1 : numberOfDays
-        let justGlucoseArray = fetchedGlucose.compactMap({ each in Int(each.glucose as Int16) })
-        let sumReadings = justGlucoseArray.reduce(0, +)
-        let countReadings = justGlucoseArray.count
-        let glucoseAverage = Double(sumReadings) / Double(countReadings)
-        let medianGlucose = medianCalculation(array: justGlucoseArray)
-        let NGSPa1CStatisticValue = (glucoseAverage + 46.7) / 28.7 // NGSP (%)
-        let IFCCa1CStatisticValue = 10.929 *
-            (NGSPa1CStatisticValue - 2.152) // IFCC (mmol/mol)  A1C(mmol/mol) = 10.929 * (A1C(%) - 2.15)
-
-        var sumOfSquares = 0.0
-
-        for array in justGlucoseArray {
-            sumOfSquares += pow(Double(array) - Double(glucoseAverage), 2)
-        }
-        var sd = 0.0
-        var cv = 0.0
-        // Avoid division by zero
-        if glucoseAverage > 0 {
-            sd = sqrt(sumOfSquares / Double(countReadings))
-            cv = sd / Double(glucoseAverage) * 100
-        }
-        let conversionFactor = 0.0555
-        let units = settings.units
-
-        return (
-            ifcc: IFCCa1CStatisticValue,
-            ngsp: NGSPa1CStatisticValue,
-            average: glucoseAverage * (units == .mmolL ? conversionFactor : 1),
-            median: medianGlucose * (units == .mmolL ? conversionFactor : 1),
-            sd: sd * (units == .mmolL ? conversionFactor : 1), cv: cv,
-            readings: Double(countReadings) / denominator
-        )
+    /// The glucose numbers of the upload, from the summaries of its four rolling windows (24 h, 7, 30 and 90 days
+    /// before E). Time-weighted, over the bands of the Statistics low/high settings.
+    struct GlucoseNumbers: Equatable, Sendable {
+        /// in range (`low ... high`), percent
+        let tir: Durations
+        /// below low, percent
+        let hypos: Durations
+        /// above high, percent
+        let hypers: Durations
+        /// TITR (70-140 mg/dL, `StatsBands.titrRange`), percent
+        let euglycemic: Durations
+        /// mean and median, in the glucose units
+        let averages: Averages
+        /// ADAG estimated A1c (the eA1c the app shows), in `a1cUnit`
+        let hbA1c: Durations
+        /// Glucose Management Indicator, in `a1cUnit`
+        let gmi: Durations
+        /// SD in the glucose units, CV percent
+        let variance: Variance
+        /// "%" or "mmol/mol": the unit of `hbA1c` and `gmi`
+        let a1cUnit: String
+        /// the readings starting in the 24 h window
+        let readings: Int
+        /// from the first to the last reading of the 90 days, in days
+        let storageDays: Decimal
     }
 
-    private func tir(
-        _ glucose: [ReadingsSnapshot],
-        settings: FreeAPSSettings
-    ) -> (TIR: Double, hypos: Double, hypers: Double, normal_: Double) {
-        let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
-        let totalReadings = justGlucoseArray.count
-        let highLimit = settings.high
-        let lowLimit = settings.low
-        let hyperArray = glucose.filter({ $0.glucose >= Int(highLimit) })
-        let hyperReadings = hyperArray.compactMap({ each in each.glucose as Int16 }).count
-        let hyperPercentage = Double(hyperReadings) / Double(totalReadings) * 100
-        let hypoArray = glucose.filter({ $0.glucose <= Int(lowLimit) })
-        let hypoReadings = hypoArray.compactMap({ each in each.glucose as Int16 }).count
-        let hypoPercentage = Double(hypoReadings) / Double(totalReadings) * 100
-        // Euglyccemic range
-        let normalArray = glucose.filter({ $0.glucose >= 70 && $0.glucose <= 140 })
-        let normalReadings = normalArray.compactMap({ each in each.glucose as Int16 }).count
-        let normalPercentage = Double(normalReadings) / Double(totalReadings) * 100
-        // TIR
-        let tir = 100 - (hypoPercentage + hyperPercentage)
-        return (
-            roundDouble(tir, 1),
-            roundDouble(hypoPercentage, 1),
-            roundDouble(hyperPercentage, 1),
-            roundDouble(normalPercentage, 1)
+    /// The upload's glucose numbers from the window summaries: 1 decimal throughout, mean, median and SD converted
+    /// to mmol/L for mmol users; 0 for an empty window.
+    static func glucoseNumbers(
+        day: GlucoseSummary,
+        week: GlucoseSummary,
+        month: GlucoseSummary,
+        total: GlucoseSummary,
+        units: GlucoseUnits,
+        hbA1cUnit: HbA1cUnit
+    ) -> GlucoseNumbers {
+        let summaries = [day, week, month, total]
+        func durations(_ value: (GlucoseSummary) -> Double?) -> Durations {
+            let values = summaries.map { Self.roundDecimal(Decimal(value($0) ?? 0), 1) }
+            return Durations(day: values[0], week: values[1], month: values[2], total: values[3])
+        }
+        func percent(_ bands: [GlucoseBand]) -> (GlucoseSummary) -> Double? {
+            { summary in
+                let fraction: Double = bands.reduce(0) { $0 + summary.fraction($1) }
+                return fraction * 100
+            }
+        }
+        let mmolPerMgdl = NSDecimalNumber(decimal: GlucoseUnits.exchangeRate).doubleValue
+        func glucose(_ mgdl: Double?) -> Double? {
+            mgdl.map { units == .mmolL ? $0 * mmolPerMgdl : $0 }
+        }
+        func a1c(_ estimate: Double?) -> Double? {
+            estimate.map { hbA1cUnit == .mmolPerMol ? GlucoseStatsEngine.ifcc(fromPercent: $0) : $0 }
+        }
+
+        let storageDays = total.firstReading.flatMap { first in
+            total.lastReading.map { $0.timeIntervalSince(first) / TimeInterval.days(1) }
+        }
+
+        return GlucoseNumbers(
+            tir: durations(percent([.inRange])),
+            hypos: durations(percent([.veryLow, .low])),
+            hypers: durations(percent([.high, .veryHigh])),
+            euglycemic: durations { $0.titrFraction * 100 },
+            averages: Averages(
+                Average: durations { glucose($0.mean) },
+                Median: durations { glucose($0.histogram.quantile(0.5)) }
+            ),
+            hbA1c: durations { a1c($0.eA1cPercent) },
+            gmi: durations { a1c($0.gmiPercent) },
+            variance: Variance(
+                SD: durations { glucose($0.sd) },
+                CV: durations(\.cv)
+            ),
+            a1cUnit: hbA1cUnit == .mmolPerMol ? "mmol/mol" : "%",
+            readings: day.histogram.readingCount,
+            storageDays: Self.roundDecimal(Decimal(storageDays ?? 0), 1)
         )
     }
 
@@ -504,11 +442,6 @@ extension DatabaseStatisticsFactory {
         return Decimal(rounded)
     }
 
-    private func roundDouble(_ double: Double, _ digits: Double) -> Double {
-        let rounded = round(Double(double) * pow(10, digits)) / pow(10, digits)
-        return rounded
-    }
-
     private static func medianCalculationDouble(array: [Double]) -> Double {
         guard !array.isEmpty else {
             return 0
@@ -520,18 +453,5 @@ extension DatabaseStatisticsFactory {
             return (sorted[length / 2 - 1] + sorted[length / 2]) / 2
         }
         return sorted[length / 2]
-    }
-
-    private func medianCalculation(array: [Int]) -> Double {
-        guard !array.isEmpty else {
-            return 0
-        }
-        let sorted = array.sorted()
-        let length = array.count
-
-        if length % 2 == 0 {
-            return Double((sorted[length / 2 - 1] + sorted[length / 2]) / 2)
-        }
-        return Double(sorted[length / 2])
     }
 }

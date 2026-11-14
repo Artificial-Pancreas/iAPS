@@ -1,9 +1,4 @@
 import Foundation
-import SwiftUI
-
-protocol RDITrackable {
-    var shouldLimitExcess: Bool { get }
-}
 
 enum MicronutrientType: String, CaseIterable, Codable {
     case vitamin
@@ -14,13 +9,7 @@ enum MicronutrientType: String, CaseIterable, Codable {
 enum MacroNutrient {
     case protein
     case fiber
-
-    var shouldLimitExcess: Bool {
-        false
-    }
 }
-
-extension MacroNutrient: RDITrackable {}
 
 enum MicroNutrient: String, CaseIterable, Codable, Identifiable {
     var id: String { rawValue }
@@ -55,8 +44,6 @@ enum MicroNutrient: String, CaseIterable, Codable, Identifiable {
     case iodine
     case salt
 }
-
-extension MicroNutrient: RDITrackable {}
 
 extension MicroNutrient {
     var displayName: String {
@@ -312,24 +299,12 @@ extension MicroNutrient {
         }
     }
 
+    /// Salt from sodium, by mass (NaCl / Na ≈ 2.54; 2.5 is the EU labelling factor, as Open Food Facts uses): for a
+    /// source that lists sodium, applied after the unit normalisation (salt in g).
+    static let saltPerSodium: Decimal = 2.5
+
     var isVitamin: Bool {
         coreDataType == "vitamin"
-    }
-
-    var shouldLimitExcess: Bool {
-        switch self {
-        case .iodine,
-             .iron,
-             .phosphorus,
-             .salt,
-             .selenium,
-             .vitaminA,
-             .vitaminD:
-            return true
-
-        default:
-            return false
-        }
     }
 
     init?(coreDataName: String) {
@@ -596,106 +571,4 @@ enum EFSAReferenceIntakes {
             }
         }
     }
-}
-
-// MARK: - Daily Percentage Calculation
-
-enum MicronutrientProgress {
-    /// Micros
-    static func progress(
-        nutrient: MicroNutrient,
-        amount: Double,
-        age: Int,
-        sex: Sex
-    ) -> NutrientProgress {
-        let reference = EFSAReferenceIntakes.value(
-            for: nutrient,
-            age: age,
-            sex: sex
-        )
-
-        guard reference.value > 0 else {
-            return NutrientProgress(
-                percent: 0,
-                color: .secondary
-            )
-        }
-
-        let percent = (amount / reference.value) * 100
-
-        return NutrientProgress(
-            percent: percent,
-            color: NutrientProgressColor.color(
-                nutrient: nutrient,
-                percent: percent
-            )
-        )
-    }
-
-    /// Macros overload
-    static func progress(
-        nutrient: MacroNutrient,
-        amount: Double,
-        age: Int,
-        sex: Sex
-    ) -> NutrientProgress {
-        let reference = EFSAReferenceIntakes.value(
-            for: nutrient,
-            age: age,
-            sex: sex
-        )
-
-        let percent = (amount / reference.value) * 100
-
-        return NutrientProgress(
-            percent: percent,
-            color: NutrientProgressColor.color(
-                nutrient: nutrient,
-                percent: percent
-            )
-        )
-    }
-}
-
-enum NutrientProgressColor {
-    static func color<T: RDITrackable>(
-        nutrient: T,
-        percent: Double
-    ) -> Color {
-        if nutrient.shouldLimitExcess {
-            switch percent {
-            case 20 ..< 75:
-                return .cyan
-            case 75 ... 125:
-                return .mint
-            case 125 ... 200:
-                return .yellow
-            default:
-                return .orange
-            }
-        }
-
-        switch percent {
-        case 0 ..< 25:
-            return .orange
-        case 25 ..< 75:
-            return .mint
-        default:
-            return .green
-        }
-    }
-}
-
-struct Individual {
-    var age: Int
-    var sex: Sex
-}
-
-extension Individual {
-    static let `default` = Individual(age: 35, sex: .woman)
-}
-
-struct NutrientProgress {
-    let percent: Double
-    let color: Color
 }

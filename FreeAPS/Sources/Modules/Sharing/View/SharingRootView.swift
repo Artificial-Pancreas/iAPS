@@ -5,8 +5,18 @@ public enum Sex: String, CaseIterable, Identifiable {
     case woman = "Woman"
     case man = "Man"
     case other = "Other"
-    case secret = "Prefer not to say"
+    /// stored as 3, the default (was "Prefer not to say")
+    case secret = "Not set"
     public var id: Self { self }
+
+    var displayName: String {
+        switch self {
+        case .woman: return NSLocalizedString("Woman", comment: "Sex dropdown menu option")
+        case .man: return NSLocalizedString("Man", comment: "Sex dropdown menu option")
+        case .other: return NSLocalizedString("Other", comment: "Sex dropdown menu option")
+        case .secret: return NSLocalizedString("Not set", comment: "Sex dropdown menu option: none chosen")
+        }
+    }
 
     /// Only Woman/Man carry a usable hormonal prior for the stats engine.
     var hasHormonalSignal: Bool {
@@ -41,78 +51,40 @@ extension Sex {
 extension Sharing {
     struct RootView: BaseView {
         let resolver: Resolver
+        /// pushed from Settings › Demographics: "Edit in Settings › About You" goes back there instead of pushing it again
+        let fromDemographics: Bool
         @StateObject var state: StateModel
+
+        @Environment(\.dismiss) private var dismiss
 
         @State private var display: Bool = false
         @State private var copied: Bool = false
-        @State private var showSexInfo: Bool = false
         @State private var showCrashInfo: Bool = false
         @State private var logsRevoked: Bool = false
-        // Local editing state for the feet/inches height entry (canonical store is cm).
-        @State private var feet: Int = 0
-        @State private var inches: Int = 0
+        /// Shown, not covered by a screen pushed over it (Settings › Demographics, where a change can revoke the logs)
+        @State private var isShown: Bool = false
+        /// Revoked while covered: told when shown again (an alert raised under a pushed screen isn't seen)
+        @State private var logsRevokedUnseen: Bool = false
 
         private let demographicsInfoURL = URL(string: "https://open-iaps.app/demographics")!
 
-        let dateRange: ClosedRange<Date> = {
-            let calendar = Calendar.current
-            let year = Date.now.year
-            let month = Date.now.month
-
-            let startComponents = DateComponents(year: 1920, month: 1)
-            let endComponents = DateComponents(year: year, month: month)
-            return calendar.date(from: startComponents)!
-                ...
-                calendar.date(from: endComponents)!
-        }()
-
-        init(resolver: Resolver) {
+        init(resolver: Resolver, fromDemographics: Bool = false) {
             self.resolver = resolver
+            self.fromDemographics = fromDemographics
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
         }
 
-        // MARK: - Unit conversion bindings (canonical: weight kg, height cm)
-
-        private static let lbPerKg = 2.2046226218
-        private static let cmPerInch = 2.54
-
-        private var weightField: Binding<Double> {
-            Binding(
-                get: {
-                    let kg = NSDecimalNumber(decimal: state.weight).doubleValue
-                    return state.weightInLb ? kg * Self.lbPerKg : kg
-                },
-                set: { newValue in
-                    let kg = state.weightInLb ? newValue / Self.lbPerKg : newValue
-                    state.weight = Decimal(max(0, kg))
-                }
-            )
-        }
-
-        private var heightCmField: Binding<Double> {
-            Binding(
-                get: { NSDecimalNumber(decimal: state.height).doubleValue },
-                set: { state.height = Decimal(max(0, $0)) }
-            )
-        }
-
-        private func seedFeetInches() {
-            let totalInches = NSDecimalNumber(decimal: state.height).doubleValue / Self.cmPerInch
-            feet = Int(totalInches / 12)
-            inches = Int(totalInches.truncatingRemainder(dividingBy: 12).rounded())
-        }
-
-        private func commitFeetInches() {
-            let totalInches = Double(feet) * 12 + Double(inches)
-            state.height = Decimal(totalInches * Self.cmPerInch)
-        }
-
         /// Auto-revoke Daily Log upload the moment the demographics stop qualifying,
-        /// and tell the user why. Manual opt-out stays silent.
+        /// and tell the user why. Manual opt-out stays silent. Also once `uploadLogs` is read from the settings
+        /// (`subscribe()`, after the screen appeared): on at the start while not qualifying is turned off then.
         private func enforceLogGate() {
             if state.uploadLogs, !state.demographicsQualifyForLogs {
                 state.uploadLogs = false
-                logsRevoked = true
+                if isShown {
+                    logsRevoked = true
+                } else {
+                    logsRevokedUnseen = true
+                }
             }
         }
 
@@ -131,7 +103,7 @@ extension Sharing {
                 }
 
                 if state.uploadStats {
-                    demographicsSection
+                    shareDemographicsSection
                     uploadLogsSection
                     recoveryTokenSection
                     personalStatsSection
@@ -144,19 +116,22 @@ extension Sharing {
                 // Logs are meaningless without their settings — drop them with backup.
                 if !state.uploadStats { state.uploadLogs = false }
             }
-            .onChange(of: state.sex) {
-                state.sexSetting = state.sex.saveSetting()
-                enforceLogGate()
-            }
-            .onChange(of: state.birthDate) { enforceLogGate() }
+            .onChange(of: state.demographics) { enforceLogGate() }
+            // the toggle is disabled while not qualifying: a change while not qualifying is the settings' value
+            // arriving, never the user turning it on
+            .onChange(of: state.uploadLogs) { enforceLogGate() }
             .onAppear {
-                state.sex = Sex.savedSettings(state.sexSetting)
-                if state.heightInFtIn { seedFeetInches() }
+                isShown = true
+                if logsRevokedUnseen {
+                    logsRevokedUnseen = false
+                    logsRevoked = true
+                }
                 enforceLogGate()
                 // Seeing this screen counts as having been offered crash reporting; the
                 // upgrade path re-shows Sharing once for users who predate the option.
                 UserDefaults.standard.set(true, forKey: IAPSconfig.hasSeenCrashReportOption)
             }
+            .onDisappear { isShown = false }
             .alert("What a crash report contains", isPresented: $showCrashInfo) {
                 Button("Got it", role: .cancel) {}
             } message: {
@@ -164,111 +139,61 @@ extension Sharing {
                     "When iAPS crashes, a report is saved on your phone and sent to open-iaps.app the next time the app starts. It contains the code path that crashed (function names and addresses), the state of each thread, the error message the app stopped with, your phone model, iOS version and iAPS version.\n\nIt does not contain glucose readings, insulin or settings; the raw memory KSCrash captures is removed before anything is sent. It is filed under the same anonymous id as statistics.\n\nReports are only sent from the latest main and dev releases — older versions may crash on bugs already fixed. Nothing else needs to be turned on for this to help."
                 )
             }
-            .alert("Why we ask about sex", isPresented: $showSexInfo) {
-                Button("Got it", role: .cancel) {}
-            } message: {
-                Text(
-                    "Insulin sensitivity is shaped by sex hormones — estrogen and progesterone versus testosterone — not by gender identity. Choose the hormonal pattern your body currently runs on. For most people that is simply their sex; if you are on hormone therapy, choose the sex whose hormones you take.\n\nThis helps your own analysis and stays anonymous."
-                )
-            }
             .alert("Daily Log upload turned off", isPresented: $logsRevoked) {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(
-                    "Daily Log upload needs your sex set to Woman or Man and a valid birth date. Update your demographics to turn it back on."
+                    "Daily Log upload needs your sex (Woman or Man) and your age shared. Turn it back on once they are."
                 )
             }
             .navigationBarTitle("Sharing")
         }
 
-        // MARK: - Demographics
+        // MARK: - Share demographics (the values are set in Settings › Demographics)
 
-        private var demographicsSection: some View {
+        private var shareDemographicsSection: some View {
             Section {
-                HStack {
-                    Picker("Sex", selection: $state.sex) {
-                        ForEach(Sex.allCases) { sex in
-                            Text(NSLocalizedString(sex.rawValue, comment: "")).tag(sex)
-                        }
-                    }
-                    Button {
-                        showSexInfo = true
-                    } label: {
-                        Image(systemName: "info.circle")
-                    }
-                    .buttonStyle(.borderless)
-                }
-
-                DatePicker("Birth Date", selection: $state.birthDate, in: dateRange, displayedComponents: [.date])
-                    .datePickerStyle(.compact)
-
-                weightRow
-                heightRow
+                shareRow(
+                    "Sex",
+                    value: state.demographics.isSexSet ? Sex.savedSettings(state.sexSetting).displayName : nil,
+                    isOn: $state.shareSex
+                )
+                shareRow(
+                    "Age",
+                    value: Demographics.bornText(state.birthDate),
+                    isOn: $state.shareAge
+                )
+                editInDemographicsRow
             } header: {
-                Text("Demographics")
+                Text("Share sex and age")
             } footer: {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(
-                        "Your sex and age also help your own analysis — they let it tell a normal, expected swing apart from a real trend worth acting on.\n\nWeight and height are purely statistical: they help us understand how the community is distributed, nothing more.\n\nIt's an honor system — we have no way to verify what you enter, and no wish to — so we simply ask you to be honest, to keep both the analysis and the statistics meaningful.\n\nAs with everything here, this data is anonymous."
-                    )
-                    Button("Why are these required for log upload?") {
-                        UIApplication.shared.open(demographicsInfoURL)
-                    }
-                    .font(.footnote)
-                }
+                Text(
+                    "These toggles set what the daily statistics include. The settings backup includes your sex, birth date, weight and height either way."
+                )
             }
         }
 
-        private var weightRow: some View {
-            HStack {
-                Text("Weight")
-                Spacer()
-                TextField("—", value: weightField, format: .number.precision(.fractionLength(0 ... 1)))
-                    .keyboardType(.decimalPad)
-                    .multilineTextAlignment(.trailing)
-                    .frame(maxWidth: 70)
-                Picker("", selection: $state.weightInLb) {
-                    Text("kg").tag(false)
-                    Text("lb").tag(true)
-                }
-                .labelsHidden()
-                .pickerStyle(.menu)
+        /// To Settings › Demographics, or back to it when pushed from there (no Demographics › Sharing › … chain).
+        @ViewBuilder private var editInDemographicsRow: some View {
+            let label = Text("Edit in Settings › About You").foregroundStyle(Color.accentColor)
+            if fromDemographics {
+                Button { dismiss() } label: { label }
+            } else {
+                label.navigationLink(to: .demographics(fromSharing: true), from: self)
             }
         }
 
-        private var heightRow: some View {
-            HStack {
-                Text("Height")
-                Spacer()
-                if state.heightInFtIn {
-                    TextField("ft", value: $feet, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(maxWidth: 34)
-                        .onChange(of: feet) { commitFeetInches() }
-                    Text("ft").foregroundStyle(.secondary)
-                    TextField("in", value: $inches, format: .number)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(maxWidth: 34)
-                        .onChange(of: inches) { commitFeetInches() }
-                    Text("in").foregroundStyle(.secondary)
-                } else {
-                    TextField("—", value: heightCmField, format: .number.precision(.fractionLength(0)))
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.trailing)
-                        .frame(maxWidth: 70)
-                }
-                Picker("", selection: $state.heightInFtIn) {
-                    Text("cm").tag(false)
-                    Text("ft/in").tag(true)
-                }
-                .labelsHidden()
-                .pickerStyle(.menu)
-                .onChange(of: state.heightInFtIn) {
-                    if state.heightInFtIn { seedFeetInches() }
+        /// A value and its share toggle; without the value (nil) "Not set" and the toggle off and disabled.
+        private func shareRow(_ title: LocalizedStringKey, value: String?, isOn: Binding<Bool>) -> some View {
+            Toggle(isOn: Binding(get: { value != nil && isOn.wrappedValue }, set: { isOn.wrappedValue = $0 })) {
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(title)
+                    Text(value ?? NSLocalizedString("Not set", comment: "Sharing: a demographic value not set"))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
             }
+            .disabled(value == nil)
         }
 
         // MARK: - Upload Daily Log
@@ -280,14 +205,16 @@ extension Sharing {
             } header: {
                 Text("Upload Daily Log")
             } footer: {
-                if !state.demographicsQualifyForLogs {
-                    Text(
-                        "Set your sex to Woman or Man and a valid birth date above to enable daily log upload."
-                    )
-                } else if !state.uploadLogs {
-                    Text(
-                        "When enabled, the previous day's log file is automatically uploaded after midnight. Logs power the multi-day analysis on open-iaps.app. Off by default."
-                    )
+                VStack(alignment: .leading, spacing: 8) {
+                    if state.demographicsQualifyForLogs {
+                        Text("The previous day’s log is uploaded after midnight.")
+                    } else {
+                        Text("Needs sex (Woman or Man) and age shared above.")
+                    }
+                    Button("Why are these required for log upload?") {
+                        UIApplication.shared.open(demographicsInfoURL)
+                    }
+                    .font(.footnote)
                 }
             }
         }

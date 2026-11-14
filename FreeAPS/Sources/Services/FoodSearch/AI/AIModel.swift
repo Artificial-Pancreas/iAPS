@@ -178,8 +178,10 @@ extension AnalysiedFoodItem: Decodable {
     }
 
     private static var micronutrientFields: [AISchemaField] {
+        // in the unit stored (`MicroNutrient.unit`): the answer is stored as it is; salt as salt, not its sodium
         MicroNutrient.allCases.map {
-            AISchemaField($0.codingKey, .number, "decimal, \($0.displayName) per 100g/ml")
+            let note = $0 == .salt ? " (salt, not sodium)" : ""
+            return AISchemaField($0.codingKey, .number, "decimal, \($0.displayName) in \($0.unit) per 100g/ml\(note)")
         }
     }
 }

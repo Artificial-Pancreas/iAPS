@@ -1,4 +1,3 @@
-import Charts
 import SpriteKit
 import SwiftDate
 import SwiftUI
@@ -17,13 +16,9 @@ extension Home {
         @State var expirationAlertMessage = ""
         @State var triggerUpdate = false
         @State var display = false
-        @State var displayGlucose = false
-        @State var animateLoop = false
-        @State var animateTIR = false
         @State var showBolusActiveAlert = false
         @State var displayAutoHistory = false
         @State var displayDynamicHistory = false
-        @State var displayAllNutrients = false
         @State private var bottomActionBarHeight: CGFloat = 0
         @State private var isBottomBarHidden = false
         @State private var homeScrollOffset: CGFloat = 0
@@ -63,13 +58,6 @@ extension Home {
             state.data.units == .mmolL ? Self.fetchedTargetFormatterMmol : Self.fetchedTargetFormatterMgdl
         }
 
-        private static let targetFormatter = {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
-            return formatter
-        }()
-
         private static let iobFormatter = {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
@@ -108,7 +96,7 @@ extension Home {
                     highGlucose: state.data.highGlucose,
                     alwaysUseColors: state.alwaysUseColors,
                     displayDelta: state.displayDelta,
-                    scrolling: displayGlucose, displaySAGE: state.displaySAGE,
+                    displaySAGE: state.displaySAGE,
                     displayExpiration: state.displayExpiration,
                     sensordays: state.sensorDays,
                     timerDate: date
@@ -311,29 +299,36 @@ extension Home {
             }.offset(x: 5, y: 5)
         }
 
-        var preview: some View {
-            addBackground()
-                .frame(minHeight: 200)
-                .overlay {
-                    PreviewChart(
-                        readings: state.readings,
-                        lowLimit: state.data.lowGlucose,
-                        highLimit: state.data.highGlucose
+        /// A long-press picks its range, Today or 24 h (Statistics never changes it), TITR and GMI; a tap opens
+        /// Statistics on its range.
+        @ViewBuilder var preview: some View {
+            if let stats = state.homeStats {
+                HomeStatsBar(
+                    content: stats.content,
+                    range: state.homeStatsRange,
+                    showTITR: state.homeStatsTITR,
+                    showGMI: state.homeStatsGMIShown,
+                    open: { state.showModal(for: .statistics(period: state.homeStatsRange, tab: .overview)) }
+                )
+                // here, not in its body: its @ScaledMetric sizes read the size where it is created
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .background { addBackground() }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                // the card lifted with its background, its shape
+                .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 15))
+                .contextMenu {
+                    HomeStatsRangeMenu(
+                        range: state.homeStatsRange,
+                        showTITR: state.homeStatsTITR,
+                        showGMI: state.homeStatsGMIShown,
+                        select: { [state] in state.select(homeStatsRange: $0) },
+                        setShowTITR: { [state] in state.showHomeStatsTITR($0) },
+                        setShowGMI: { [state] in state.showHomeStatsGMI($0) }
                     )
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
-                .blur(radius: animateTIR ? 2 : 0)
-                .onTapGesture {
-                    timeIsNowTIR()
-                    state.showModal(for: .statistics)
-                }
-                .overlay {
-                    if animateTIR {
-                        animation.asAny()
-                    }
-                }
+            }
         }
 
         var infoPanelView: some View {
@@ -349,72 +344,103 @@ extension Home {
                 .padding(.horizontal, 10)
         }
 
-        var activeIOBView: some View {
-            addBackground()
-                .frame(minHeight: 190)
-                .overlay {
-                    ActiveIOBView(
-                        data: state.iobData,
+        /// The last 24 hours, no range of its own; a long-press picks the glucose and carbs lanes (IOB always). Not a
+        /// link but its lanes and its Negative IOB row: the glucose lane the Day tab's 24 hours, the IOB lane Insulin on
+        /// Today, the COB lane Meals on Today, the Negative IOB row Statistics › Insulin at 7 d, scrolled to the Negative
+        /// IOB card.
+        @ViewBuilder var onBoardView: some View {
+            if let onBoard = state.homeOnBoard {
+                HomeOnBoardCard(
+                    content: onBoard,
+                    showGlucose: state.homeOnBoardGlucose,
+                    showCOB: state.homeOnBoardCOB,
+                    openNegativeIOB: { [state] in
+                        state.showModal(for: .statistics(period: .days7, tab: .insulin, focus: .negativeIOB))
+                    },
+                    openGlucose: { [state] in state.showModal(for: .statistics(period: .last24h, tab: .trace)) },
+                    openInsulin: { [state] in state.showModal(for: .statistics(period: .today, tab: .insulin)) },
+                    openMeals: { [state] in state.showModal(for: .statistics(period: .today, tab: .meals)) }
+                )
+                // the actions are new closures every time: compared by what it shows
+                .equatable()
+                // here, not in its body: its @ScaledMetric sizes read the size where it is created
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .background { addBackground() }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                // the card lifted with its background, its shape
+                .contentShape(.contextMenuPreview, RoundedRectangle(cornerRadius: 15))
+                .contextMenu {
+                    HomeOnBoardMenu(
+                        showGlucose: state.homeOnBoardGlucose,
+                        showCOB: state.homeOnBoardCOB,
+                        setShowGlucose: { [state] in state.showOnBoardGlucose($0) },
+                        setShowCOB: { [state] in state.showOnBoardCOB($0) }
                     )
                 }
-                .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+            }
         }
 
-        var activeCOBView: some View {
-            addBackground()
-                .frame(minHeight: 190)
-                .overlay {
-                    ActiveCOBView(data: state.iobData)
-                }
+        /// Today, no range of its own (no menu). Tap opens the Statistics Insulin tab on Today. Today is as of the read
+        /// (no clock).
+        @ViewBuilder var insulinView: some View {
+            if let insulin = state.homeInsulin {
+                HomeInsulinCard(
+                    content: insulin,
+                    open: { state.showModal(for: .statistics(period: .today, tab: .insulin)) }
+                )
+                // the action is a new closure every time: compared by what it shows
+                .equatable()
+                // here, not in its body: its @ScaledMetric size reads the size where it is created
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .background { addBackground() }
                 .clipShape(RoundedRectangle(cornerRadius: 15))
                 .addShadows()
                 .padding(.horizontal, 10)
+            }
         }
 
-        var insulinView: some View {
-            addBackground()
-                .frame(minHeight: 280)
-                .overlay {
-                    InsulinSummaryView(stats: state.insulinStatistics)
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.horizontal, 10)
-        }
-
-        var mealsView: some View {
-            addBackground()
-                .frame(minHeight: frameHeight)
-                .overlay {
-                    mealsSummaryView
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.horizontal, 10)
-                .dynamicTypeSize(...DynamicTypeSize.medium)
-        }
-
-        var loopPreview: some View {
-            addBackground()
-                .frame(minHeight: 160)
-                .overlay {
-                    LoopsView(loopStatistics: state.loopStatistics)
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .addShadows()
-                .padding(.horizontal, 10)
-                .blur(radius: animateLoop ? 2.5 : 0)
-                .onTapGesture {
-                    timeIsNowLoop()
-                    state.showModal(for: .statistics)
-                }
-                .overlay {
-                    if animateLoop {
-                        animation.asAny()
+        /// Today, no range of its own (no menu). The top opens the Statistics Meals tab on Today, the Nutrients row its
+        /// Nutrients screen.
+        @ViewBuilder var mealsView: some View {
+            if let meals = state.homeMeals {
+                HomeMealsCard(
+                    content: meals,
+                    openMeals: {
+                        state.showModal(for: .statistics(period: .today, tab: .meals))
+                    },
+                    openNutrients: {
+                        state.showModal(for: .statistics(period: .today, tab: .meals, nutrients: true))
                     }
-                }
+                )
+                // the actions are new closures every time: compared by what it shows (the actions read the state)
+                .equatable()
+                // here, not in its body: its @ScaledMetric sizes read the size where it is created
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .background { addBackground() }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+            }
+        }
+
+        /// The last 24 h, no range of its own (no menu). Tap opens the Loops screen.
+        @ViewBuilder var loopPreview: some View {
+            if let loops = state.homeLoops {
+                HomeLoopsCard(
+                    content: loops,
+                    open: { state.showModal(for: .loops) }
+                )
+                // the action is a new closure every time: compared by what it shows
+                .equatable()
+                // here, not in its body: its @ScaledMetric size reads the size where it is created
+                .dynamicTypeSize(...DynamicTypeSize.xxLarge)
+                .background { addBackground() }
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .addShadows()
+                .padding(.horizontal, 10)
+            }
         }
 
         var profileView: some View {
@@ -459,7 +485,7 @@ extension Home {
         }
 
         @ViewBuilder private func headerView(_ geo: GeometryProxy) -> some View {
-            let height: CGFloat = (displayGlucose ? 140 : 210)
+            let height: CGFloat = 210
             addHeaderBackground()
                 .frame(
                     height: fontSize < .extraExtraLarge ? height + geo.safeAreaInsets.top : height + 10 + geo
@@ -468,84 +494,34 @@ extension Home {
                 .overlay {
                     VStack {
                         ZStack {
-                            if !displayGlucose {
-                                glucoseView.frame(maxHeight: .infinity, alignment: .center)
-                                    .offset(y: isIphoneDuoScreen(for: geo) ? 5 : -5)
-                                loopView
-                                    .frame(
-                                        maxWidth: .infinity,
-                                        maxHeight: .infinity,
-                                        alignment: .topLeading
-                                    )
-                                    .padding(20)
-                                    .offset(x: 5, y: isIphoneDuoScreen(for: geo) ? 10 : -10)
+                            glucoseView.frame(maxHeight: .infinity, alignment: .center)
+                                .offset(y: isIphoneDuoScreen(for: geo) ? 5 : -5)
+                            loopView
+                                .frame(
+                                    maxWidth: .infinity,
+                                    maxHeight: .infinity,
+                                    alignment: .topLeading
+                                )
+                                .padding(20)
+                                .offset(x: 5, y: isIphoneDuoScreen(for: geo) ? 10 : -10)
+                            HStack {
+                                carbsAndInsulinView
+                                    .frame(maxHeight: .infinity, alignment: .bottom)
+                                // Spacer()
+                                pumpView
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
                             }
-                            if displayGlucose {
-                                glucoseView.frame(maxHeight: .infinity, alignment: .center)
-                                    .offset(y: isIphoneDuoScreen(for: geo) ? 0 : -10)
-                            } else {
-                                HStack {
-                                    carbsAndInsulinView
-                                        .frame(maxHeight: .infinity, alignment: .bottom)
-                                    // Spacer()
-                                    pumpView
-                                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottomTrailing)
-                                }
-                                .dynamicTypeSize(...DynamicTypeSize.xLarge)
-                                .padding(.horizontal, 10)
-                                .padding(.bottom, 5)
-                            }
+                            .dynamicTypeSize(...DynamicTypeSize.xLarge)
+                            .padding(.horizontal, 10)
+                            .padding(.bottom, 5)
                         }
 
-                        if displayGlucose {
-                            glucosePreview
-                        } else {
-                            infoPanelView
-                        }
+                        infoPanelView
 
                         Divider()
                     }
                     .padding(.top, geo.safeAreaInsets.top)
                 }
-        }
-
-        var glucosePreview: some View {
-            let data = state.data.glucose
-            let minimum = data.map(\.glucose).min() ?? 0
-            let minimumRange = Double(minimum) * 0.8
-            let maximum = Double(data.map(\.glucose).max() ?? 0) * 1.1
-
-            let high = state.data.highGlucose
-            let low = state.data.lowGlucose
-            let veryHigh = 198
-
-            return Chart(data) {
-                PointMark(
-                    x: .value("Time", $0.dateString),
-                    y: .value("Glucose", Double($0.glucose) * (state.data.units == .mmolL ? 0.0555 : 1.0))
-                )
-                .foregroundStyle(
-                    ($0.glucose > veryHigh || Decimal($0.glucose) < low) ? Color(.red) : Decimal($0.glucose) >
-                        high ? Color(.yellow) : Color(.darkGreen)
-                )
-                .symbolSize(5)
-            }
-            .chartXAxis(.hidden)
-            .chartYAxis {
-                AxisMarks(values: .automatic(desiredCount: 3))
-            }
-            .chartYScale(
-                domain: minimumRange * (state.data.units == .mmolL ? 0.0555 : 1.0) ... maximum *
-                    (state.data.units == .mmolL ? 0.0555 : 1.0)
-            )
-            .chartXScale(
-                domain: Date.now.subtractingTimeInterval(.hours(24)) ... Date.now
-            )
-            .frame(height: 50)
-            .padding(.leading, 30)
-            .padding(.trailing, 32)
-            .padding(.top, 15)
-            .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
         }
 
         var timeSetting: some View {
@@ -593,344 +569,12 @@ extension Home {
             .offset(x: 130)
         }
 
-        private var mealIntervalPicker: some View {
-            HStack(spacing: 10) {
-                ForEach([DateFilter.today, DateFilter.day, DateFilter.week, DateFilter.month]) { interval in
-                    Button {
-                        state.selectedMealInterval = interval
-                        state.setupMeals()
-                    } label: {
-                        Text(NSLocalizedString(interval.title, comment: "Interval"))
-                            .font(.caption.weight(.semibold))
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 8)
-                            .background(
-                                state.selectedMealInterval == interval
-                                    ? Color.secondary
-                                    : Color.gray.opacity(0.15)
-                            )
-                            .foregroundStyle(
-                                state.selectedMealInterval == interval
-                                    ? .white
-                                    : .primary
-                            )
-                            .clipShape(Capsule())
-                    }
-                    .buttonStyle(.plain)
-                }
-            }
-        }
-
-        private var mealsSummaryView: some View {
-            VStack {
-                Text("Meals")
-                    .font(.previewHeadline)
-                    .padding(.top, 20)
-                    .padding(.bottom, 15)
-
-                mealIntervalPicker
-                    .padding(.bottom, 10)
-
-                servingsView
-                    .padding(.horizontal, 23)
-
-                caloriesView
-                    .padding(.horizontal, 23)
-
-                carbNutrientsView
-                    .padding(.horizontal, 23)
-                    .padding(.bottom, (savedMicronutrients.isEmpty && !otherMacros) ? 10 : 0)
-
-                if !(savedMicronutrients.isEmpty && !otherMacros) {
-                    micronutrientToggle
-
-                    if displayAllNutrients {
-                        micronutrientsAndMoreView
-                            .padding(.horizontal, 23)
-                            .background(Color(.systemGray5))
-                    }
-                }
-            }
-            .dynamicTypeSize(...DynamicTypeSize.xLarge)
-        }
-
-        private var micronutrientToggle: some View {
-            Button {
-                displayAllNutrients.toggle()
-            } label: {
-                Label(
-                    micronutrientTitle(),
-                    systemImage: "pills.fill"
-                )
-                .font(.caption.weight(.semibold))
-                .labelStyle(.titleAndIcon)
-                .padding(.vertical, 10)
-                .padding(.leading, 20)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .buttonStyle(.borderless)
-            .foregroundStyle(.blue)
-            .padding(.bottom, !displayAllNutrients ? 20 : 10)
-        }
-
-        private var caloriesView: some View {
-            HStack {
-                Text("Kilo Calories")
-                Spacer()
-                Text(
-                    Self.tirFormatter.string(
-                        from: displayedCalories as NSNumber
-                    ) ?? ""
-                )
-            }
-            .foregroundStyle(.secondary)
-        }
-
-        private var servingsView: some View {
-            HStack {
-                Text("Servings")
-                Spacer()
-                Text(
-                    Self.tirFormatter.string(
-                        from: displayedServings as NSNumber
-                    ) ?? ""
-                )
-            }
-            .foregroundStyle(.secondary)
-        }
-
-        private var carbNutrientsView: some View {
-            HStack {
-                Text("Carbs")
-                Spacer()
-                Text(
-                    Self.tirFormatter.string(
-                        from: displayedCarbs as NSNumber
-                    ) ?? ""
-                )
-            }
-            .foregroundStyle(.secondary)
-        }
-
-        private var otherMacroNutrientsView: some View {
-            VStack {
-                if state.mealData.fat > 0 {
-                    micronutrientRow(
-                        "Fat",
-                        value: displayedFat,
-                        unit: "g",
-                        formatter: Self.tirFormatter
-                    )
-                }
-
-                if state.mealData.protein > 0 {
-                    micronutrientRow(
-                        "Protein",
-                        value: displayedProtein,
-                        unit: "g",
-                        progress: MicronutrientProgress.progress(
-                            nutrient: .protein,
-                            amount: NSDecimalNumber(decimal: displayedProtein).doubleValue,
-                            age: state.individual.age,
-                            sex: state.individual.sex
-                        ),
-                        formatter: Self.tirFormatter
-                    )
-                }
-
-                if state.mealData.fiber > 0 {
-                    micronutrientRow(
-                        "Fiber",
-                        value: displayedFiber,
-                        unit: "g",
-                        progress: MicronutrientProgress.progress(
-                            nutrient: .fiber,
-                            amount: NSDecimalNumber(decimal: displayedFiber).doubleValue,
-                            age: state.individual.age,
-                            sex: state.individual.sex
-                        ),
-                        formatter: Self.tirFormatter
-                    )
-                }
-            }
-            .foregroundStyle(.secondary)
-            .font(.callout)
-        }
-
-        private var micronutrientsAndMoreView: some View {
-            VStack(spacing: 4) {
-                otherMacroNutrientsView
-                    .padding(.bottom, otherMacros ? 10 : 0)
-
-                ForEach(savedMicronutrients, id: \.nutrient) { item in
-                    let value = state.mealData.averaged(item.amount)
-
-                    micronutrientRow(
-                        item.nutrient.displayName,
-                        value: value,
-                        unit: item.nutrient.unit,
-                        progress: MicronutrientProgress.progress(
-                            nutrient: item.nutrient,
-                            amount: NSDecimalNumber(decimal: value).doubleValue,
-                            age: state.individual.age,
-                            sex: state.individual.sex
-                        ),
-                        formatter: Self.targetFormatter
-                    )
-                }
-            }
-            .font(.callout)
-            .foregroundStyle(.secondary)
-            .padding(.horizontal, 10)
-            .padding(.top, 10)
-            .padding(.bottom, 30)
-        }
-
-        private func micronutrientRow(
-            _ title: String,
-            value: Decimal,
-            unit: String,
-            progress: NutrientProgress? = nil,
-            formatter: NumberFormatter
-        ) -> some View {
-            VStack(alignment: .leading, spacing: 2) {
-                HStack {
-                    Text(NSLocalizedString(title, comment: ""))
-
-                    Spacer()
-
-                    if let progress {
-                        Text("\(Int(progress.percent.rounded())) %")
-                            .foregroundStyle(progress.color)
-                    }
-
-                    Text(formatter.string(from: NSDecimalNumber(decimal: value)) ?? "")
-
-                    Text(NSLocalizedString(unit, comment: ""))
-                }
-
-                if let progress {
-                    NutrientProgressBar(progress: progress)
-                }
-            }
-        }
-
-        private var otherMacros: Bool {
-            state.mealData.fat > 0 || state.mealData.protein > 0 || state.mealData.fiber > 0
-        }
-
-        private func countOtherMacros() -> Int {
-            var total = 0
-            total += state.mealData.fat > 0 ? 1 : 0
-            total += state.mealData.protein > 0 ? 1 : 0
-            total += state.mealData.fiber > 0 ? 1 : 0
-            return total
-        }
-
-        private var nutrientsCount: Int {
-            state.mealData.micronutrients.count + countOtherMacros()
-        }
-
-        private func micronutrientTitle() -> String {
-            let count = state.mealData.additionalNutrients + countOtherMacros()
-
-            guard count > 0 else {
-                return String.empty
-            }
-
-            guard count > 1 else {
-                return "\(count) " + NSLocalizedString("more nutrient", comment: "")
-            }
-
-            return "\(count) " + NSLocalizedString("more nutrients", comment: "")
-        }
-
-        /// Currently constant. The Average Day Title
-        private var intervalTitle: String { "Day" }
-
-        private var displayedServings: Decimal {
-            state.mealData.averaged(state.mealData.servings)
-        }
-
-        private var displayedCarbs: Decimal {
-            state.mealData.averaged(state.mealData.carbs)
-        }
-
-        private var displayedFat: Decimal {
-            state.mealData.averaged(state.mealData.fat)
-        }
-
-        private var displayedProtein: Decimal {
-            state.mealData.averaged(state.mealData.protein)
-        }
-
-        private var displayedFiber: Decimal {
-            state.mealData.averaged(state.mealData.fiber)
-        }
-
-        private var displayedCalories: Decimal {
-            state.mealData.averaged(state.mealData.kcal)
-        }
-
-        private var savedMicronutrients: [(nutrient: MicroNutrient, amount: Decimal)] {
-            state.mealData.micronutrients
-                .filter { $0.value > 0 }
-                .sorted {
-                    MicronutrientProgress.progress(
-                        nutrient: $0.key,
-                        amount: NSDecimalNumber(decimal: $0.value).doubleValue,
-                        age: state.individual.age,
-                        sex: state.individual.sex
-                    ).percent
-                        >
-                        MicronutrientProgress.progress(
-                            nutrient: $1.key,
-                            amount: NSDecimalNumber(decimal: $1.value).doubleValue,
-                            age: state.individual.age,
-                            sex: state.individual.sex
-                        ).percent
-                }
-                .map { ($0.key, $0.value) }
-        }
-
-        /// Meal Summary Frame Height
-        private var frameHeight: CGFloat {
-            CGFloat(
-                200 +
-                    ((state.mealData.micronutrients.isEmpty && !otherMacros) ? 0 : 53) +
-                    (displayAllNutrients && state.mealData.micronutrients.isEmpty ? 43 : displayAllNutrients ? 64 : 0) +
-                    (displayAllNutrients ? 1 : 0) * nutrientsCount * 31
-            )
-        }
-
         private func enabled() -> Bool {
             state.overrideAutoISF == true
         }
 
         private func disabled() -> Bool {
             state.overrideAutoISF == false
-        }
-
-        /// The tapped card's blur and spinner, while the statistics screen opens. Cleared by its own task: nothing
-        /// else re-renders Home at the moment a time-based expiry would pass, so the spinner would stay
-        private func timeIsNowLoop() {
-            animateLoop = true
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(1.5))
-                animateLoop = false
-            }
-        }
-
-        private func timeIsNowTIR() {
-            animateTIR = true
-            Task { @MainActor in
-                try? await Task.sleep(for: .seconds(1.5))
-                animateTIR = false
-            }
-        }
-
-        private var animation: any View {
-            ActivityIndicator(isAnimating: .constant(true), style: .large)
         }
 
         private var shouldHideBottomBar: Bool {
@@ -948,41 +592,41 @@ extension Home {
                 versionBanner
                 ScrollView {
                     VStack {
+                        // Main Chart
                         chart(geo)
+                        // Adjust hours visible (X-Axis) and ratio display
                         timeSetting
                             .overlay { isfView }
                             // Reserve toolbar clearance at the top, then consume it as the user scrolls.
                             .padding(.bottom, usesBottomBar ? max(0, bottomActionBarHeight + min(0, homeScrollOffset)) : 0)
 
-                        if !state.data.glucose.isEmpty {
+                        // Stats bar
+                        if state.homeStats != nil {
                             preview.padding(.top, 15)
                         }
-
-                        loopPreview.padding(.vertical, 15)
-
-                        if state.showCOBChart {
-                            activeCOBView.padding(.bottom, 15)
+                        // Loops card
+                        if state.homeLoops != nil {
+                            loopPreview.padding(.vertical, 15)
                         }
 
-                        if state.showIOBChart {
-                            activeIOBView.padding(.bottom, 15)
+                        // On board: glucose, COB and IOB, the last 24 h
+                        if state.homeOnBoard != nil {
+                            onBoardView.padding(.bottom, 15)
                         }
 
-                        insulinView.padding(.bottom, 15)
-                        mealsView.padding(.bottom, 15)
+                        // Summary Views
+                        if state.homeInsulin != nil {
+                            insulinView.padding(.bottom, 15)
+                        }
+                        if state.homeMeals != nil {
+                            mealsView.padding(.bottom, 15)
+                        }
                     }
                     .frame(maxWidth: .infinity)
                     .onGeometryChange(for: CGFloat.self) { proxy in
                         proxy.frame(in: .named("HomeScrollView")).minY
                     } action: { scrollPosition in
                         homeScrollOffset = scrollPosition
-                        let showsGlucose = scrollPosition < -550 &&
-                            (state.showIOBChart || state.showCOBChart) && !state.skipGlucoseChart
-                        if displayGlucose != showsGlucose {
-                            withAnimation(.easeOut(duration: showsGlucose ? 0.3 : 0.2)) {
-                                displayGlucose = showsGlucose
-                            }
-                        }
                     }
                 }
                 .frame(maxWidth: .infinity)
