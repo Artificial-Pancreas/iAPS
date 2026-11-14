@@ -3493,6 +3493,9 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Ẩn nhãn nồng độ Insulin";
 
 /* UI/UX option */
+"Always Display Buttons" = "Always Display Buttons";
+
+/* UI/UX option */
 "Use insulin bars" = "Sử dụng thanh hiển thị insulin";
 
 /* UI/UX option */
@@ -3774,6 +3777,8 @@ Enact a temp Basal or a temp target */
 "iAPS updated" = "iAPS đã được cập nhật";
 
 "You're now running version %@." = "Bạn đang sử dụng phiên bản %@.";
+
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Các bản cập nhật đôi khi có thể đặt lại một số cài đặt. Mặc dù hiếm khi xảy ra, nếu bạn nhận thấy bất kỳ điều gì bất thường — chẳng hạn như Vòng lặp kín bị tắt hoặc IOB tối đa bằng 0 — chúng tôi khuyên bạn nên kiểm tra cài đặt trước tiên.";
 

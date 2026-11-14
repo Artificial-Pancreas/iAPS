@@ -3499,6 +3499,9 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "Hide Concentration Badge" = "Verberg concentratie badge";
 
 /* UI/UX option */
+"Always Display Buttons" = "Always Display Buttons";
+
+/* UI/UX option */
 "Use insulin bars" = "Gebruik insulinebalken";
 
 /* UI/UX option */
@@ -3779,6 +3782,8 @@ Doelglucose − (Doelglucose − 2,2) / 2.";
 "iAPS updated" = "iAPS is bijgewerkt";
 
 "You're now running version %@." = "Je gebruikt nu versie %@.";
+
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates kunnen soms instellingen terugzetten. Dit gebeurt niet vaak. Merk je toch iets vreemds, bijvoorbeeld dat Closed Loop uitstaat of Max IOB op 0 staat? Controleer dan eerst je instellingen.";
 

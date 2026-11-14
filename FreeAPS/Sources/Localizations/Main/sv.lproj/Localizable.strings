@@ -3493,6 +3493,9 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Dölj koncentrationsmärke";
 
 /* UI/UX option */
+"Always Display Buttons" = "Visa alltid knapparna";
+
+/* UI/UX option */
 "Use insulin bars" = "Använd insulinstänger";
 
 /* UI/UX option */
@@ -3773,6 +3776,8 @@ Enact a temp Basal or a temp target */
 "iAPS updated" = "iAPS uppdaterad";
 
 "You're now running version %@." = "Du kör nu version %@.";
+
+"Newer release available at GitHub: " = "Nyare version tillgänglig på GitHub: ";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Uppdateringar kan ibland återställa vissa adv dina inställningar, även om detta är sällsynt. Om du märker något konstigt — exempelvis öppen loop eller Max IOB på 0 — rekommenderar vi att du noga kontrollerar dina inställningar först.";
 
