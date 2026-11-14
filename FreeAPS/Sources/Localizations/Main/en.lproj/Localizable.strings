@@ -4423,6 +4423,28 @@ Enact a temp Basal or a temp target */
 "Simulate a crash?" = "Simulate a crash?";
 "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start." = "iAPS will stop immediately and must be reopened. If \"Send crash reports\" is on in Sharing, the report is sent at the next start.";
 
+/* --- App start: data migrations, the downgrade warning --- */
+/* Data migration description (shown after a downgrade): the preferences key of Resistance Lowers Target was renamed */
+"Preferences: the \"resistance lowers target\" setting was stored under a new name" = "Preferences: the \"resistance lowers target\" setting was stored under a new name";
+/* Data migration downgrade info: what to check after going back to an older app version */
+"Check Preferences › Resistance Lowers Target" = "Check Preferences › Resistance Lowers Target";
+/* App cannot start: a data migration failed. 1: the migration's description, 2: its id, 3: the error */
+"Data migration \"%1$@\" (%2$@) has failed: %3$@" = "Data migration \"%1$@\" (%2$@) has failed: %3$@";
+/* App cannot start after a downgrade. %@: the list of changes the newer version made, one per line */
+"iAPS cannot start: the data on this phone was changed by a newer version of iAPS in a way this version cannot use.\n\n%@\n\nPlease update iAPS to a newer version." = "iAPS cannot start: the data on this phone was changed by a newer version of iAPS in a way this version cannot use.\n\n%@\n\nPlease update iAPS to a newer version.";
+/* App cannot start: the stored data migration records are unreadable. %@: the error */
+"iAPS cannot start: the list of applied data migrations cannot be read (%@). It may have been written by a newer version of iAPS - please update iAPS to a newer version." = "iAPS cannot start: the list of applied data migrations cannot be read (%@). It may have been written by a newer version of iAPS - please update iAPS to a newer version.";
+/* Downgrade warning at app start: title */
+"Data from a newer version" = "Data from a newer version";
+/* Downgrade warning at app start: explanation above the list of data changes */
+"The data of this app was last used by a newer version of iAPS. That version made the changes listed below, which this version does not know about. Settings may differ from what you expect: check them before relying on the app." = "The data of this app was last used by a newer version of iAPS. That version made the changes listed below, which this version does not know about. Settings may differ from what you expect: check them before relying on the app.";
+/* Downgrade warning at app start: when a data change was made (1: date and time) and by which app version (2) */
+"Applied %1$@ by version %2$@" = "Applied %1$@ by version %2$@";
+/* Downgrade warning at app start: what the continue button does */
+"Nothing has been changed yet. When you continue, this version forgets these changes; they are made again when iAPS is next updated." = "Nothing has been changed yet. When you continue, this version forgets these changes; they are made again when iAPS is next updated.";
+/* Downgrade warning at app start: the button that continues the start */
+"I understand, continue to the app" = "I understand, continue to the app";
+
 /* --- Settings → Fat and Protein: conversion on/off (the Add Carbs fields are a separate UI setting) --- */
 "Convert fat and protein into carb equivalents" = "Convert fat and protein into carb equivalents";
 "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface." = "When off, fat and protein are still saved with the meal, but no future carb entries are created from them. Whether the Add Carbs screen shows the fat and protein fields is a separate setting under Settings → User Interface.";
