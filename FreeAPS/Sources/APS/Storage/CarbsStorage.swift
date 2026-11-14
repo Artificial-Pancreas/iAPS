@@ -124,6 +124,13 @@ final class BaseCarbsStorage: CarbsStorage, Injectable {
                         storage.save(Array(uniqEvents), as: file)
                     }
                 } else {
+                    // One line per stored entry for log-based analysis: the oref "Carb entry" line
+                    // carries only time and grams, this adds who entered it and the note.
+                    let when = Formatter.iso8601withFractionalSeconds.string(from: onlyCarbs.actualDate ?? creationDate)
+                    debug(
+                        .default,
+                        "Carb entry stored \(when), carbs: \(onlyCarbs.carbs), entered by: \(onlyCarbs.enteredBy ?? ""), note: \(onlyCarbs.note ?? "")"
+                    )
                     self.storage.transaction { storage in
                         storage.append([onlyCarbs], to: file, uniqBy: \.id)
                         uniqEvents = storage.retrieve(file, as: [CarbsEntry].self)?
