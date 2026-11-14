@@ -84,11 +84,11 @@ actor BaseLoopEventsStorage: LoopEventsStorage, AppService {
         }
     }
 
-    /// newest -> oldest
-    private static func filterOldAndSort(_ events: [LoopEvent]) -> [LoopEvent] {
+    /// newest -> oldest. "Pump not configured" events are no longer recorded; the ones already stored are dropped
+    static func filterOldAndSort(_ events: [LoopEvent]) -> [LoopEvent] {
         let oldest = Date.now.subtractingTimeInterval(Config.retention)
         return events
-            .filter { $0.timestamp > oldest }
+            .filter { $0.timestamp > oldest && $0.type != .pumpNotConfigured }
             .sorted { $0.timestamp > $1.timestamp }
     }
 }

@@ -200,12 +200,13 @@ extension LoopEvent {
     /// a loop cycle failure vs a rejected enactment, so that the chart/list can tell apart
     /// "pump was busy" from "couldn't talk to the pump" etc.
     ///
-    /// Returns `nil` when the failure is a pump command that `BaseDeviceDataManager` has already recorded.
+    /// Returns `nil` when the failure is a pump command that `BaseDeviceDataManager` has already recorded, and when
+    /// there is no pump: a loop that can't run for want of a pump is not an event.
     static func failure(_ error: Error, timestamp: Date = Date()) -> LoopEvent? {
-        guard !isRecordedAsCommandFailure(error) else { return nil }
+        guard !isRecordedAsCommandFailure(error), let type = LoopEventType(failure: error) else { return nil }
         return LoopEvent(
             timestamp: timestamp,
-            type: LoopEventType(failure: error),
+            type: type,
             message: error.localizedDescription
         )
     }
@@ -219,15 +220,23 @@ extension LoopEvent {
 }
 
 extension LoopEventType {
-    init(failure error: Error) {
+    /// what `APSManager` puts in `APSError.invalidPumpState` when there is no pump
+    static let pumpNotSetMessage = "Pump not set"
+
+    /// `nil` when there is no pump (nothing to record). `.pumpNotConfigured` is no longer produced: the case stays
+    /// for the events already stored, which `BaseLoopEventsStorage` drops.
+    init?(failure error: Error) {
         if let apsError = error as? APSError {
             switch apsError {
             case let .pumpError(underlying):
                 self = LoopEventType(pumpManagerError: underlying) ?? .pumpCommunication
             case let .invalidPumpState(message):
-                self = message.lowercased().contains("suspend") ? .pumpSuspended : .pumpNotConfigured
+                if message == Self.pumpNotSetMessage {
+                    return nil
+                }
+                self = message.lowercased().contains("suspend") ? .pumpSuspended : .pumpError
             case .pumpNotConfigured:
-                self = .pumpNotConfigured
+                return nil
             case .bolusInProgress:
                 self = .pumpBusy
             case .glucoseError:
