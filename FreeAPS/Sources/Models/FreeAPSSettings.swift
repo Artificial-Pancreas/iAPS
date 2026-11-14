@@ -168,6 +168,8 @@ struct FreeAPSSettings: JSON, Equatable {
         autoisf && !isNighttime
     }
 
+    var dontHideButtons: Bool = false
+
     var isNighttime: Bool {
         guard nightTime.enabled else { return false }
 
@@ -718,10 +720,6 @@ extension FreeAPSSettings: Decodable {
             settings.b30_duration = b30_duration
         }
 
-        if let b30_duration = try? container.decode(Decimal.self, forKey: .b30_duration) {
-            settings.b30_duration = b30_duration
-        }
-
         if let iobThresholdPercent = try? container.decode(Decimal.self, forKey: .iobThresholdPercent) {
             settings.iobThresholdPercent = iobThresholdPercent
         }
@@ -765,6 +763,10 @@ extension FreeAPSSettings: Decodable {
             settings.variableKetoProtect = variableKetoProtect
         }
 
+        if let ketoProtectBasalPercent = try? container.decode(Decimal.self, forKey: .ketoProtectBasalPercent) {
+            settings.ketoProtectBasalPercent = ketoProtectBasalPercent
+        }
+
         if let ketoProtectAbsolut = try? container.decode(Bool.self, forKey: .ketoProtectAbsolut) {
             settings.ketoProtectAbsolut = ketoProtectAbsolut
         }
@@ -791,6 +793,10 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadCrashReports = try? container.decode(Bool.self, forKey: .uploadCrashReports) {
             settings.uploadCrashReports = uploadCrashReports
+        }
+
+        if let dontHideButtons = try? container.decode(Bool.self, forKey: .dontHideButtons) {
+            settings.dontHideButtons = dontHideButtons
         }
 
         if let nightTime = try? container.decode(NightTimeConfiguration.self, forKey: .nightTime) {

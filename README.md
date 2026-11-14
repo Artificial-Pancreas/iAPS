@@ -13,6 +13,13 @@ Ready to explore iAPS? Here's how you can download and build the repository:
   * **Using Terminal:**
 
     clone and open workspace project in Xcode
+
+    Stable release (`main` branch, recommended):
+    ```bash
+    git clone --recurse-submodules --branch=main https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
+    ```
+
+    Development version (`dev` branch, latest features, may be less stable):
     ```bash
     git clone --recurse-submodules --branch=dev https://github.com/artificial-pancreas/iaps.git && cd iaps && xed .
     ```
@@ -38,6 +45,14 @@ For instructions on how to build iAPS directly within GitHub, refer to these res
 
   * **iAPS-Specific Instructions:** [https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md](https://github.com/Artificial-Pancreas/iAPS/blob/main/fastlane/testflight.md)
   * **General GitHub Actions Overview:** [https://loopkit.github.io/loopdocs/gh-actions/gh-overview/](https://loopkit.github.io/loopdocs/gh-actions/gh-overview/)
+
+#### Apple Watch Series 3
+
+GitHub builds use Xcode 27, which can no longer produce a watch app for watchOS 8, the last version the Apple Watch Series 3 supports. The phone app is unaffected, but the watch app will not install on a Series 3.
+
+If you use a Series 3, add a repository **variable** named `USE_XCODE_26` with the value `true` (Settings → Secrets and variables → Actions → Variables) and run the "4. Build iAPS" workflow again. The build then uses Xcode 26 and the watch app installs on the Series 3 again. Everyone else should leave the variable unset. See [fastlane/docs/github.md](fastlane/docs/github.md) for details.
+
+If you build locally with Xcode instead, the same limit applies: Xcode 27 and later cannot build the watch app for watchOS 8. If your Xcode has updated past 26, you can download Xcode 26 from [Apple's developer downloads page](https://developer.apple.com/download/all/?q=Xcode%2026) and keep it installed alongside.
 
 -----
 
@@ -83,6 +98,8 @@ Distributing and building TestFlight apps also requires a paid membership.
       * 1
       * 2 (European)
       * 2 Plus (European)
+      * 3
+      * 3 Plus
   * **Eversense**
       * E3 (90 & 180 days)
       * 365

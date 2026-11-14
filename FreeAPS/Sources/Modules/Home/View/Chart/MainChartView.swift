@@ -108,6 +108,7 @@ struct MainChartView: View {
                     MainChartCanvas(geom: geom, data: data, scrollTrigger: $scrollTrigger)
                 }
             }
+            .clipped()
             .onAppear {
                 latestSize = geo.size
                 subscribeToUpdates()
@@ -342,14 +343,10 @@ struct MainChartCanvas: View {
                                 scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
                             }
                         }
-                        .onAppear {
-                            DispatchQueue.main.async {
-                                scroll.scrollTo(ChartConfig.endID, anchor: .trailing)
-                            }
-                        }
                 }
             }
         }
+        .defaultScrollAnchor(.trailing)
     }
 
     private var yGridView: some View {

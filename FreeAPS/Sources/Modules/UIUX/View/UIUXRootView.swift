@@ -46,6 +46,7 @@ extension UIUX {
                     Toggle("Display Temp Targets Button", isOn: $state.useTargetButton)
                     Toggle("Display Profile Override Button", isOn: $state.profileButton)
                     Toggle("Display Meal Button", isOn: $state.carbButton)
+                    Toggle("Always Display Buttons", isOn: $state.dontHideButtons)
                 } header: { Text("Home View Button Panel ") }
 
                 Section {
@@ -95,6 +96,10 @@ extension UIUX {
                         }
                     }
                 } header: { Text("Light / Dark Mode") }
+
+                Section {
+                    Toggle("Animate backbround", isOn: $state.animatedBackground)
+                } header: { Text("Other") }
             }
             .dynamicTypeSize(...DynamicTypeSize.xxLarge)
             .navigationBarTitle("UI/UX")
