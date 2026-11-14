@@ -1277,6 +1277,8 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "hasNew readingResult: \(readingResult)")
         processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: false)
+        // display only: a reading may come with a new session start (Dexcom) and no state update
+        dispatchCgmStatus()
     }
 
     func cgmManager(_: LoopKit.CGMManager, hasNew events: [PersistedCgmEvent]) {
@@ -1287,11 +1289,15 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
                 appCoordinator.sendNewSensorDetected()
             }
         }
+        // display only: a sensor start/stop event changes the session Home shows
+        dispatchCgmStatus()
     }
 
     func cgmManagerDidUpdateState(_ manager: CGMManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         rawCGMManager = manager.rawValue
+        // display only: the name and the onboarded flag are part of the manager's state too
+        dispatchCgmInfo()
         dispatchCgmStatus()
     }
 
@@ -1300,7 +1306,10 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         UUID().uuidString
     }
 
-    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
+    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {
+        // display only
+        dispatchCgmStatus()
+    }
 }
 
 // MARK: - Device alert acknowledgement

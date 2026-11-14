@@ -156,6 +156,15 @@
 /* Home View Message if no pump is connected */
 "No Pump" = "No Pump";
 
+/* Home header, no CGM is configured */
+"No CGM" = "No CGM";
+
+/* Home header, short name of the Nightscout CGM source */
+"NS CGM" = "NS CGM";
+
+/* Home header, short name of the Shared App Group CGM source */
+"App CGM" = "App CGM";
+
 /* Home View Message if open loop is active */
 "Open" = "Open";
 

@@ -351,3 +351,137 @@ private final class MaxBox: @unchecked Sendable {
         lock.withLock { _value = max(_value, sample) }
     }
 }
+
+final class HomeCGMElementTests: XCTestCase {
+    private let now = Date(timeIntervalSince1970: 1_800_000_000)
+    private let day: TimeInterval = 86400
+
+    private func status(sessionStart: Date?, lifetime: TimeInterval?) -> CgmDisplayStatus {
+        CgmDisplayStatus(
+            statusHighlight: nil,
+            sessionStartDate: sessionStart,
+            shouldUploadGlucose: false,
+            oneMinuteReadings: false,
+            sensorDays: lifetime
+        )
+    }
+
+    func testLifetimeIsTheCgmsSecondsOrTheSettingsDays() {
+        XCTAssertEqual(HomeCGMView.sensorLifetime(cgmLifetime: 15 * day, settingsDays: 10), 15 * day)
+        XCTAssertEqual(HomeCGMView.sensorLifetime(cgmLifetime: nil, settingsDays: 10), 10 * day)
+        XCTAssertEqual(HomeCGMView.sensorLifetime(cgmLifetime: 0, settingsDays: 14), 14 * day)
+        XCTAssertEqual(HomeCGMView.sensorLifetime(cgmLifetime: nil, settingsDays: -1), 0)
+    }
+
+    func testNoCgm() {
+        let element = HomeCGMView.element(
+            cgmLabel: nil,
+            sessionStart: now.addingTimeInterval(-day),
+            lifetime: 10 * day,
+            showsRing: true,
+            now: now
+        )
+        XCTAssertEqual(element, .noCGM)
+    }
+
+    func testCgmWithoutSessionShowsItsLabelWhateverTheRingSettings() {
+        for showsRing in [true, false] {
+            let element = HomeCGMView.element(
+                cgmLabel: "NS CGM",
+                sessionStart: nil,
+                lifetime: 10 * day,
+                showsRing: showsRing,
+                now: now
+            )
+            XCTAssertEqual(element, .label("NS CGM"))
+        }
+    }
+
+    func testRunningSensor() {
+        let element = HomeCGMView.element(
+            cgmLabel: "G7",
+            sessionStart: now.addingTimeInterval(-3 * day),
+            lifetime: 10 * day,
+            showsRing: true,
+            now: now
+        )
+        XCTAssertEqual(element, .sensor(age: 3 * day, remaining: 7 * day))
+    }
+
+    func testExpiredSensorHasNothingLeftNotANegativeTime() {
+        let element = HomeCGMView.element(
+            cgmLabel: "G7",
+            sessionStart: now.addingTimeInterval(-11 * day),
+            lifetime: 10 * day,
+            showsRing: true,
+            now: now
+        )
+        XCTAssertEqual(element, .sensor(age: 11 * day, remaining: 0))
+    }
+
+    func testSessionStartingInTheFutureIsANewSensor() {
+        let element = HomeCGMView.element(
+            cgmLabel: "G7",
+            sessionStart: now.addingTimeInterval(1500),
+            lifetime: 10 * day,
+            showsRing: true,
+            now: now
+        )
+        XCTAssertEqual(element, .sensor(age: 0, remaining: 10 * day))
+    }
+
+    func testRingSettingsOffHideTheSensor() {
+        let element = HomeCGMView.element(
+            cgmLabel: "G7",
+            sessionStart: now.addingTimeInterval(-day),
+            lifetime: 10 * day,
+            showsRing: false,
+            now: now
+        )
+        XCTAssertEqual(element, .hidden)
+    }
+
+    func testSessionStartPrefersTheStatus() {
+        let fromStatus = now.addingTimeInterval(-600)
+        let fromGlucose = now.addingTimeInterval(-9 * day)
+        XCTAssertEqual(
+            HomeCGMView.sessionStart(
+                status: status(sessionStart: fromStatus, lifetime: 10 * day),
+                recentGlucoseSessionStart: fromGlucose
+            ),
+            fromStatus
+        )
+        // a sensor CGM that has no session yet: the last record's
+        XCTAssertEqual(
+            HomeCGMView.sessionStart(
+                status: status(sessionStart: nil, lifetime: 10 * day),
+                recentGlucoseSessionStart: fromGlucose
+            ),
+            fromGlucose
+        )
+        // a source without sensors: a record left by the CGM before it does not count
+        XCTAssertNil(
+            HomeCGMView.sessionStart(status: status(sessionStart: nil, lifetime: nil), recentGlucoseSessionStart: fromGlucose)
+        )
+        XCTAssertNil(HomeCGMView.sessionStart(status: nil, recentGlucoseSessionStart: fromGlucose))
+    }
+
+    func testLabels() {
+        XCTAssertEqual(
+            HomeCGMView.label(
+                name: "Nightscout Remote CGM",
+                identifier: "NightscoutRemoteCGM",
+                statisticsIdentifier: "nightscout"
+            ),
+            "NS CGM"
+        )
+        XCTAssertEqual(
+            HomeCGMView.label(name: "Shared App Group CGM", identifier: "AppGroupCGM", statisticsIdentifier: nil),
+            "App CGM"
+        )
+        XCTAssertEqual(
+            HomeCGMView.label(name: "CGM Simulator", identifier: "MockCGMManager", statisticsIdentifier: "simulator"),
+            "CGM Simulator"
+        )
+    }
+}

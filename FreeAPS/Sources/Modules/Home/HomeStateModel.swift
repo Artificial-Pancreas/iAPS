@@ -342,7 +342,8 @@ extension Home {
 
         private func updateSensorDays() {
             guard let settings else { return }
-            sensorDays = cgmSensorDays ?? settings.sensorDays
+            // seconds: the CGM reports its lifetime in seconds, the setting is a number of days
+            sensorDays = HomeCGMView.sensorLifetime(cgmLifetime: cgmSensorDays, settingsDays: settings.sensorDays)
         }
 
         func addCarbs() {

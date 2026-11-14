@@ -9,9 +9,6 @@ struct CurrentGlucoseView: View {
     let alwaysUseColors: Bool
     let displayDelta: Bool
     let scrolling: Bool
-    let displaySAGE: Bool
-    let displayExpiration: Bool
-    let sensordays: Double
     let timerDate: Date
 
     @Environment(\.colorScheme) var colorScheme
@@ -70,20 +67,6 @@ struct CurrentGlucoseView: View {
         return formatter
     }()
 
-    private static let remainingTimeFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day, .hour]
-        formatter.unitsStyle = .abbreviated
-        return formatter
-    }()
-
-    private static let remainingTimeFormatterDays: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.day]
-        formatter.unitsStyle = .abbreviated
-        return formatter
-    }()
-
     private static let decimalString: String = NumberFormatter().decimalSeparator
 
     private var glucoseFormatter: NumberFormatter {
@@ -108,9 +91,6 @@ struct CurrentGlucoseView: View {
             if let recent = recentGlucose {
                 if displayDelta, !scrolling, let deltaInt = delta,
                    !(units == .mmolL && abs(deltaInt) <= 1) { deltaView(deltaInt) }
-                if displayExpiration || displaySAGE {
-                    sageView
-                }
                 VStack(spacing: 15) {
                     let formatter = recent.type == GlucoseType.manual.rawValue ? manualGlucoseFormatter : glucoseFormatter
                     let value = Decimal(recent.glucose)
@@ -152,45 +132,6 @@ struct CurrentGlucoseView: View {
         }
         .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
         .frame(maxHeight: .infinity, alignment: .center).offset(x: 110.5, y: -9)
-    }
-
-    private var sageView: some View {
-        ZStack {
-            if let date = recentGlucose?.sessionStartDate {
-                let sensorAge: TimeInterval = -date.timeIntervalSinceNow
-                let expiration = sensordays - sensorAge
-                let secondsOfDay = 8.64E4
-                let colour = colorScheme == .light ? Color.black : Color.white
-                let lineColour: Color = sensorAge >= sensordays - secondsOfDay * 1 ? Color.red
-                    .opacity(0.9) : sensorAge >= sensordays - secondsOfDay * 2 ? Color
-                    .orange : Color.white
-                let minutesAndHours = (displayExpiration && expiration < 1 * 8.64E4) || (displaySAGE && sensorAge < 1 * 8.64E4)
-
-                Sage(amount: sensorAge, expiration: expiration, lineColour: lineColour, sensordays: sensordays)
-                    .frame(width: 36, height: 36)
-                    .overlay {
-                        HStack {
-                            Text(
-                                !minutesAndHours ?
-                                    (
-                                        Self.remainingTimeFormatterDays
-                                            .string(from: displayExpiration ? expiration : sensorAge) ?? ""
-                                    )
-                                    .replacingOccurrences(of: ",", with: " ") :
-                                    (
-                                        Self.remainingTimeFormatter
-                                            .string(from: displayExpiration ? expiration : sensorAge) ?? ""
-                                    )
-                                    .replacingOccurrences(of: ",", with: " ")
-                            ).foregroundStyle(colour).fontWeight(colorScheme == .dark ? .semibold : .regular)
-                        }
-                    }
-            }
-        }
-        .font(.footnote)
-        .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing).padding(20)
-        .offset(x: -5)
     }
 
     private var adjustments: (degree: Double, x: CGFloat, y: CGFloat) {
@@ -285,5 +226,153 @@ struct CurrentGlucoseView: View {
         default:
             return .loopYellow
         }
+    }
+}
+
+/// The header's CGM element: the sensor ring, the source's name where there is no sensor session, or "No CGM".
+/// It is a view of its own, so that its tap is its own and not the glucose value's.
+struct HomeCGMView: View {
+    let cgmInfo: CgmDisplayInfo?
+    let cgmStatus: CgmDisplayStatus?
+    /// the session start the last glucose record carries
+    let recentGlucoseSessionStart: Date?
+    let displaySAGE: Bool
+    let displayExpiration: Bool
+    /// the sensor's lifetime in seconds
+    let sensorLifetime: TimeInterval
+    let timerDate: Date
+    let action: () -> Void
+
+    @Environment(\.colorScheme) var colorScheme
+
+    enum Element: Equatable {
+        case noCGM
+        /// a CGM without a sensor session (Nightscout, an app group source, a sensor not started yet): its name
+        case label(String)
+        /// seconds since the session's start and until its end, neither ever negative
+        case sensor(age: TimeInterval, remaining: TimeInterval)
+        /// a sensor session while both "Display Sensor Age" and "Display Sensor Time Remaining" are off
+        case hidden
+    }
+
+    static let secondsOfDay: TimeInterval = 86400
+
+    /// The CGM's own lifetime (seconds) when it knows one, the "Sensor Life-Span" setting (days) otherwise.
+    static func sensorLifetime(cgmLifetime: TimeInterval?, settingsDays: Double) -> TimeInterval {
+        if let cgmLifetime, cgmLifetime > 0 { return cgmLifetime }
+        return max(settingsDays, 0) * secondsOfDay
+    }
+
+    /// The manager's current session comes first: a new sensor shows before its first reading. The last glucose
+    /// record's session stands in only for a CGM that knows its sensor's lifetime (a Dexcom before the first
+    /// reading after a launch): that record may be one of a CGM that has been replaced since.
+    static func sessionStart(status: CgmDisplayStatus?, recentGlucoseSessionStart: Date?) -> Date? {
+        guard let status else { return nil }
+        if let sessionStart = status.sessionStartDate { return sessionStart }
+        return status.sensorDays != nil ? recentGlucoseSessionStart : nil
+    }
+
+    /// `cgmLabel`: the configured CGM's label, nil without a CGM.
+    static func element(
+        cgmLabel: String?,
+        sessionStart: Date?,
+        lifetime: TimeInterval,
+        showsRing: Bool,
+        now: Date
+    ) -> Element {
+        guard let cgmLabel else { return .noCGM }
+        guard let sessionStart else { return .label(cgmLabel) }
+        guard showsRing else { return .hidden }
+        // a session that starts in the future (a sensor warming up) is a new one, and an overdue one has nothing left
+        let age = max(now.timeIntervalSince(sessionStart), 0)
+        return .sensor(age: age, remaining: max(lifetime - age, 0))
+    }
+
+    /// A name short enough for the header's corner.
+    static func label(name: String, identifier: String, statisticsIdentifier: String?) -> String {
+        if statisticsIdentifier == "nightscout" {
+            return NSLocalizedString("NS CGM", comment: "Home header, short name of the Nightscout CGM source")
+        }
+        if identifier == "AppGroupCGM" {
+            return NSLocalizedString("App CGM", comment: "Home header, short name of the Shared App Group CGM source")
+        }
+        return name
+    }
+
+    private static let remainingTimeFormatter: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day, .hour]
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }()
+
+    private static let remainingTimeFormatterDays: DateComponentsFormatter = {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.day]
+        formatter.unitsStyle = .abbreviated
+        return formatter
+    }()
+
+    private var element: Element {
+        Self.element(
+            cgmLabel: cgmInfo.map {
+                Self.label(name: $0.name, identifier: $0.identifier, statisticsIdentifier: $0.identifierForStatistics)
+            },
+            sessionStart: Self.sessionStart(status: cgmStatus, recentGlucoseSessionStart: recentGlucoseSessionStart),
+            lifetime: sensorLifetime,
+            showsRing: displaySAGE || displayExpiration,
+            now: timerDate
+        )
+    }
+
+    var body: some View {
+        let element = self.element
+        if element != .hidden {
+            content(element)
+                .font(.footnote)
+                .dynamicTypeSize(DynamicTypeSize.medium ... DynamicTypeSize.large)
+                .frame(minWidth: 44, minHeight: 44, alignment: .topTrailing)
+                .contentShape(Rectangle())
+                .onTapGesture(perform: action)
+        }
+    }
+
+    @ViewBuilder private func content(_ element: Element) -> some View {
+        switch element {
+        case .hidden:
+            EmptyView()
+        case .noCGM:
+            nameLabel(NSLocalizedString("No CGM", comment: "Home header, no CGM is configured"))
+        case let .label(name):
+            nameLabel(name)
+        case let .sensor(age, remaining):
+            ring(age: age, remaining: remaining)
+        }
+    }
+
+    private func nameLabel(_ text: String) -> some View {
+        Text(text)
+            .font(.statusFont)
+            .foregroundStyle(.secondary)
+            .lineLimit(1)
+            .truncationMode(.tail)
+            .frame(maxWidth: 110, alignment: .trailing)
+    }
+
+    private func ring(age: TimeInterval, remaining: TimeInterval) -> some View {
+        let colour = colorScheme == .light ? Color.black : Color.white
+        let lineColour: Color = remaining <= Self.secondsOfDay ? Color.red.opacity(0.9) :
+            remaining <= Self.secondsOfDay * 2 ? Color.orange : Color.white
+        let shown = displayExpiration ? remaining : age
+        let formatter = shown < Self.secondsOfDay ? Self.remainingTimeFormatter : Self.remainingTimeFormatterDays
+
+        // the ring's fill is remaining / age: at least a second of age keeps it finite
+        return Sage(amount: max(age, 1), expiration: remaining, lineColour: lineColour, sensordays: sensorLifetime)
+            .frame(width: 36, height: 36)
+            .overlay {
+                Text((formatter.string(from: shown) ?? "").replacingOccurrences(of: ",", with: " "))
+                    .foregroundStyle(colour)
+                    .fontWeight(colorScheme == .dark ? .semibold : .regular)
+            }
     }
 }
