@@ -156,9 +156,13 @@ extension Home {
                     timerDate: date
                 )
             }
+            .contentShape(Rectangle())
             .onTapGesture {
                 if appUIState.pumpInfo != nil {
                     state.setupPump = true
+                } else {
+                    // "No Pump": the list of pumps to add one
+                    state.showModal(for: .pumpConfig)
                 }
             }
             .offset(y: 2)

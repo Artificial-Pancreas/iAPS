@@ -1,3 +1,4 @@
+import LoopKit
 import UIKit
 
 struct CgmDisplayInfo: Equatable, Sendable {
@@ -19,4 +20,22 @@ struct CgmDisplayStatus: Equatable, Sendable {
     let shouldUploadGlucose: Bool
     let oneMinuteReadings: Bool
     let sensorDays: Double?
+}
+
+/// How serious a device's status highlight is: LoopKit's `DeviceStatusHighlightState`, for display.
+enum DeviceStatusHighlightLevel: Equatable, Sendable {
+    case normal
+    case warning
+    case critical
+}
+
+extension DeviceStatusHighlightLevel {
+    init(_ state: DeviceStatusHighlightState) {
+        switch state {
+        case .critical: self = .critical
+        case .warning: self = .warning
+        case .normalCGM,
+             .normalPump: self = .normal
+        }
+    }
 }

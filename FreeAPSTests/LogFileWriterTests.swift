@@ -485,3 +485,207 @@ final class HomeCGMElementTests: XCTestCase {
         )
     }
 }
+
+final class HomePumpElementTests: XCTestCase {
+    private let now = Date(timeIntervalSince1970: 1_800_000_000)
+    private let utc = TimeZone(secondsFromGMT: 0)!
+
+    private func info(_ identifier: String, onboarded: Bool = true, expiresAt: Date? = nil) -> PumpDisplayInfo {
+        PumpDisplayInfo(
+            identifier: identifier,
+            name: "a title the element must not read",
+            isOnboarded: onboarded,
+            image: nil,
+            expiresAt: expiresAt,
+            podActivatedAt: nil
+        )
+    }
+
+    private func status(
+        reservoir: ReservoirReading? = .units(120),
+        highlight: DeviceStatusHighlightLevel? = nil,
+        battery: Int? = nil,
+        uncertain: Bool = false,
+        suspended: Bool = false,
+        timeZone: TimeZone? = nil
+    ) -> PumpDisplayStatus {
+        PumpDisplayStatus(
+            status: suspended ? .suspended : .normal,
+            reservoir: reservoir,
+            statusHighlight: highlight.map { _ in "a message" },
+            statusHighlightLevel: highlight,
+            timeZone: timeZone ?? utc,
+            // as DeviceDataManager builds it: 100 % and `display` false for a pump that reports no battery
+            battery: Battery(percent: battery ?? 100, voltage: nil, string: .normal, display: battery != nil),
+            deliveryIsUncertain: uncertain,
+            isSuspended: suspended,
+            isBolusing: false,
+            supportedBasalRates: [],
+            supportedBolusVolumes: [],
+            model: nil,
+            timestamp: now
+        )
+    }
+
+    private func element(_ info: PumpDisplayInfo?, _ status: PumpDisplayStatus?) -> PumpView.Element {
+        PumpView.element(info: info, status: status, now: now, currentTimeZone: utc)
+    }
+
+    private func device(_ info: PumpDisplayInfo?, _ status: PumpDisplayStatus?) -> PumpView.Device? {
+        if case let .device(device) = element(info, status) { return device }
+        return nil
+    }
+
+    func testNoPump() {
+        XCTAssertEqual(element(nil, nil), .noPump)
+        XCTAssertEqual(element(nil, status()), .noPump)
+    }
+
+    func testPumpNotOnboarded() {
+        XCTAssertEqual(element(info("Dana", onboarded: false), status()), .reconnect)
+    }
+
+    func testPodAndPatchWithoutAnActiveOne() {
+        XCTAssertEqual(element(info("Omni"), status()), .noPod)
+        XCTAssertEqual(element(info("Medtrum"), status(highlight: .critical)), .noPatch)
+    }
+
+    func testPod() {
+        let pod = device(info("Omni", expiresAt: now.addingTimeInterval(3600)), status(reservoir: .aboveThreshold))
+        XCTAssertEqual(
+            pod,
+            PumpView.Device(
+                kind: .pod,
+                reservoir: .aboveThreshold,
+                batteryPercent: nil,
+                lifetime: .remaining(3600),
+                state: .normal,
+                clockOffset: false
+            )
+        )
+    }
+
+    func testActivePatch() {
+        let patch = device(info("Medtrum", expiresAt: now.addingTimeInterval(86400)), status(reservoir: .units(150)))
+        XCTAssertEqual(
+            patch,
+            PumpView.Device(
+                kind: .medtrum,
+                reservoir: .units(150),
+                batteryPercent: nil,
+                lifetime: .remaining(86400),
+                state: .normal,
+                clockOffset: false
+            )
+        )
+    }
+
+    func testExpiredPatchCountsUpFromItsExpiry() {
+        let patch = device(info("Medtrum", expiresAt: now.addingTimeInterval(-1800)), status())
+        XCTAssertEqual(patch?.lifetime, .expired(1800))
+        XCTAssertEqual(device(info("Medtrum", expiresAt: now), status())?.lifetime, .expired(0))
+    }
+
+    func testFaultedPatchIsNotANormalOne() {
+        // its activation and so its expiry outlive the fault
+        let patch = device(
+            info("Medtrum", expiresAt: now.addingTimeInterval(86400)),
+            status(highlight: .critical, suspended: true)
+        )
+        XCTAssertEqual(patch?.state, .critical)
+        XCTAssertEqual(patch?.lifetime, .remaining(86400))
+    }
+
+    func testPumpsWithABatteryAndNoExpiry() {
+        for identifier in ["Dana", "Minimed500"] {
+            let pump = device(info(identifier), status(reservoir: .units(87), battery: 55))
+            XCTAssertEqual(pump?.batteryPercent, 55)
+            XCTAssertNil(pump?.lifetime)
+            XCTAssertEqual(pump?.reservoir, .units(87))
+            XCTAssertEqual(pump?.state, .normal)
+        }
+        XCTAssertEqual(device(info("Dana"), status())?.kind, .dana)
+        XCTAssertEqual(device(info("Minimed500"), status())?.kind, .medtronic)
+    }
+
+    func testSimulator() {
+        let simulator = device(info("MockPumpManager"), status(reservoir: .units(200), battery: 100))
+        XCTAssertEqual(
+            simulator,
+            PumpView.Device(
+                kind: .other,
+                reservoir: .units(200),
+                batteryPercent: 100,
+                lifetime: nil,
+                state: .normal,
+                clockOffset: false
+            )
+        )
+    }
+
+    func testNoBatteryForAPumpThatReportsNoneNorForAPodOrPatch() {
+        XCTAssertNil(device(info("Minimed500"), status(battery: nil))?.batteryPercent)
+        XCTAssertNil(device(info("Omni", expiresAt: now.addingTimeInterval(60)), status(battery: 80))?.batteryPercent)
+        XCTAssertNil(device(info("Medtrum", expiresAt: now.addingTimeInterval(60)), status(battery: 80))?.batteryPercent)
+    }
+
+    func testUnknownReservoirAndNoStatusYet() {
+        XCTAssertNil(device(info("Minimed500"), status(reservoir: nil))?.reservoir)
+        XCTAssertEqual(
+            device(info("Dana"), nil),
+            PumpView.Device(
+                kind: .dana,
+                reservoir: nil,
+                batteryPercent: nil,
+                lifetime: nil,
+                state: .normal,
+                clockOffset: false
+            )
+        )
+    }
+
+    func testStateIsTheMostSeriousCondition() {
+        XCTAssertEqual(PumpView.deviceState(nil), .normal)
+        XCTAssertEqual(PumpView.deviceState(status()), .normal)
+        XCTAssertEqual(PumpView.deviceState(status(highlight: .normal)), .normal)
+        XCTAssertEqual(PumpView.deviceState(status(suspended: true)), .suspended)
+        XCTAssertEqual(PumpView.deviceState(status(highlight: .warning, suspended: true)), .suspended)
+        XCTAssertEqual(PumpView.deviceState(status(uncertain: true, suspended: true)), .deliveryUncertain)
+        XCTAssertEqual(PumpView.deviceState(status(highlight: .critical, uncertain: true, suspended: true)), .critical)
+    }
+
+    func testClockOffset() {
+        let other = TimeZone(secondsFromGMT: 3600)!
+        XCTAssertEqual(device(info("Dana"), status(timeZone: other))?.clockOffset, true)
+        XCTAssertEqual(device(info("Dana"), status(timeZone: utc))?.clockOffset, false)
+    }
+
+    func testEmptyPortion() {
+        // a pod and a patch: 120 % of (units + 10) of 200
+        XCTAssertEqual(PumpView.emptyPortion(units: 50, kind: .pod), 0.64, accuracy: 0.0001)
+        XCTAssertEqual(PumpView.emptyPortion(units: 0, kind: .medtrum), 0.94, accuracy: 0.0001)
+        XCTAssertEqual(PumpView.emptyPortion(units: 300, kind: .medtrum), 0)
+        // the others: of 300
+        XCTAssertEqual(PumpView.emptyPortion(units: 150, kind: .dana), 0.5, accuracy: 0.0001)
+        XCTAssertEqual(PumpView.emptyPortion(units: 0, kind: .other), 1)
+        XCTAssertEqual(PumpView.emptyPortion(units: 400, kind: .medtronic), 0)
+        XCTAssertEqual(PumpView.emptyPortion(units: -5, kind: .other), 1)
+    }
+
+    func testBatterySymbolLevels() {
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 100), 100)
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 81), 100)
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 80), 75)
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 60), 50)
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 40), 25)
+        XCTAssertEqual(PumpView.batterySymbolLevel(percent: 0), 25)
+    }
+
+    func testPumpKindByPluginIdentifier() {
+        XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Omni"), .pod)
+        XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Medtrum"), .medtrum)
+        XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Dana"), .dana)
+        XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Minimed500"), .medtronic)
+        XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "MockPumpManager"), .other)
+    }
+}
