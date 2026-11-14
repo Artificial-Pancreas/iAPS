@@ -131,38 +131,55 @@ extension Home {
         }
 
         /// The sensor ring / the CGM's name in the header's top trailing corner, where the glucose view used to draw
-        /// the ring. Always opens the CGM screen (the list of CGMs when none is configured): the glucose value's tap
-        /// keeps the alarm snooze.
+        /// the ring. Opens the CGM screen (the list of CGMs when none is configured), or the CGM's status when it has
+        /// one: the glucose value's tap keeps the alarm snooze.
         var cgmView: some View {
-            ForegroundTimelineView(interval: 5) { date in
-                HomeCGMView(
-                    cgmInfo: appUIState.cgmInfo,
-                    cgmStatus: appUIState.cgmStatus,
-                    recentGlucoseSessionStart: state.recentGlucose?.sessionStartDate,
-                    displaySAGE: state.displaySAGE,
-                    displayExpiration: state.displayExpiration,
-                    sensorLifetime: state.sensorDays,
-                    timerDate: date
-                ) {
-                    state.showModal(for: .cgm)
+            HomeDeviceStatusView(
+                highlight: appUIState.cgmStatus?.highlight,
+                alignment: .top,
+                // the middle of the 36 pt ring
+                iconOffsetY: 9,
+                settingsTitle: NSLocalizedString(
+                    "CGM Settings",
+                    comment: "Home header, button under a CGM's status message: opens the CGM's settings"
+                ),
+                openSettings: { state.showModal(for: .cgm) }
+            ) { tap in
+                ForegroundTimelineView(interval: 5) { date in
+                    HomeCGMView(
+                        cgmInfo: appUIState.cgmInfo,
+                        cgmStatus: appUIState.cgmStatus,
+                        recentGlucoseSessionStart: state.recentGlucose?.sessionStartDate,
+                        displaySAGE: state.displaySAGE,
+                        displayExpiration: state.displayExpiration,
+                        sensorLifetime: state.sensorDays,
+                        timerDate: date,
+                        action: tap
+                    )
                 }
             }
         }
 
         var pumpView: some View {
-            ForegroundTimelineView(interval: 5) { date in
-                PumpView(
-                    hideInsulinBadge: state.settings?.hideInsulinBadge == true,
-                    timerDate: date
-                )
-            }
-            .contentShape(Rectangle())
-            .onTapGesture {
-                if appUIState.pumpInfo != nil {
-                    state.setupPump = true
-                } else {
-                    // "No Pump": the list of pumps to add one
-                    state.showModal(for: .pumpConfig)
+            HomeDeviceStatusView(
+                highlight: appUIState.pumpInfo == nil ? nil : appUIState.pumpStatus?.highlight,
+                // the pump element is drawn 5 pt below its frame
+                iconOffsetY: 5,
+                settingsTitle: NSLocalizedString("Pump Settings", comment: ""),
+                openSettings: {
+                    if appUIState.pumpInfo != nil {
+                        state.setupPump = true
+                    } else {
+                        // "No Pump": the list of pumps to add one
+                        state.showModal(for: .pumpConfig)
+                    }
+                }
+            ) { _ in
+                ForegroundTimelineView(interval: 5) { date in
+                    PumpView(
+                        hideInsulinBadge: state.settings?.hideInsulinBadge == true,
+                        timerDate: date
+                    )
                 }
             }
             .offset(y: 2)

@@ -1580,8 +1580,11 @@ private extension BaseDeviceDataManager {
             return
         }
 
+        // one read: the message, the icon and the level are one highlight's
+        let highlight = DeviceStatusHighlightDisplay((cgmManager as? CGMManagerUI)?.cgmStatusHighlight)
         let status = CgmDisplayStatus(
-            statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
+            statusHighlight: highlight?.message,
+            highlight: highlight,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM,
             oneMinuteReadings: KnownPlugins.isOneMinuteReadingsEnabled(for: cgmManager),
@@ -1856,14 +1859,14 @@ extension BaseDeviceDataManager {
         let isBolusing = pumpManagerStatus.bolusState != .noBolus
         let isSuspended = pumpManagerStatus.basalDeliveryState?.isSuspended ?? true
         let statusType: PumpDisplayStatus.StatusType = isSuspended ? .suspended : (isBolusing ? .bolusing : .normal)
-        // one read: the message and its level are one highlight's
-        let highlight = pumpManager.pumpStatusHighlight
+        // one read: the message, the icon and the level are one highlight's
+        let highlight = DeviceStatusHighlightDisplay(pumpManager.pumpStatusHighlight)
 
         return PumpDisplayStatus(
             status: statusType,
             reservoir: lastKnownReservoir,
-            statusHighlight: highlight?.localizedMessage,
-            statusHighlightLevel: highlight.map { DeviceStatusHighlightLevel($0.state) },
+            statusHighlight: highlight?.message,
+            highlight: highlight,
             timeZone: pumpManagerStatus.timeZone,
             battery: battery,
             deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
@@ -1880,10 +1883,7 @@ extension BaseDeviceDataManager {
     /// delegate callback: the pump status is published again when the highlight is not the published one.
     private func refreshPumpStatusHighlight() {
         guard let pumpManager, let published = appCoordinator.pumpStatus.value else { return }
-        let highlight = pumpManager.pumpStatusHighlight
-        guard published.statusHighlight != highlight?.localizedMessage ||
-            published.statusHighlightLevel != highlight.map({ DeviceStatusHighlightLevel($0.state) })
-        else { return }
+        guard published.highlight != DeviceStatusHighlightDisplay(pumpManager.pumpStatusHighlight) else { return }
         appCoordinator.setPumpStatus(pumpStatus(for: pumpManager, status: pumpManager.status))
     }
 

@@ -1,4 +1,5 @@
 @testable import FreeAPS
+import SwiftUI
 import XCTest
 
 final class LogFileWriterTests: XCTestCase {
@@ -359,6 +360,7 @@ final class HomeCGMElementTests: XCTestCase {
     private func status(sessionStart: Date?, lifetime: TimeInterval?) -> CgmDisplayStatus {
         CgmDisplayStatus(
             statusHighlight: nil,
+            highlight: nil,
             sessionStartDate: sessionStart,
             shouldUploadGlucose: false,
             oneMinuteReadings: false,
@@ -513,7 +515,9 @@ final class HomePumpElementTests: XCTestCase {
             status: suspended ? .suspended : .normal,
             reservoir: reservoir,
             statusHighlight: highlight.map { _ in "a message" },
-            statusHighlightLevel: highlight,
+            highlight: highlight.map {
+                DeviceStatusHighlightDisplay(message: "a message", imageName: "exclamationmark.circle.fill", level: $0)
+            },
             timeZone: timeZone ?? utc,
             // as DeviceDataManager builds it: 100 % and `display` false for a pump that reports no battery
             battery: Battery(percent: battery ?? 100, voltage: nil, string: .normal, display: battery != nil),
@@ -687,5 +691,31 @@ final class HomePumpElementTests: XCTestCase {
         XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Dana"), .dana)
         XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "Minimed500"), .medtronic)
         XCTAssertEqual(KnownPlugins.headerPump(pluginIdentifier: "MockPumpManager"), .other)
+    }
+}
+
+final class DeviceStatusHighlightDisplayTests: XCTestCase {
+    private func highlight(_ imageName: String) -> DeviceStatusHighlightDisplay {
+        DeviceStatusHighlightDisplay(message: "Signal Loss", imageName: imageName, level: .critical)
+    }
+
+    func testNoHighlightIsNoDisplay() {
+        XCTAssertNil(DeviceStatusHighlightDisplay(nil))
+    }
+
+    func testSymbolIsTheHighlightsOwn() {
+        XCTAssertEqual(highlight("pause.circle.fill").symbolName, "pause.circle.fill")
+        XCTAssertEqual(highlight("clock").symbolName, "clock")
+    }
+
+    func testSymbolFallsBackWhenThereIsNoSuchSymbol() {
+        XCTAssertEqual(highlight("").symbolName, DeviceStatusHighlightDisplay.fallbackSymbolName)
+        XCTAssertEqual(highlight("danai").symbolName, DeviceStatusHighlightDisplay.fallbackSymbolName)
+    }
+
+    func testColours() {
+        XCTAssertEqual(DeviceStatusHighlightLevel.normal.color, .secondary)
+        XCTAssertEqual(DeviceStatusHighlightLevel.warning.color, .orange)
+        XCTAssertEqual(DeviceStatusHighlightLevel.critical.color, .red)
     }
 }

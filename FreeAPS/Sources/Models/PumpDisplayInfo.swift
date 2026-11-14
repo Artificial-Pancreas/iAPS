@@ -21,8 +21,8 @@ struct PumpDisplayStatus: Equatable, Sendable {
 
     let reservoir: ReservoirReading?
     let statusHighlight: String?
-    /// the level of the pump manager's status highlight, nil without one
-    let statusHighlightLevel: DeviceStatusHighlightLevel?
+    /// the same highlight with its icon and level, nil without one
+    let highlight: DeviceStatusHighlightDisplay?
     let timeZone: TimeZone
     let battery: Battery?
     let deliveryIsUncertain: Bool

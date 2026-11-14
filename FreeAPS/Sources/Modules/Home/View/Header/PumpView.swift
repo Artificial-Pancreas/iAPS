@@ -97,7 +97,7 @@ struct PumpView: View {
 
     static func deviceState(_ status: PumpDisplayStatus?) -> DeviceState {
         guard let status else { return .normal }
-        if status.statusHighlightLevel == .critical { return .critical }
+        if status.highlight?.level == .critical { return .critical }
         if status.deliveryIsUncertain { return .deliveryUncertain }
         return status.isSuspended ? .suspended : .normal
     }

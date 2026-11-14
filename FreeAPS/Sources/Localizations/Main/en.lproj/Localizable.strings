@@ -165,6 +165,9 @@
 /* Home header, short name of the Shared App Group CGM source */
 "App CGM" = "App CGM";
 
+/* Home header, button under a CGM's status message: opens the CGM's settings */
+"CGM Settings" = "CGM Settings";
+
 /* Home View Message if open loop is active */
 "Open" = "Open";
 

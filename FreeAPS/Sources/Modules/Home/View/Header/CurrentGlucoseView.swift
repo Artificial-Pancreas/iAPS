@@ -376,3 +376,78 @@ struct HomeCGMView: View {
             }
     }
 }
+
+/// A header device element (the CGM's, the pump's) with its manager's status highlight: the highlight's icon to the
+/// left of the element. While there is a highlight, a tap on the element or the icon shows its message with a button
+/// to the device's settings; without one the tap opens the settings.
+struct HomeDeviceStatusView<Content: View>: View {
+    let highlight: DeviceStatusHighlightDisplay?
+    var alignment: VerticalAlignment = .center
+    /// moves the icon down to the element's middle, where the element is not centered in its own frame
+    var iconOffsetY: CGFloat = 0
+    let settingsTitle: String
+    let openSettings: () -> Void
+    /// the element; it gets the tap's action for a tap target of its own
+    @ViewBuilder let content: (_ tap: @escaping () -> Void) -> Content
+
+    @State private var showsStatus = false
+    @State private var opensSettingsOnDismiss = false
+
+    private func tap() {
+        if highlight == nil {
+            openSettings()
+        } else {
+            showsStatus = true
+        }
+    }
+
+    var body: some View {
+        HStack(alignment: alignment, spacing: 4) {
+            if let highlight {
+                Image(systemName: highlight.symbolName)
+                    .font(.system(size: 18))
+                    .foregroundStyle(highlight.level.color)
+                    .offset(y: iconOffsetY)
+            }
+            content(tap)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture(perform: tap)
+        .popover(isPresented: $showsStatus) {
+            VStack(spacing: 12) {
+                Text(highlight?.message ?? "")
+                    .font(.subheadline)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button(settingsTitle) {
+                    // the settings are a modal: it is presented once the popover is gone
+                    opensSettingsOnDismiss = true
+                    showsStatus = false
+                }
+                .buttonStyle(.bordered)
+            }
+            .padding()
+            .frame(maxWidth: 260)
+            .presentationCompactAdaptation(.popover)
+            .onDisappear {
+                guard opensSettingsOnDismiss else { return }
+                opensSettingsOnDismiss = false
+                openSettings()
+            }
+        }
+        .onChange(of: highlight == nil) { _, none in
+            // the status is gone: so is its message
+            if none { showsStatus = false }
+        }
+    }
+}
+
+extension DeviceStatusHighlightLevel {
+    var color: Color {
+        switch self {
+        case .normal: .secondary
+        case .warning: .orange
+        case .critical: .red
+        }
+    }
+}
