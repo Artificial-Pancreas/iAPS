@@ -267,6 +267,9 @@
 /*  Temp target set for ... minutes */
 "min" = "min";
 
+/* Short form for seconds */
+"s" = "s";
+
 /*  */
 "Autotune" = "Autotune";
 

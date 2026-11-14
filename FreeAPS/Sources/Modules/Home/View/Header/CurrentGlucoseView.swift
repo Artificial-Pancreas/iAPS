@@ -125,10 +125,13 @@ struct CurrentGlucoseView: View {
                         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: recent.glucose)
                     if !scrolling {
                         let minutesAgo = timerDate.timeIntervalSince(recent.dateString) / 60
-                        let text = Self.timaAgoFormatter.string(for: Double(minutesAgo)) ?? ""
                         Text(
-                            minutesAgo <= 1 ? NSLocalizedString("Now", comment: "") :
-                                (text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " ")
+                            Self.ageText(
+                                Self.age(
+                                    seconds: timerDate.timeIntervalSince(recent.dateString),
+                                    oneMinuteReadings: appUIState.cgmStatus?.oneMinuteReadings ?? false
+                                )
+                            )
                         )
                         .animation(.spring(response: 0.4, dampingFraction: 0.7), value: minutesAgo)
                         .font(.caption)
@@ -137,6 +140,38 @@ struct CurrentGlucoseView: View {
                     }
                 }
             }
+        }
+    }
+
+    /// The age of the last reading as the header shows it.
+    enum ReadingAge: Equatable {
+        case now
+        case seconds(Int)
+        case minutes(Int)
+    }
+
+    /// A CGM delivering a reading every minute would always read "Now" with the 5-minute rule (a minute of "Now",
+    /// then rounded minutes), so its first minute is shown in steps of 15 s and the minutes after it are whole ones.
+    /// Any other CGM keeps the 5-minute rule.
+    static func age(seconds: TimeInterval, oneMinuteReadings: Bool) -> ReadingAge {
+        guard oneMinuteReadings else {
+            let minutes = seconds / 60
+            return minutes <= 1 ? .now : .minutes(Int(minutes.rounded(.toNearestOrEven)))
+        }
+        if seconds < 15 { return .now }
+        if seconds < 60 { return .seconds(Int(seconds / 15) * 15) }
+        return .minutes(Int(seconds / 60))
+    }
+
+    static func ageText(_ age: ReadingAge) -> String {
+        switch age {
+        case .now:
+            return NSLocalizedString("Now", comment: "")
+        case let .seconds(seconds):
+            return "\(seconds) " + NSLocalizedString("s", comment: "Short form for seconds") + " "
+        case let .minutes(minutes):
+            let text = timaAgoFormatter.string(for: minutes) ?? ""
+            return text + " " + NSLocalizedString("min", comment: "Short form for minutes") + " "
         }
     }
 

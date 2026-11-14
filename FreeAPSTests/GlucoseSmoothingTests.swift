@@ -596,3 +596,33 @@ final class GlucoseSmoothingTests: XCTestCase {
         XCTAssertEqual(settings.glucoseSmoothing.savitzkyGolay.passes, .three)
     }
 }
+
+final class HomeReadingAgeTests: XCTestCase {
+    private typealias View = CurrentGlucoseView
+
+    func testFiveMinuteCgmKeepsItsRule() {
+        XCTAssertEqual(View.age(seconds: 0, oneMinuteReadings: false), .now)
+        XCTAssertEqual(View.age(seconds: 45, oneMinuteReadings: false), .now)
+        XCTAssertEqual(View.age(seconds: 60, oneMinuteReadings: false), .now)
+        XCTAssertEqual(View.age(seconds: 61, oneMinuteReadings: false), .minutes(1))
+        XCTAssertEqual(View.age(seconds: 100, oneMinuteReadings: false), .minutes(2))
+        XCTAssertEqual(View.age(seconds: 290, oneMinuteReadings: false), .minutes(5))
+    }
+
+    func testOneMinuteCgmCountsTheFirstMinuteInQuarters() {
+        XCTAssertEqual(View.age(seconds: -3, oneMinuteReadings: true), .now)
+        XCTAssertEqual(View.age(seconds: 0, oneMinuteReadings: true), .now)
+        XCTAssertEqual(View.age(seconds: 14.9, oneMinuteReadings: true), .now)
+        XCTAssertEqual(View.age(seconds: 15, oneMinuteReadings: true), .seconds(15))
+        XCTAssertEqual(View.age(seconds: 29.9, oneMinuteReadings: true), .seconds(15))
+        XCTAssertEqual(View.age(seconds: 30, oneMinuteReadings: true), .seconds(30))
+        XCTAssertEqual(View.age(seconds: 59.9, oneMinuteReadings: true), .seconds(45))
+    }
+
+    func testOneMinuteCgmThenWholeMinutes() {
+        XCTAssertEqual(View.age(seconds: 60, oneMinuteReadings: true), .minutes(1))
+        XCTAssertEqual(View.age(seconds: 119, oneMinuteReadings: true), .minutes(1))
+        XCTAssertEqual(View.age(seconds: 120, oneMinuteReadings: true), .minutes(2))
+        XCTAssertEqual(View.age(seconds: 600, oneMinuteReadings: true), .minutes(10))
+    }
+}
