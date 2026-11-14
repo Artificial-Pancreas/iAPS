@@ -34,6 +34,12 @@ struct LoopEventDot: Identifiable {
     var id: String { events.first?.id ?? type.rawValue }
 }
 
+/// a bar in the events lane: a period without loops, or a run of one event repeated every cycle
+struct LoopEventBar {
+    let rect: CGRect
+    let type: LoopEventType
+}
+
 struct OverrideStruct {
     let start: Date
     let end: Date
@@ -897,12 +903,16 @@ struct MainChartCanvas: View {
 
     private var loopEventsView: some View {
         ZStack {
-            Path { path in
-                for barRect in geom.loopGapBars {
-                    path.addRoundedRect(in: barRect, cornerSize: CGSize(width: 1.5, height: 1.5))
+            // one path per colour
+            let barTypes = LoopEventType.allCases.filter { type in geom.loopEventBars.contains { $0.type == type } }
+            ForEach(barTypes, id: \.self) { type in
+                Path { path in
+                    for bar in geom.loopEventBars where bar.type == type {
+                        path.addRoundedRect(in: bar.rect, cornerSize: CGSize(width: 1.5, height: 1.5))
+                    }
                 }
+                .fill(type.color.opacity(0.7))
             }
-            .fill(LoopEventType.skippedLoops.color.opacity(0.7))
 
             ForEach(geom.loopEventDots) { dot in
                 ZStack {
