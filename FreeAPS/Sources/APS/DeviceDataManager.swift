@@ -372,6 +372,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
             .receive(on: processQueue)
             .sink { [weak self] _ in
                 self?.updatePumpManagerBLEHeartbeatPreference()
+                self?.refreshPumpStatusHighlight()
             }
             .store(in: lifetime)
 
@@ -711,6 +712,7 @@ final class BaseDeviceDataManager: DeviceDataManager, AppServiceSync {
         fetchNewDataFromCgm { readingResult in
             self.processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: forceRecommendLoop)
         }
+        refreshPumpStatusHighlight()
     }
 
     private func processCGMReadingResultAndLoop(readingResult: CGMReadingResult, forceRecommendLoop: Bool) {
@@ -1277,6 +1279,9 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "hasNew readingResult: \(readingResult)")
         processCGMReadingResultAndLoop(readingResult: readingResult, forceRecommendLoop: false)
+        // display only: a reading may come with a new session start (Dexcom) and no state update
+        dispatchCgmStatus()
+        refreshPumpStatusHighlight()
     }
 
     func cgmManager(_: LoopKit.CGMManager, hasNew events: [PersistedCgmEvent]) {
@@ -1287,11 +1292,15 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
                 appCoordinator.sendNewSensorDetected()
             }
         }
+        // display only: a sensor start/stop event changes the session Home shows
+        dispatchCgmStatus()
     }
 
     func cgmManagerDidUpdateState(_ manager: CGMManager) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         rawCGMManager = manager.rawValue
+        // display only: the name and the onboarded flag are part of the manager's state too
+        dispatchCgmInfo()
         dispatchCgmStatus()
     }
 
@@ -1300,7 +1309,10 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
         UUID().uuidString
     }
 
-    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
+    func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {
+        // display only
+        dispatchCgmStatus()
+    }
 }
 
 // MARK: - Device alert acknowledgement
@@ -1568,8 +1580,11 @@ private extension BaseDeviceDataManager {
             return
         }
 
+        // one read: the message, the icon and the level are one highlight's
+        let highlight = DeviceStatusHighlightDisplay((cgmManager as? CGMManagerUI)?.cgmStatusHighlight)
         let status = CgmDisplayStatus(
-            statusHighlight: (cgmManager as? CGMManagerUI)?.cgmStatusHighlight?.localizedMessage,
+            statusHighlight: highlight?.message,
+            highlight: highlight,
             sessionStartDate: KnownPlugins.sessionStart(cgmManager: cgmManager),
             shouldUploadGlucose: cgmManager.shouldSyncToRemoteService || ConfigOverrides.allowUploadsFromNightscoutCGM,
             oneMinuteReadings: KnownPlugins.isOneMinuteReadingsEnabled(for: cgmManager),
@@ -1844,11 +1859,14 @@ extension BaseDeviceDataManager {
         let isBolusing = pumpManagerStatus.bolusState != .noBolus
         let isSuspended = pumpManagerStatus.basalDeliveryState?.isSuspended ?? true
         let statusType: PumpDisplayStatus.StatusType = isSuspended ? .suspended : (isBolusing ? .bolusing : .normal)
+        // one read: the message, the icon and the level are one highlight's
+        let highlight = DeviceStatusHighlightDisplay(pumpManager.pumpStatusHighlight)
 
         return PumpDisplayStatus(
             status: statusType,
             reservoir: lastKnownReservoir,
-            statusHighlight: pumpManager.pumpStatusHighlight?.localizedMessage,
+            statusHighlight: highlight?.message,
+            highlight: highlight,
             timeZone: pumpManagerStatus.timeZone,
             battery: battery,
             deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
@@ -1859,6 +1877,14 @@ extension BaseDeviceDataManager {
             model: KnownPlugins.pumpModel(pumpManager),
             timestamp: Date.now
         )
+    }
+
+    /// Display only. A pump's status highlight may change with time alone (signal loss, an expired patch), with no
+    /// delegate callback: the pump status is published again when the highlight is not the published one.
+    private func refreshPumpStatusHighlight() {
+        guard let pumpManager, let published = appCoordinator.pumpStatus.value else { return }
+        guard published.highlight != DeviceStatusHighlightDisplay(pumpManager.pumpStatusHighlight) else { return }
+        appCoordinator.setPumpStatus(pumpStatus(for: pumpManager, status: pumpManager.status))
     }
 
     func currentPumpStatus() -> PumpDisplayStatus? {
