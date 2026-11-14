@@ -25,12 +25,31 @@ struct PumpDisplayStatus: Equatable, Sendable {
     let battery: Battery?
     let deliveryIsUncertain: Bool
     let isSuspended: Bool
+    /// the temp basal the pump reports as running, nil when it reports none
+    let tempBasal: TempBasalDisplay?
     let isBolusing: Bool
     let supportedBasalRates: [Double]
     let supportedBolusVolumes: [Double]
     let model: String? // only for medtronic pumps, oref0 uses this value to enable 0.025U basal rate granularity for pumps that support it
 
     let timestamp: Date
+}
+
+/// A running temp basal as the pump manager reports it, for display only.
+struct TempBasalDisplay: Equatable, Sendable {
+    let rate: Decimal
+    let startDate: Date
+    let endDate: Date
+}
+
+extension TempBasalDisplay {
+    /// the temp basal of a pump manager's basal delivery state, nil for every other state
+    init?(basalDeliveryState: PumpManagerStatus.BasalDeliveryState?) {
+        guard case let .tempBasal(dose) = basalDeliveryState else { return nil }
+        // the pump's rates are multiples of 0.001 U/hr at the finest: this drops the Double's binary noise
+        let rate = Decimal((dose.unitsPerHour * 1000).rounded()) / 1000
+        self.init(rate: rate, startDate: dose.startDate, endDate: dose.endDate)
+    }
 }
 
 enum ReservoirReading: Sendable, Equatable {
