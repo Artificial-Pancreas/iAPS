@@ -52,6 +52,8 @@ GitHub builds use Xcode 27, which can no longer produce a watch app for watchOS 
 
 If you use a Series 3, add a repository **variable** named `USE_XCODE_26` with the value `true` (Settings → Secrets and variables → Actions → Variables) and run the "4. Build iAPS" workflow again. The build then uses Xcode 26 and the watch app installs on the Series 3 again. Everyone else should leave the variable unset. See [fastlane/docs/github.md](fastlane/docs/github.md) for details.
 
+If you build locally with Xcode instead, the same limit applies: Xcode 27 and later cannot build the watch app for watchOS 8. If your Xcode has updated past 26, you can download Xcode 26 from [Apple's developer downloads page](https://developer.apple.com/download/all/?q=Xcode%2026) and keep it installed alongside.
+
 -----
 
 ## Important Considerations
