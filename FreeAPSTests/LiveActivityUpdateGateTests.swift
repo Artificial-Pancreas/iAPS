@@ -76,3 +76,14 @@ final class LiveActivityUpdateGateTests: XCTestCase {
         XCTAssertEqual(gate.decide(1, trigger: .iob, now: at(1)), .push)
     }
 }
+
+final class HomeLoopAgeTests: XCTestCase {
+    func testWholeMinutesSinceTheLastLoop() {
+        XCTAssertEqual(LoopView.wholeMinutes(-5), 0)
+        XCTAssertEqual(LoopView.wholeMinutes(0), 0)
+        XCTAssertEqual(LoopView.wholeMinutes(59.9), 0)
+        XCTAssertEqual(LoopView.wholeMinutes(60), 1)
+        XCTAssertEqual(LoopView.wholeMinutes(119), 1)
+        XCTAssertEqual(LoopView.wholeMinutes(300), 5)
+    }
+}
