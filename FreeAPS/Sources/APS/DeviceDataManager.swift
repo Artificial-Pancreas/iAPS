@@ -26,6 +26,10 @@ protocol DeviceDataManager {
     // notify device manager when the app becomes active
     func didBecomeActive()
 
+    /// The background watchdog found stale readings: ask the CGM for data (re-arming its
+    /// connection where the manager does that on fetch) and force a loop.
+    func backgroundWatchdogFired()
+
     func cgmInfo() -> GlucoseSourceInfo?
 
     func createBolusProgressReporter() -> DoseProgressReporter?
@@ -948,6 +952,14 @@ protocol PumpTimeZoneObserver {
 extension BaseDeviceDataManager {
     func didBecomeActive() {
         updatePumpManagerBLEHeartbeatPreference()
+    }
+
+    func backgroundWatchdogFired() {
+        debug(
+            .deviceManager,
+            "Background watchdog: fetching from \(cgmManager.map { String(describing: type(of: $0)) } ?? "no CGM") and forcing a loop"
+        )
+        heartbeat(forceRecommendLoop: true)
     }
 
     func updatePumpManagerBLEHeartbeatPreference() {

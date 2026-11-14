@@ -7,6 +7,8 @@ class AppDelegate: NSObject, UIApplicationDelegate, ObservableObject {
         _: UIApplication,
         didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        // Task handlers must be registered before launching finishes.
+        BackgroundWatchdog.shared.register()
         AppLauncher.shared.startIfNeeded()
         return true
     }
