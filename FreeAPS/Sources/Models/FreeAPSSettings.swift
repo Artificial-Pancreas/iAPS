@@ -168,6 +168,8 @@ struct FreeAPSSettings: JSON, Equatable {
         autoisf && !isNighttime
     }
 
+    var dontHideButtons: Bool = false
+
     var isNighttime: Bool {
         guard nightTime.enabled else { return false }
 
@@ -791,6 +793,10 @@ extension FreeAPSSettings: Decodable {
 
         if let uploadCrashReports = try? container.decode(Bool.self, forKey: .uploadCrashReports) {
             settings.uploadCrashReports = uploadCrashReports
+        }
+
+        if let dontHideButtons = try? container.decode(Bool.self, forKey: .dontHideButtons) {
+            settings.dontHideButtons = dontHideButtons
         }
 
         if let nightTime = try? container.decode(NightTimeConfiguration.self, forKey: .nightTime) {

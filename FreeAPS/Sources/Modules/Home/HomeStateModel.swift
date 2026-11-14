@@ -77,6 +77,7 @@ extension Home {
         @Published var tdd3DaysAgo: Decimal = 0
         @Published var tddActualAverage: Decimal = 0
         @Published var skipGlucoseChart: Bool = false
+        @Published var dontHideButtons: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
@@ -271,6 +272,7 @@ extension Home {
             data.hidePredictions = settingsManager.settings.hidePredictions
             data.useCarbBars = settingsManager.settings.useCarbBars
             skipGlucoseChart = settingsManager.settings.skipGlucoseChart
+            dontHideButtons = settingsManager.settings.dontHideButtons
             displayDelta = settingsManager.settings.displayDelta
             maxIOB = settingsManager.preferences.maxIOB
             maxCOB = settingsManager.preferences.maxCOB
@@ -864,6 +866,7 @@ extension Home.StateModel:
         data.hidePredictions = settingsManager.settings.hidePredictions
         data.useCarbBars = settingsManager.settings.useCarbBars
         skipGlucoseChart = settingsManager.settings.skipGlucoseChart
+        dontHideButtons = settingsManager.settings.dontHideButtons
         displayDelta = settingsManager.settings.displayDelta
         maxIOB = settingsManager.preferences.maxIOB
         maxCOB = settingsManager.preferences.maxCOB

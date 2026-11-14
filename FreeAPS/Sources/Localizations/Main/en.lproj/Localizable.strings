@@ -3504,6 +3504,9 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Hide Concentration Badge";
 
 /* UI/UX option */
+"Always Display Buttons" = "Always Display Buttons";
+
+/* UI/UX option */
 "Use insulin bars" = "Use insulin bars";
 
 /* UI/UX option */

@@ -1039,7 +1039,7 @@ extension Home {
 
         private var shouldHideBottomBar: Bool {
             // Show the bar at the top even while deceleration or rubber-banding finishes.
-            isBottomBarHidden && homeScrollOffset < -1
+            !state.dontHideButtons && isBottomBarHidden && homeScrollOffset < -1
         }
 
         private var bottomBarAnimation: Animation? {
