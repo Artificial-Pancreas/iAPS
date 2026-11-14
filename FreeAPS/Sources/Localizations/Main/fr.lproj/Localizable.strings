@@ -3493,6 +3493,9 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Masquer la pastille indiquant la concentration de l'insuline";
 
 /* UI/UX option */
+"Always Display Buttons" = "Always Display Buttons";
+
+/* UI/UX option */
 "Use insulin bars" = "Afficher l'insuline sous forme de barres";
 
 /* UI/UX option */
@@ -3773,6 +3776,8 @@ Enact a temp Basal or a temp target */
 "iAPS updated" = "iAPS updated";
 
 "You're now running version %@." = "You're now running version %@.";
+
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first.";
 
