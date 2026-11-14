@@ -101,11 +101,18 @@ extension Bolus {
                         Button {
                             state.enact()
                         }
-                        label: { Text(!(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!") }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .disabled(state.amount > state.maxBolus)
-                            .listRowBackground((state.amount <= state.maxBolus) ? Color(.systemBlue) : Color(.systemGray4))
-                            .tint(.white)
+                        label: {
+                            Bolus.enactLabel(
+                                !(state.amount > state.maxBolus) ? "Enact bolus" : "Max Bolus exceeded!",
+                                committing: state.committing
+                            )
+                        }
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .disabled(state.amount > state.maxBolus || state.committing)
+                        .listRowBackground(
+                            (state.amount <= state.maxBolus && !state.committing) ? Color(.systemBlue) : Color(.systemGray4)
+                        )
+                        .tint(.white)
                     } else {
                         Button {
                             state.saveWithoutBolus()
@@ -114,6 +121,7 @@ extension Bolus {
                             Text("Continue without bolus")
                                 .frame(maxWidth: .infinity, alignment: .center)
                         }
+                        .disabled(state.committing)
                     }
                 }
             }
@@ -178,6 +186,7 @@ extension Bolus {
                         Text("Meal")
                     }
                 }
+                .disabled(state.committing)
             }
         }
         ToolbarItem(placement: .topBarTrailing) {
@@ -186,6 +195,19 @@ extension Bolus {
             }
             label: { Text("Cancel") }
                 .disabled(state.committing)
+        }
+    }
+
+    /// The Enact button's label: while the bolus is being committed (from the tap until the pump has answered) a
+    /// spinner and "Starting bolus" replace the title, so the tap visibly registered
+    @MainActor @ViewBuilder static func enactLabel(_ title: LocalizedStringKey, committing: Bool) -> some View {
+        if committing {
+            HStack(spacing: 8) {
+                ProgressView().tint(.white)
+                Text(NSLocalizedString("Starting bolus", comment: "Bolus progress bar title while the pump starts the bolus"))
+            }
+        } else {
+            Text(title)
         }
     }
 }
