@@ -21,6 +21,8 @@ extension DataTable {
         @State private var editIsPresented: Bool = false
         @State private var isAmountUnconfirmed: Bool = true
         @State private var displayMicronutrients: Bool = false
+        /// the loop event whose full message is shown in a sheet
+        @State private var loopEventDetail: LoopEvent?
 
         @FetchRequest(
             entity: Meals.entity(),
@@ -115,6 +117,9 @@ extension DataTable {
                 addExternalInsulinView
             }
             .sheet(isPresented: $editIsPresented) { edit }
+            .sheet(item: $loopEventDetail) { item in
+                loopEventDetailView(item)
+            }
         }
 
         private var treatmentsList: some View {
@@ -234,7 +239,15 @@ extension DataTable {
             }
         }
 
+        /// A crash report's text is unbounded, and some error descriptions run long too:
+        /// those rows show the first lines and open the whole message in a sheet.
+        private func loopEventHasDetail(_ item: LoopEvent) -> Bool {
+            guard let message = item.message, message != item.type.title else { return false }
+            return item.type == .appCrashed || message.count > 120 || message.contains("\n")
+        }
+
         @ViewBuilder private func loopEventView(_ item: LoopEvent) -> some View {
+            let hasDetail = loopEventHasDetail(item)
             HStack(alignment: .top) {
                 Image(systemName: item.type.symbol)
                     .foregroundStyle(item.type.color)
@@ -246,6 +259,7 @@ extension DataTable {
                         Text(message)
                             .font(.caption)
                             .foregroundStyle(.secondary)
+                            .lineLimit(hasDetail ? (item.type == .appCrashed ? 2 : 3) : nil)
                     }
                 }
 
@@ -253,6 +267,19 @@ extension DataTable {
 
                 Text(dateFormatter.string(from: item.timestamp))
                     .foregroundStyle(.secondary)
+
+                if hasDetail {
+                    Image(systemName: "chevron.right")
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(.tertiary)
+                        .padding(.top, 3)
+                }
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                if hasDetail {
+                    loopEventDetail = item
+                }
             }
             .swipeActions {
                 if item.type.canBeDismissed {
@@ -262,6 +289,41 @@ extension DataTable {
                         role: .destructive,
                         action: { state.deleteLoopEvent(item) }
                     ).tint(.red)
+                }
+            }
+        }
+
+        private func loopEventDetailView(_ item: LoopEvent) -> some View {
+            let date = item.timestamp.formatted(date: .abbreviated, time: .standard)
+            let message = item.message ?? ""
+            let report = [item.type.title, date, message].joined(separator: "\n")
+            return NavigationStack {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(date)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                        Text(message)
+                            .font(.footnote.monospaced())
+                            .textSelection(.enabled)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                }
+                .navigationTitle(item.type.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close") { loopEventDetail = nil }
+                    }
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button {
+                            UIPasteboard.general.string = report
+                        } label: {
+                            Label("Copy", systemImage: "doc.on.doc")
+                        }
+                        ShareLink(item: report)
+                    }
                 }
             }
         }

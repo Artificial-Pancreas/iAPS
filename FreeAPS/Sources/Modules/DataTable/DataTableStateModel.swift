@@ -145,6 +145,9 @@ extension DataTable {
                     let tempBasalEntry = chunk[1]
                     guard tempBasalEntry.type == .tempBasal,
                           durationEntry.type == .tempBasalDuration else { return nil }
+                    // PumpHistoryStorage pads every temp basal's durationMin by 0.1 min (against tiny gaps between
+                    // TBRs); stripped here so the list reads "30 min", not "30.1 min"
+                    let storedDurationPad = Decimal(1) / 10
                     return Treatment(
                         units: units,
                         type: .tempBasal,
@@ -152,7 +155,7 @@ extension DataTable {
                         creationDate: tempBasalEntry.timestamp,
                         amount: tempBasalEntry.rate ?? 0,
                         secondAmount: nil,
-                        duration: durationEntry.durationMin ?? 0
+                        duration: max(0, (durationEntry.durationMin ?? 0) - storedDurationPad)
                     )
                 }
 

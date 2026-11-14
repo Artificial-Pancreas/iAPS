@@ -1941,6 +1941,7 @@ extension BaseDeviceDataManager {
             battery: battery,
             deliveryIsUncertain: pumpManagerStatus.deliveryIsUncertain,
             isSuspended: isSuspended,
+            tempBasal: TempBasalDisplay(basalDeliveryState: pumpManagerStatus.basalDeliveryState),
             isBolusing: isBolusing,
             supportedBasalRates: pumpManager.supportedBasalRates,
             supportedBolusVolumes: pumpManager.supportedBolusVolumes,

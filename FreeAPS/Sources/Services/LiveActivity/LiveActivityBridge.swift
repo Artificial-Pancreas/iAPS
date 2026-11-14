@@ -223,7 +223,9 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         }
     }
 
-    private var latestLoopOutcome: LoopOutcome?
+    /// the last suggestion a loop produced; a failed determination has none and leaves this one in place,
+    /// so glucose, IOB and the chart keep updating while the loop ring ages
+    private var latestSuggestion: Suggestion?
 
     private var updateGate = LiveActivityUpdateGate<LiveActivityAttributes.ContentState>()
     private var trailingIOBUpdate: (deadline: Date, task: Task<Void, Never>)?
@@ -246,7 +248,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
         let settings = appCoordinator.settings.value
         knownSettings = settings
 
-        latestLoopOutcome = appCoordinator.latestLoopOutcome.value
+        latestSuggestion = appCoordinator.latestLoopOutcome.value?.suggestion
 
         observe(appCoordinator.iobTicks) { me, iobTicks in
             if let iobTicks {
@@ -283,7 +285,9 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
     }
 
     private func loopCompleted(_ outcome: LoopOutcome) async {
-        latestLoopOutcome = outcome
+        if let suggestion = outcome.suggestion {
+            latestSuggestion = suggestion
+        }
         await updateActivityContent(trigger: .immediate)
     }
 
@@ -358,17 +362,13 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
             return
         }
 
-        let theSuggestion: Suggestion
-        let loopDate: Date
-        var iobValue: Decimal?
-
         // TODO: this check should be like this instead:
         // IF enactedSuggestion AND ((NOT suggestion) OR (suggestion is older than enactedSuggestion))
 
-        guard let suggestion = latestLoopOutcome?.suggestion, let timestamp = latestLoopOutcome?.timestamp else { return }
-        theSuggestion = suggestion
-        iobValue = appCoordinator.iobTicks.value?.first?.iob ?? suggestion.iob
-        loopDate = timestamp
+        guard let theSuggestion = latestSuggestion else { return }
+        let iobValue = appCoordinator.iobTicks.value?.first?.iob ?? theSuggestion.iob
+        // the last successful loop, as on Home: a failed loop or a failed enact does not reset the ring
+        let loopDate = appCoordinator.lastLoopDate.value ?? .distantPast
 
         let hoursAgo3 = Date.now.subtractingTimeInterval(.hours(3))
         let glucose = appCoordinator.glucoseRaw.value.filter { $0.dateString >= hoursAgo3 }

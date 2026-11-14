@@ -160,7 +160,16 @@ extension Home {
         var info: some View {
             HStack(spacing: 10) {
                 ZStack {
-                    TempBasalView(pumpSuspended: state.pumpSuspended, tempRate: state.tempRate)
+                    // on a timer: the temp's expiry and the schedule's changes come without a pump event
+                    ForegroundTimelineView(interval: 5) { date in
+                        TempBasalView(
+                            pumpSuspended: state.pumpSuspended,
+                            tempRate: state.tempRate,
+                            tempRateEndDate: state.tempRateEndDate,
+                            scheduledRate: state.scheduledBasalRate(at: date),
+                            timerDate: date
+                        )
+                    }
                 }
                 .padding(.leading, 8)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -1182,6 +1191,10 @@ private struct TempBasalView: View {
     @Environment(AppUIState.self) private var appUIState
     let pumpSuspended: Bool
     let tempRate: Decimal?
+    let tempRateEndDate: Date?
+    /// the basal profile's rate at `timerDate`, nil without a profile
+    let scheduledRate: Decimal?
+    let timerDate: Date
 
     private static let numberFormatter = {
         let formatter = NumberFormatter()
@@ -1196,27 +1209,39 @@ private struct TempBasalView: View {
                 Text("Pump suspended")
                     .font(.extraSmall).bold().foregroundColor(.loopGray)
             } else {
-                Text(tempBasalString)
+                // the scheduled rate is the profile's value, not one the pump confirmed: it is shown apart from a running temp
+                Text(basalString)
                     .font(.statusFont).bold()
-                    .foregroundColor(.insulin)
+                    .foregroundColor(runningTempRate != nil ? .insulin : .secondary)
             }
         }
     }
 
-    var tempBasalString: String {
-        guard let tempRate = tempRate else {
-            return "?" + NSLocalizedString(" U/hr", comment: "Unit per hour with space")
-        }
-        let rateString = Self.numberFormatter.string(from: tempRate as NSNumber) ?? "0"
-        var manualBasalString = ""
+    /// the temp basal's rate while it runs
+    private var runningTempRate: Decimal? {
+        guard let tempRate, let tempRateEndDate, timerDate < tempRateEndDate else { return nil }
+        return tempRate
+    }
 
-        if appUIState.manualTempBasal {
-            manualBasalString = NSLocalizedString(
-                " Manual",
-                comment: "Manual Temp basal"
-            )
+    var basalString: String {
+        let unit = NSLocalizedString(" U/hr", comment: "Unit per hour with space")
+        if let tempRate = runningTempRate {
+            let rateString = Self.numberFormatter.string(from: tempRate as NSNumber) ?? "0"
+            var manualBasalString = ""
+
+            if appUIState.manualTempBasal {
+                manualBasalString = NSLocalizedString(
+                    " Manual",
+                    comment: "Manual Temp basal"
+                )
+            }
+            return rateString + " " + unit + manualBasalString
         }
-        return rateString + " " + NSLocalizedString(" U/hr", comment: "Unit per hour with space") + manualBasalString
+        guard let scheduledRate else {
+            return "?" + unit
+        }
+        let rateString = Self.numberFormatter.string(from: scheduledRate as NSNumber) ?? "0"
+        return rateString + " " + unit
     }
 }
 

@@ -305,12 +305,11 @@ enum GlucoseAlarm {
     case descending
 
     var displayName: String {
-        // TODO: LOWALERT and HIGHALERT are swapped
         switch self {
         case .high:
-            return NSLocalizedString("LOWALERT!", comment: "LOWALERT!")
-        case .low:
             return NSLocalizedString("HIGHALERT!", comment: "HIGHALERT!")
+        case .low:
+            return NSLocalizedString("LOWALERT!", comment: "LOWALERT!")
         case .ascending:
             return NSLocalizedString("RAPIDLY ASCENDING GLUCOSE!", comment: "RAPIDLY ASCENDING GLUCOSE!")
         case .descending:

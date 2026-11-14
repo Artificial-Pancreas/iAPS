@@ -70,6 +70,8 @@ actor BaseFetchTreatmentsManager: FetchTreatmentsManager, LifetimeOwner, AppServ
     }
 
     private func poll() async {
+        // no Nightscout URL: nothing to fetch, and nothing to log every minute
+        guard await nightscoutManager.isConfigured() else { return }
         await withBackgroundTask("fetch treatments") {
             debug(.nightscout, "FetchTreatmentsManager heartbeat")
             debug(.nightscout, "Start fetching carbs and temptargets")
