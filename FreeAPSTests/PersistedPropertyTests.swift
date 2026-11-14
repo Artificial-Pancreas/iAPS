@@ -142,3 +142,22 @@ final class PersistedPropertyTests: XCTestCase {
         XCTAssertTrue(try fileHoldsMarker())
     }
 }
+
+final class KnownPluginsDanaDetectionTests: XCTestCase {
+    func testNoPumpIsNotADanaPump() {
+        XCTAssertFalse(KnownPlugins.isDanaPump(pluginIdentifier: nil))
+    }
+
+    func testDanaIsDetectedByPluginIdentifier() {
+        // DanaKitPumpManager.pluginIdentifier, as stored with the pump manager's raw state
+        XCTAssertTrue(KnownPlugins.isDanaPump(pluginIdentifier: "Dana"))
+    }
+
+    func testOtherPumpsAndPumpNamesAreNotDana() {
+        XCTAssertFalse(KnownPlugins.isDanaPump(pluginIdentifier: "Omnipod-Dash"))
+        XCTAssertFalse(KnownPlugins.isDanaPump(pluginIdentifier: "Medtrum"))
+        // a display name is not an identifier
+        XCTAssertFalse(KnownPlugins.isDanaPump(pluginIdentifier: "Dana-i/RS"))
+        XCTAssertFalse(KnownPlugins.isDanaPump(pluginIdentifier: ""))
+    }
+}
