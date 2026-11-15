@@ -3496,6 +3496,9 @@ Enact a temp Basal or a temp target */
 "Hide Concentration Badge" = "Сховати значок Концентрації";
 
 /* UI/UX option */
+"Always Display Buttons" = "Always Display Buttons";
+
+/* UI/UX option */
 "Use insulin bars" = "Відображати інсулін вертикально";
 
 /* UI/UX option */
@@ -3776,6 +3779,8 @@ Enact a temp Basal or a temp target */
 "iAPS updated" = "iAPS оновлено";
 
 "You're now running version %@." = "Зараз ви використовуєте версію %@.";
+
+"Newer release available at GitHub: " = "Newer release available at GitHub: ";
 
 "Updates can occasionally reset settings. Although rare, if you notice anything out of the ordinary — such as Closed Loop being off or Max IOB at 0 — we recommend checking your settings first." = "Оновлення можуть іноді скидати налаштування. Хоча це рідко, але якщо ви помітили щось незвичайне — наприклад, замкнутий цикл вимкнено або максимальний IOB на 0 — ми рекомендуємо спочатку перевірити свої налаштування.";
 
