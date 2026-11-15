@@ -7,6 +7,8 @@ extension Settings {
         @Injected() private var profileAndSettingsUploadManager: ProfileAndSettingsUploadManager!
         @Injected() private var nightscoutManager: NightscoutManager!
         @Injected() private var databaseManager: DatabaseManager!
+        @Injected() private var pumpEventStore: PumpEventStore!
+        @Injected() private var cgmSessionStore: CGMSessionStore!
 
         @Setting(\.closedLoop) var closedLoop = false
         @Setting(\.debugOptions) var debugOptions = false
@@ -131,10 +133,35 @@ extension Settings {
 
         func deleteStoredData(entity: String) {
             Task {
-                await CoreDataStack.shared.deleteBatch(entity: entity)
+                switch entity {
+                case PumpEventStore.Entity.events:
+                    // through its writer, with the pump sessions (their entered fields too): the last 24 h come back
+                    // at once, and the delivering unit's session is seeded again
+                    await pumpEventStore.wipe()
+                case PumpEventStore.Entity.sessions:
+                    // the sessions only (entered fields too); the delivering unit's is seeded again
+                    await pumpEventStore.wipeSessions()
+                case PumpEventStore.Entity.schedules:
+                    // re-seeded from the current schedule
+                    await pumpEventStore.wipeSchedules()
+                case CGMSessionStore.Entity.sessions:
+                    // through its writer, the entered and the backfilled sessions too: the current CGM's opens again
+                    await cgmSessionStore.wipe()
+                default:
+                    await CoreDataStack.shared.deleteBatch(entity: entity)
+                }
 
                 if ["Override", "OverridePresets", "Auto_ISF"].contains(entity) {
                     appCoordinator.overridesDidChange()
+                }
+                if entity == "Readings" {
+                    appCoordinator.sendReadingsChanged(.all)
+                }
+                if entity == "Reasons" {
+                    appCoordinator.sendInsulinDataChanged(.all)
+                }
+                if entity == "Meals" {
+                    appCoordinator.sendMealsChanged()
                 }
             }
         }

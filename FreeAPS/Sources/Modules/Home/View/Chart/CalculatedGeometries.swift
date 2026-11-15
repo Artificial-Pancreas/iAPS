@@ -14,6 +14,8 @@ struct CalculatedGeometries {
     let fullSize: CGSize
 
     let glucoseDots: [(rect: CGRect, glucose: Int?)]
+    /// the Statistics bands the glucose dots and peak labels are coloured by, built once per data change
+    let glucoseBands: StatsBands
     let activityDots: [CGPoint]
     let activityZeroPointY: CGFloat?
     let cobDots: [(CGPoint, IOBData)]
@@ -275,7 +277,8 @@ private final class GeometriesBuilder {
 
         let suspensionsPath = calculateSuspensions(additionalWidth: additionalWidth)
 
-        let (horizontalGrid, lowThresholdLine, highThresholdLine, glucoseLabels) = calculateHorizontalLines()
+        let glucoseBands = StatsBands(low: data.lowGlucose, high: data.highGlucose, units: data.units)
+        let (horizontalGrid, lowThresholdLine, highThresholdLine, glucoseLabels) = calculateHorizontalLines(glucoseBands)
 
         let glucosePeaks = data.chartGlucosePeaks ?
             measure("calculateGlucosePeaks") {
@@ -291,6 +294,7 @@ private final class GeometriesBuilder {
             fullSize: fullSize,
 
             glucoseDots: glucoseDots,
+            glucoseBands: glucoseBands,
             activityDots: activityDots,
             activityZeroPointY: activityZeroPointY,
             cobDots: cobDots,
@@ -358,12 +362,15 @@ private final class GeometriesBuilder {
         return stride(from: from + step, through: through - step, by: step)
     }
 
-    private func calculateHorizontalLines() -> ([(CGFloat, Int)], (CGFloat, Int), (CGFloat, Int), [(CGFloat, Int)]) {
+    /// The threshold lines and the in-range fill are at the bands' edges, the dots' rule: a dot on a line is in range.
+    private func calculateHorizontalLines(
+        _ bands: StatsBands
+    ) -> ([(CGFloat, Int)], (CGFloat, Int), (CGFloat, Int), [(CGFloat, Int)]) {
         var lines: [(CGFloat, Int)] = []
         var labels: [(CGFloat, Int)] = []
 
-        let highGlucoseInt = Int(NSDecimalNumber(decimal: data.highGlucose).doubleValue.rounded())
-        let lowGlucoseInt = Int(NSDecimalNumber(decimal: data.lowGlucose).doubleValue.rounded())
+        let highGlucoseInt = bands.high
+        let lowGlucoseInt = bands.low
 
         let lowLine = (glucoseToYCoordinate(lowGlucoseInt), lowGlucoseInt)
         let highLine = (glucoseToYCoordinate(highGlucoseInt), highGlucoseInt)

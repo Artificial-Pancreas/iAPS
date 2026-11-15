@@ -170,7 +170,10 @@ actor BaseGlucoseStorage: GlucoseStorage, AppService, LifetimeOwner {
 
         setCachedGlucose(stored)
 
-        await coreDataStorage.updateGlucose(Dictionary(changed.map { ($0.id, $0.glucose) }) { _, last in last })
+        let updated = await coreDataStorage.updateGlucose(Dictionary(changed.map { ($0.id, $0.glucose) }) { _, last in last })
+        if updated > 0, let change = ReadingsChange.readings(at: changed.map(\.dateString), newest: false) {
+            appCoordinator.sendReadingsChanged(change)
+        }
 
         debug(.service, "recalibrate: \(changed.count) readings updated for session \(session)")
 

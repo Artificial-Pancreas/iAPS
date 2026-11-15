@@ -18,6 +18,8 @@ extension NightscoutConfig {
         @Injected() private var isfScheduleStorage: IsfScheduleStorage!
         @Injected() private var crScheduleStorage: CarbRatioScheduleStorage!
         @Injected() private var bgTargetsScheduleStorage: BgTargetsScheduleStorage!
+        @Injected() private var pumpEventStore: PumpEventStore!
+        @Injected() private var cgmSessionStore: CGMSessionStore!
 
         private let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
         private let coreDataStorage = CoreDataStorage()
@@ -26,8 +28,27 @@ extension NightscoutConfig {
         @Published var secret = ""
         @Published var message = ""
         @Published var connecting = false
-        @Published var backfilling = false
+        enum BackfillPhase {
+            case fetching
+            case saving
+        }
+
+        enum BackfillKind {
+            case glucose
+            case insulin
+        }
+
+        /// nil: no backfill running
+        @Published var backfillPhase: BackfillPhase?
+        /// what the running (or last) backfill fetches: one runs at a time
+        @Published var backfillKind: BackfillKind = .glucose
+        /// of the phase
         @Published var backfillingProgress = 0.0
+        /// how the last glucose backfill went, until the next one starts
+        @Published var backfillResult: String?
+        /// how the last insulin backfill went, until the next one starts
+        @Published var insulinBackfillResult: String?
+        var backfilling: Bool { backfillPhase != nil }
         @Published var uploading = false
         @Published var uploadingProgress = 0.0
         @Published var isUploadEnabled = false // Allow uploads
@@ -356,35 +377,334 @@ extension NightscoutConfig {
         }
 
         func backfillGlucose() {
-            backfilling = true
+            guard !backfilling else { return }
+            backfillKind = .glucose
+            backfillPhase = .fetching
             backfillingProgress = 0.0
+            backfillResult = nil
             Task {
-                defer { backfilling = false }
+                defer { backfillPhase = nil }
                 let since = Date.now.subtractingTimeInterval(.days(backFillInterval))
+                var fetched: FetchedGlucose?
                 for await progress in await nightscoutManager.fetchGlucose(since: since) {
                     switch progress {
                     case let .progress(progress):
                         self.backfillingProgress = progress
-                    case let .done(glucose):
-                        await storeBackfilledGlucose(glucose)
+                    case let .done(result):
+                        fetched = result
                     }
                 }
+                guard let fetched else { return }
+                // nothing to save: straight to the result
+                guard fetched.glucose.isNotEmpty else {
+                    backfillResult = Self.backfillMessage(fetched, CoreDataManager.GlucoseStoreOutcome())
+                    return
+                }
+
+                backfillPhase = .saving
+                backfillingProgress = 0.0
+                let stored = await storeBackfilledGlucose(fetched.glucose)
+                // the CGM of the readings no CGM session names, from the entries' device, over the days fetched
+                let named = await backfillCGMs(fetched, since: since)
+                backfillResult = [Self.backfillMessage(fetched, stored), named.flatMap(Self.cgmBackfillMessage)]
+                    .compactMap { $0 }.filter(\.isNotEmpty).joined(separator: "\n")
             }
         }
 
-        private func storeBackfilledGlucose(_ glucose: [BloodGlucose]) async {
-            let onePer5Min = FrequentGlucoseFiltering.filterFrequentGlucose(glucose, interval: .minutes(4.5))
-            debug(.nightscout, "fetched \(glucose.count) (filtered: \(onePer5Min.count)) glucose records from nightscout")
+        /// The CGM backfill (`NightscoutCGMBackfill.run`) over the glucose backfill's complete time, from the entries
+        /// it fetched; nil when it didn't run (nothing fetched completely, Nightscout not reachable).
+        private func backfillCGMs(_ fetched: FetchedGlucose, since: Date) async -> NightscoutCGMBackfillOutcome? {
+            let from: Date
+            switch fetched.failure {
+            case .none: from = since
+            case let .pageFailed(reached?, _): from = reached
+            case .notConfigured,
+                 .notReachable,
+                 .pageFailed(nil, _): return nil
+            }
+            let now = Date()
+            guard let window = NightscoutCGMBackfill.window(from: from, now: now),
+                  let source = await nightscoutManager.cgmBackfillSource()
+            else { return nil }
+            let readings: [Date]
+            do {
+                readings = try await coreDataStorage.fetchGlucosePoints(from: window.start, to: window.end).map(\.time)
+            } catch {
+                return NightscoutCGMBackfillOutcome(failure: error.localizedDescription)
+            }
+            let sessions = await cgmSessionStore.sessions(in: DateInterval(start: .distantPast, end: .distantFuture))
+            let entries = fetched.glucose.compactMap { glucose -> NightscoutCGMSessions.Entry? in
+                guard glucose.type == GlucoseType.sgv.rawValue, let device = glucose.device else { return nil }
+                return NightscoutCGMSessions.Entry(date: glucose.dateString, device: device)
+            }
+            let store = cgmSessionStore!
+            return await NightscoutCGMBackfill.run(
+                entries: entries,
+                window: window,
+                readings: readings,
+                sessions: sessions,
+                source: source,
+                store: { await store.storeBackfilled($0, replacing: $1) }
+            )
+        }
 
-            guard glucose.isNotEmpty else { return }
+        /// "Nightscout named the CGM of 120 of 400 readings without one"; nil when none were without one
+        private static func cgmBackfillMessage(_ outcome: NightscoutCGMBackfillOutcome) -> String? {
+            if let failure = outcome.failure {
+                return String(
+                    format: NSLocalizedString(
+                        "Naming the CGMs failed: %@",
+                        comment: "Glucose backfill result: the CGM backfill's error"
+                    ),
+                    failure
+                )
+            }
+            guard outcome.unknown > 0 else { return nil }
+            return String(
+                format: NSLocalizedString(
+                    "Nightscout named the CGM of %1$d of %2$d readings without one",
+                    comment: "Glucose backfill result: the readings no CGM session covered, and those Nightscout named"
+                ),
+                outcome.named,
+                outcome.unknown
+            )
+        }
 
-            // glucose storage - store only last 24 hours
+        private func storeBackfilledGlucose(_ glucose: [BloodGlucose]) async -> CoreDataManager.GlucoseStoreOutcome {
+            debug(.nightscout, "fetched \(glucose.count) glucose records from nightscout")
+
+            // the last 24 hours first, into core data and glucose storage: the gap Home and the loop see is filled
+            // at once, and kept if the rest is interrupted. Core data before glucose storage: the readings glucose
+            // storage passes on to core data are then stored already, so the count is what this backfill inserted
             let cutOffDate = Date.now.subtractingTimeInterval(.hours(24))
             let recent = glucose.filter { $0.dateString >= cutOffDate }
-            _ = await glucoseStorage.storeGlucose(recent)
+            let older = glucose.filter { cutOffDate > $0.dateString }
+            // of the progress: as the readings
+            let recentShare = Double(recent.count) / Double(max(glucose.count, 1))
 
-            // core data - store everything
-            await coreDataManager.storeGlucose(glucose)
+            var outcome = await coreDataManager.storeGlucose(recent) { [weak self] progress in
+                self?.backfillingProgress = progress * recentShare
+            }
+            _ = await glucoseStorage.storeGlucose(recent)
+            guard outcome.error == nil else { return outcome }
+
+            let rest = await coreDataManager.storeGlucose(older) { [weak self] progress in
+                self?.backfillingProgress = recentShare + progress * (1 - recentShare)
+            }
+            outcome.inserted += rest.inserted
+            outcome.error = rest.error
+            outcome.reached = rest.reached
+            return outcome
+        }
+
+        private static func backfillMessage(_ fetched: FetchedGlucose, _ stored: CoreDataManager.GlucoseStoreOutcome) -> String {
+            switch fetched.failure {
+            case .notConfigured:
+                return NSLocalizedString("Nightscout is not configured", comment: "Glucose backfill result")
+            case .notReachable:
+                return NSLocalizedString("No network connection", comment: "Glucose backfill result")
+            case .none where fetched.glucose.isEmpty:
+                return NSLocalizedString("Nightscout returned no readings", comment: "Glucose backfill result")
+            case .none,
+                 .pageFailed:
+                var lines: [String] = []
+                if fetched.glucose.isNotEmpty {
+                    lines.append(
+                        stored.inserted == 1 ?
+                            NSLocalizedString("Imported 1 reading", comment: "Glucose backfill result") :
+                            String(
+                                format: NSLocalizedString("Imported %d readings", comment: "Glucose backfill result"),
+                                stored.inserted
+                            )
+                    )
+                }
+                if let error = stored.error {
+                    lines.append(
+                        stopped(at: stored.reached, error) ??
+                            String(format: NSLocalizedString("Saving failed: %@", comment: "Glucose backfill result"), error)
+                    )
+                }
+                if case let .pageFailed(reached, error) = fetched.failure {
+                    lines.append(
+                        stopped(at: reached, error) ??
+                            String(format: NSLocalizedString("Fetching failed: %@", comment: "Glucose backfill result"), error)
+                    )
+                }
+                return lines.joined(separator: "\n")
+            }
+        }
+
+        /// "Stopped at <date>: <error>"; nil without a date
+        private static func stopped(at date: Date?, _ error: String) -> String? {
+            guard let date else { return nil }
+            return String(
+                format: NSLocalizedString("Stopped at %@: %@", comment: "Glucose backfill result: date, error"),
+                date.formatted(date: .abbreviated, time: .shortened),
+                error
+            )
+        }
+
+        /// The insulin backfill: the basal schedules first (the days are judged by the schedule then in effect), then
+        /// the insulin records, in batches through the pump event store. Read-only GETs, nothing automatic.
+        func backfillInsulin() {
+            guard !backfilling else { return }
+            backfillKind = .insulin
+            backfillPhase = .fetching
+            backfillingProgress = 0.0
+            insulinBackfillResult = nil
+            Task {
+                defer { backfillPhase = nil }
+                let since = Date.now.subtractingTimeInterval(.days(backFillInterval))
+                var fetched: FetchedInsulin?
+                for await progress in await nightscoutManager.fetchInsulin(since: since) {
+                    switch progress {
+                    case let .progress(progress):
+                        self.backfillingProgress = progress
+                    case let .done(result):
+                        fetched = result
+                    }
+                }
+                guard let fetched else { return }
+                switch fetched.failure {
+                case .notConfigured,
+                     .notReachable:
+                    insulinBackfillResult = Self.insulinBackfillMessage(InsulinBackfillOutcome(fetched: fetched))
+                    return
+                case .none,
+                     .pageFailed:
+                    break
+                }
+
+                backfillPhase = .saving
+                backfillingProgress = 0.0
+                // mapped off the main actor: tens of thousands of treatments for 90 days
+                let prepared = await Task.detached(priority: .userInitiated) {
+                    NightscoutInsulinBackfill(fetched: fetched)
+                }.value
+                debug(
+                    .nightscout,
+                    "insulin backfill: \(fetched.treatments.count) treatments -> \(prepared.records.count) records, " +
+                        "\(prepared.schedules.count) basal schedules; \(fetched.sessionTreatments.count) Site Changes and " +
+                        "Announcements" + (fetched.sessionsFailure.map { " (stopped early: \($0))" } ?? "")
+                )
+
+                var outcome = InsulinBackfillOutcome(fetched: fetched)
+                outcome.records = prepared.records.count
+                outcome.usableSchedules = prepared.schedules.count
+                if fetched.schedulesFailure == nil {
+                    outcome.schedules = await pumpEventStore.storeScheduleBackfill(prepared.schedules)
+                }
+                // an incomplete fetch (a page failed) stores the records of its complete time all the same, upserted by
+                // identity (a re-run completes them); its sessions are built over `sessionsComplete` only (a failed
+                // session query shortens it; none without one: `prepared.sessions` is nil), and are not built when
+                // there are no records
+                if prepared.records.isNotEmpty {
+                    outcome.stored = await pumpEventStore.storeBackfill(prepared.records) { progress in
+                        // the task holds the model already (as the phase's `defer` does)
+                        self.backfillingProgress = progress
+                    }
+                    // the pump sessions from the Site Changes and alarms, after the records (their evidence). Only
+                    // with records: a run that fetched no insulin has no evidence, and would replace the stored
+                    // sessions of its window with none
+                    if let sessions = prepared.sessions {
+                        await pumpEventStore.storeNightscoutSessions(sessions)
+                    }
+                }
+                insulinBackfillResult = Self.insulinBackfillMessage(outcome)
+            }
+        }
+
+        /// What an insulin backfill did, for its result line.
+        struct InsulinBackfillOutcome {
+            let fetched: FetchedInsulin
+            /// the records the treatments mapped to
+            var records = 0
+            var stored = PumpEventStore.BackfillOutcome()
+            /// the basal schedules the profiles mapped to
+            var usableSchedules = 0
+            /// the schedules imported; nil: not stored (the fetch failed)
+            var schedules: Result<Int, Error>?
+        }
+
+        static func insulinBackfillMessage(_ outcome: InsulinBackfillOutcome) -> String {
+            let fetched = outcome.fetched
+            var lines: [String] = []
+            switch fetched.failure {
+            case .notConfigured:
+                return NSLocalizedString("Nightscout is not configured", comment: "Insulin backfill result")
+            case .notReachable:
+                return NSLocalizedString("No network connection", comment: "Insulin backfill result")
+            case .none where outcome.records == 0:
+                lines.append(NSLocalizedString("Nightscout returned no insulin", comment: "Insulin backfill result"))
+            case .none,
+                 .pageFailed:
+                if outcome.records > 0 {
+                    let imported = outcome.stored.inserted + outcome.stored.updated
+                    lines.append(
+                        imported == 1 ?
+                            NSLocalizedString("Imported 1 insulin record", comment: "Insulin backfill result") :
+                            String(
+                                format: NSLocalizedString("Imported %d insulin records", comment: "Insulin backfill result"),
+                                imported
+                            )
+                    )
+                }
+                if outcome.stored.recent > 0 {
+                    lines.append(String(
+                        format: NSLocalizedString(
+                            "%d records from the last 24 h left out",
+                            comment: "Insulin backfill result: records in the time the pump history file covers"
+                        ),
+                        outcome.stored.recent
+                    ))
+                }
+                if outcome.stored.skipped > 0 {
+                    lines.append(String(
+                        format: NSLocalizedString(
+                            "%d records skipped: iAPS has them",
+                            comment: "Insulin backfill result: records inside the pump's own history"
+                        ),
+                        outcome.stored.skipped
+                    ))
+                }
+                if let error = outcome.stored.error {
+                    lines.append(
+                        stopped(at: outcome.stored.reached, error) ??
+                            String(format: NSLocalizedString("Saving failed: %@", comment: "Insulin backfill result"), error)
+                    )
+                }
+                if case let .pageFailed(reached, error) = fetched.failure {
+                    lines.append(
+                        stopped(at: reached, error) ??
+                            String(format: NSLocalizedString("Fetching failed: %@", comment: "Insulin backfill result"), error)
+                    )
+                }
+            }
+
+            if let error = fetched.schedulesFailure {
+                lines.append(String(
+                    format: NSLocalizedString("Fetching basal schedules failed: %@", comment: "Insulin backfill result"),
+                    error
+                ))
+            } else {
+                switch outcome.schedules {
+                case .success where outcome.usableSchedules == 0:
+                    lines.append(NSLocalizedString("No basal schedules in Nightscout", comment: "Insulin backfill result"))
+                case let .success(count):
+                    lines.append(String(
+                        format: NSLocalizedString("Imported %d basal schedules", comment: "Insulin backfill result"),
+                        count
+                    ))
+                case let .failure(error):
+                    lines.append(String(
+                        format: NSLocalizedString("Saving basal schedules failed: %@", comment: "Insulin backfill result"),
+                        error.localizedDescription
+                    ))
+                case .none:
+                    break
+                }
+            }
+            return lines.joined(separator: "\n")
         }
 
         func uploadOldGlucose() {
@@ -392,26 +712,14 @@ extension NightscoutConfig {
             uploadingProgress = 0.0
 
             Task {
-                let readings = await coreDataStorage
-                    .fetchGlucose(interval: Date.now.subtractingTimeInterval(.days(self.uploadInterval)) as NSDate)
-                let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
-                    guard let date = reading.date,
-                          let id = reading.id
-                    else {
-                        return nil
-                    }
-                    return BloodGlucose(
-                        _id: id,
-                        glucose: Int(reading.glucose),
-                        direction: nil,
-                        date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
-                        dateString: date,
-                        noise: nil,
-                        type: "sgv",
-                        activationDate: nil,
-                        sessionStartDate: nil,
-                        transmitterID: nil
-                    )
+                let since = Date.now.subtractingTimeInterval(.days(self.uploadInterval))
+                let readings = await coreDataStorage.fetchGlucose(interval: since as NSDate)
+                // each reading with its recorded CGM session's Nightscout device, as the live upload sends it
+                let sessions = await cgmSessionStore.sessions(in: DateInterval(start: since, end: .distantFuture))
+                    .filter { $0.source == .recorded }
+                let bloodGlucose = readings.compactMap { reading in
+                    let device = reading.date.flatMap { CGMSessionAttribution.device(at: $0, sessions) }
+                    return Self.glucoseUpload(reading, device: device)
                 }
 
                 for await progress in await self.nightscoutManager.uploadOldGlucose(bloodGlucose: bloodGlucose) {
@@ -419,6 +727,34 @@ extension NightscoutConfig {
                 }
                 self.uploading = false
             }
+        }
+
+        /// A stored reading as the live glucose upload sends it (`BloodGlucose.toNightscoutEntry`): a CGM reading as
+        /// an sgv entry (no type: stored before the type was), a manual BG as an mbg entry; nil for the rest (an mbg
+        /// came from Nightscout) and for a reading without a date or an id
+        /// - Parameter device: the Nightscout `device` of the recorded CGM session covering it (`CGMSession.device`);
+        ///   nil: none covers it, it is uploaded without one
+        nonisolated static func glucoseUpload(_ reading: ReadingsSnapshot, device: String? = nil) -> BloodGlucose? {
+            guard let date = reading.date,
+                  let id = reading.id
+            else {
+                return nil
+            }
+            let glucose = BloodGlucose(
+                _id: id,
+                glucose: Int(reading.glucose),
+                direction: nil,
+                date: Decimal(Int(date.timeIntervalSince1970 * 1000)),
+                dateString: date,
+                noise: nil,
+                type: reading.type ?? GlucoseType.sgv.rawValue,
+                activationDate: nil,
+                sessionStartDate: nil,
+                transmitterID: nil,
+                // a CGM reading's: a manual BG came from no CGM
+                device: (reading.type ?? GlucoseType.sgv.rawValue) == GlucoseType.sgv.rawValue ? device : nil
+            )
+            return glucose.toNightscoutEntry != nil ? glucose : nil
         }
 
         func delete() {

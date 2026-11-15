@@ -10,10 +10,12 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
     private let context: NightscoutUploadContext
     private let gate: UploadScheduleGate
     private let sync: DataSynchronizer<Record, Sink>
-    private let source: KeyPath<AppCoordinator, CurrentValueSubject<Source, Never>> & Sendable
+    /// the source's pushes
+    private let changes: @Sendable(AppCoordinator) -> AnyPublisher<Source, Never>
+    /// the records to sync now, read only when there is work pending
+    private let current: @Sendable(AppCoordinator) async -> [Record]
     private let isEnabled: @Sendable(AppCoordinator) -> Bool
     private let prepare: (@Sendable(Source) async -> Bool)?
-    private let records: @Sendable(Source) async -> [Record]
     private let isUrgent: (@Sendable(_ previous: Source, _ current: Source) -> Bool)?
     /// the previous source value, for `isUrgent`
     private var previous: Source?
@@ -40,6 +42,66 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
         records: @escaping @Sendable(Source) async -> [Record],
         isUrgent: (@Sendable(_ previous: Source, _ current: Source) -> Bool)? = nil
     ) {
+        self.init(
+            name: name,
+            group: group,
+            sink: sink,
+            snapshotFile: snapshotFile,
+            retention: retention,
+            deletionWindow: deletionWindow,
+            context: context,
+            changes: { $0[keyPath: source].eraseToAnyPublisher() },
+            current: { await records($0[keyPath: source].value) },
+            isEnabled: isEnabled,
+            prepare: prepare,
+            isUrgent: isUrgent
+        )
+    }
+
+    /// An entity whose source only pushes (a `PassthroughSubject` of events): `record` keeps each push where `records`
+    /// reads it (a local log), and returns whether it added anything to upload.
+    init(
+        name: String,
+        group: UploadScheduleGroup,
+        sink: Sink,
+        snapshotFile: String,
+        retention: TimeInterval,
+        deletionWindow: TimeInterval,
+        context: NightscoutUploadContext,
+        events: KeyPath<AppCoordinator, PassthroughSubject<Source, Never>> & Sendable,
+        record: @escaping @Sendable(Source) async -> Bool,
+        records: @escaping @Sendable() async -> [Record]
+    ) {
+        self.init(
+            name: name,
+            group: group,
+            sink: sink,
+            snapshotFile: snapshotFile,
+            retention: retention,
+            deletionWindow: deletionWindow,
+            context: context,
+            changes: { $0[keyPath: events].eraseToAnyPublisher() },
+            current: { _ in await records() },
+            isEnabled: { _ in true },
+            prepare: record,
+            isUrgent: nil
+        )
+    }
+
+    private init(
+        name: String,
+        group: UploadScheduleGroup,
+        sink: Sink,
+        snapshotFile: String,
+        retention: TimeInterval,
+        deletionWindow: TimeInterval,
+        context: NightscoutUploadContext,
+        changes: @escaping @Sendable(AppCoordinator) -> AnyPublisher<Source, Never>,
+        current: @escaping @Sendable(AppCoordinator) async -> [Record],
+        isEnabled: @escaping @Sendable(AppCoordinator) -> Bool,
+        prepare: (@Sendable(Source) async -> Bool)?,
+        isUrgent: (@Sendable(_ previous: Source, _ current: Source) -> Bool)?
+    ) {
         self.name = name
         self.context = context
         gate = context.makeGate(name: name, group: group)
@@ -52,15 +114,15 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
             deletionWindow: deletionWindow,
             category: .nightscout
         )
-        self.source = source
+        self.changes = changes
+        self.current = current
         self.isEnabled = isEnabled
         self.prepare = prepare
-        self.records = records
         self.isUrgent = isUrgent
     }
 
     func start() async {
-        observe(context.appCoordinator[keyPath: source]) { me, value in
+        observe(changes(context.appCoordinator)) { me, value in
             await me.sourceUpdated(value)
         }
     }
@@ -91,10 +153,10 @@ final actor NightscoutCollectionSync<Source: Sendable, Record: SyncRecord, Sink:
     private func performFlush(startedAt: Date) async {
         guard isEnabled(context.appCoordinator), context.canUpload(), await gate.allows() else { return }
         // the latest value, read only when there is work pending
-        let current: @Sendable() async -> [Record] = { [context, source, records] in
-            await records(context.appCoordinator[keyPath: source].value)
+        let read: @Sendable() async -> [Record] = { [context, current] in
+            await current(context.appCoordinator)
         }
-        if await sync.reconcile(trigger: .retry, current: current) == .synced {
+        if await sync.reconcile(trigger: .retry, current: read) == .synced {
             gate.recordUpload(at: startedAt)
         }
     }

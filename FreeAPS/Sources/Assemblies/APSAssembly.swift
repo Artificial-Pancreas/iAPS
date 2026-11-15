@@ -17,13 +17,15 @@ final class APSAssembly: Assembly {
                 calibrationService: r.resolve(CalibrationService.self)!,
                 router: r.resolve(Router.self)!,
                 appCoordinator: r.resolve(AppCoordinator.self)!,
-                loopEventsStorage: r.resolve(LoopEventsStorage.self)!
+                loopEventsStorage: r.resolve(LoopEventsStorage.self)!,
+                cgmSessionStore: r.resolve(CGMSessionStore.self)!
             )
         }
         container.register(OverrideManager.self) { r in
             BaseOverrideManager(
                 overrideStorage: r.resolve(OverrideStorage.self)!,
-                nightscoutManager: r.resolve(NightscoutManager.self)!
+                nightscoutManager: r.resolve(NightscoutManager.self)!,
+                appCoordinator: r.resolve(AppCoordinator.self)!
             )
         }
         container.register(DynamicStateManager.self) { r in

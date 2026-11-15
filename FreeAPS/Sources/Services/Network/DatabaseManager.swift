@@ -42,9 +42,11 @@ actor BaseDatabaseManager: DatabaseManager, LifetimeOwner, AppService {
 
     private var isLogUploadEnabled: Bool {
         // Logs are uninterpretable without the settings/profile they ran under,
-        // so they only upload when full Backup is also enabled.
+        // so they only upload when full Backup is also enabled — and with the sex and the age
+        // shared (Settings › Sharing), which can change in Settings › Demographics while it is on.
         let settings = appCoordinator.settings.value
-        return settings.uploadStats && settings.uploadLogs
+        return settings.uploadStats && settings.uploadLogs &&
+            settings.demographics.qualifiesForLogs(now: Date(), calendar: .current)
     }
 
     init(

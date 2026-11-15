@@ -8,38 +8,29 @@ extension Sharing {
         @Published var uploadLogs: Bool = false
         @Published var uploadCrashReports: Bool = false
         @Published var identifier: String = ""
-        @Published var birthDate = Date.distantPast
-        @Published var sexSetting: Int = 3
-        @Published var sex: Sex = .secret
-        // Weight stored canonically in kg, height in cm (0 = unset).
-        @Published var weight: Decimal = 0
-        @Published var height: Decimal = 0
-        @Published var weightInLb: Bool = false
-        @Published var heightInFtIn: Bool = false
+        // The values are set in Settings › Demographics (pushed from here too): read here, and followed while shown.
+        @Setting(\.sexSetting) var sexSetting: Int = 3
+        @Setting(\.birthDate) var birthDate = Date.distantPast
+        // Whether the daily statistics carry them.
+        @Setting(\.shareSex) var shareSex: Bool = false
+        @Setting(\.shareAge) var shareAge: Bool = false
 
         override func subscribe() async {
             subscribeSetting(\.uploadStats, on: $uploadStats) { self.uploadStats = $0 }
             subscribeSetting(\.uploadLogs, on: $uploadLogs) { self.uploadLogs = $0 }
             subscribeSetting(\.uploadCrashReports, on: $uploadCrashReports) { self.uploadCrashReports = $0 }
-            subscribeSetting(\.birthDate, on: $birthDate) { self.birthDate = $0 }
-            subscribeSetting(\.sexSetting, on: $sexSetting) {
-                self.sexSetting = $0
-                self.sex = Sex.savedSettings($0)
-            }
-            subscribeSetting(\.weight, on: $weight) { self.weight = $0 }
-            subscribeSetting(\.height, on: $height) { self.height = $0 }
-            subscribeSetting(\.weightInLb, on: $weightInLb) { self.weightInLb = $0 }
-            subscribeSetting(\.heightInFtIn, on: $heightInFtIn) { self.heightInFtIn = $0 }
 
             identifier = userToken.getIdentifier()
         }
 
-        /// Logs require two anonymous demographics: a usable hormonal sex signal
+        var demographics: DemographicsSharing {
+            DemographicsSharing(sexSetting: sexSetting, birthDate: birthDate, shareSex: shareSex, shareAge: shareAge)
+        }
+
+        /// Logs require two anonymous demographics, shared: a usable hormonal sex signal
         /// (Woman/Man) and a plausible age. Anything else can't anchor the stats.
         var demographicsQualifyForLogs: Bool {
-            guard sex.hasHormonalSignal else { return false }
-            let age = Calendar.current.dateComponents([.year], from: birthDate, to: Date()).year ?? -1
-            return age >= 1 && age <= 120
+            demographics.qualifiesForLogs(now: Date(), calendar: .current)
         }
     }
 }
