@@ -47,8 +47,10 @@ extension Main {
             router.view(for: .home)
                 .sheet(isPresented: $state.isModalPresented) {
                     NavigationView {
-                        self.state.modal!.view
-                            .environmentObject(state)
+                        if let modal = state.modal {
+                            modal.view
+                                .environmentObject(state)
+                        }
                     }
                     .navigationViewStyle(StackNavigationViewStyle())
                     .interactiveDismissDisabled(state.shouldPreventModalDismiss)
