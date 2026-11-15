@@ -21,7 +21,7 @@ struct CalculatedGeometries {
     let manualGlucoseDots: [CGRect]
     let announcementDots: [AnnouncementDot]
     let loopEventDots: [LoopEventDot]
-    let loopGapBars: [CGRect]
+    let loopEventBars: [LoopEventBar]
     let manualGlucoseDotsCenter: [CGRect]
     let unSmoothedGlucoseDots: [CGRect]
     let predictionDotsIOB: [CGRect]
@@ -252,7 +252,7 @@ private final class GeometriesBuilder {
         let announcementDots = calculateAnnouncementDots()
 //        let announcementPath = makeAnnouncementPath(announcementDots: announcementDots)
 
-        let (loopEventDots, loopGapBars): ([LoopEventDot], [CGRect]) = data.loopEventsPlacement == .hidden ?
+        let (loopEventDots, loopEventBars): ([LoopEventDot], [LoopEventBar]) = data.loopEventsPlacement == .hidden ?
             ([], []) :
             calculateLoopEventDots()
 
@@ -298,7 +298,7 @@ private final class GeometriesBuilder {
             manualGlucoseDots: manualGlucoseDots,
             announcementDots: announcementDots,
             loopEventDots: loopEventDots,
-            loopGapBars: loopGapBars,
+            loopEventBars: loopEventBars,
             manualGlucoseDotsCenter: manualGlucoseDotsCenter,
             unSmoothedGlucoseDots: unSmoothedGlucoseDots,
             predictionDotsIOB: predictionDotsIOB,
@@ -580,19 +580,38 @@ private final class GeometriesBuilder {
             glucoseAreaBottom - ChartConfig.loopEventsLaneHeight
     }
 
-    private func calculateLoopEventDots() -> (dots: [LoopEventDot], gapBars: [CGRect]) {
+    private func calculateLoopEventDots() -> (dots: [LoopEventDot], bars: [LoopEventBar]) {
         let laneY = loopEventsLaneY
 
-        let gapBars = data.loopGaps.compactMap { gap -> CGRect? in
-            guard gap.end.timeIntervalSince(gap.start) > .minutes(11) else { return nil }
-            let startX = timeToXCoordinate(gap.start.timeIntervalSince1970)
-            let endX = timeToXCoordinate(gap.end.timeIntervalSince1970)
-            return CGRect(
-                x: startX,
-                y: laneY - 1.5,
-                width: max(endX - startX, 3),
-                height: 3
+        func bar(from start: Date, to end: Date, type: LoopEventType) -> LoopEventBar {
+            let startX = timeToXCoordinate(start.timeIntervalSince1970)
+            let endX = timeToXCoordinate(end.timeIntervalSince1970)
+            return LoopEventBar(
+                rect: CGRect(
+                    x: startX,
+                    y: laneY - 1.5,
+                    width: max(endX - startX, 3),
+                    height: 3
+                ),
+                type: type
             )
+        }
+
+        let gapBars = data.loopGaps.compactMap { gap -> LoopEventBar? in
+            guard gap.end.timeIntervalSince(gap.start) > .minutes(11) else { return nil }
+            return bar(from: gap.start, to: gap.end, type: .skippedLoops)
+        }
+
+        // an event repeated every cycle (a suspended pump) is one bar with one symbol at its middle, as a gap is
+        let (spans, singleEvents) = LoopEvent.collapsingRuns(in: data.loopEvents)
+        let spanBars = spans.map { bar(from: $0.start, to: $0.end, type: $0.type) }
+        // the run's events all sit at the midpoint, so they cluster into one symbol that counts them
+        let spanEvents = spans.flatMap { span in
+            let x = (
+                timeToXCoordinate(span.start.timeIntervalSince1970) +
+                    timeToXCoordinate(span.end.timeIntervalSince1970)
+            ) / 2
+            return span.events.map { (event: $0, x: x) }
         }
 
         let gapEvents = data.loopGaps.map { gap in
@@ -605,11 +624,11 @@ private final class GeometriesBuilder {
             )
         }
 
-        let events = data.loopEvents.map {
+        let events = singleEvents.map {
             (event: $0, x: timeToXCoordinate($0.timestamp.timeIntervalSince1970))
         }
 
-        let allEvents = (events + gapEvents).sorted { $0.x < $1.x }
+        let allEvents = (events + gapEvents + spanEvents).sorted { $0.x < $1.x }
 
         var clusters: [[(event: LoopEvent, x: CGFloat)]] = []
         var lastX: CGFloat?
@@ -635,7 +654,7 @@ private final class GeometriesBuilder {
             )
         }
 
-        return (dots, gapBars)
+        return (dots, gapBars + spanBars)
     }
 
     private func makeAnnouncementPath(announcementDots: [AnnouncementDot]) -> Path {
