@@ -88,7 +88,6 @@ struct ManualNutritionOverrideEditor: View {
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 16)
-                .background(Color(.systemBackground))
             }
             .navigationTitle("Edit Totals")
             .navigationBarTitleDisplayMode(.inline)
