@@ -158,3 +158,90 @@ final class LoopEventFailureTests: XCTestCase {
         XCTAssertEqual(try JSONDecoder().decode(LoopEventType.self, from: data), .pumpNotConfigured)
     }
 }
+
+final class LoopEventSpanTests: XCTestCase {
+    private let t0 = Date(timeIntervalSince1970: 1_800_000_000)
+
+    private func event(_ type: LoopEventType, at minutes: Double) -> LoopEvent {
+        LoopEvent(id: "\(type.rawValue)-\(minutes)", timestamp: t0.addingTimeInterval(minutes * 60), type: type)
+    }
+
+    func testNoEvents() {
+        let result = LoopEvent.collapsingRuns(in: [])
+        XCTAssertTrue(result.spans.isEmpty)
+        XCTAssertTrue(result.singles.isEmpty)
+    }
+
+    func testSingleSuspendedEventStaysADot() {
+        let events = [event(.pumpSuspended, at: 0)]
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertTrue(result.spans.isEmpty)
+        XCTAssertEqual(result.singles, events)
+    }
+
+    func testRunBecomesOneSpan() {
+        let events = [0, 5, 10, 15].map { event(.pumpSuspended, at: $0) }
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertEqual(result.spans.count, 1)
+        XCTAssertEqual(result.spans.first?.type, .pumpSuspended)
+        XCTAssertEqual(result.spans.first?.events, events)
+        XCTAssertEqual(result.spans.first?.start, events.first?.timestamp)
+        XCTAssertEqual(result.spans.first?.end, events.last?.timestamp)
+        XCTAssertTrue(result.singles.isEmpty)
+    }
+
+    func testRunSurvivesHolesUpToTheLimit() {
+        // cycles with nothing to enact record no event
+        let events = [0, 15, 31].map { event(.pumpSuspended, at: $0) }
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertEqual(result.spans.map(\.events.count), [3])
+    }
+
+    func testLongerPauseSplitsTheRun() {
+        let events = [0, 5, 22, 27, 60].map { event(.pumpSuspended, at: $0) }
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertEqual(result.spans.map(\.events.count), [2, 2])
+        XCTAssertEqual(result.spans.map(\.start), [events[0].timestamp, events[2].timestamp])
+        XCTAssertEqual(result.spans.map(\.end), [events[1].timestamp, events[3].timestamp])
+        XCTAssertEqual(result.singles, [events[4]])
+    }
+
+    func testAnotherEventEndsTheRun() {
+        let events = [
+            event(.pumpSuspended, at: 0),
+            event(.pumpSuspended, at: 5),
+            event(.appStart, at: 7),
+            event(.pumpSuspended, at: 10),
+            event(.cgmError, at: 12)
+        ]
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertEqual(result.spans.map(\.events), [[events[0], events[1]]])
+        XCTAssertEqual(result.singles, [events[2], events[3], events[4]])
+    }
+
+    func testOtherTypesAreNotCollapsed() {
+        let events = [0, 5, 10].map { event(.pumpCommunication, at: $0) }
+        let result = LoopEvent.collapsingRuns(in: events)
+        XCTAssertTrue(result.spans.isEmpty)
+        XCTAssertEqual(result.singles, events)
+    }
+
+    func testUnsortedInputAndACustomSet() {
+        let events = [10, 0, 5].map { event(.pumpBusy, at: $0) }
+        let result = LoopEvent.collapsingRuns(in: events, types: [.pumpBusy, .pumpSuspended])
+        XCTAssertEqual(result.spans.count, 1)
+        XCTAssertEqual(result.spans.first?.events.map(\.id), [events[1], events[2], events[0]].map(\.id))
+    }
+
+    func testAdjacentRunsOfDifferentTypesStayApart() {
+        let events = [
+            event(.pumpBusy, at: 0),
+            event(.pumpBusy, at: 5),
+            event(.pumpSuspended, at: 10),
+            event(.pumpSuspended, at: 15)
+        ]
+        let result = LoopEvent.collapsingRuns(in: events, types: [.pumpBusy, .pumpSuspended])
+        XCTAssertEqual(result.spans.map(\.type), [.pumpBusy, .pumpSuspended])
+        XCTAssertTrue(result.singles.isEmpty)
+    }
+}
