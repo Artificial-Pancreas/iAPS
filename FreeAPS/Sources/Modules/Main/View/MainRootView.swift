@@ -36,7 +36,7 @@ extension Main {
         }
 
         var preferredScheme: ColorScheme? {
-            state.lightMode == .auto ? nil : colorScheme
+            appUIState.lightMode == .auto ? nil : colorScheme
         }
 
         init(resolver: Resolver) {
