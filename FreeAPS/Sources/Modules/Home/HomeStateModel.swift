@@ -72,6 +72,7 @@ extension Home {
         @Published var useCalc: Bool = true
         @Published var hours: Int = 6
         @Published var iobData: [IOBData] = []
+        @Published var dontHideButtons: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
@@ -1407,6 +1408,7 @@ extension Home.StateModel {
         data.fpuAmounts = settings.fpuAmounts
         data.hidePredictions = settings.hidePredictions
         data.useCarbBars = settings.useCarbBars
+        dontHideButtons = settings.dontHideButtons
         displayDelta = settings.displayDelta
         autoisf = settings.autoisfEffective
         hours = max(min(settings.hours, 24), 2)

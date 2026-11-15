@@ -19,6 +19,7 @@ extension UIUX {
         @Published var ai: Bool = true
         @Published var mealViewMicronutrients: Bool = true
         @Published var animatedBackground: Bool = false
+        @Published var dontHideButtons: Bool = false
 
         var units: GlucoseUnits = .mmolL
 
@@ -41,6 +42,7 @@ extension UIUX {
             subscribeSetting(\.ai, on: $ai) { self.ai = $0 }
             subscribeSetting(\.mealViewMicronutrients, on: $mealViewMicronutrients) { self.mealViewMicronutrients = $0 }
             subscribeSetting(\.animatedBackground, on: $animatedBackground) { self.animatedBackground = $0 }
+            subscribeSetting(\.dontHideButtons, on: $dontHideButtons) { self.dontHideButtons = $0 }
 
             subscribeSetting(\.low, on: $low, initial: {
                 let value = max(min($0, 90), 40)
