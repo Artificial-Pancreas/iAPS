@@ -213,7 +213,6 @@ struct ImageSelectorView: View {
             .disabled(searchText.isEmpty)
         }
         .padding()
-        .background(Color(.systemBackground))
     }
 
     private var selectionOptionsSection: some View {
