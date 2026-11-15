@@ -118,6 +118,17 @@ enum KnownPlugins {
         }
     }
 
+    /// The kind of pump the Home header draws, by the pump manager's plugin identifier (`PumpDisplayInfo.identifier`).
+    static func headerPump(pluginIdentifier: String) -> HeaderPump {
+        switch pluginIdentifier {
+        case OmniPumpManager.pluginIdentifier: .pod
+        case MedtrumPumpManager.pluginIdentifier: .medtrum
+        case DanaKitPumpManager.pluginIdentifier: .dana
+        case MinimedPumpManager.pluginIdentifier: .medtronic
+        default: .other
+        }
+    }
+
     static func isManualTempBasalActive(_ pumpManager: PumpManager) -> Bool? {
         guard case let .tempBasal(dose) = pumpManager.status.basalDeliveryState else { return false }
         return !(dose.automatic ?? true)

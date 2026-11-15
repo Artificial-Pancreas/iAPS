@@ -187,11 +187,14 @@ final class AppCoordinator: @unchecked Sendable {
         pumpStatus.send(value)
     }
 
+    // both are sent from every CGM callback that may have changed them: the observers hear of changes only
     func setCgmInfo(_ value: CgmDisplayInfo?) {
+        guard cgmInfo.value != value else { return }
         cgmInfo.send(value)
     }
 
     func setCgmStatus(_ value: CgmDisplayStatus?) {
+        guard cgmStatus.value != value else { return }
         cgmStatus.send(value)
     }
 
