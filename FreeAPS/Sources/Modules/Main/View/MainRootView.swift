@@ -35,6 +35,10 @@ extension Main {
             appUIState.lightMode != LightMode.auto ? (appUIState.lightMode == .light ? .light : .dark) : lightMode
         }
 
+        var preferredScheme: ColorScheme? {
+            state.lightMode == .auto ? nil : colorScheme
+        }
+
         init(resolver: Resolver) {
             self.resolver = resolver
             _state = StateObject(wrappedValue: StateModel(resolver: resolver))
@@ -56,6 +60,7 @@ extension Main {
                     state.secondaryModalView ?? EmptyView().asAny()
                 }
                 .environment(\.colorScheme, colorScheme)
+                .preferredColorScheme(preferredScheme) // set it for UIKit as well
                 .fullScreenCover(isPresented: Binding(
                     get: { !hasSeenWelcome || showUpgradeNotice || !hasSeenSharingSetup },
                     set: { _ in } // dismissal is flag-driven; the cover content flips the flags
