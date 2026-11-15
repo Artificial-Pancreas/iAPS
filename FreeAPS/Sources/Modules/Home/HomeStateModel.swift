@@ -85,6 +85,7 @@ extension Home {
         @Published var showCOBChart: Bool = false
         @Published var insulinStatistics: InsulinStatistics = .empty
         @Published var skipGlucoseChart: Bool = false
+        @Published var dontHideButtons: Bool = false
         @Published var displayDelta: Bool = false
         @Published var maxIOB: Decimal = 0
         @Published var maxCOB: Decimal = 0
@@ -843,6 +844,7 @@ extension Home.StateModel {
         data.hidePredictions = settings.hidePredictions
         data.useCarbBars = settings.useCarbBars
         skipGlucoseChart = settings.skipGlucoseChart
+        dontHideButtons = settings.dontHideButtons
         displayDelta = settings.displayDelta
         autoisf = settings.autoisfEffective
         hours = max(min(settings.hours, 24), 2)
