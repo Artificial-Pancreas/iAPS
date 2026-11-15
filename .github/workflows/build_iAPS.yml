@@ -68,7 +68,11 @@ jobs:
   build:
     name: Build
     needs: [check_certs,check_latest_from_upstream]
-    runs-on: xcode-27
+    # Xcode 27 is the default. Setting the repository variable USE_XCODE_26 to
+    # true builds with Xcode 26 on the macOS 26 image instead: Xcode 27 cannot
+    # target watchOS 8, so a watch app built with it no longer installs on an
+    # Apple Watch Series 3.
+    runs-on: ${{ (vars.USE_XCODE_26 == 'true' || vars.USE_XCODE_26 == '1' || vars.USE_XCODE_26 == 'yes') && 'macos-26' || 'xcode-27' }}
     permissions:
       contents: write
     steps:
@@ -90,18 +94,34 @@ jobs:
         
       - name: Verify Xcode version
         shell: bash
+        env:
+          USE_XCODE_26: ${{ vars.USE_XCODE_26 }}
         run: |
           set -euo pipefail
 
           echo "Available Xcode versions:"
           ls -d /Applications/Xcode*.app
 
-          # Select the latest Xcode 27.x version
-          XCODE=$( { for app in /Applications/Xcode_27.[0-9]*.app; do readlink -f "$app"; done; } \
+          # Xcode 27.1 or newer by default; Xcode 26.x when USE_XCODE_26 is set.
+          # Accepted values must match the runs-on expression of this job.
+          case "${USE_XCODE_26:-}" in
+            true|1|yes)
+              REQUIRED_MAJOR=26
+              REQUIRED_MINOR=0
+              echo "USE_XCODE_26 is set: building with Xcode 26"
+              ;;
+            *)
+              REQUIRED_MAJOR=27
+              REQUIRED_MINOR=1
+              ;;
+          esac
+
+          # Select the latest stable Xcode of the required major version
+          XCODE=$( { for app in /Applications/Xcode_${REQUIRED_MAJOR}.[0-9]*.app; do readlink -f "$app"; done; } \
           | grep -viE 'beta|Release_Candidate' | sort -uV | tail -1 || true )
-          
+
           if [ -z "$XCODE" ]; then
-            echo "::error::No stable Xcode 27.x found on this runner"
+            echo "::error::No stable Xcode ${REQUIRED_MAJOR}.x found on this runner"
             exit 1
           fi
           sudo xcode-select --switch "$XCODE/Contents/Developer"
@@ -119,8 +139,8 @@ jobs:
           MAJOR="${BASH_REMATCH[1]}"
           MINOR="${BASH_REMATCH[2]}"
 
-          if (( MAJOR < 27 || (MAJOR == 27 && MINOR < 1) )); then
-            echo "::error::Xcode 27.1 or newer required, found $VERSION"
+          if (( MAJOR != REQUIRED_MAJOR || MINOR < REQUIRED_MINOR )); then
+            echo "::error::Xcode ${REQUIRED_MAJOR}.${REQUIRED_MINOR} or newer ${REQUIRED_MAJOR}.x required, found $VERSION"
             exit 1
           fi
 
