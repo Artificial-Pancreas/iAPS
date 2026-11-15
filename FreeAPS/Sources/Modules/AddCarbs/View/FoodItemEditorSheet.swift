@@ -268,7 +268,6 @@ struct FoodItemEditorSheet: View {
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 16)
-                .background(Color(.systemBackground))
             }
             .navigationTitle(NSLocalizedString(title, comment: "Title"))
             .navigationBarTitleDisplayMode(.inline)

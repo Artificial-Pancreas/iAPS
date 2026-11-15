@@ -104,7 +104,6 @@ extension DataTable {
                     }
                 }
             }
-            .background(Color(.systemBackground))
             .dynamicTypeSize(...DynamicTypeSize.large)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.inline)
