@@ -151,7 +151,6 @@ extension Stat {
                 .pickerStyle(.segmented).background(.cyan.opacity(0.2))
                 stats()
             }
-            .background(Color(.systemBackground)) // New iOS 26 bug
             .dynamicTypeSize(...DynamicTypeSize.xLarge)
             .navigationBarTitle("Statistics")
             .navigationBarTitleDisplayMode(.inline)
