@@ -35,6 +35,15 @@ final class CoreDataStack: ObservableObject {
         persistentContainer.viewContext
     }
 
+    /// Runs `work` on the view context's queue (the main thread) and returns its result.
+    ///
+    /// Objects fetched from the view context may only be read or changed on that queue. Code running on any
+    /// other queue does its reading in here and takes plain values out; a managed object must not leave the
+    /// block. Safe to call from the main thread and from inside another block of the same context.
+    func onViewContext<T>(_ work: () throws -> T) rethrows -> T {
+        try persistentContainer.viewContext.performAndWait(work)
+    }
+
     func saveContext() {
         let context = persistentContainer.viewContext
 

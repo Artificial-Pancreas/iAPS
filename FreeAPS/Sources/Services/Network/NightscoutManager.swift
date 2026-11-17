@@ -1243,19 +1243,22 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     private func consecutiveOverrideDate(for date: Date) -> Date? {
-        guard let override = overrideStorage.fetchNumberOfOverrides(numbers: 10)
-            .first(where: { override in
-                guard let overrideDate = override.date else { return false }
-                return override.succeeding != nil && abs(overrideDate.timeIntervalSince(date)) < 1
-            }),
-            override.succeeding != nil
-        else {
-            return nil
-        }
+        // Override objects belong to the view context; editOverride is also called off the main thread.
+        CoreDataStack.shared.onViewContext { () -> Date? in
+            guard let override = overrideStorage.fetchNumberOfOverrides(numbers: 10)
+                .first(where: { override in
+                    guard let overrideDate = override.date else { return false }
+                    return override.succeeding != nil && abs(overrideDate.timeIntervalSince(date)) < 1
+                }),
+                override.succeeding != nil
+            else {
+                return nil
+            }
 
-        let duration = Int(truncating: override.duration ?? 0)
-        let normalizedDuration = (duration == 0 || override.indefinite) ? 2880 : duration
-        return date.addingTimeInterval(TimeInterval(normalizedDuration * 60))
+            let duration = Int(truncating: override.duration ?? 0)
+            let normalizedDuration = (duration == 0 || override.indefinite) ? 2880 : duration
+            return date.addingTimeInterval(TimeInterval(normalizedDuration * 60))
+        }
     }
 
     func uploadOverride(_ profile: String, _ duration_: Double, _ date: Date, consecutive: OverridePresets?) {

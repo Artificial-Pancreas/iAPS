@@ -673,84 +673,89 @@ extension Database {
     }
 
     private func migrateMealPresets() -> [MigratedMeals] {
-        let meals = CoreDataStorage().fetchMealPresets()
-        return meals.map({ item -> MigratedMeals in
-            MigratedMeals(
-                carbs: (item.carbs ?? 0) as Decimal,
-                dish: item.dish ?? "",
-                fat: (item.fat ?? 0) as Decimal,
-                protein: (item.protein ?? 0) as Decimal,
-                fiber: item.fiber?.decimalValue,
-                sugars: item.sugars?.decimalValue,
-                glycemicIndex: item.glycemicIndex?.decimalValue,
-                portionSize: item.portionSize?.decimalValue,
-                per100: item.per100,
-                mealUnits: item.mealUnits,
-                standardName: item.standardName,
-                standardServing: item.standardServing,
-                standardServingSize: item.standardServingSize?.decimalValue,
-                imageURL: item.imageURL,
-                tags: item.tags,
-                foodID: item.foodID?.uuidString,
-                // Read the stored entries directly rather than via micronutrientValuesTyped(),
-                // which rescales by portion and drops substances it doesn't recognise — fine for
-                // display, lossy for a backup.
-                micronutrients: (item.micronutrient ?? []).compactMap { entry in
-                    guard let name = entry.micronutrient.name else { return nil }
-                    return MigratedMicronutrient(
-                        name: name,
-                        type: entry.micronutrient.type,
-                        unit: entry.micronutrient.unit,
-                        amount: entry.amount?.decimalValue,
-                        per100: entry.per100
-                    )
-                }
-            )
-        })
+        // The presets belong to the view context, and a backup can be built off the main thread.
+        CoreDataStack.shared.onViewContext { () -> [MigratedMeals] in
+            let meals = CoreDataStorage().fetchMealPresets()
+            return meals.map({ item -> MigratedMeals in
+                MigratedMeals(
+                    carbs: (item.carbs ?? 0) as Decimal,
+                    dish: item.dish ?? "",
+                    fat: (item.fat ?? 0) as Decimal,
+                    protein: (item.protein ?? 0) as Decimal,
+                    fiber: item.fiber?.decimalValue,
+                    sugars: item.sugars?.decimalValue,
+                    glycemicIndex: item.glycemicIndex?.decimalValue,
+                    portionSize: item.portionSize?.decimalValue,
+                    per100: item.per100,
+                    mealUnits: item.mealUnits,
+                    standardName: item.standardName,
+                    standardServing: item.standardServing,
+                    standardServingSize: item.standardServingSize?.decimalValue,
+                    imageURL: item.imageURL,
+                    tags: item.tags,
+                    foodID: item.foodID?.uuidString,
+                    // Read the stored entries directly rather than via micronutrientValuesTyped(),
+                    // which rescales by portion and drops substances it doesn't recognise — fine for
+                    // display, lossy for a backup.
+                    micronutrients: (item.micronutrient ?? []).compactMap { entry in
+                        guard let name = entry.micronutrient.name else { return nil }
+                        return MigratedMicronutrient(
+                            name: name,
+                            type: entry.micronutrient.type,
+                            unit: entry.micronutrient.unit,
+                            amount: entry.amount?.decimalValue,
+                            per100: entry.per100
+                        )
+                    }
+                )
+            })
+        }
     }
 
     private func migrateOverridePresets() -> [MigratedOverridePresets] {
-        let storage = OverrideStorage()
-        let presets = storage.fetchProfiles()
-        return presets.map({ item -> MigratedOverridePresets in
-            // The Auto ISF block lives in its own entity keyed by the preset's id, so it has to be
-            // looked up per preset rather than read off the preset itself.
-            let autoISF = item.id
-                .flatMap { storage.fetchAutoISFsetting(id: $0) }
-                .map { MigratedAutoISF($0) }
+        CoreDataStack.shared.onViewContext { () -> [MigratedOverridePresets] in
+            let storage = OverrideStorage()
+            let presets = storage.fetchProfiles()
+            return presets.map({ item -> MigratedOverridePresets in
+                // The Auto ISF block lives in its own entity keyed by the preset's id, so it has to be
+                // looked up per preset rather than read off the preset itself.
+                let autoISF = item.id
+                    .flatMap { storage.fetchAutoISFsetting(id: $0) }
+                    .map { MigratedAutoISF($0) }
 
-            return MigratedOverridePresets(
-                advancedSettings: item.advancedSettings,
-                cr: item.cr,
-                date: item.date ?? Date(),
-                duration: (item.duration ?? 0) as Decimal,
-                emoji: item.emoji ?? "",
-                end: (item.end ?? 0) as Decimal,
-                id: item.id ?? "",
-                indefininite: item.indefinite,
-                isf: item.isf,
-                isndAndCr: item.isfAndCr, basal: item.basal,
-                maxIOB: (item.maxIOB ?? 0) as Decimal,
-                name: item.name ?? "",
-                overrideMaxIOB: item.overrideMaxIOB,
-                percentage: item.percentage,
-                smbAlwaysOff: item.smbIsAlwaysOff,
-                smbIsOff: item.smbIsOff,
-                smbMinutes: (item.smbMinutes ?? 0) as Decimal,
-                start: (item.start ?? 0) as Decimal,
-                target: (item.target ?? 0) as Decimal,
-                uamMinutes: (item.uamMinutes ?? 0) as Decimal,
-                autoISF: autoISF,
-                succeeding: item.succeeding,
-                endWIthNewCarbs: item.endWIthNewCarbs,
-                overrideAutoISF: item.overrideAutoISF,
-                glucoseOverrideThresholdActive: item.glucoseOverrideThresholdActive,
-                glucoseOverrideThreshold: item.glucoseOverrideThreshold?.decimalValue,
-                glucoseOverrideThresholdActiveDown: item.glucoseOverrideThresholdActiveDown,
-                glucoseOverrideThresholdDown: item.glucoseOverrideThresholdDown?.decimalValue
-            )
+                return MigratedOverridePresets(
+                    advancedSettings: item.advancedSettings,
+                    cr: item.cr,
+                    date: item.date ?? Date(),
+                    duration: (item.duration ?? 0) as Decimal,
+                    emoji: item.emoji ?? "",
+                    end: (item.end ?? 0) as Decimal,
+                    id: item.id ?? "",
+                    indefininite: item.indefinite,
+                    isf: item.isf,
+                    isndAndCr: item.isfAndCr, basal: item.basal,
+                    maxIOB: (item.maxIOB ?? 0) as Decimal,
+                    name: item.name ?? "",
+                    overrideMaxIOB: item.overrideMaxIOB,
+                    percentage: item.percentage,
+                    smbAlwaysOff: item.smbIsAlwaysOff,
+                    smbIsOff: item.smbIsOff,
+                    smbMinutes: (item.smbMinutes ?? 0) as Decimal,
+                    start: (item.start ?? 0) as Decimal,
+                    target: (item.target ?? 0) as Decimal,
+                    uamMinutes: (item.uamMinutes ?? 0) as Decimal,
+                    autoISF: autoISF,
+                    succeeding: item.succeeding,
+                    endWIthNewCarbs: item.endWIthNewCarbs,
+                    overrideAutoISF: item.overrideAutoISF,
+                    glucoseOverrideThresholdActive: item.glucoseOverrideThresholdActive,
+                    glucoseOverrideThreshold: item.glucoseOverrideThreshold?.decimalValue,
+                    glucoseOverrideThresholdActiveDown: item.glucoseOverrideThresholdActiveDown,
+                    glucoseOverrideThresholdDown: item.glucoseOverrideThresholdDown?.decimalValue
+                )
 
-        })
+            })
+        }
     }
 
     /// Snapshot the AI settings out of UserDefaults. The provider API keys are intentionally not

@@ -134,8 +134,10 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     var override: Override? {
-        guard let last = OverrideStorage().fetchLatestOverride().first, last.enabled else { return nil }
-        return last
+        CoreDataStack.shared.onViewContext { () -> Override? in
+            guard let last = OverrideStorage().fetchLatestOverride().first, last.enabled else { return nil }
+            return last
+        }
     }
 
     init(resolver: Resolver) {
@@ -717,27 +719,31 @@ final class BaseAPSManager: APSManager, Injectable {
         case let .override(name):
             guard !name.isEmpty else { return }
             let storage = OverrideStorage()
-            let lastActiveOveride = storage.fetchLatestOverride().first
-            let isActive = lastActiveOveride?.enabled ?? false
+            // Announcements are enacted off the main thread, and override objects belong to the view context, so
+            // they are read and changed on that context's queue.
+            CoreDataStack.shared.onViewContext {
+                let lastActiveOveride = storage.fetchLatestOverride().first
+                let isActive = lastActiveOveride?.enabled ?? false
 
-            // Command to Cancel Active Override
-            if name.lowercased() == "cancel", isActive {
-                if let activeOveride = lastActiveOveride {
-                    let presetName = storage.isPresetName()
-                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+                // Command to Cancel Active Override
+                if name.lowercased() == "cancel", isActive {
+                    if let activeOveride = lastActiveOveride {
+                        let presetName = storage.isPresetName()
+                        let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile().duration {
-                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                        if let duration = storage.cancelProfile().duration {
+                            nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                        }
+                        announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                        debug(.apsManager, "Override Canceled by Announcement succeeded.")
                     }
-                    announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                    debug(.apsManager, "Override Canceled by Announcement succeeded.")
+                    return
                 }
-                return
-            }
 
-            guard storage.activatePresetAndUpload(named: name, nightscout: nightscout) != nil else { return }
-            announcementsStorage.storeAnnouncements([announcement], enacted: true)
-            debug(.apsManager, "Remote Override by Announcement succeeded.")
+                guard storage.activatePresetAndUpload(named: name, nightscout: nightscout) != nil else { return }
+                announcementsStorage.storeAnnouncements([announcement], enacted: true)
+                debug(.apsManager, "Remote Override by Announcement succeeded.")
+            }
         }
     }
 
@@ -860,12 +866,13 @@ final class BaseAPSManager: APSManager, Injectable {
             storage.save(enacted, as: OpenAPS.Enact.enacted)
 
             // Save to CoreData also. TO DO: Remove the JSON saving after some testing.
+            // The previous loop's record belongs to the view context: read its date there, before going to ours.
+            let previousTimestamp = CoreDataStack.shared.onViewContext { CoreDataStorage().fetchLastLoop()?.timestamp }
             coredataContext.perform {
                 let saveLastLoop = LastLoop(context: self.coredataContext)
                 saveLastLoop.iob = (enacted.iob ?? 0) as NSDecimalNumber
                 saveLastLoop.cob = (enacted.cob ?? 0) as NSDecimalNumber
-                saveLastLoop.timestamp = received ? enacted.timestamp : CoreDataStorage().fetchLastLoop()?
-                    .timestamp ?? .distantPast
+                saveLastLoop.timestamp = received ? enacted.timestamp : previousTimestamp ?? .distantPast
                 try? self.coredataContext.save()
             }
 
@@ -916,7 +923,7 @@ final class BaseAPSManager: APSManager, Injectable {
         return Double(sorted[length / 2])
     }
 
-    private func tir(_ array: [Readings]) -> (TIR: Double, hypos: Double, hypers: Double, normal_: Double) {
+    private func tir(_ array: [GlucoseReading]) -> (TIR: Double, hypos: Double, hypers: Double, normal_: Double) {
         let glucose = array
         let justGlucoseArray = glucose.compactMap({ each in Int(each.glucose as Int16) })
         let totalReadings = justGlucoseArray.count
@@ -942,7 +949,7 @@ final class BaseAPSManager: APSManager, Injectable {
         )
     }
 
-    private func glucoseStats(_ fetchedGlucose: [Readings])
+    private func glucoseStats(_ fetchedGlucose: [GlucoseReading])
         -> (ifcc: Double, ngsp: Double, average: Double, median: Double, sd: Double, cv: Double, readings: Double)
     {
         let glucose = fetchedGlucose
@@ -1042,11 +1049,13 @@ final class BaseAPSManager: APSManager, Injectable {
 
     // Add to statistics.JSON for upload to NS.
     private func statistics() {
-        let stats = CoreDataStorage().fetchStats()
+        // statistics() runs off the main thread. What CoreDataStorage fetches belongs to the view context, so those
+        // objects are only read inside onViewContext; plain values come out.
+        let lastRun = CoreDataStack.shared.onViewContext { CoreDataStorage().fetchStats().first?.lastrun }
         versionCheack()
         let newVersion = UserDefaults.standard.bool(forKey: IAPSconfig.newVersion)
         // Only save and upload twice per day
-        guard ((-1 * (stats.first?.lastrun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
+        guard ((-1 * (lastRun ?? .distantPast).timeIntervalSinceNow.hours) > 10) || newVersion else {
             return
         }
 
@@ -1057,17 +1066,20 @@ final class BaseAPSManager: APSManager, Injectable {
             let preferences = settingsManager.preferences
 
             // Carbs
-            let carbs = CoreDataStorage().fetchMealData(interval: DateFilter.day.startDate)
-            var carbTotal: Decimal = 0
-            carbTotal = carbs.map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+            let carbTotal: Decimal = CoreDataStack.shared.onViewContext {
+                CoreDataStorage().fetchMealData(interval: DateFilter.day.startDate)
+                    .map({ carbs in carbs.carbs as? Decimal ?? 0 }).reduce(0, +)
+            }
 
             // TDD
-            let tdds = CoreDataStorage().fetchTDD(interval: DateFilter.fourteenDays.startDate)
+            let tddArray: [Decimal] = CoreDataStack.shared.onViewContext {
+                CoreDataStorage().fetchTDD(interval: DateFilter.fourteenDays.startDate)
+                    .map({ insulin in insulin.tdd as? Decimal ?? 0 })
+            }
             var currentTDD: Decimal = 0
             var tddTotalAverage: Decimal = 0
-            if !tdds.isEmpty {
-                currentTDD = tdds[0].tdd?.decimalValue ?? 0
-                let tddArray = tdds.compactMap({ insulin in insulin.tdd as? Decimal ?? 0 })
+            if !tddArray.isEmpty {
+                currentTDD = tddArray[0]
                 tddTotalAverage = tddArray.reduce(0, +) / Decimal(tddArray.count)
             }
 
@@ -1106,10 +1118,14 @@ final class BaseAPSManager: APSManager, Injectable {
                 iPa = 50
             }
             // CGM Readings
-            let glucose_24 = CoreDataStorage().fetchGlucose(interval: DateFilter.day.startDate) // Day
-            let glucose_7 = CoreDataStorage().fetchGlucose(interval: DateFilter.week.startDate) // Week
-            let glucose_30 = CoreDataStorage().fetchGlucose(interval: DateFilter.month.startDate) // Month
-            let glucose = CoreDataStorage().fetchGlucose(interval: DateFilter.total.startDate) // Total
+            // One fetch, copied to plain values; the shorter periods are cut from it (newest first, as before).
+            let glucose = CoreDataStorage().fetchGlucoseValues(interval: DateFilter.total.startDate) // Total
+            let since: (NSDate) -> [GlucoseReading] = { start in
+                glucose.filter { ($0.date ?? .distantPast) > start as Date }
+            }
+            let glucose_24 = since(DateFilter.day.startDate) // Day
+            let glucose_7 = since(DateFilter.week.startDate) // Week
+            let glucose_30 = since(DateFilter.month.startDate) // Month
 
             // First date
             let previous = glucose.last?.date ?? Date()
@@ -1215,17 +1231,20 @@ final class BaseAPSManager: APSManager, Injectable {
             let variance = Variance(SD: standardDeviations, CV: cvs)
 
             // Loops
-            var lsr = [LoopStatRecord]()
-            let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
-            requestLSR.predicate = NSPredicate(
-                format: "interval > 0 AND start > %@",
-                Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
-            )
-            let sortLSR = NSSortDescriptor(key: "start", ascending: false)
-            requestLSR.sortDescriptors = [sortLSR]
-            try? lsr = coredataContext.fetch(requestLSR)
-            // Compute LoopStats for 24 hours
-            let oneDayLoops = loops(lsr)
+            // Compute LoopStats for 24 hours. These records live in our own background context, so they are
+            // fetched and read on its queue.
+            let oneDayLoops = coredataContext.performAndWait { () -> Loops in
+                var lsr = [LoopStatRecord]()
+                let requestLSR = LoopStatRecord.fetchRequest() as NSFetchRequest<LoopStatRecord>
+                requestLSR.predicate = NSPredicate(
+                    format: "interval > 0 AND start > %@",
+                    Date().addingTimeInterval(-24.hours.timeInterval) as NSDate
+                )
+                let sortLSR = NSSortDescriptor(key: "start", ascending: false)
+                requestLSR.sortDescriptors = [sortLSR]
+                try? lsr = coredataContext.fetch(requestLSR)
+                return loops(lsr)
+            }
             let loopstat = LoopCycles(
                 loops: oneDayLoops.loops,
                 errors: oneDayLoops.errors,
@@ -1244,7 +1263,15 @@ final class BaseAPSManager: APSManager, Injectable {
             )
 
             // Insulin
-            let insulinDistribution = CoreDataStorage().fetchInsulinDistribution()
+            let insulinDistribution = CoreDataStack.shared
+                .onViewContext { () -> (bolus: Decimal, tempBasal: Decimal, scheduledBasal: Decimal)? in
+                    guard let latest = CoreDataStorage().fetchInsulinDistribution().first else { return nil }
+                    return (
+                        (latest.bolus ?? 0) as Decimal,
+                        (latest.tempBasal ?? 0) as Decimal,
+                        (latest.scheduledBasal ?? 0) as Decimal
+                    )
+                }
             var insulin = Ins(
                 TDD: 0,
                 bolus: 0,
@@ -1255,10 +1282,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
             insulin = Ins(
                 TDD: roundDecimal(currentTDD, 2),
-                bolus: insulinDistribution.first != nil ? ((insulinDistribution.first?.bolus ?? 0) as Decimal) : 0,
-                temp_basal: insulinDistribution.first != nil ? ((insulinDistribution.first?.tempBasal ?? 0) as Decimal) : 0,
-                scheduled_basal: insulinDistribution
-                    .first != nil ? ((insulinDistribution.first?.scheduledBasal ?? 0) as Decimal) : 0,
+                bolus: insulinDistribution?.bolus ?? 0,
+                temp_basal: insulinDistribution?.tempBasal ?? 0,
+                scheduled_basal: insulinDistribution?.scheduledBasal ?? 0,
                 total_average: roundDecimal(tddTotalAverage, 1)
             )
 
@@ -1323,8 +1349,8 @@ final class BaseAPSManager: APSManager, Injectable {
     /// attempt an hour, so this cannot repeat on every loop while the server is unreachable,
     /// which the old "any loop in an even hour" gate did.
     private func versionCheack() {
-        let last = CoreDataStorage().fetchVNr()
-        if (last?.date ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
+        let lastDate = CoreDataStack.shared.onViewContext { CoreDataStorage().fetchVNr()?.date }
+        if (lastDate ?? .distantPast) < Date.now.addingTimeInterval(-23.hours.timeInterval) {
             nightscout.fetchVersion()
         }
     }
@@ -1339,17 +1365,17 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     private func loopStats(loopStatRecord: LoopStats, error: Error?) {
-        let nLS = LoopStatRecord(context: coredataContext)
-        nLS.start = loopStatRecord.start
-        nLS.end = loopStatRecord.end ?? Date()
-        nLS.loopStatus = loopStatRecord.loopStatus
-        nLS.duration = loopStatRecord.duration ?? 0.0
-        nLS.interval = loopStatRecord.interval ?? 0.0
-        if let error = error {
-            nLS.error = error.localizedDescription.string
-        }
-
         coredataContext.performAndWait {
+            let nLS = LoopStatRecord(context: self.coredataContext)
+            nLS.start = loopStatRecord.start
+            nLS.end = loopStatRecord.end ?? Date()
+            nLS.loopStatus = loopStatRecord.loopStatus
+            nLS.duration = loopStatRecord.duration ?? 0.0
+            nLS.interval = loopStatRecord.interval ?? 0.0
+            if let error = error {
+                nLS.error = error.localizedDescription.string
+            }
+
             try? self.coredataContext.save()
         }
     }

@@ -3,8 +3,27 @@ import Foundation
 import SwiftDate
 import Swinject
 
+/// A glucose reading copied out of CoreData. `Readings` objects belong to the view context and may only be
+/// read on the main thread; code on any other queue works with these plain values instead.
+struct GlucoseReading {
+    let date: Date?
+    let glucose: Int16
+    let direction: String?
+    let id: String?
+}
+
 final class CoreDataStorage {
     let coredataContext = CoreDataStack.shared.persistentContainer.viewContext
+
+    /// Same readings as `fetchGlucose`, newest first, copied to plain values on the context's queue.
+    /// Use this one from any queue other than main.
+    func fetchGlucoseValues(interval: NSDate) -> [GlucoseReading] {
+        coredataContext.performAndWait {
+            fetchGlucose(interval: interval).map {
+                GlucoseReading(date: $0.date, glucose: $0.glucose, direction: $0.direction, id: $0.id)
+            }
+        }
+    }
 
     func fetchGlucose(interval: NSDate) -> [Readings] {
         var fetchGlucose = [Readings]()
@@ -33,8 +52,9 @@ final class CoreDataStorage {
     }
 
     func fetchInsulinData(interval: NSDate) -> [IOBTick0] {
-        var fetchTicks = [InsulinActivity]()
+        var result = [IOBTick0]()
         coredataContext.performAndWait {
+            var fetchTicks = [InsulinActivity]()
             let requestTicks = InsulinActivity.fetchRequest()
             let sort = NSSortDescriptor(key: "date", ascending: true)
             requestTicks.sortDescriptors = [sort]
@@ -42,16 +62,17 @@ final class CoreDataStorage {
                 format: "date > %@", interval
             )
             try? fetchTicks = self.coredataContext.fetch(requestTicks)
-        }
-        let result = fetchTicks.compactMap { tick -> IOBTick0? in
-            guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
-                return nil
+            // Copied to plain values in here: callers are not always on the main thread.
+            result = fetchTicks.compactMap { tick -> IOBTick0? in
+                guard let date = tick.date, let activity = tick.activity, let iob = tick.iob else {
+                    return nil
+                }
+                return IOBTick0(
+                    time: date,
+                    iob: iob as Decimal,
+                    activity: activity as Decimal
+                )
             }
-            return IOBTick0(
-                time: date,
-                iob: iob as Decimal,
-                activity: activity as Decimal
-            )
         }
         return result
     }
@@ -509,25 +530,29 @@ final class CoreDataStorage {
     }
 
     func checkIfActiveProfile() -> Bool {
-        var presetsArray = [ActiveProfile]()
+        var active = false
         coredataContext.performAndWait {
+            var presetsArray = [ActiveProfile]()
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
             try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            active = presetsArray.first?.active ?? false
         }
-        return (presetsArray.first?.active ?? false)
+        return active
     }
 
     func fetchActiveProfile() -> String {
-        var presetsArray = [ActiveProfile]()
+        var name = "default"
         coredataContext.performAndWait {
+            var presetsArray = [ActiveProfile]()
             let requestProfiles = ActiveProfile.fetchRequest() as NSFetchRequest<ActiveProfile>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestProfiles.sortDescriptors = [sort]
             try? presetsArray = self.coredataContext.fetch(requestProfiles)
+            name = presetsArray.first?.name ?? "default"
         }
-        return presetsArray.first?.name ?? "default"
+        return name
     }
 
     func fetchLastLoop() -> LastLoop? {
@@ -543,16 +568,17 @@ final class CoreDataStorage {
     }
 
     func insulinConcentration() -> (concentration: Double, increment: Double) {
-        var conc = [InsulinConcentration]()
-        coredataContext.performAndWait {
+        // The values are read inside the block: this is called from the dosing code, off the main thread.
+        coredataContext.performAndWait { () -> (concentration: Double, increment: Double) in
+            var conc = [InsulinConcentration]()
             let requestConc = InsulinConcentration.fetchRequest() as NSFetchRequest<InsulinConcentration>
             let sort = NSSortDescriptor(key: "date", ascending: false)
             requestConc.sortDescriptors = [sort]
             requestConc.fetchLimit = 1
             try? conc = coredataContext.fetch(requestConc)
+            let recent = conc.first
+            return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
         }
-        let recent = conc.first
-        return (recent?.concentration ?? 1.0, recent?.incrementSetting ?? 0.1)
     }
 
     func unchanged(meal: Meals) -> Bool {

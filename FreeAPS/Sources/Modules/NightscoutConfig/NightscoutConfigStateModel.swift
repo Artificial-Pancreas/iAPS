@@ -375,8 +375,8 @@ extension NightscoutConfig {
             uploadingProgress = 0.0
 
             processQueue.async {
-                let readings = CoreDataStorage()
-                    .fetchGlucose(interval: Date().addingTimeInterval(-Int(self.uploadInterval).days.timeInterval) as NSDate)
+                let since = Date().addingTimeInterval(-Int(self.uploadInterval).days.timeInterval) as NSDate
+                let readings = CoreDataStorage().fetchGlucoseValues(interval: since)
                 let bloodGlucose = readings.compactMap { reading -> BloodGlucose? in
                     guard let date = reading.date,
                           let id = reading.id
