@@ -343,18 +343,17 @@ final class OverrideStorage {
     }
 
     func isActive() -> Bool {
-        var overrideArray = [Override]()
+        var active = false
         coredataContext.performAndWait {
+            var overrideArray = [Override]()
             let requestOverrides = Override.fetchRequest() as NSFetchRequest<Override>
             let sortOverride = NSSortDescriptor(key: "date", ascending: false)
             requestOverrides.sortDescriptors = [sortOverride]
             requestOverrides.fetchLimit = 1
             try? overrideArray = self.coredataContext.fetch(requestOverrides)
+            active = overrideArray.first?.enabled ?? false
         }
-        guard let lastOverride = overrideArray.first else {
-            return false
-        }
-        return lastOverride.enabled
+        return active
     }
 
     func isPresetName() -> String? {
@@ -457,6 +456,7 @@ final class OverrideStorage {
 
     func countNotUploaded() -> Int? {
         var currentCount = [NotUploaded]()
+        var count: Int?
         coredataContext.performAndWait {
             let requestCount = NotUploaded.fetchRequest() as NSFetchRequest<NotUploaded>
             let sortOverride = NSSortDescriptor(key: "date", ascending: false)
@@ -466,11 +466,11 @@ final class OverrideStorage {
             requestCount.sortDescriptors = [sortOverride]
             requestCount.fetchLimit = 1
             try? currentCount = self.coredataContext.fetch(requestCount)
+            if let latest = currentCount.first, latest.number > 0 {
+                count = Int(latest.number)
+            }
         }
-        if let latest = currentCount.first, latest.number > 0 {
-            return Int(latest.number)
-        }
-        return nil
+        return count
     }
 
     /// Helper function
