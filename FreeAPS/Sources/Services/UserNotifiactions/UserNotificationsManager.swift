@@ -6,7 +6,11 @@ import Swinject
 import UIKit
 import UserNotifications
 
-protocol UserNotificationsManager {}
+protocol UserNotificationsManager {
+    /// The background watchdog found no glucose for `minutesWithoutGlucose` while the app was
+    /// in the background.
+    func notifyBackgroundWatchdog(minutesWithoutGlucose: Int)
+}
 
 enum GlucoseSourceKey: String {
     case transmitterBattery
@@ -37,6 +41,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
         case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
         case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
         case pumpNotification = "FreeAPS.pumpNotification"
+        case backgroundWatchdogNotification = "FreeAPS.backgroundWatchdogNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
@@ -166,6 +171,23 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
                 deleteOld: true,
                 trigger: secondTrigger
             )
+        }
+    }
+
+    func notifyBackgroundWatchdog(minutesWithoutGlucose: Int) {
+        ensureCanSendNotification {
+            let content = UNMutableNotificationContent()
+            content.title = NSLocalizedString("iAPS is not receiving glucose", comment: "Background watchdog notification title")
+            content.body = String(
+                format: NSLocalizedString(
+                    "No readings for %d minutes while iAPS was in the background. Open iAPS to check the sensor connection.",
+                    comment: "Background watchdog notification body"
+                ),
+                minutesWithoutGlucose
+            )
+            content.sound = .default
+
+            self.addRequest(identifier: .backgroundWatchdogNotification, content: content, deleteOld: true)
         }
     }
 
