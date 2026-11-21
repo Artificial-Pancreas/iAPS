@@ -103,6 +103,8 @@ final class OverrideStorage {
 
     func cancelProfile() -> (duration: Double?, id: String?) {
         let scheduled = fetchLatestOverride().first
+        // Name before the cancel row is saved: isPresetName() reads the latest row.
+        let endingName = scheduled?.enabled == true ? (isPresetName() ?? "Custom") : nil
         var duration: Double?
         var succeeding: String?
         coredataContext.performAndWait { [self] in
@@ -122,7 +124,24 @@ final class OverrideStorage {
             profiles.date = Date()
             try? self.coredataContext.save()
         }
+        if let endingName, let duration {
+            debug(.service, "Override ended: name: \(endingName), ran: \(Int(duration.rounded())) min")
+        }
         return (duration, succeeding)
+    }
+
+    /// One locale-free line per override start, for log-based analysis. The loop's own
+    /// "Override Active" line carries only the percentage, not which profile the user chose,
+    /// and the profile name ("Gym", "Sick", "Hypo") is the context that explains the hours it covers.
+    static func logStarted(_ override: Override, name: String) {
+        let targetValue = override.target?.decimalValue ?? 0
+        let target = targetValue > 6 ? "\(targetValue) mg/dL" : "none"
+        let duration = override.indefinite || (override.duration?.intValue ?? 0) == 0
+            ? "indefinite" : "\(override.duration?.intValue ?? 0) min"
+        debug(
+            .service,
+            "Override started: name: \(name), percentage: \(Int(override.percentage.rounded())), target: \(target), duration: \(duration)"
+        )
     }
 
     @discardableResult func activatePresetAndUpload(
@@ -230,6 +249,7 @@ final class OverrideStorage {
             save.succeeding = preset.succeeding
             try? coredataContext.save()
         }
+        OverrideStorage.logStarted(save, name: preset.name ?? "Preset")
         return save
     }
 
