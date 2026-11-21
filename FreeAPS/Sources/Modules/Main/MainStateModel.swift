@@ -21,7 +21,9 @@ extension Main {
                 .removeDuplicates { $0?.id == $1?.id }
                 .receive(on: DispatchQueue.main)
                 .sink { modal in
-                    self.modal = modal
+                    // Keep the last modal on dismissal: the sheet content can be evaluated
+                    // again while the sheet is going away.
+                    if let modal { self.modal = modal }
                     self.isModalPresented = modal != nil
                 }
                 .store(in: &lifetime)
