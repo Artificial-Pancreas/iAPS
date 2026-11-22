@@ -1,6 +1,24 @@
 {
-  "originHash" : "3fb9b35a31f002aec8b33fc537ca047c6a0b59d991f6ada3ae189e9a47ea3607",
+  "originHash" : "a6249b8eb7da9d40dce3f7d45ad676c3d54c637a63369e74b5b9a2b48c7441dd",
   "pins" : [
+    {
+      "identity" : "asn1",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leif-ibsen/ASN1",
+      "state" : {
+        "revision" : "e38d1b8b43d8b53ffadde9836f34289176bb7a0c",
+        "version" : "2.7.0"
+      }
+    },
+    {
+      "identity" : "bigint",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leif-ibsen/BigInt",
+      "state" : {
+        "revision" : "7c7b1be2f6714ce03833879b0aab4b20293c0207",
+        "version" : "1.24.0"
+      }
+    },
     {
       "identity" : "cryptoswift",
       "kind" : "remoteSourceControl",
@@ -8,6 +26,15 @@
       "state" : {
         "revision" : "19b3c3ceed117c5cc883517c4e658548315ba70b",
         "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "digest",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leif-ibsen/Digest",
+      "state" : {
+        "revision" : "95ba89b494aaff5f3cd2933c03b9a890323dbf2c",
+        "version" : "1.13.0"
       }
     },
     {
@@ -58,7 +85,7 @@
     {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanschuetz/SwiftCharts.git",
+      "location" : "https://github.com/ivanschuetz/SwiftCharts",
       "state" : {
         "branch" : "master",
         "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
@@ -71,6 +98,15 @@
       "state" : {
         "revision" : "6190d0cefff3013e77ed567e6b074f324e5c5bf5",
         "version" : "6.3.1"
+      }
+    },
+    {
+      "identity" : "swiftecc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leif-ibsen/SwiftECC",
+      "state" : {
+        "revision" : "85c529c9c56b649a8d8edcef60aab3925ab0f69f",
+        "version" : "5.5.0"
       }
     },
     {

@@ -76,6 +76,7 @@ Distributing and building TestFlight apps also requires a paid membership.
   * **Omnipod DASH**
   * **Omnipod 5**
   * **Medtrum TouchCare Nano**
+  * **Tandem Mobi**
   * **Dana:**
       * Dana-I
       * DanaRS (firmware 3 only)
@@ -103,6 +104,8 @@ Distributing and building TestFlight apps also requires a paid membership.
   * **Eversense**
       * E3 (90 & 180 days)
       * 365
+  * **Accu-Chek SmartGuide**
+  * **Syai Ultra (X1)**
   * **Medtronic Enlite**
   * **Nightscout** (as CGM)
 

@@ -1,3 +1,4 @@
+import AccuChekKit
 import CGMBLEKit
 import EversenseKit
 import Foundation
@@ -10,6 +11,7 @@ import MinimedKit
 import MockKit
 import NightscoutRemoteCGM
 import OmnipodKit
+import SyaiKit
 
 enum KnownPlugins {
     static func allowCalibrations(for cgmManager: CGMManager) -> Bool {
@@ -40,6 +42,9 @@ enum KnownPlugins {
         case MinimedPumpManager.pluginIdentifier: 6 * secondsOfDay
         case EversenseCGMManager
             .pluginIdentifier: (((cgmManager as? EversenseCGMManager)?.state.is365 ?? false) ? 365 : 180) * secondsOfDay
+        case AccuChekCgmManager.pluginIdentifier: 14 * secondsOfDay
+        // The wear time comes from the sensor's own record; nil until one is paired.
+        case SyaiCGMManager.pluginIdentifier: (cgmManager as? SyaiCGMManager)?.state.activeDuration
         default: nil
         }
     }
@@ -74,6 +79,10 @@ enum KnownPlugins {
             return (cgmManager as? LibreLoopCGMManager)?.state.activatedAt
         case EversenseCGMManager.pluginIdentifier:
             return (cgmManager as? EversenseCGMManager)?.state.activatedAt
+        case AccuChekCgmManager.pluginIdentifier:
+            return (cgmManager as? AccuChekCgmManager)?.state.cgmStartTime
+        case SyaiCGMManager.pluginIdentifier:
+            return (cgmManager as? SyaiCGMManager)?.state.activatedAt
         default:
             return nil
         }
@@ -99,6 +108,8 @@ enum KnownPlugins {
         case G6CGMManager.pluginIdentifier: return "dexcomG6"
         case G7CGMManager.pluginIdentifier: return "dexcomG7"
         case EversenseCGMManager.pluginIdentifier: return "eversense"
+        case AccuChekCgmManager.pluginIdentifier: return "accuChek"
+        case SyaiCGMManager.pluginIdentifier: return "syai"
         case LibreTransmitterManagerV3.pluginIdentifier: return "libreTransmitter"
         case LibreLoopCGMManager.pluginIdentifier: return "libre3"
         case NightscoutRemoteCGM.pluginIdentifier: return "nightscout"

@@ -49,3 +49,15 @@
 	path = LibreLoop	
 	url = https://github.com/Artificial-Pancreas/LibreLoop.git	
 	branch = iaps-dev
+[submodule "SyaiKit"]
+	path = SyaiKit
+	url = https://github.com/Artificial-Pancreas/SyaiKit.git
+	branch = dev
+[submodule "AccuChekKit"]
+	path = AccuChekKit
+	url = https://github.com/Artificial-Pancreas/AccuChekKit.git
+	branch = master
+[submodule "TandemKit"]
+	path = TandemKit
+	url = https://github.com/Artificial-Pancreas/TandemKit.git
+	branch = iaps-dev

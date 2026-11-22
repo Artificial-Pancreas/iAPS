@@ -52,4 +52,13 @@
    <FileRef
       location = "group:OmnipodKit/OmnipodKit.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:SyaiKit/SyaiKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:AccuChekKit/AccuChekKit.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:TandemKit/TandemKit.xcodeproj">
+   </FileRef>
 </Workspace>

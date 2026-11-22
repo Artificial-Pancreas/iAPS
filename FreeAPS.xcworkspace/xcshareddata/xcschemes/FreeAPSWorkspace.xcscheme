@@ -308,6 +308,48 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "574100000000000000000029"
+               BuildableName = "SyaiKitPlugin.loopplugin"
+               BlueprintName = "SyaiKitPlugin"
+               ReferencedContainer = "container:SyaiKit/SyaiKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3E5A3B962F42246100D498DB"
+               BuildableName = "AccuChekKitPlugin.loopplugin"
+               BlueprintName = "AccuChekKitPlugin"
+               ReferencedContainer = "container:AccuChekKit/AccuChekKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "3EEECBD62EC902F90063D7BC"
+               BuildableName = "TandemKitPlugin.loopplugin"
+               BlueprintName = "TandemKitPlugin"
+               ReferencedContainer = "container:TandemKit/TandemKit.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "388E595725AD948C0019842D"
                BuildableName = "FreeAPS.app"
                BlueprintName = "FreeAPS"

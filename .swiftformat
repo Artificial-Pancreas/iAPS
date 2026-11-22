@@ -16,3 +16,6 @@
 --exclude RoundWhiteDiscKit/
 --exclude LibreLoop/
 --exclude EversenseKit/
+--exclude TandemKit/
+--exclude SyaiKit/
+--exclude AccuChekKit/

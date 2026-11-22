@@ -139,6 +139,8 @@
 		3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0725C9D32E00A708ED /* BaseView.swift */; };
 		3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0825C9D32F00A708ED /* BaseProvider.swift */; };
 		3811DE1025C9D37700A708ED /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3811DE0F25C9D37700A708ED /* Swinject */; };
+		F2A5D0000000000000000A03 /* ASN1 in Frameworks */ = {isa = PBXBuildFile; productRef = F2A5D0000000000000000A02 /* ASN1 */; };
+		F2A5D0000000000000000B03 /* BigInt in Frameworks */ = {isa = PBXBuildFile; productRef = F2A5D0000000000000000B02 /* BigInt */; };
 		3811DE1725C9D40400A708ED /* Screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1525C9D40400A708ED /* Screen.swift */; };
 		3811DE1825C9D40400A708ED /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1625C9D40400A708ED /* Router.swift */; };
 		3811DE2225C9D48300A708ED /* MainProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE1C25C9D48300A708ED /* MainProvider.swift */; };
@@ -1291,6 +1293,8 @@
 				3818AA71274C278200843DB3 /* LoopTestingKit.framework in Frameworks */,
 				CE51DD1C2A01970900F163F7 /* ConnectIQ 2.xcframework in Frameworks */,
 				3811DE1025C9D37700A708ED /* Swinject in Frameworks */,
+				F2A5D0000000000000000A03 /* ASN1 in Frameworks */,
+				F2A5D0000000000000000B03 /* BigInt in Frameworks */,
 				3818AA5C274C26A300843DB3 /* MockKit.framework in Frameworks */,
 				3818AA5E274C26A300843DB3 /* MockKitUI.framework in Frameworks */,
 				38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */,
@@ -3168,6 +3172,8 @@
 			name = FreeAPS;
 			packageProductDependencies = (
 				3811DE0F25C9D37700A708ED /* Swinject */,
+				F2A5D0000000000000000A02 /* ASN1 */,
+				F2A5D0000000000000000B02 /* BigInt */,
 				38B17B6525DD90E0005CAE3D /* SwiftDate */,
 				3833B46C26012030003021B3 /* Algorithms */,
 				38DF1788276FC8C400B3528F /* SwiftMessages */,
@@ -3284,6 +3290,8 @@
 			mainGroup = 388E594F25AD948C0019842D;
 			packageReferences = (
 				3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */,
+				F2A5D0000000000000000A01 /* XCRemoteSwiftPackageReference "ASN1" */,
+				F2A5D0000000000000000B01 /* XCRemoteSwiftPackageReference "BigInt" */,
 				38B17B6425DD90E0005CAE3D /* XCRemoteSwiftPackageReference "SwiftDate" */,
 				3833B46B26012030003021B3 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 				38DF1787276FC8C300B3528F /* XCRemoteSwiftPackageReference "SwiftMessages" */,
@@ -4570,6 +4578,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		F2A5D0000000000000000A01 /* XCRemoteSwiftPackageReference "ASN1" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/leif-ibsen/ASN1";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.0;
+			};
+		};
+		F2A5D0000000000000000B01 /* XCRemoteSwiftPackageReference "BigInt" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/leif-ibsen/BigInt";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.22.0;
+			};
+		};
 		3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Swinject/Swinject";
@@ -4629,6 +4653,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		F2A5D0000000000000000A02 /* ASN1 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2A5D0000000000000000A01 /* XCRemoteSwiftPackageReference "ASN1" */;
+			productName = ASN1;
+		};
+		F2A5D0000000000000000B02 /* BigInt */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F2A5D0000000000000000B01 /* XCRemoteSwiftPackageReference "BigInt" */;
+			productName = BigInt;
+		};
 		3811DE0F25C9D37700A708ED /* Swinject */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3811DE0E25C9D37700A708ED /* XCRemoteSwiftPackageReference "Swinject" */;
