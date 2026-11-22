@@ -65,19 +65,31 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private func configureState() {
         processQueue.async {
             let overrideStorage = OverrideStorage()
-            let coreDataStorage = CoreDataStorage()
-            let reasons = coreDataStorage.fetchReason()
 
-            if let reason = reasons {
-                self.state.isf = (reason.isf ?? 15) as Decimal
-                self.state.target = (reason.target ?? 100) as Decimal
-                self.state.carbRatio = (reason.cr ?? 30) as Decimal
-                self.state.minPredBG = (reason.minPredBG ?? 0) as Decimal
+            // This runs on processQueue, while everything fetched from CoreData here belongs to the view context
+            // (main thread). Managed objects are therefore only read inside onViewContext, and plain values
+            // are what comes out.
+            let reason = CoreDataStack.shared
+                .onViewContext { () -> (isf: Decimal, target: Decimal, carbRatio: Decimal, minPredBG: Decimal)? in
+                    guard let reason = CoreDataStorage().fetchReason() else { return nil }
+                    return (
+                        (reason.isf ?? 15) as Decimal,
+                        (reason.target ?? 100) as Decimal,
+                        (reason.cr ?? 30) as Decimal,
+                        (reason.minPredBG ?? 0) as Decimal
+                    )
+                }
+
+            if let reason = reason {
+                self.state.isf = reason.isf
+                self.state.target = reason.target
+                self.state.carbRatio = reason.carbRatio
+                self.state.minPredBG = reason.minPredBG
             }
 
             self.state.eventualGlucose = Decimal(self.suggestion?.eventualBG ?? 0)
 
-            let readings = self.coreDataStorage.fetchGlucose(interval: DateFilter.twoHours.startDate)
+            let readings = self.coreDataStorage.fetchGlucoseValues(interval: DateFilter.twoHours.startDate)
             let glucoseValues = self.glucoseText(readings)
             self.state.glucose = glucoseValues.glucose
             self.state.trend = glucoseValues.trend
@@ -119,36 +131,45 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
                     )
                 }
 
-            self.state.overrides = overrideStorage.fetchProfiles()
-                .map { preset -> OverridePresets_ in
-                    let untilDate = overrideStorage.fetchLatestOverride().first.flatMap { currentOverride -> Date? in
-                        guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
+            let overrides = CoreDataStack.shared.onViewContext { () -> (list: [OverridePresets_], percentage: String) in
+                let latest = overrideStorage.fetchLatestOverride().first
 
-                        let duration = Double(currentOverride.duration ?? 0)
-                        let overrideDate: Date = currentOverride.date ?? Date.now
+                var list = overrideStorage.fetchProfiles()
+                    .map { preset -> OverridePresets_ in
+                        let untilDate = latest.flatMap { currentOverride -> Date? in
+                            guard currentOverride.id == preset.id, currentOverride.enabled else { return nil }
 
-                        let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
-                        return date > Date.now ? date : nil
+                            let duration = Double(currentOverride.duration ?? 0)
+                            let overrideDate: Date = currentOverride.date ?? Date.now
+
+                            let date = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                            return date > Date.now ? date : nil
+                        }
+
+                        return OverridePresets_(
+                            name: preset.name ?? "",
+                            id: preset.id ?? "",
+                            until: untilDate,
+                            description: self.description(preset)
+                        )
                     }
+                // Is there an active override but no preset?
+                if let last = latest, last.enabled, !list.contains(where: { $0.until != nil }) {
+                    let duration = Double(last.duration ?? 0)
+                    let overrideDate: Date = last.date ?? Date.now
+                    let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
+                    let date = date_ > Date.now ? date_ : nil
 
-                    return OverridePresets_(
-                        name: preset.name ?? "",
-                        id: preset.id ?? "",
-                        until: untilDate,
-                        description: self.description(preset)
+                    list.append(
+                        OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last))
                     )
                 }
-            // Is there an active override but no preset?
-            let currentButNoOverrideNotPreset = self.state.overrides.filter({ $0.until != nil }).first
-            if let last = overrideStorage.fetchLatestOverride().first, last.enabled, currentButNoOverrideNotPreset == nil {
-                let duration = Double(last.duration ?? 0)
-                let overrideDate: Date = last.date ?? Date.now
-                let date_ = duration == 0 ? Date.distantFuture : overrideDate.addingTimeInterval(duration * 60)
-                let date = date_ > Date.now ? date_ : nil
 
-                self.state.overrides
-                    .append(OverridePresets_(name: "custom", id: last.id ?? "", until: date, description: self.description(last)))
+                let percentage = (latest?.enabled ?? false) ?
+                    "\((latest?.percentage ?? 100).formatted(.number)) %" : "100 %"
+                return (list, percentage)
             }
+            self.state.overrides = overrides.list
 
             self.state.bolusAfterCarbs = !self.settingsManager.settings.skipBolusScreenAfterCarbs
             self.state.displayOnWatch = self.settingsManager.settings.displayOnWatch
@@ -160,14 +181,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.eventualBG = eBG.map { "⇢ " + $0 }
             self.state.eventualBGRaw = eBG
 
-            let overrideArray = overrideStorage.fetchLatestOverride()
-
-            if overrideArray.first?.enabled ?? false {
-                let percentString = "\((overrideArray.first?.percentage ?? 100).formatted(.number)) %"
-                self.state.override = percentString
-            } else {
-                self.state.override = "100 %"
-            }
+            self.state.override = overrides.percentage
 
             if useNewCalc {
                 self.state.deltaBG = self.getDeltaBG(readings)
@@ -180,7 +194,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
     }
 
-    private func getDeltaBG(_ glucose: [Readings]) -> Decimal? {
+    private func getDeltaBG(_ glucose: [GlucoseReading]) -> Decimal? {
         guard let lastGlucose = glucose.first, glucose.count >= 4 else { return nil }
         return Decimal(lastGlucose.glucose + glucose[1].glucose) / 2 -
             (Decimal(glucose[3].glucose + glucose[2].glucose) / 2)
@@ -207,7 +221,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
     }
 
-    private func glucoseText(_ glucose: [Readings]) -> (glucose: String, trend: String, delta: String) {
+    private func glucoseText(_ glucose: [GlucoseReading]) -> (glucose: String, trend: String, delta: String) {
         let glucoseValue = glucose.first?.glucose ?? 0
 
         guard !glucose.isEmpty else { return ("--", "--", "--") }
@@ -284,7 +298,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
     }
 
-    private func newBolusCalc(delta: [Readings]) -> Decimal {
+    private func newBolusCalc(delta: [GlucoseReading]) -> Decimal {
         var conversion: Decimal = 1
         // Settings etc
         if settingsManager.settings.units == .mmolL {
@@ -510,23 +524,32 @@ extension BaseWatchManager: WCSessionDelegate {
 
         if let overrideID = message["override"] as? String {
             let storage = OverrideStorage()
-            if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
-                preset.date = Date.now
+            // WCSession calls this on its own queue, and the override objects belong to the view context, so
+            // they are read and changed on that context's queue. nil = not an override command we know.
+            let confirmed = CoreDataStack.shared.onViewContext { () -> Bool? in
+                if let preset = storage.fetchProfiles().first(where: { $0.id == overrideID }) {
+                    preset.date = Date.now
 
-                storage.activatePresetAndUpload(preset, nightscout: nightscout)
-                replyHandler(["confirmation": true])
-                configureState()
-                return
-            } else if overrideID == "cancel" {
-                if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
-                    let presetName = storage.isPresetName()
-                    let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
+                    storage.activatePresetAndUpload(preset, nightscout: nightscout)
+                    return true
+                } else if overrideID == "cancel" {
+                    if let activeOveride = storage.fetchLatestOverride().first, activeOveride.enabled {
+                        let presetName = storage.isPresetName()
+                        let nsString = presetName != nil ? presetName : activeOveride.percentage.formatted()
 
-                    if let duration = storage.cancelProfile().duration {
-                        nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
-                        replyHandler(["confirmation": true])
-                        configureState()
+                        if let duration = storage.cancelProfile().duration {
+                            nightscout.editOverride(nsString!, duration, activeOveride.date ?? Date.now)
+                            return true
+                        }
                     }
+                    return false
+                }
+                return nil
+            }
+            if let confirmed = confirmed {
+                if confirmed {
+                    replyHandler(["confirmation": true])
+                    configureState()
                 }
                 return
             }

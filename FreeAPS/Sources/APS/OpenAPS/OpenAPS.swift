@@ -73,8 +73,11 @@ final class OpenAPS {
                     print("Time for Loading files \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
-                    let tdd = CoreDataStorage()
-                        .fetchInsulinDistribution().first
+                    // Copied out on the view context's queue; we are on processQueue here.
+                    let tdd = self.coredataContext.performAndWait { () -> (bolus: Decimal, tempBasal: Decimal)? in
+                        guard let latest = CoreDataStorage().fetchInsulinDistribution().first else { return nil }
+                        return ((latest.bolus ?? 0) as Decimal, (latest.tempBasal ?? 0) as Decimal)
+                    }
                     print("Time for tdd \(-1 * now.timeIntervalSinceNow) seconds")
 
                     now = Date.now
@@ -385,18 +388,24 @@ final class OpenAPS {
 
     // MARK: - Private
 
+    // `override` and the Auto ISF settings belong to the view context, while the loop runs on processQueue, so
+    // both helpers read them on the context's queue.
     private func aisfEnabled(override: Override?) -> Bool {
-        guard let current = override, current.enabled else { return false }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
-              settings.autoisf else { return false }
-        return true
+        coredataContext.performAndWait { () -> Bool in
+            guard let current = override, current.enabled else { return false }
+            guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
+                  settings.autoisf else { return false }
+            return true
+        }
     }
 
     private func notDisabled(override: Override?, settings: FreeAPSSettings) -> Bool {
-        guard let current = override, current.enabled else { return true }
-        guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
-              !settings.autoisf else { return true }
-        return false
+        coredataContext.performAndWait { () -> Bool in
+            guard let current = override, current.enabled else { return true }
+            guard current.overrideAutoISF, let settings = OverrideStorage().fetchAutoISFsetting(id: current.id ?? ""),
+                  !settings.autoisf else { return true }
+            return false
+        }
     }
 
     private func pumpHistory() async -> RawJSON {
@@ -477,10 +486,15 @@ final class OpenAPS {
         suggestion: Suggestion,
         preferences: Preferences?,
         profile: RawJSON,
-        tdd: InsulinDistribution?,
+        tdd: (bolus: Decimal, tempBasal: Decimal)?,
         settings: FreeAPSSettings?,
         override: Override?
     ) -> String {
+        // `override` belongs to the view context: what the text below needs is read on that context's queue.
+        let activeOverride = coredataContext.performAndWait { () -> (percentage: Double, smbIsOff: Bool)? in
+            guard let override = override, override.enabled else { return nil }
+            return (override.percentage, override.smbIsOff)
+        }
         var reasonString = reason
         let startIndex = reasonString.startIndex
         var aisf = false
@@ -491,10 +505,10 @@ final class OpenAPS {
             // TDD
             var tddString = ""
             if let tdd = tdd {
-                let total = ((tdd.bolus ?? 0) as Decimal) + ((tdd.tempBasal ?? 0) as Decimal)
+                let total = tdd.bolus + tdd.tempBasal
                 totalDailyDose = total
                 let round = round(Double(total * 10)) / 10
-                let bolus = Int(((tdd.bolus ?? 0) as Decimal) * 100 / (total != 0 ? total : 1))
+                let bolus = Int(tdd.bolus * 100 / (total != 0 ? total : 1))
                 tddString = ", Insulin 24h: \(round) U, \(bolus) % Bolus"
             }
             // Auto ISF
@@ -580,7 +594,7 @@ final class OpenAPS {
 
         // Display either Target or Override (where target is included).
         let targetGlucose = suggestion.targetBG
-        if targetGlucose != nil, let override = override, override.enabled {
+        if targetGlucose != nil, let override = activeOverride {
             var orString = ", Override: "
             if override.percentage != 100 {
                 orString += (formatter.string(from: override.percentage as NSNumber) ?? "")
