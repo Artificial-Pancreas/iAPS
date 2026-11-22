@@ -457,13 +457,7 @@ private extension Stat.GoodBadDays {
         }
 
         static func zoneLetter(_ zone: GlycemiaRiskIndex.Zone) -> String {
-            switch zone {
-            case .a: return "A"
-            case .b: return "B"
-            case .c: return "C"
-            case .d: return "D"
-            case .e: return "E"
-            }
+            zone.letter
         }
 
         // MARK: Counts and lines
@@ -1017,6 +1011,19 @@ private extension Stat.GoodBadDays {
                 format: NSLocalizedString("%@ pt", comment: "Statistics Good & bad days: a difference in percentage points"),
                 abs(value).formatted(.number.precision(.fractionLength(digits)))
             )
+        }
+    }
+}
+
+extension GlycemiaRiskIndex.Zone {
+    /// "A" … "E" (Good & bad days' GRI, the PDF report's)
+    var letter: String {
+        switch self {
+        case .a: return "A"
+        case .b: return "B"
+        case .c: return "C"
+        case .d: return "D"
+        case .e: return "E"
         }
     }
 }

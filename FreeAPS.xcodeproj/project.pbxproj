@@ -528,6 +528,14 @@
 		AEE1E41D2CDDFB591488D415 /* HourOfDayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18B12DAC501197F3B6072D78 /* HourOfDayView.swift */; };
 		9A3D2E9533CDFED984E4F672 /* WeekdayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D388FD439E61462536B3D0 /* WeekdayView.swift */; };
 		78A280058647A7C88A538B3F /* GRIInfoSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD2C03D332F8636A95E5B55 /* GRIInfoSheet.swift */; };
+		DEFAD229CF9D84E1A9A7C353 /* ReportOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46ECC69E9E2204ADC506F94 /* ReportOptions.swift */; };
+		525C99F676288E72D5643638 /* ReportData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457CFF52DE99E465FF4F155B /* ReportData.swift */; };
+		B188F868024D2FBF47DCFFE7 /* ReportPageModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07DA4ABB1FAB74F361080840 /* ReportPageModels.swift */; };
+		DFF5C73BDA5AA3FAB6442C74 /* ReportPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56633D55FD34F9BE6133484A /* ReportPDFWriter.swift */; };
+		6CD6A33C2100E8C668E24539 /* ReportExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */; };
+		E8ADC52161533F58B0CED1BF /* ReportPrintViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFCA9290B7F348325AB840E /* ReportPrintViews.swift */; };
+		E19303C6C65C9385380D1C48 /* ReportsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E8E275E4049C7319C75577C /* ReportsScreen.swift */; };
+		114D4F01C846B7EE14F37B81 /* StatsReportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA27365B63292298FC5F027C /* StatsReportTests.swift */; };
 		F9A554511DF0A980500E4AA3 /* GoodBadDaysModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29F080BDBFF029FE082630DC /* GoodBadDaysModel.swift */; };
 		10BD572FA8B7F1D373DEA504 /* GoodBadDaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8544A19E6FB76070B516F6F /* GoodBadDaysView.swift */; };
 		11E87EEC994B448F4836F35E /* WeekdayHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6687407F7E87855CA3F8293C /* WeekdayHeatmap.swift */; };
@@ -1400,6 +1408,14 @@
 		18B12DAC501197F3B6072D78 /* HourOfDayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourOfDayView.swift; sourceTree = "<group>"; };
 		38D388FD439E61462536B3D0 /* WeekdayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayView.swift; sourceTree = "<group>"; };
 		BFD2C03D332F8636A95E5B55 /* GRIInfoSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRIInfoSheet.swift; sourceTree = "<group>"; };
+		F46ECC69E9E2204ADC506F94 /* ReportOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportOptions.swift; sourceTree = "<group>"; };
+		457CFF52DE99E465FF4F155B /* ReportData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportData.swift; sourceTree = "<group>"; };
+		07DA4ABB1FAB74F361080840 /* ReportPageModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPageModels.swift; sourceTree = "<group>"; };
+		56633D55FD34F9BE6133484A /* ReportPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDFWriter.swift; sourceTree = "<group>"; };
+		39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExporter.swift; sourceTree = "<group>"; };
+		FFFCA9290B7F348325AB840E /* ReportPrintViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPrintViews.swift; sourceTree = "<group>"; };
+		8E8E275E4049C7319C75577C /* ReportsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsScreen.swift; sourceTree = "<group>"; };
+		BA27365B63292298FC5F027C /* StatsReportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsReportTests.swift; sourceTree = "<group>"; };
 		29F080BDBFF029FE082630DC /* GoodBadDaysModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodBadDaysModel.swift; sourceTree = "<group>"; };
 		B8544A19E6FB76070B516F6F /* GoodBadDaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodBadDaysView.swift; sourceTree = "<group>"; };
 		6687407F7E87855CA3F8293C /* WeekdayHeatmap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayHeatmap.swift; sourceTree = "<group>"; };
@@ -2001,12 +2017,35 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3880D062415F6AD554ACE3E4 /* Report */ = {
+			isa = PBXGroup;
+			children = (
+				F46ECC69E9E2204ADC506F94 /* ReportOptions.swift */,
+				457CFF52DE99E465FF4F155B /* ReportData.swift */,
+				07DA4ABB1FAB74F361080840 /* ReportPageModels.swift */,
+				56633D55FD34F9BE6133484A /* ReportPDFWriter.swift */,
+				39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */,
+				9E3656823E272857DFE37194 /* View */,
+			);
+			path = Report;
+			sourceTree = "<group>";
+		};
+		9E3656823E272857DFE37194 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				FFFCA9290B7F348325AB840E /* ReportPrintViews.swift */,
+				8E8E275E4049C7319C75577C /* ReportsScreen.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		19F95FF129F10F9C00314DDC /* Stat */ = {
 			isa = PBXGroup;
 			children = (
 				19F95FF229F10FBC00314DDC /* StatDataFlow.swift */,
 				19F95FF429F10FCF00314DDC /* StatProvider.swift */,
 				19F95FF629F10FEE00314DDC /* StatStateModel.swift */,
+				3880D062415F6AD554ACE3E4 /* Report */,
 				19F95FF829F10FF600314DDC /* View */,
 			);
 			path = Stat;
@@ -2846,6 +2885,7 @@
 				5F7DAB854484804114E80505 /* CGMSessionStoreTests.swift */,
 				DA3253796B7B627DC27F756B /* CGMStatsEngineTests.swift */,
 				0714DF132A189761727B27B5 /* GoodBadDaysEngineTests.swift */,
+				BA27365B63292298FC5F027C /* StatsReportTests.swift */,
 				1C384DD124056181E952DBCF /* GoodBadDaysTabsTests.swift */,
 				EA6C0BC2688A88C4F4AE9C33 /* SmoothingReplayTests.swift */,
 				CB1B65914A4DD272D00333D4 /* StatsTestSupport.swift */,
@@ -4296,6 +4336,13 @@
 				AEE1E41D2CDDFB591488D415 /* HourOfDayView.swift in Sources */,
 				9A3D2E9533CDFED984E4F672 /* WeekdayView.swift in Sources */,
 				78A280058647A7C88A538B3F /* GRIInfoSheet.swift in Sources */,
+				DEFAD229CF9D84E1A9A7C353 /* ReportOptions.swift in Sources */,
+				525C99F676288E72D5643638 /* ReportData.swift in Sources */,
+				B188F868024D2FBF47DCFFE7 /* ReportPageModels.swift in Sources */,
+				DFF5C73BDA5AA3FAB6442C74 /* ReportPDFWriter.swift in Sources */,
+				6CD6A33C2100E8C668E24539 /* ReportExporter.swift in Sources */,
+				E8ADC52161533F58B0CED1BF /* ReportPrintViews.swift in Sources */,
+				E19303C6C65C9385380D1C48 /* ReportsScreen.swift in Sources */,
 				F9A554511DF0A980500E4AA3 /* GoodBadDaysModel.swift in Sources */,
 				10BD572FA8B7F1D373DEA504 /* GoodBadDaysView.swift in Sources */,
 				11E87EEC994B448F4836F35E /* WeekdayHeatmap.swift in Sources */,
@@ -4646,6 +4693,7 @@
 				36CB774E55BDAE9EA28A725D /* CGMSessionStoreTests.swift in Sources */,
 				70CC15C6A064C9F42976F188 /* CGMStatsEngineTests.swift in Sources */,
 				19F8F5A5B4B86EE76A28F708 /* GoodBadDaysEngineTests.swift in Sources */,
+				114D4F01C846B7EE14F37B81 /* StatsReportTests.swift in Sources */,
 				5D96525BF47B6B79D8983BBC /* GoodBadDaysTabsTests.swift in Sources */,
 				9BF52A674C3807610702FDCF /* SmoothingReplayTests.swift in Sources */,
 				70E1B5678F13BAD771058C3C /* StatsTestSupport.swift in Sources */,

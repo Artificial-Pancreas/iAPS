@@ -150,6 +150,8 @@ struct StatsViewMenu: View {
     @Binding var selection: StatsTab
     /// the Patches topic's naming; nil without a session in the last 120 days: no Patches item
     var patches: PatchTopic?
+    /// opens the Reports screen (PDF reports): the last item; nil: no item
+    var openReports: (() -> Void)?
 
     var body: some View {
         Section(Self.title(StatsTopic.glucose)) {
@@ -171,6 +173,16 @@ struct StatsViewMenu: View {
         Section(Self.title(StatsTopic.cgm)) {
             ForEach(StatsTopic.cgm.views) { view in
                 item(view)
+            }
+        }
+        if let openReports {
+            Section {
+                Button(action: openReports) {
+                    Label(
+                        NSLocalizedString("Reports", comment: "Statistics: the PDF reports screen, and its menu item"),
+                        systemImage: "doc.text"
+                    )
+                }
             }
         }
     }

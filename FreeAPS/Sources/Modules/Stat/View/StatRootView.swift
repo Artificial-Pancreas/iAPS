@@ -19,6 +19,8 @@ extension Stat {
         /// across refreshes, and pops when one drops it
         @State private var patchDetailID = ""
         @State private var patchDetailShown = false
+        /// the Reports screen pushed (the title menu's last item)
+        @State private var reportsShown = false
 
         /// - Parameters:
         ///   - nutrients: opened with the Meals tab's Nutrients screen pushed (Home's meal card); back goes to the Meals
@@ -51,10 +53,15 @@ extension Stat {
                         pendingFocus = nil
                         state.select(tab: tab)
                     }),
-                    patches: state.patchTopic
+                    patches: state.patchTopic,
+                    openReports: { reportsShown = true }
                 )
             }
             .navigationBarItems(trailing: Button("Close", action: state.hideModal))
+            // the views' "Export PDF" (`ReportExportButton`); not observed here: its progress redraws only the button
+            .environment(\.reportExporter, state.reportExporter)
+            // a view's report; the Reports screen presents the ones made there
+            .background(ReportPreviewHost(exporter: state.reportExporter, screen: false))
             .onAppear {
                 // the root first: the session is up before the push, and stays up as the root goes under the Nutrients
                 // screen (`StatsPageSet`: either order within a turn)
@@ -64,8 +71,14 @@ extension Stat {
                 nutrientsShown = true
             }
             .onDisappear { state.disappear() }
-            .onChange(of: state.tab) { pendingFocus = nil }
-            .onChange(of: state.period) { pendingFocus = nil }
+            .onChange(of: state.tab) {
+                pendingFocus = nil
+                state.reportExporter.clearFailure()
+            }
+            .onChange(of: state.period) {
+                pendingFocus = nil
+                state.reportExporter.clearFailure()
+            }
             .onChange(of: insulinContentHasNoCards) { _, none in
                 if none {
                     pendingFocus = nil
@@ -76,6 +89,9 @@ extension Stat {
             }
             .navigationDestination(isPresented: $nutrientsShown) {
                 NutrientsScreen(state: state)
+            }
+            .navigationDestination(isPresented: $reportsShown) {
+                ReportsScreen(state: state, exporter: state.reportExporter)
             }
         }
 
