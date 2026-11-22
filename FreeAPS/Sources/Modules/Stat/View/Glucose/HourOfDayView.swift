@@ -78,15 +78,11 @@ extension Stat {
                 Self.readout(hour, time: time, dayCount: dayCount, bands: bands, units: units)
             }
 
-            // as the mock orders them: lows, highs, then the best hour
-            let order: [PeakHour.Group] = [.below, .above, .inRange]
-            peaks = order.compactMap { group -> Peak? in
-                guard let peak = result.peaks.first(where: { $0.group == group }),
-                      let index = result.hours.firstIndex(where: { $0.hour == peak.hour })
-                else { return nil }
-                let shown = GlucoseStatsEngine.peakPercent(peak, of: result.hours[index])
-                let percent = Format.percent(shown.percent, belowOne: shown.belowOne)
-                let time = result.labels[index]
+            peaks = Self.shownPeaks(result).map { shown -> Peak in
+                let group = shown.group
+                let peak = shown.peak
+                let percent = shown.percent
+                let time = result.labels[shown.index]
                 switch group {
                 case .below:
                     return Peak(
@@ -144,6 +140,22 @@ extension Stat {
             }
         }
 
+        /// "When it happens" in the order shown (lows, highs, then the best hour): each group's peak, its hour's index
+        /// in `result.hours` and its share as shown ("12%", "<1%": `GlucoseStatsEngine.peakPercent`). A group without
+        /// a peak is left out.
+        @MainActor static func shownPeaks(
+            _ result: HourOfDayResult
+        ) -> [(group: PeakHour.Group, peak: PeakHour, index: Int, percent: String)] {
+            let order: [PeakHour.Group] = [.below, .above, .inRange]
+            return order.compactMap { group in
+                guard let peak = result.peaks.first(where: { $0.group == group }),
+                      let index = result.hours.firstIndex(where: { $0.hour == peak.hour })
+                else { return nil }
+                let shown = GlucoseStatsEngine.peakPercent(peak, of: result.hours[index])
+                return (group, peak, index, StatsFormatting.percent(shown.percent, belowOne: shown.belowOne))
+            }
+        }
+
         @MainActor private static func readout(
             _ hour: HourOfDayResult.Hour,
             time: String,
@@ -192,6 +204,7 @@ struct HourOfDayView: View {
             if hourOfDay.peaks.isNotEmpty {
                 StatsCard { peaks }
             }
+            ReportExportButton(part: .byHour)
         }
     }
 

@@ -113,7 +113,7 @@ struct ReportsScreen: View {
                     Divider()
                 }
                 partRow(part)
-                if options.parts.contains(part), part.hasSettings {
+                if options.parts.contains(part), part.hasSettings, part.availability(for: options.period).isAvailable {
                     settings(of: part)
                         .padding(.leading, 34)
                         .padding(.bottom, 6)
@@ -122,10 +122,14 @@ struct ReportsScreen: View {
         }
     }
 
+    /// A part the period is too short for is off and drawn unchecked, with why; the selection is kept for a longer
+    /// period, where its checkmark is back.
     private func partRow(_ part: ReportPart) -> some View {
-        let isSelected = options.parts.contains(part)
+        let availability = part.availability(for: options.period)
+        let isStored = options.parts.contains(part)
+        let isSelected = isStored && availability.isAvailable
         return Button {
-            if isSelected {
+            if isStored {
                 options.parts.remove(part)
             } else {
                 options.parts.insert(part)
@@ -138,15 +142,24 @@ struct ReportsScreen: View {
                     .font(.title3)
                     .foregroundStyle(isSelected ? Color.accentColor : Color.secondary)
                     .frame(width: 24)
-                Text(part.title)
-                    .font(.body)
-                    .foregroundStyle(Color.primary)
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(part.title)
+                        .font(.body)
+                        .foregroundStyle(availability.isAvailable ? Color.primary : Color.secondary)
+                    if let note = availability.note {
+                        Text(note)
+                            .font(.footnote)
+                            .foregroundStyle(Color.secondary)
+                    }
+                }
                 Spacer(minLength: 0)
             }
             .frame(minHeight: 44)
             .contentShape(Rectangle())
+            .opacity(availability.isAvailable ? 1 : 0.6)
         }
         .buttonStyle(.plain)
+        .disabled(!availability.isAvailable)
     }
 
     @ViewBuilder private func settings(of part: ReportPart) -> some View {
@@ -204,6 +217,38 @@ struct ReportsScreen: View {
             chartsToggle("Carbs", \.carbs)
             chartsToggle("Basal", \.basal)
             chartsToggle("Newest first", \.newestFirst)
+        } else if part == .byHour {
+            VStack(alignment: .leading, spacing: 6) {
+                title("Content")
+                StatsSegmentedControl(
+                    items: ReportOptions.ByHourSettings.Content.allCases,
+                    selection: Binding(get: { options.byHour.content }, set: { content in
+                        options.byHour.content = content
+                        preferences.byHour = options.byHour
+                    }),
+                    label: { Self.label($0) }
+                )
+            }
+        } else if part == .byWeekday {
+            VStack(alignment: .leading, spacing: 6) {
+                title("Heat map")
+                StatsSegmentedControl(
+                    items: ReportOptions.ByWeekdaySettings.HeatMap.allCases,
+                    selection: Binding(get: { options.byWeekday.heatMap }, set: { heatMap in
+                        options.byWeekday.heatMap = heatMap
+                        preferences.byWeekday = options.byWeekday
+                    }),
+                    label: { Stat.Weekday.title($0.metric) }
+                )
+            }
+        }
+    }
+
+    static func label(_ content: ReportOptions.ByHourSettings.Content) -> String {
+        switch content {
+        case .chartAndTable: return NSLocalizedString("Chart and table", comment: "Reports screen, By hour: what the page holds")
+        case .chart: return NSLocalizedString("Chart", comment: "Reports screen, By hour: what the page holds")
+        case .table: return NSLocalizedString("Table", comment: "Reports screen, By hour: what the page holds")
         }
     }
 
@@ -270,8 +315,8 @@ struct ReportsScreen: View {
                     .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
-            .foregroundStyle(options.parts.isEmpty ? Color.secondary : Color.accentColor)
-            .disabled(options.parts.isEmpty || exporter.isRunning)
+            .foregroundStyle(options.orderedParts.isEmpty ? Color.secondary : Color.accentColor)
+            .disabled(options.orderedParts.isEmpty || exporter.isRunning)
         }
         if let failure = exporter.failure(at: .screen) {
             Text(failure)

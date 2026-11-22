@@ -10,9 +10,19 @@ extension Stat {
         let carbEquivalentFactor: Double
         /// the period the view on screen shows
         let screenPeriod: StatsPeriod
+        /// the current `allowOneMinuteLoop` (Good & bad days' loop row)
+        var allowOneMinuteLoop = false
+        /// the metric By weekday's heat map shows on screen: its own "Export PDF" prints that one
+        var weekdayMetric: WeekdayMetric?
 
         /// - Parameter day: one day's chart alone (`ReportRequest.day`)
-        func request(_ options: ReportOptions, parts: [ReportPart]? = nil, day: Date? = nil) -> ReportRequest {
+        /// - Parameter partPeriod: a view's own period for its part alone (`ReportRequest.partPeriod`)
+        func request(
+            _ options: ReportOptions,
+            parts: [ReportPart]? = nil,
+            day: Date? = nil,
+            partPeriod: StatsPeriod? = nil
+        ) -> ReportRequest {
             ReportRequest(
                 period: options.period,
                 parts: parts ?? options.orderedParts,
@@ -22,7 +32,11 @@ extension Stat {
                 summary: options.summary,
                 daysTable: options.daysTable,
                 dailyCharts: options.dailyCharts,
+                byHour: options.byHour,
+                byWeekday: options.byWeekday,
                 carbEquivalentFactor: carbEquivalentFactor,
+                allowOneMinuteLoop: allowOneMinuteLoop,
+                partPeriod: partPeriod,
                 day: day
             )
         }
@@ -99,9 +113,19 @@ extension Stat {
         /// - Parameter day: Daily charts of that day alone (the Day view's), on one landscape page
         func export(part: ReportPart, day: Date? = nil) {
             guard let context = context?() else { return }
+            start(partRequest(part, day: day, context: context), source: context.source, origin: .part(part))
+        }
+
+        /// A view's own "Export PDF": its part as the screen shows it. By weekday's weeks and Good & bad days' days are
+        /// the view's own, whatever a report's period would give, and By weekday's heat map is the metric on screen;
+        /// everything else is the saved settings (By hour's content too).
+        func partRequest(_ part: ReportPart, day: Date? = nil, context: ReportContext) -> ReportRequest {
             var options = preferences.options(userUnits: context.userUnits)
             options.period = ReportOptions.period(nearest: context.screenPeriod)
-            start(context.request(options, parts: [part], day: day), source: context.source, origin: .part(part))
+            if part == .byWeekday, let metric = context.weekdayMetric {
+                options.byWeekday.heatMap = ReportOptions.ByWeekdaySettings.HeatMap(metric)
+            }
+            return context.request(options, parts: [part], day: day, partPeriod: context.screenPeriod)
         }
 
         /// Stops the report being made (Cancel, the Reports screen popped, Statistics going down); a report shown
@@ -215,7 +239,9 @@ extension Stat.StateModel {
             userUnits: settings.units,
             hbA1cUnit: settings.hbA1cUnit,
             carbEquivalentFactor: (appSettings.individualAdjustmentFactor as NSDecimalNumber).doubleValue,
-            screenPeriod: period
+            screenPeriod: period,
+            allowOneMinuteLoop: appSettings.allowOneMinuteLoop,
+            weekdayMetric: weekdaySelection.metric
         )
     }
 }

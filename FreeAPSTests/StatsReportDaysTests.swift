@@ -925,7 +925,7 @@ final class StatsReportDaysTests: XCTestCase {
         options.units = .both
         XCTAssertEqual(options.estimatedPageCount, 24)
 
-        options.parts = Set(ReportPart.implemented)
+        options.parts = [.summary, .percentileProfile, .daysTable, .dailyCharts]
         options.units = .mgdL
         options.period = .days14
         options.dailyCharts.daysPerPage = 4
@@ -1041,6 +1041,26 @@ final class StatsReportDaysTests: XCTestCase {
             inputNow = now
             if failing.contains(.pumpEvents) { throw Failure() }
             return input
+        }
+
+        func reportHourOfDay(_: StatsPeriod, bands: StatsBands) -> Stat.HourOfDayResult {
+            Stat.HourOfDayResult(buckets: [], summary: summary, bands: bands)
+        }
+
+        func reportWeekday(_ period: StatsPeriod, bands: StatsBands) -> Stat.WeekdayResult {
+            let calendar = Calendar(identifier: .gregorian)
+            return Stat.WeekdayResult(
+                GlucoseStatsEngine.weekdayHours([], days: [], bands: bands, calendar: calendar),
+                period: period
+            )
+        }
+
+        func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop _: Bool) -> Stat.GoodBadDaysData {
+            let calendar = Calendar(identifier: .gregorian)
+            return Stat.GoodBadDaysData(
+                period: period,
+                result: GoodBadDaysEngine.result(period: period, days: [], readings: [], bands: bands, calendar: calendar)
+            )
         }
     }
 
@@ -1830,7 +1850,7 @@ final class StatsReportDaysTests: XCTestCase {
                             period: period,
                             units: units,
                             paper: paper,
-                            parts: Set(ReportPart.implemented)
+                            parts: [.summary, .percentileProfile, .daysTable, .dailyCharts]
                         )
                         options.dailyCharts.daysPerPage = perPage
                         // every day has data, no subtotals: exact

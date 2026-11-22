@@ -23,6 +23,7 @@ struct GoodBadDaysView: View {
                 StatsCard { factorCard(content) }
             }
             StatsCard { daysCard(content) }
+            ReportExportButton(part: .goodBadDays)
         }
         .sheet(isPresented: $griShown) {
             GRIInfoSheet(content: model.griSheet)

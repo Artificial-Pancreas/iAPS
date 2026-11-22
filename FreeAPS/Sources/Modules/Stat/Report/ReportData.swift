@@ -141,13 +141,20 @@ protocol ReportDataSource: Sendable {
     func reportInsulin(_ period: StatsPeriod) async throws -> InsulinPeriod
     /// the Meals tab's period: its summary and its days
     func reportMeals(_ period: StatsPeriod, factor: Double) async throws -> MealPeriod
-    /// the period's day aggregates, as "In range by day" reads them (`GlucoseStatistics.periodDays`)
+    /// the period's day aggregates, as "In range by day" reads them (`GlucoseStatistics.periodDays`); Weekly's 13
+    /// weeks too, read once for every unit printed
     func reportDays(_ period: StatsPeriod) async -> PeriodDays
     /// a day's readings, as the Day view reads them (`Stat.Provider.trace`)
     func reportTrace(day: Date, bands: StatsBands) async -> ReportDayTrace
     /// the pump events, coverage and basal schedules of a window, read once (what `InsulinStatsEngine.timeline` takes)
     /// - Parameter now: the report's clock: nothing after it is read
     func reportInsulinInput(_ window: DateInterval, now: Date) async throws -> InsulinInput
+    /// By hour's result (`Stat.Provider.hourOfDay`)
+    func reportHourOfDay(_ period: StatsPeriod, bands: StatsBands) async -> Stat.HourOfDayResult
+    /// By weekday's result: whole weeks to yesterday (`Stat.Provider.weekday`)
+    func reportWeekday(_ period: StatsPeriod, bands: StatsBands) async -> Stat.WeekdayResult
+    /// Good & bad days' result with its factor rows (`Stat.Provider.goodBadDays`)
+    func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) async -> Stat.GoodBadDaysData
 }
 
 extension Stat.Provider: ReportDataSource {
@@ -178,6 +185,18 @@ extension Stat.Provider: ReportDataSource {
     func reportInsulinInput(_ window: DateInterval, now: Date) async throws -> InsulinInput {
         try await Stat.ReportBuilder.insulinInput(window, now: now, source: CoreDataStorage())
     }
+
+    func reportHourOfDay(_ period: StatsPeriod, bands: StatsBands) async -> Stat.HourOfDayResult {
+        await hourOfDay(period, bands: bands)
+    }
+
+    func reportWeekday(_ period: StatsPeriod, bands: StatsBands) async -> Stat.WeekdayResult {
+        await weekday(period, bands: bands)
+    }
+
+    func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) async -> Stat.GoodBadDaysData {
+        await goodBadDays(period, bands: bands, allowOneMinuteLoop: allowOneMinuteLoop)
+    }
 }
 
 extension Stat {
@@ -196,8 +215,15 @@ extension Stat {
         let summary: ReportOptions.SummarySettings
         let daysTable: ReportOptions.DaysTableSettings
         let dailyCharts: ReportOptions.DailyChartsSettings
+        let byHour: ReportOptions.ByHourSettings
+        let byWeekday: ReportOptions.ByWeekdaySettings
         /// the current `individualAdjustmentFactor` (the Meals tab's read takes it)
         let carbEquivalentFactor: Double
+        /// the current `allowOneMinuteLoop` (Good & bad days' loop row counts its slots by it)
+        let allowOneMinuteLoop: Bool
+        /// A view's own period for its part alone (its "Export PDF"): By weekday's weeks, Good & bad days' days; nil
+        /// for a report, whose parts follow `period`.
+        let partPeriod: StatsPeriod?
         /// One day alone (the Day view's "Export PDF"): its chart on a single landscape page, whatever the period and
         /// the days per page; nil for a period's report.
         let day: Date?
@@ -211,7 +237,11 @@ extension Stat {
             summary: ReportOptions.SummarySettings = .init(),
             daysTable: ReportOptions.DaysTableSettings = .init(),
             dailyCharts: ReportOptions.DailyChartsSettings = .init(),
+            byHour: ReportOptions.ByHourSettings = .init(),
+            byWeekday: ReportOptions.ByWeekdaySettings = .init(),
             carbEquivalentFactor: Double = 0.5,
+            allowOneMinuteLoop: Bool = false,
+            partPeriod: StatsPeriod? = nil,
             day: Date? = nil
         ) {
             self.period = day == nil ? period : Self.dayPeriod
@@ -226,8 +256,42 @@ extension Stat {
                 charts.daysPerPage = 1
             }
             self.dailyCharts = charts
+            self.byHour = byHour
+            self.byWeekday = byWeekday
             self.carbEquivalentFactor = carbEquivalentFactor
+            self.allowOneMinuteLoop = allowOneMinuteLoop
+            self.partPeriod = partPeriod
             self.day = day
+        }
+
+        /// Weekly's period: the screen's, whatever the report's.
+        static let weeklyPeriod: StatsPeriod = .weeks13
+
+        /// By weekday's whole weeks: a view's own (4, 8 or 13), else those of the report's period (30 days: 4 weeks,
+        /// 90 days: 13); nil for a shorter period: the part is left out, never widened.
+        var weekdayPeriod: StatsPeriod? {
+            if let partPeriod, StatsPeriod.weekdayPeriods.contains(partPeriod) { return partPeriod }
+            guard ReportPart.byWeekday.availability(for: period).isAvailable else { return nil }
+            return period == .days90 ? .weeks13 : .weeks4
+        }
+
+        /// Good & bad days' period: a view's own (14, 30 or 90 days), else the report's when it is one of them; nil for
+        /// 7 days: the part is left out.
+        var goodBadDaysPeriod: StatsPeriod? {
+            if let partPeriod, StatsPeriod.usualDayPeriods.contains(partPeriod) { return partPeriod }
+            return StatsPeriod.usualDayPeriods.contains(period) ? period : nil
+        }
+
+        /// Weekly is printed: the report's period is long enough for it, or it was asked for on its own.
+        var printsWeekly: Bool {
+            parts == [.weekly] || ReportPart.weekly.availability(for: period).isAvailable
+        }
+
+        /// The one part of a view's own "Export PDF" that reads nothing but its own result: By hour, By weekday,
+        /// Weekly or Good & bad days alone. nil for a report and for the other parts.
+        var ownPart: ReportPart? {
+            guard parts.count == 1, let part = parts.first, day == nil else { return nil }
+            return [.byHour, .byWeekday, .weekly, .goodBadDays].contains(part) ? part : nil
         }
 
         /// the period a single day's request carries (the Day view's days); its insulin and meals are read from the
@@ -280,6 +344,15 @@ extension Stat {
         var chartDays: [ReportChartDay] = []
         /// the reads that failed: the Days table and Daily charts say so under them
         var failedReads: Set<ReportReadFailure> = []
+        /// By hour's result, on `summary`'s bands; nil without the part
+        var hourOfDay: HourOfDayResult?
+        /// By weekday's result (`request.weekdayPeriod`'s whole weeks); nil without the part
+        var weekday: WeekdayResult?
+        /// Weekly's result of 13 weeks in each unit printed, all from one read of the weeks' days (only the means and
+        /// their Δ are taken in the unit shown); none without the part
+        var weekly: [WeeklyResult] = []
+        /// Good & bad days' result (`request.goodBadDaysPeriod`); nil without the part
+        var goodBadDays: GoodBadDaysData?
 
         /// The first and the last day printed (their starts): the period's, the last one today, also without readings
         /// yet; a single day's report: that day.
@@ -291,6 +364,27 @@ extension Stat {
             let first = summary.window.start
             let count = request.period.calendarDayCount ?? 1
             return (first, calendar.date(byAdding: .day, value: count - 1, to: first) ?? first)
+        }
+
+        /// The days the file is named by: a report of one part that states its own dates in its header (By weekday's
+        /// whole weeks, Weekly's 13 weeks, Good & bad days' complete days) those, else the period's (`days`).
+        func fileDays(calendar: Calendar) -> (first: Date, last: Date) {
+            guard request.parts.count == 1, let part = request.parts.first else { return days(calendar: calendar) }
+            switch part {
+            case .byWeekday:
+                if let weekday { return (weekday.window.start, weekday.lastDay) }
+            case .weekly:
+                if let weeks = weekly.first?.weeks, let first = weeks.first, let last = weeks.last {
+                    return (first.days.start, last.lastDay)
+                }
+            case .goodBadDays:
+                if let window = goodBadDays?.result.window {
+                    let last = calendar.startOfDay(for: Swift.max(window.start, window.end.addingTimeInterval(-1)))
+                    return (window.start, last)
+                }
+            default: break
+            }
+            return days(calendar: calendar)
         }
     }
 
@@ -389,6 +483,9 @@ extension Stat {
         ) async throws -> ReportData {
             let bands = standardBands(units)
             try Task.checkCancellation()
+            if let part = request.ownPart {
+                return try await readOwn(part, request: request, bands: bands, source: source, now: now)
+            }
             let profile = await source.reportProfile(request.period, bands: bands)
             try Task.checkCancellation()
             guard !profile.summary.isEmpty else { throw ReportError.noData }
@@ -451,7 +548,7 @@ extension Stat {
                     failed.insert(.pumpEvents)
                 }
             }
-            return try assemble(
+            var data = try assemble(
                 request,
                 summary: summary,
                 bins: profile.bins,
@@ -464,6 +561,104 @@ extension Stat {
                 failedReads: failed,
                 now: now
             )
+            try await readPatterns(request, into: &data, bands: bands, source: source)
+            return data
+        }
+
+        /// One of the glucose views' parts alone (its "Export PDF"): its own result and nothing else, so no profile of
+        /// the whole period is computed for it. Without data in it: `noData`. The summary is the result's own where it
+        /// has one, else an empty one of the part's days (nothing prints it: the part states its own dates).
+        private static func readOwn(
+            _ part: ReportPart,
+            request: ReportRequest,
+            bands: StatsBands,
+            source: any ReportDataSource,
+            now: Date
+        ) async throws -> ReportData {
+            var data = ReportData(
+                request: request,
+                generatedAt: now,
+                summary: GlucoseStatsEngine.summary(
+                    GlucoseHistogram(),
+                    window: DateInterval(start: now, duration: 0),
+                    endRule: .stalled,
+                    calendarDays: 0,
+                    daysWithData: 0,
+                    bands: bands
+                ),
+                bins: [],
+                gri: nil,
+                insulin: nil,
+                meals: nil
+            )
+            try await readPatterns(request, into: &data, bands: bands, source: source)
+            let summary: GlucoseSummary?
+            switch part {
+            case .byHour: summary = data.hourOfDay.flatMap { $0.isEmpty ? nil : $0.summary }
+            case .byWeekday: summary = data.weekday.flatMap { $0.isEmpty ? nil : data.summary }
+            case .weekly: summary = data.weekly.first.flatMap { $0.isEmpty ? nil : $0.summary }
+            case .goodBadDays: summary = data.goodBadDays.flatMap { $0.isEmpty ? nil : data.summary }
+            default: summary = nil
+            }
+            guard let summary else { throw ReportError.noData }
+            var result = ReportData(
+                request: request,
+                generatedAt: now,
+                summary: summary,
+                bins: [],
+                gri: nil,
+                insulin: nil,
+                meals: nil
+            )
+            result.hourOfDay = data.hourOfDay
+            result.weekday = data.weekday
+            result.weekly = data.weekly
+            result.goodBadDays = data.goodBadDays
+            return result
+        }
+
+        /// The glucose views' results, each read once with the report's bands: By hour, By weekday (its whole weeks),
+        /// Weekly (13 weeks' days read once, whatever the units printed) and Good & bad days. A part whose period the
+        /// report can't hold is left out.
+        private static func readPatterns(
+            _ request: ReportRequest,
+            into data: inout ReportData,
+            bands: StatsBands,
+            source: any ReportDataSource
+        ) async throws {
+            if request.parts.contains(.byHour) {
+                try Task.checkCancellation()
+                data.hourOfDay = await source.reportHourOfDay(request.period, bands: bands)
+            }
+            if request.parts.contains(.byWeekday), let weeks = request.weekdayPeriod {
+                try Task.checkCancellation()
+                data.weekday = await source.reportWeekday(weeks, bands: bands)
+            }
+            if request.parts.contains(.weekly), request.printsWeekly {
+                try Task.checkCancellation()
+                // one read: the weeks and their average are the same on every unit's page, which only takes the means
+                // (and their Δ) in its unit
+                let period = ReportRequest.weeklyPeriod
+                let days = await source.reportDays(period)
+                let summary = GlucoseStatsEngine.summary(
+                    days: days.days,
+                    window: days.window,
+                    endRule: days.endRule,
+                    period: period,
+                    bands: bands
+                )
+                let weeks = GlucoseStatsEngine.weeks(days.days, count: period.weekCount ?? 0)
+                data.weekly = request.units.map { WeeklyResult(summary: summary, weeks: weeks, units: $0) }
+            }
+            if request.parts.contains(.goodBadDays), let period = request.goodBadDaysPeriod {
+                try Task.checkCancellation()
+                data.goodBadDays = await source.reportGoodBadDays(
+                    period,
+                    bands: bands,
+                    allowOneMinuteLoop: request.allowOneMinuteLoop
+                )
+            }
+            try Task.checkCancellation()
         }
 
         /// One day's chart. Its readings first: without any there is no chart (`noDataOnDay`), whatever else the day

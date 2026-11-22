@@ -28,7 +28,8 @@ import SwiftUI
         try? FileManager.default.removeItem(at: parent)
     }
 
-    /// "iAPS report 2026-11-08 – 2026-11-21.pdf": the period's first and last day in the calendar's time zone
+    /// "iAPS report 2026-11-08 – 2026-11-21.pdf": the first and last day printed (`ReportData.fileDays`) in the
+    /// calendar's time zone
     nonisolated static func fileName(first: Date, last: Date, calendar: Calendar) -> String {
         let formatter = DateFormatter()
         formatter.calendar = Calendar(identifier: .gregorian)
@@ -60,7 +61,7 @@ import SwiftUI
         let layout = data.layout(calendar: calendar)
         let pages = layout.pages
         guard let firstPage = pages.first else { throw Stat.ReportError.nothingSelected }
-        let days = data.days(calendar: calendar)
+        let days = data.fileDays(calendar: calendar)
         let fileName = Self.fileName(first: days.first, last: days.last, calendar: calendar)
 
         let fileManager = FileManager.default
@@ -92,7 +93,8 @@ import SwiftUI
                         index: index,
                         count: pages.count,
                         version: version,
-                        calendar: calendar
+                        calendar: calendar,
+                        header: content.header
                     )
                     let view = ReportPageView(content: content, chrome: chrome, size: page.size)
                         .environment(\.colorScheme, .light)

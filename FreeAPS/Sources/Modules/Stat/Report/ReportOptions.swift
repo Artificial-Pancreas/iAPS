@@ -18,7 +18,9 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
     case settings
 
     /// The parts that can be printed so far, in the report's order.
-    static let implemented: [ReportPart] = [.summary, .percentileProfile, .daysTable, .dailyCharts]
+    static let implemented: [ReportPart] = [
+        .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays
+    ]
     /// The parts selected until the user picks: the two one-page ones.
     static let defaultSelection: Set<ReportPart> = [.summary, .percentileProfile]
 
@@ -49,7 +51,50 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// the part has settings of its own (shown under it when it is selected)
     var hasSettings: Bool {
-        self == .summary || self == .daysTable || self == .dailyCharts
+        switch self {
+        case .byHour,
+             .byWeekday,
+             .dailyCharts,
+             .daysTable,
+             .summary: return true
+        default: return false
+        }
+    }
+
+    /// The days a report's period needs for the part: By weekday and Weekly are whole weeks (30 days or more: 4 weeks
+    /// at least), Good & bad days needs thirds of 5 days (14 or more); nil: any period.
+    var minimumDays: Int? {
+        switch self {
+        case .byWeekday,
+             .weekly: return 30
+        case .goodBadDays: return 14
+        default: return nil
+        }
+    }
+
+    /// Whether a report of `period` can hold the part.
+    func availability(for period: StatsPeriod) -> ReportPartAvailability {
+        guard let minimumDays, (period.calendarDayCount ?? 0) < minimumDays else { return .available }
+        return .needsDays(minimumDays)
+    }
+}
+
+/// Whether a report's period can hold a part; when it can't, the part's row on the Reports screen is off with the
+/// reason, and the part is left out of the report (not an error).
+enum ReportPartAvailability: Equatable, Sendable {
+    case available
+    /// the period is shorter than the part needs: "needs 30 days or more"
+    case needsDays(Int)
+
+    var isAvailable: Bool { self == .available }
+
+    /// "needs 30 days or more"; nil when available
+    var note: String? {
+        guard case let .needsDays(days) = self else { return nil }
+        return String(
+            format: NSLocalizedString("needs %d days or more", comment: "Reports screen: a part the period is too short for"),
+            days
+        )
     }
 }
 
@@ -153,6 +198,47 @@ struct ReportOptions: Equatable, Sendable {
         var isLandscape: Bool { daysPerPage == 1 }
     }
 
+    /// By hour's own setting: what the page holds.
+    struct ByHourSettings: Equatable, Sendable {
+        enum Content: String, CaseIterable, Sendable, Hashable {
+            case chartAndTable
+            case chart
+            case table
+        }
+
+        var content: Content = .chartAndTable
+
+        var showsChart: Bool { content != .table }
+        var showsTable: Bool { content != .chart }
+    }
+
+    /// By weekday's own setting: the heat map's metric, the ones the screen offers.
+    struct ByWeekdaySettings: Equatable, Sendable {
+        enum HeatMap: String, CaseIterable, Sendable, Hashable {
+            case inRange
+            case low
+            case mean
+
+            var metric: WeekdayMetric {
+                switch self {
+                case .inRange: return .inRange
+                case .low: return .low
+                case .mean: return .mean
+                }
+            }
+
+            init(_ metric: WeekdayMetric) {
+                switch metric {
+                case .inRange: self = .inRange
+                case .low: self = .low
+                case .mean: self = .mean
+                }
+            }
+        }
+
+        var heatMap: HeatMap = .inRange
+    }
+
     /// the periods a report offers; they end today
     static let periods: [StatsPeriod] = [.days7, .days14, .days30, .days90]
     static let defaultPeriod: StatsPeriod = .days14
@@ -165,10 +251,12 @@ struct ReportOptions: Equatable, Sendable {
     var summary = SummarySettings()
     var daysTable = DaysTableSettings()
     var dailyCharts = DailyChartsSettings()
+    var byHour = ByHourSettings()
+    var byWeekday = ByWeekdaySettings()
 
-    /// the selected parts in the report's order
+    /// the selected parts the period can hold (`ReportPart.availability`), in the report's order
     var orderedParts: [ReportPart] {
-        ReportPart.implemented.filter { parts.contains($0) }
+        ReportPart.implemented.filter { parts.contains($0) && $0.availability(for: period).isAvailable }
     }
 
     /// The pages the report will have.
@@ -211,8 +299,13 @@ enum ReportPlan {
     /// The estimate can be more than the report has: Daily charts leaves out the days without anything to draw, and
     /// the subtotal rows are counted at their most.
     static func isUpperBound(_ parts: [ReportPart], daysTable: ReportOptions.DaysTableSettings) -> Bool {
-        parts.contains(.dailyCharts) || (parts.contains(.daysTable) && daysTable.subtotals != .none)
+        parts.contains(.dailyCharts) || parts.contains(.goodBadDays)
+            || (parts.contains(.daysTable) && daysTable.subtotals != .none)
     }
+
+    /// Good & bad days at its most: the comparison, what was different and the days each on a page of their own (every
+    /// factor row shown, the longest period); usually two, or one.
+    static let goodBadDaysPages = 3
 
     static func pageCount(_ count: Int, perPage: Int) -> Int {
         guard count > 0 else { return 0 }
@@ -243,6 +336,8 @@ enum ReportPlan {
             return pageCount(rows, perPage: daysTableRowsPerPage(paper))
         case .dailyCharts:
             return pageCount(days, perPage: dailyCharts.daysPerPage)
+        case .goodBadDays:
+            return goodBadDaysPages
         default:
             return part.isImplemented ? 1 : 0
         }
@@ -282,6 +377,8 @@ struct ReportPreferences {
         static let chartsCarbs = "iAPS.reports.charts.carbs"
         static let chartsBasal = "iAPS.reports.charts.basal"
         static let chartsNewestFirst = "iAPS.reports.charts.newestFirst"
+        static let hourContent = "iAPS.reports.hour.content"
+        static let weekdayHeatMap = "iAPS.reports.weekday.heatMap"
     }
 
     let defaults: UserDefaults
@@ -396,6 +493,26 @@ struct ReportPreferences {
         }
     }
 
+    /// By hour's setting: an unknown content reads as the chart and the table.
+    var byHour: ReportOptions.ByHourSettings {
+        get {
+            typealias Settings = ReportOptions.ByHourSettings
+            let content = defaults.string(forKey: Key.hourContent).flatMap { Settings.Content(rawValue: $0) }
+            return Settings(content: content ?? Settings().content)
+        }
+        nonmutating set { defaults.set(newValue.content.rawValue, forKey: Key.hourContent) }
+    }
+
+    /// By weekday's setting: an unknown metric reads as in range.
+    var byWeekday: ReportOptions.ByWeekdaySettings {
+        get {
+            typealias Settings = ReportOptions.ByWeekdaySettings
+            let heatMap = defaults.string(forKey: Key.weekdayHeatMap).flatMap { Settings.HeatMap(rawValue: $0) }
+            return Settings(heatMap: heatMap ?? Settings().heatMap)
+        }
+        nonmutating set { defaults.set(newValue.heatMap.rawValue, forKey: Key.weekdayHeatMap) }
+    }
+
     /// A stored whole number; nil for anything else, a stored Bool too (it would read as 0 or 1).
     private func integer(_ key: String) -> Int? {
         guard let number = defaults.object(forKey: key) as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
@@ -417,7 +534,9 @@ struct ReportPreferences {
             parts: parts,
             summary: summary,
             daysTable: daysTable,
-            dailyCharts: dailyCharts
+            dailyCharts: dailyCharts,
+            byHour: byHour,
+            byWeekday: byWeekday
         )
     }
 

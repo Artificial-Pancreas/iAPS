@@ -260,6 +260,15 @@ extension Stat.ReportData {
             return Swift.max(dayRows.count, 1)
         case .dailyCharts:
             return Swift.max(ReportPlan.pageCount(chartDays.count, perPage: request.dailyCharts.daysPerPage), 1)
+        // a part the report's period can't hold was left out by the builder: no page
+        case .byHour:
+            return hourOfDay == nil ? 0 : 1
+        case .byWeekday:
+            return weekday == nil ? 0 : 1
+        case .weekly:
+            return weekly.isEmpty ? 0 : 1
+        case .goodBadDays:
+            return goodBadDays.map { ReportGoodBadDaysLayout.pageCount($0, paper: request.paper) } ?? 0
         default:
             return 1
         }

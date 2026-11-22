@@ -267,6 +267,7 @@ struct WeeklyView: View {
         VStack(spacing: 16) {
             StatsCard { charts }
             StatsCard { table }
+            ReportExportButton(part: .weekly)
         }
     }
 

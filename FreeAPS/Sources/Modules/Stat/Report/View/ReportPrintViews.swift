@@ -23,6 +23,20 @@ enum ReportStyle {
     static var median: Color { Color(.statsAGPMedian) }
     /// a subtotal row's background
     static let shade = Color(white: 0.94)
+
+    /// The outline of a heat map step, 0 for none: in range is the one metric whose colours diverge, so its two steps
+    /// under the 70% target are outlined (the lowest heavier) and still stand apart in black and white.
+    static func heatOutline(_ metric: WeekdayMetric, step: Int) -> CGFloat {
+        guard metric == .inRange else { return 0 }
+        switch step {
+        case 0: return 1.5
+        case 1: return 0.6
+        default: return 0
+        }
+    }
+
+    /// Weekly's bars and Good & bad days' worst third: a dark blue that prints as a dark grey
+    static let accent = Color(red: 0.16, green: 0.3, blue: 0.55)
     /// Daily charts: the glucose trace (dark, for black and white print), the in-range band, the insulin marks, the
     /// carbs' markers and the delivered basal
     static let trace = Color(white: 0.1)
@@ -69,6 +83,14 @@ struct ReportPageView: View {
                     ReportDaysContent(page: days, width: width)
                 case let .charts(charts):
                     ReportChartsContent(page: charts, width: width)
+                case let .hours(hours):
+                    ReportHoursContent(page: hours, width: width)
+                case let .weekdays(weekdays):
+                    ReportWeekdaysContent(page: weekdays, width: width)
+                case let .weeks(weeks):
+                    ReportWeeksContent(page: weeks, width: width)
+                case let .goodBadDays(days):
+                    ReportGoodBadDaysContent(page: days, width: width)
                 }
             }
             .padding(.top, 12)
@@ -136,7 +158,7 @@ struct ReportPageView: View {
 }
 
 /// A section of a page: its title over a rule, then its content.
-private struct ReportSection<Content: View>: View {
+struct ReportSection<Content: View>: View {
     let title: String
     @ViewBuilder let content: Content
 

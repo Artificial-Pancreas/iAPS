@@ -105,13 +105,6 @@ struct ReportDaysContent: View {
 
     /// The day's time by band, very low at the leading end; empty without readings.
     private func bar(_ segments: [BandSegment]) -> some View {
-        HStack(spacing: 0) {
-            ForEach(segments) { segment in
-                Rectangle()
-                    .fill(segment.band.color)
-                    .frame(width: Self.barWidth * CGFloat(segment.fraction), height: 7)
-            }
-        }
-        .frame(width: Self.barWidth, height: 7, alignment: .leading)
+        ReportBandBar(segments: segments, width: Self.barWidth)
     }
 }
