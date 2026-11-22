@@ -189,34 +189,26 @@ struct ReportSection<Content: View>: View {
     }
 }
 
-/// Whether a goal is met: a check or a cross (drawn, not a glyph) with the words.
+/// Whether a goal is met: a check, or a cross (drawn, not a glyph; the cross a little heavier, so "not met" reads at a
+/// glance).
 private struct ReportMetMark: View {
     let isMet: Bool
 
     var body: some View {
-        HStack(spacing: 3) {
-            Path { path in
-                if isMet {
-                    path.move(to: CGPoint(x: 0.5, y: 4))
-                    path.addLine(to: CGPoint(x: 2.8, y: 6.5))
-                    path.addLine(to: CGPoint(x: 6.5, y: 0.8))
-                } else {
-                    path.move(to: CGPoint(x: 1, y: 1))
-                    path.addLine(to: CGPoint(x: 6, y: 6))
-                    path.move(to: CGPoint(x: 6, y: 1))
-                    path.addLine(to: CGPoint(x: 1, y: 6))
-                }
+        Path { path in
+            if isMet {
+                path.move(to: CGPoint(x: 0.5, y: 4.5))
+                path.addLine(to: CGPoint(x: 3.2, y: 7.3))
+                path.addLine(to: CGPoint(x: 7.5, y: 0.8))
+            } else {
+                path.move(to: CGPoint(x: 1, y: 1))
+                path.addLine(to: CGPoint(x: 7, y: 7))
+                path.move(to: CGPoint(x: 7, y: 1))
+                path.addLine(to: CGPoint(x: 1, y: 7))
             }
-            .stroke(ReportStyle.text, style: StrokeStyle(lineWidth: 1.1, lineCap: .round, lineJoin: .round))
-            .frame(width: 7, height: 7)
-            Text(
-                isMet
-                    ? NSLocalizedString("met", comment: "PDF report: a consensus goal is met")
-                    : NSLocalizedString("not met", comment: "PDF report: a consensus goal isn't met")
-            )
-            .font(ReportStyle.font(8, isMet ? .regular : .semibold))
-            .fixedSize()
         }
+        .stroke(ReportStyle.text, style: StrokeStyle(lineWidth: isMet ? 1.1 : 1.5, lineCap: .round, lineJoin: .round))
+        .frame(width: 8, height: 8)
     }
 }
 
@@ -226,7 +218,7 @@ private struct ReportGoalCells: View {
     let goal: Stat.ReportGoalMark?
     let textWidth: CGFloat
 
-    static let markWidth: CGFloat = 44
+    static let markWidth: CGFloat = 12
 
     var body: some View {
         HStack(spacing: 6) {
@@ -339,7 +331,7 @@ struct ReportSummaryContent: View {
     private var ranges: some View {
         let percentWidth: CGFloat = 40
         let perDayWidth: CGFloat = 58
-        let goalWidth: CGFloat = 150
+        let goalWidth: CGFloat = 182
         let spacing: CGFloat = 10
         let tableWidth = width - Self.barWidth - 14
         let fixed = percentWidth + perDayWidth + goalWidth + 6 + ReportGoalCells.markWidth + spacing * 3
@@ -413,7 +405,7 @@ struct ReportSummaryContent: View {
     /// A table of fixed columns: the title takes what the value and the goal leave, and shrinks before anything is cut.
     private func metricsTable(_ metrics: [Stat.ReportSummary.Metric], width tableWidth: CGFloat) -> some View {
         let valueWidth: CGFloat = 66
-        let goalWidth: CGFloat = 44
+        let goalWidth: CGFloat = 76
         let spacing: CGFloat = 6
         let fixed = valueWidth + goalWidth + 6 + ReportGoalCells.markWidth + spacing * 2
         let titleWidth = Swift.max(tableWidth - fixed, 30)

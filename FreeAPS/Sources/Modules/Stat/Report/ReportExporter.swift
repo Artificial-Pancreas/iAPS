@@ -42,6 +42,7 @@ extension Stat {
                 byHour: options.byHour,
                 byWeekday: options.byWeekday,
                 meals: options.meals,
+                insulin: options.insulin,
                 patchesInput: patchesInput,
                 cgmPick: cgmPick,
                 settingsSnapshot: settingsSnapshot,

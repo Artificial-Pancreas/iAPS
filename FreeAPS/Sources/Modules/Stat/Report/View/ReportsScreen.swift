@@ -251,6 +251,25 @@ struct ReportsScreen: View {
             )
             .font(.subheadline)
             .frame(minHeight: 40)
+            Toggle(
+                "Detailed tables",
+                isOn: Binding(get: { options.meals.detailedTables }, set: { isOn in
+                    options.meals.detailedTables = isOn
+                    preferences.meals = options.meals
+                })
+            )
+            .font(.subheadline)
+            .frame(minHeight: 40)
+        } else if part == .insulin {
+            Toggle(
+                "Detailed tables",
+                isOn: Binding(get: { options.insulin.detailedTables }, set: { isOn in
+                    options.insulin.detailedTables = isOn
+                    preferences.insulin = options.insulin
+                })
+            )
+            .font(.subheadline)
+            .frame(minHeight: 40)
         }
     }
 

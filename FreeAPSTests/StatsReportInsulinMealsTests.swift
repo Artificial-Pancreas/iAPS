@@ -159,7 +159,8 @@ final class StatsReportInsulinMealsTests: XCTestCase {
         parts: [ReportPart] = [.insulin, .meals],
         units: [GlucoseUnits] = [.mgdL],
         paper: ReportPaper = .a4,
-        nutrients: Bool = false
+        nutrients: Bool = false,
+        tables: Bool = true
     ) -> Stat.ReportRequest {
         Stat.ReportRequest(
             period: period,
@@ -167,7 +168,8 @@ final class StatsReportInsulinMealsTests: XCTestCase {
             units: units,
             hbA1cUnit: .percent,
             paper: paper,
-            meals: ReportOptions.MealsSettings(includeNutrients: nutrients)
+            meals: ReportOptions.MealsSettings(includeNutrients: nutrients, detailedTables: tables),
+            insulin: ReportOptions.InsulinSettings(detailedTables: tables)
         )
     }
 
@@ -796,10 +798,107 @@ final class StatsReportInsulinMealsTests: XCTestCase {
         XCTAssertFalse(store.meals.includeNutrients)
 
         XCTAssertTrue(ReportPart.meals.hasSettings)
-        XCTAssertFalse(ReportPart.insulin.hasSettings)
+        XCTAssertTrue(ReportPart.insulin.hasSettings)
         store.parts = [.insulin, .meals]
         XCTAssertEqual(store.parts, [.insulin, .meals])
         XCTAssertEqual(store.options(userUnits: .mgdL).orderedParts, [.insulin, .meals])
+    }
+
+    /// "Detailed tables", a toggle for each part: on until switched off, kept; off, the part is its overview page alone.
+    @MainActor func testDetailedTablesOption() throws {
+        typealias Key = ReportPreferences.Key
+        let name = "test-report-detailed-tables-\(UUID().uuidString)"
+        let defaults = UserDefaults(suiteName: name)!
+        let parent = FileManager.default.temporaryDirectory.appendingPathComponent(name, isDirectory: true)
+        addTeardownBlock {
+            defaults.removePersistentDomain(forName: name)
+            try? FileManager.default.removeItem(at: parent)
+        }
+        let store = ReportPreferences(defaults: defaults)
+        // on by default
+        XCTAssertTrue(ReportOptions.InsulinSettings().detailedTables)
+        XCTAssertTrue(ReportOptions.MealsSettings().detailedTables)
+        XCTAssertTrue(store.insulin.detailedTables)
+        XCTAssertTrue(store.meals.detailedTables)
+        XCTAssertTrue(store.options(userUnits: .mgdL).insulin.detailedTables)
+        // each kept on its own, under the reports' keys
+        store.insulin = ReportOptions.InsulinSettings(detailedTables: false)
+        XCTAssertEqual(defaults.object(forKey: Key.insulinTables) as? Bool, false)
+        XCTAssertTrue(Key.insulinTables.hasPrefix("iAPS.reports.insulin."))
+        XCTAssertTrue(Key.mealsTables.hasPrefix("iAPS.reports.meals."))
+        XCTAssertTrue(store.meals.detailedTables)
+        var meals = store.meals
+        meals.detailedTables = false
+        meals.includeNutrients = true
+        store.meals = meals
+        let next = ReportPreferences(defaults: defaults)
+        XCTAssertFalse(next.insulin.detailedTables)
+        XCTAssertEqual(next.meals, ReportOptions.MealsSettings(includeNutrients: true, detailedTables: false))
+        XCTAssertFalse(next.options(userUnits: .mgdL).insulin.detailedTables)
+        XCTAssertFalse(next.options(userUnits: .mgdL).meals.detailedTables)
+        // a value of another type reads as the default
+        defaults.set("no", forKey: Key.insulinTables)
+        XCTAssertTrue(store.insulin.detailedTables)
+        defaults.set(false, forKey: Key.insulinTables)
+
+        // off: the overview page of each, whatever the period; the estimate is the plan
+        for period in [StatsPeriod.days7, .days90] {
+            for paper in ReportPaper.allCases {
+                let off = try data(request(period: period, paper: paper, tables: false))
+                XCTAssertEqual(off.pages(calendar: Self.calendar).map(\.part), [.insulin, .meals], "\(period)")
+                XCTAssertEqual(off.pages(calendar: Self.calendar).map(\.index), [0, 0])
+                XCTAssertEqual(off.pageCount(of: .insulin, calendar: Self.calendar), 1)
+                XCTAssertEqual(off.pageCount(of: .meals, calendar: Self.calendar), 1)
+                var options = ReportOptions(period: period, units: .both, paper: paper, parts: [.insulin, .meals])
+                options.insulin.detailedTables = false
+                options.meals.detailedTables = false
+                XCTAssertEqual(options.estimatedPageCount, 2)
+                // one off, the other on
+                options.meals.detailedTables = true
+                var mixed = Stat.ReportRequest(
+                    period: period,
+                    parts: [.insulin, .meals],
+                    units: [.mgdL],
+                    hbA1cUnit: .percent,
+                    paper: paper,
+                    insulin: ReportOptions.InsulinSettings(detailedTables: false)
+                )
+                let half = try data(mixed)
+                let mealPages = Layout.pageCount(
+                    days: period.calendarDayCount ?? 0,
+                    paper: paper,
+                    hourRows: Stat.ReportMeals.hourRows
+                )
+                XCTAssertEqual(half.pages(calendar: Self.calendar).count, 1 + mealPages)
+                XCTAssertEqual(options.estimatedPageCount, 1 + mealPages)
+                XCTAssertGreaterThanOrEqual(options.estimatedPageCount, half.pages(calendar: Self.calendar).count)
+                mixed = request(period: period, paper: paper)
+                XCTAssertGreaterThan(try data(mixed).pages(calendar: Self.calendar).count, 1 + mealPages)
+            }
+        }
+        // the overview is the same page with or without the tables after it
+        let on = Stat.ReportInsulin(try data(request(parts: [.insulin])), page: page(.insulin), calendar: Self.calendar)
+        let off = Stat.ReportInsulin(
+            try data(request(parts: [.insulin], tables: false)),
+            page: page(.insulin),
+            calendar: Self.calendar
+        )
+        XCTAssertEqual(off, on)
+
+        // a tab's own export follows the saved toggle
+        let exporter = Stat.ReportExporter(preferences: next, parent: parent, calendar: { Self.calendar })
+        let context = Stat.ReportContext(
+            source: FakeSource(),
+            userUnits: .mgdL,
+            hbA1cUnit: .percent,
+            carbEquivalentFactor: 0.5,
+            screenPeriod: .days30
+        )
+        XCTAssertFalse(exporter.partRequest(.insulin, context: context).insulin.detailedTables)
+        XCTAssertFalse(exporter.partRequest(.meals, context: context).meals.detailedTables)
+        next.insulin = ReportOptions.InsulinSettings()
+        XCTAssertTrue(exporter.partRequest(.insulin, context: context).insulin.detailedTables)
+        XCTAssertFalse(context.request(next.options(userUnits: .mgdL)).meals.detailedTables)
     }
 
     // MARK: - The reads

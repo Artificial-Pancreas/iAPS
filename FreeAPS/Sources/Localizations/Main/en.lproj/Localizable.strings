@@ -5750,8 +5750,6 @@ Enact a temp Basal or a temp target */
 "Carbs: 1 complete day with entries" = "Carbs: 1 complete day with entries";
 "Insulin: 1 complete day with pump data" = "Insulin: 1 complete day with pump data";
 "Percentiles by time of day (%@)" = "Percentiles by time of day (%@)";
-"met" = "met";
-"not met" = "not met";
 "Insulin and carbs per day" = "Insulin and carbs per day";
 "Date of birth" = "Date of birth";
 "Consensus goal" = "Consensus goal";
@@ -5874,3 +5872,4 @@ Enact a temp Basal or a temp target */
 "The first %d wear days are listed." = "The first %d wear days are listed.";
 "Not printed: %@" = "Not printed: %@";
 "1 sensor" = "1 sensor";
+"Detailed tables" = "Detailed tables";

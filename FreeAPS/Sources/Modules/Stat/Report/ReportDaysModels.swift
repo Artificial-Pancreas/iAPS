@@ -276,14 +276,14 @@ extension Stat.ReportData {
             return goodBadDays.map { ReportGoodBadDaysLayout.pageCount($0, paper: request.paper) } ?? 0
         // the overview and the tables; one page saying so without data
         case .insulin:
-            guard let period = insulinPeriod?.value, !period.summary.isEmpty else { return 1 }
+            guard request.insulin.detailedTables, let period = insulinPeriod?.value, !period.summary.isEmpty else { return 1 }
             return ReportTablesLayout.pageCount(
                 days: period.days.count,
                 paper: request.paper,
                 hourRows: Stat.ReportInsulin.hourRows
             )
         case .meals:
-            guard let period = mealPeriod?.value, !period.summary.isEmpty else { return 1 }
+            guard request.meals.detailedTables, let period = mealPeriod?.value, !period.summary.isEmpty else { return 1 }
             return ReportTablesLayout.pageCount(
                 days: period.days.count,
                 paper: request.paper,

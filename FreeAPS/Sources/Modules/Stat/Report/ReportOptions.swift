@@ -57,6 +57,7 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
              .byWeekday,
              .dailyCharts,
              .daysTable,
+             .insulin,
              .meals,
              .summary: return true
         default: return false
@@ -259,10 +260,18 @@ struct ReportOptions: Equatable, Sendable {
         var heatMap: HeatMap = .inRange
     }
 
-    /// The Meals part's own setting.
+    /// The Insulin part's own setting.
+    struct InsulinSettings: Equatable, Sendable {
+        /// "Detailed tables": the clock hours and the days as tables after the overview page
+        var detailedTables = true
+    }
+
+    /// The Meals part's own settings.
     struct MealsSettings: Equatable, Sendable {
         /// "Include nutrients": fat, protein and their carb equivalents beside the carbs, when they are logged
         var includeNutrients = false
+        /// "Detailed tables": the clock hours and the days as tables after the overview page
+        var detailedTables = true
     }
 
     /// the periods a report offers; they end today
@@ -280,6 +289,7 @@ struct ReportOptions: Equatable, Sendable {
     var byHour = ByHourSettings()
     var byWeekday = ByWeekdaySettings()
     var meals = MealsSettings()
+    var insulin = InsulinSettings()
 
     /// the selected parts the period can hold (`ReportPart.availability`), in the report's order
     var orderedParts: [ReportPart] {
@@ -292,7 +302,11 @@ struct ReportOptions: Equatable, Sendable {
     var estimatedPageCount: Int {
         let days = period.calendarDayCount ?? 1
         return orderedParts.reduce(0) { total, part in
-            let pages = ReportPlan.estimatedPages(part, days: days, paper: paper, daysTable: daysTable, dailyCharts: dailyCharts)
+            // Insulin and Meals without their tables are the overview page alone
+            let overviewOnly = (part == .insulin && !insulin.detailedTables) || (part == .meals && !meals.detailedTables)
+            let pages = overviewOnly
+                ? 1
+                : ReportPlan.estimatedPages(part, days: days, paper: paper, daysTable: daysTable, dailyCharts: dailyCharts)
             // a part without glucose values is printed once
             return total + pages * (units == .both && part.printsGlucose ? 2 : 1)
         }
@@ -438,6 +452,8 @@ struct ReportPreferences {
         static let hourContent = "iAPS.reports.hour.content"
         static let weekdayHeatMap = "iAPS.reports.weekday.heatMap"
         static let mealsNutrients = "iAPS.reports.meals.nutrients"
+        static let mealsTables = "iAPS.reports.meals.tables"
+        static let insulinTables = "iAPS.reports.insulin.tables"
     }
 
     let defaults: UserDefaults
@@ -572,10 +588,24 @@ struct ReportPreferences {
         nonmutating set { defaults.set(newValue.heatMap.rawValue, forKey: Key.weekdayHeatMap) }
     }
 
-    /// The Meals part's setting: off until switched on.
+    /// The Meals part's settings: the nutrients off until switched on, the tables on until switched off.
     var meals: ReportOptions.MealsSettings {
-        get { ReportOptions.MealsSettings(includeNutrients: bool(Key.mealsNutrients, false)) }
-        nonmutating set { defaults.set(newValue.includeNutrients, forKey: Key.mealsNutrients) }
+        get {
+            ReportOptions.MealsSettings(
+                includeNutrients: bool(Key.mealsNutrients, false),
+                detailedTables: bool(Key.mealsTables, true)
+            )
+        }
+        nonmutating set {
+            defaults.set(newValue.includeNutrients, forKey: Key.mealsNutrients)
+            defaults.set(newValue.detailedTables, forKey: Key.mealsTables)
+        }
+    }
+
+    /// The Insulin part's setting: the tables on until switched off.
+    var insulin: ReportOptions.InsulinSettings {
+        get { ReportOptions.InsulinSettings(detailedTables: bool(Key.insulinTables, true)) }
+        nonmutating set { defaults.set(newValue.detailedTables, forKey: Key.insulinTables) }
     }
 
     /// A stored whole number; nil for anything else, a stored Bool too (it would read as 0 or 1).
@@ -602,7 +632,8 @@ struct ReportPreferences {
             dailyCharts: dailyCharts,
             byHour: byHour,
             byWeekday: byWeekday,
-            meals: meals
+            meals: meals,
+            insulin: insulin
         )
     }
 

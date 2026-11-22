@@ -267,6 +267,7 @@ extension Stat {
         let byHour: ReportOptions.ByHourSettings
         let byWeekday: ReportOptions.ByWeekdaySettings
         let meals: ReportOptions.MealsSettings
+        let insulin: ReportOptions.InsulinSettings
         /// what the Patches topic's read takes from the screen (`ReportPatchesInput`)
         let patchesInput: ReportPatchesInput
         /// the CGM on screen: its own "Export PDF" prints that one; nil for a report, which prints each
@@ -296,6 +297,7 @@ extension Stat {
             byHour: ReportOptions.ByHourSettings = .init(),
             byWeekday: ReportOptions.ByWeekdaySettings = .init(),
             meals: ReportOptions.MealsSettings = .init(),
+            insulin: ReportOptions.InsulinSettings = .init(),
             patchesInput: ReportPatchesInput = .init(),
             cgmPick: CGMPick? = nil,
             settingsSnapshot: ReportSettingsSnapshot? = nil,
@@ -319,6 +321,7 @@ extension Stat {
             self.byHour = byHour
             self.byWeekday = byWeekday
             self.meals = meals
+            self.insulin = insulin
             self.patchesInput = patchesInput
             self.cgmPick = cgmPick
             self.settingsSnapshot = settingsSnapshot
