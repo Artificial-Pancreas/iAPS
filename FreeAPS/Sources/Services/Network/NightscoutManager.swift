@@ -485,9 +485,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             dailystats: nil, justVersion: json
         )
 
-        guard let nightscout = nightscoutAPI else {
-            return
-        }
+        // The statistics server, as for uploadStatistics. The user's Nightscout plays no part: uploadStats
+        // always posts to IAPSconfig.statURL, and requiring a Nightscout connection here meant a device
+        // with Online Backup off and no Nightscout never sent this at all.
+        let nightscout = NightscoutAPI(url: IAPSconfig.statURL)
 
         processQueue.async {
             nightscout.uploadStats(stats)
