@@ -4,7 +4,12 @@ import SwiftUI
     iOS 27.1,
     *
 ) struct ToolbarEdgeActionBarLayout<Content: View, VerticalBar: View, BottomBar: View>: View {
-    @Environment(\.toolbarVerticalEdge) private var toolbarVerticalEdge
+    // The key is new in the iOS 27.1 SDK; @available does not hide it from the Xcode 26 compiler.
+    #if compiler(>=6.4)
+        @Environment(\.toolbarVerticalEdge) private var toolbarVerticalEdge
+    #else
+        private let toolbarVerticalEdge: HorizontalEdge? = nil
+    #endif
 
     let content: Content
     @ViewBuilder let verticalBar: () -> VerticalBar
@@ -40,9 +45,11 @@ import SwiftUI
 
 extension EnvironmentValues {
     var usesBottomBar: Bool {
-        if #available(iOS 27.1, *) {
-            return toolbarVerticalEdge == nil
-        }
+        #if compiler(>=6.4)
+            if #available(iOS 27.1, *) {
+                return toolbarVerticalEdge == nil
+            }
+        #endif
         return true
     }
 }
