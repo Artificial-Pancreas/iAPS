@@ -128,6 +128,7 @@
 		19FFF08C2FCB3457009DBC48 /* NutrientProgressBars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19FFF08B2FCB3442009DBC48 /* NutrientProgressBars.swift */; };
 		1BBB001DAD60F3B8CEA4B1C7 /* ISFEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505E09DC17A0C3D0AF4B66FE /* ISFEditorStateModel.swift */; };
 		1D6732A75D39807685D21FD3 /* CrashReportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */; };
+		F2B6A3D130A11C0000B3D0A1 /* BackgroundWatchdog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B6A3D230A11C0000B3D0A2 /* BackgroundWatchdog.swift */; };
 		1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60744C3E9BB3652895C908CC /* DataTableProvider.swift */; };
 		23888883D4EA091C88480FF2 /* BolusProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19984D62EFC0035A9E9644D /* BolusProvider.swift */; };
 		28089E07169488CF6DCC2A31 /* AddCarbsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86FC1CFD647CF34508AF9A3B /* AddCarbsRootView.swift */; };
@@ -1143,6 +1144,7 @@
 		CEC751D529D88262006E9D24 /* MinimedKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MinimedKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC751D729D88262006E9D24 /* MinimedKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = MinimedKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrashReportService.swift; sourceTree = "<group>"; };
+		F2B6A3D230A11C0000B3D0A2 /* BackgroundWatchdog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundWatchdog.swift; sourceTree = "<group>"; };
 		CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalStateModel.swift; sourceTree = "<group>"; };
 		D0BDC6993C1087310EDFC428 /* CREditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorRootView.swift; sourceTree = "<group>"; };
 		D295A3F870E826BE371C0BB5 /* AutotuneConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigStateModel.swift; sourceTree = "<group>"; };
@@ -1855,6 +1857,7 @@
 			isa = PBXGroup;
 			children = (
 				CF5A714FB12AC2EC42D95BB2 /* CrashReportService.swift */,
+				F2B6A3D230A11C0000B3D0A2 /* BackgroundWatchdog.swift */,
 				F2159A552BA6238D00A0B716 /* ContactTrick */,
 				6B1A8D2C2B156EC100E76752 /* LiveActivity */,
 				CEB434E128B8F9BC00B70274 /* Bluetooth */,
@@ -3546,6 +3549,7 @@
 				CE7950262998056D00FA576E /* CGMSetupView.swift in Sources */,
 				F2A4B7CB2E6CDF8F000E0E85 /* AppServices.swift in Sources */,
 				1D6732A75D39807685D21FD3 /* CrashReportService.swift in Sources */,
+				F2B6A3D130A11C0000B3D0A1 /* BackgroundWatchdog.swift in Sources */,
 				38A0363B25ECF07E00FCBB52 /* GlucoseStorage.swift in Sources */,
 				190EBCC629FF138000BA767D /* UIUXProvider.swift in Sources */,
 				38E98A2725F52C9300C0CED0 /* CollectionIssueReporter.swift in Sources */,
@@ -4475,7 +4479,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = "$(APP_VERSION)";
+				MARKETING_VERSION = "$(APP_VERSION)";v
 				PRODUCT_BUNDLE_IDENTIFIER = "$(BUNDLE_IDENTIFIER).LiveActivity";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
