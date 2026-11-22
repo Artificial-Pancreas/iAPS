@@ -155,9 +155,58 @@ protocol ReportDataSource: Sendable {
     func reportWeekday(_ period: StatsPeriod, bands: StatsBands) async -> Stat.WeekdayResult
     /// Good & bad days' result with its factor rows (`Stat.Provider.goodBadDays`)
     func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) async -> Stat.GoodBadDaysData
+    /// the Patches topic's result for the period (`Stat.Provider.patches`)
+    /// - Parameters: the report's clock and calendar
+    func reportPatches(
+        _ period: StatsPeriod,
+        bands: StatsBands,
+        input: ReportPatchesInput,
+        now: Date,
+        calendar: Calendar
+    ) async throws -> Stat.PatchesResult
+    /// the CGM topic's result for the period, computed for the report (`Stat.Provider.cgmUncached`)
+    /// - Parameters: the report's clock and calendar
+    func reportCGM(_ period: StatsPeriod, now: Date, calendar: Calendar) async throws -> Stat.CGMResult
 }
 
 extension Stat.Provider: ReportDataSource {
+    /// The Patches topic's result on the report's bands, computed on its own: the screen's kept sessions
+    /// (`patchesCache`, on the user's range) are neither used nor dropped, so the Patches screen is as it was when the
+    /// report is done. The same reads and engine calls as `patches`, every session computed (as that one's first read).
+    func reportPatches(
+        _ period: StatsPeriod,
+        bands: StatsBands,
+        input: ReportPatchesInput,
+        now: Date,
+        calendar: Calendar
+    ) async throws -> Stat.PatchesResult {
+        let storage = CoreDataStorage()
+        let records = try await Self.pumpSessions(now: now, storage: storage)
+        let sessions = PatchStatsEngine.sessions(records)
+        let inUseID = PatchStatsEngine.inUse(sessions, deliveringPlugin: input.deliveringPlugin)?.id
+        var computed: [PatchStats] = []
+        for run in StatsIntervals.runs(Array(sessions.indices)) {
+            let runSessions = run.map { sessions[$0] }
+            let patchInput = try await Self.patchInput(runSessions, now: now, storage: storage)
+            try Task.checkCancellation()
+            computed += PatchStatsEngine.stats(
+                runSessions,
+                input: patchInput,
+                bands: bands,
+                allowOneMinuteLoop: input.allowOneMinuteLoop,
+                inUseID: inUseID,
+                now: now,
+                calendar: calendar
+            )
+        }
+        let stats = PatchStatsEngine.assembled(sessions, reused: [:], computed: computed)
+        return Self.patchesResult(stats, period: period, currentPlugin: input.currentPlugin, now: now, calendar: calendar)
+    }
+
+    func reportCGM(_ period: StatsPeriod, now: Date, calendar: Calendar) async throws -> Stat.CGMResult {
+        try await cgmUncached(period, now: now, calendar: calendar)
+    }
+
     func reportProfile(_ period: StatsPeriod, bands: StatsBands) async -> Stat.AGPResult {
         await agp(period, bands: bands)
     }
@@ -218,6 +267,12 @@ extension Stat {
         let byHour: ReportOptions.ByHourSettings
         let byWeekday: ReportOptions.ByWeekdaySettings
         let meals: ReportOptions.MealsSettings
+        /// what the Patches topic's read takes from the screen (`ReportPatchesInput`)
+        let patchesInput: ReportPatchesInput
+        /// the CGM on screen: its own "Export PDF" prints that one; nil for a report, which prints each
+        let cgmPick: CGMPick?
+        /// the settings as they are when the report is asked for; nil: not given (the Settings part says so)
+        let settingsSnapshot: ReportSettingsSnapshot?
         /// the current `individualAdjustmentFactor` (the Meals tab's read takes it)
         let carbEquivalentFactor: Double
         /// the current `allowOneMinuteLoop` (Good & bad days' loop row counts its slots by it)
@@ -241,6 +296,9 @@ extension Stat {
             byHour: ReportOptions.ByHourSettings = .init(),
             byWeekday: ReportOptions.ByWeekdaySettings = .init(),
             meals: ReportOptions.MealsSettings = .init(),
+            patchesInput: ReportPatchesInput = .init(),
+            cgmPick: CGMPick? = nil,
+            settingsSnapshot: ReportSettingsSnapshot? = nil,
             carbEquivalentFactor: Double = 0.5,
             allowOneMinuteLoop: Bool = false,
             partPeriod: StatsPeriod? = nil,
@@ -261,6 +319,9 @@ extension Stat {
             self.byHour = byHour
             self.byWeekday = byWeekday
             self.meals = meals
+            self.patchesInput = patchesInput
+            self.cgmPick = cgmPick
+            self.settingsSnapshot = settingsSnapshot
             self.carbEquivalentFactor = carbEquivalentFactor
             self.allowOneMinuteLoop = allowOneMinuteLoop
             self.partPeriod = partPeriod
@@ -291,10 +352,10 @@ extension Stat {
         }
 
         /// The one part of a view's own "Export PDF" that reads nothing but its own result: By hour, By weekday,
-        /// Weekly, Good & bad days, Insulin or Meals alone. nil for a report and for the other parts.
+        /// Weekly, Good & bad days, Insulin, Meals, Patches or CGM alone. nil for a report and for the other parts.
         var ownPart: ReportPart? {
             guard parts.count == 1, let part = parts.first, day == nil else { return nil }
-            return [.byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals].contains(part) ? part : nil
+            return [.byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals, .patches, .cgm].contains(part) ? part : nil
         }
 
         /// the period a single day's request carries (the Day view's days); its insulin and meals are read from the
@@ -366,6 +427,10 @@ extension Stat {
         /// the Meals part's: the Meals tab's period (its summary, days and clock hours), or that it couldn't be read;
         /// nil without the part
         var mealPeriod: ReportRead<MealPeriod>?
+        /// the Patches part's: the Patches topic's result, or that it couldn't be read; nil without the part
+        var patches: ReportRead<PatchesResult>?
+        /// the CGM part's: the CGM topic's result, or that it couldn't be read; nil without the part
+        var cgm: ReportRead<CGMResult>?
 
         /// The first and the last day printed (their starts): the period's, the last one today, also without readings
         /// yet; a single day's report: that day.
@@ -402,6 +467,10 @@ extension Stat {
                 if let window = insulinPeriod?.value?.summary.window { return Self.days(of: window, calendar: calendar) }
             case .meals:
                 if let window = mealPeriod?.value?.summary.window { return Self.days(of: window, calendar: calendar) }
+            case .patches:
+                if let window = patches?.value?.window { return Self.days(of: window, calendar: calendar) }
+            case .cgm:
+                if let window = cgm?.value?.window { return Self.days(of: window, calendar: calendar) }
             default: break
             }
             return days(calendar: calendar)
@@ -419,6 +488,12 @@ extension Stat {
         case pumpDataNotRead
         /// the Meals part alone: the carb entries couldn't be read
         case carbEntriesNotRead
+        /// the Patches part alone: no patch (pod, site) in the period; the text says which
+        case noPatches(String)
+        /// the Patches part alone: the pump data couldn't be read
+        case patchesNotRead
+        /// the CGM part alone: the readings couldn't be read
+        case cgmNotRead
         /// a single day's report: the day has no CGM data
         case noDataOnDay
         /// no part selected
@@ -600,7 +675,38 @@ extension Stat {
                 data.mealPeriod = meals ?? .failed
             }
             try await readPatterns(request, into: &data, bands: bands, source: source)
+            try await readDevices(request, into: &data, bands: bands, source: source, now: now, calendar: calendar)
             return data
+        }
+
+        /// The Patches and the CGM topics' results; a read that fails is said on the part's page.
+        private static func readDevices(
+            _ request: ReportRequest,
+            into data: inout ReportData,
+            bands: StatsBands,
+            source: any ReportDataSource,
+            now: Date,
+            calendar: Calendar
+        ) async throws {
+            if request.parts.contains(.patches) {
+                try Task.checkCancellation()
+                data.patches = try await tolerant("the patches") {
+                    try await source.reportPatches(
+                        request.period,
+                        bands: bands,
+                        input: request.patchesInput,
+                        now: now,
+                        calendar: calendar
+                    )
+                }
+            }
+            if request.parts.contains(.cgm) {
+                try Task.checkCancellation()
+                data.cgm = try await tolerant("the CGM readings") {
+                    try await source.reportCGM(request.period, now: now, calendar: calendar)
+                }
+            }
+            try Task.checkCancellation()
         }
 
         /// A report's data without anything of the glucose: an empty summary of the period's window (the period's days
@@ -684,6 +790,18 @@ extension Stat {
                 guard let period = read.value else { throw ReportError.carbEntriesNotRead }
                 guard !period.summary.isEmpty else { throw ReportError.noCarbEntries }
                 data.mealPeriod = .value(period)
+                return data
+            }
+            // Patches or CGM alone: the topic's result; without data, or unread, no report, saying why
+            if part == .patches || part == .cgm {
+                try await readDevices(request, into: &data, bands: bands, source: source, now: now, calendar: calendar)
+                if part == .patches {
+                    guard let result = data.patches?.value else { throw ReportError.patchesNotRead }
+                    guard !result.isEmpty else { throw ReportError.noPatches(ReportPatches.emptyText(result.topic)) }
+                } else {
+                    guard let result = data.cgm?.value else { throw ReportError.cgmNotRead }
+                    guard !result.isEmpty else { throw ReportError.noData }
+                }
                 return data
             }
             try await readPatterns(request, into: &data, bands: bands, source: source)

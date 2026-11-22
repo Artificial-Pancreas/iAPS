@@ -284,7 +284,7 @@ extension Stat {
         }
 
         /// The pump session records of the last 120 days (the store's retention), to an hour after `now`.
-        private static func pumpSessions(now: Date, storage: CoreDataStorage) async throws -> [PumpSessionValue] {
+        static func pumpSessions(now: Date, storage: CoreDataStorage) async throws -> [PumpSessionValue] {
             try await storage.fetchPumpSessions(
                 from: now.addingTimeInterval(-PumpEventStore.Config.retention),
                 to: now.addingTimeInterval(.hours(1))
@@ -333,7 +333,7 @@ extension Stat {
         /// The rows of the sessions' time, as the Insulin tab and the glucose statistics read them: the state running
         /// into it, the events and the IOB up to an hour after it (the next temp clips one running over its end), the
         /// readings from `GlucoseStatistics.Config.lookback` before it, the loop records.
-        private static func patchInput(
+        static func patchInput(
             _ sessions: [PatchSession],
             now: Date,
             storage coreDataStorage: CoreDataStorage
@@ -651,28 +651,72 @@ extension Stat.Provider {
         )
         let storage = coreDataStorage
         return try await cgmCache.result(key: key) {
-            let readings = try await storage.fetchGlucosePoints(from: window.start, to: now.addingTimeInterval(1))
-            let joined = try await Self.sensorSessions(sessions, storage: storage, fetched: readings)
-            try Task.checkCancellation()
-            // on a GCD queue: the engine's fits run in parallel (`DispatchQueue.concurrentPerform`), blocking it
-            let result: CGMResult = await withCheckedContinuation { continuation in
-                DispatchQueue.global(qos: .userInitiated).async {
-                    continuation.resume(returning: Self.cgmResult(
-                        readings: readings,
-                        sessions: joined,
-                        period: period,
-                        window: DateInterval(start: window.start, end: now),
-                        generation: generation,
-                        backfillWindows: backfillWindows,
-                        now: now,
-                        calendar: calendar
-                    ))
-                }
-            }
-            let milliseconds = Int((Date().timeIntervalSince(now) * 1000).rounded())
-            debug(.service, "Statistics: CGM \(period.rawValue), \(readings.count) readings in \(milliseconds) ms")
-            return result
+            try await Self.computeCGM(
+                period,
+                windowStart: window.start,
+                sessions: sessions,
+                backfillWindows: backfillWindows,
+                generation: generation,
+                now: now,
+                calendar: calendar,
+                storage: storage
+            )
         }
+    }
+
+    /// The CGM topic's result computed on its own, for a PDF report: `cgm`'s reads and computation without its kept
+    /// result (`cgmCache`), so a report neither cancels nor is cancelled by the screen's read, and is never a kept one.
+    /// - Parameters: the report's clock and calendar
+    func cgmUncached(_ period: StatsPeriod, now: Date, calendar: Calendar) async throws -> CGMResult {
+        let window = GlucoseStatsEngine.window(for: period, now: now, end: now, calendar: calendar)
+        let sessions = await cgmSessions.sessions(in: DateInterval(start: .distantPast, end: now.addingTimeInterval(.hours(1))))
+        let windows = await cgmSessions.backfillWindows()
+        let isConfigured = await nightscoutManager.isConfigured()
+        return try await Self.computeCGM(
+            period,
+            windowStart: window.start,
+            sessions: sessions,
+            backfillWindows: isConfigured ? windows : nil,
+            generation: 0,
+            now: now,
+            calendar: calendar,
+            storage: coreDataStorage
+        )
+    }
+
+    /// The period's readings read and the result computed (`cgmResult`). Logs how long it took.
+    private static func computeCGM(
+        _ period: StatsPeriod,
+        windowStart: Date,
+        sessions: [CGMSessionRecord],
+        backfillWindows: [DateInterval]?,
+        generation: Int,
+        now: Date,
+        calendar: Calendar,
+        storage: CoreDataStorage
+    ) async throws -> CGMResult {
+        let started = Date()
+        let readings = try await storage.fetchGlucosePoints(from: windowStart, to: now.addingTimeInterval(1))
+        let joined = try await sensorSessions(sessions, storage: storage, fetched: readings)
+        try Task.checkCancellation()
+        // on a GCD queue: the engine's fits run in parallel (`DispatchQueue.concurrentPerform`), blocking it
+        let result: CGMResult = await withCheckedContinuation { continuation in
+            DispatchQueue.global(qos: .userInitiated).async {
+                continuation.resume(returning: cgmResult(
+                    readings: readings,
+                    sessions: joined,
+                    period: period,
+                    window: DateInterval(start: windowStart, end: now),
+                    generation: generation,
+                    backfillWindows: backfillWindows,
+                    now: now,
+                    calendar: calendar
+                ))
+            }
+        }
+        let milliseconds = Int((Date().timeIntervalSince(started) * 1000).rounded())
+        debug(.service, "Statistics: CGM \(period.rawValue), \(readings.count) readings in \(milliseconds) ms")
+        return result
     }
 
     /// The "Which CGM was this?" sheet's input: the last 90 days (the topic's longest period, whatever is shown), the

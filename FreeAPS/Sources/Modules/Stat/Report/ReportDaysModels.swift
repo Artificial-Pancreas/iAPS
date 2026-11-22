@@ -289,6 +289,12 @@ extension Stat.ReportData {
                 paper: request.paper,
                 hourRows: Stat.ReportMeals.hourRows
             )
+        case .patches:
+            return patches?.value.map { ReportPatchesLayout.pageCount($0, paper: request.paper) } ?? 1
+        case .cgm:
+            return cgm?.value.map { Stat.ReportCGM.pageCount($0, shown: request.cgmPick) } ?? 1
+        case .settings:
+            return ReportSettingsLayout.pageCount(request.settingsSnapshot, paper: request.paper)
         default:
             return 1
         }

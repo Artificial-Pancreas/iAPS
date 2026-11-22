@@ -19,7 +19,8 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// The parts that can be printed so far, in the report's order.
     static let implemented: [ReportPart] = [
-        .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals
+        .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals,
+        .patches, .cgm, .settings
     ]
     /// The parts selected until the user picks: the two one-page ones.
     static let defaultSelection: Set<ReportPart> = [.summary, .percentileProfile]
@@ -66,10 +67,18 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
     /// none and are printed once.
     var printsGlucose: Bool {
         switch self {
+        // Settings writes its glucose values in the report's first unit, and says so
         case .insulin,
-             .meals: return false
+             .meals,
+             .settings: return false
         default: return true
         }
+    }
+
+    /// The part's pages print time in ranges: they carry the ranges' line and the footer's note about it. The CGM part
+    /// has glucose values (noise, rate of change) but no range figures.
+    var printsRanges: Bool {
+        printsGlucose && self != .cgm
     }
 
     /// The days a report's period needs for the part: By weekday and Weekly are whole weeks (30 days or more: 4 weeks
@@ -318,14 +327,32 @@ enum ReportPlan {
     /// The estimate can be more than the report has: Daily charts leaves out the days without anything to draw, and
     /// the subtotal rows are counted at their most.
     static func isUpperBound(_ parts: [ReportPart], daysTable: ReportOptions.DaysTableSettings) -> Bool {
-        // Insulin and Meals are one page each without data (or unread)
+        // Insulin and Meals are one page each without data (or unread); Patches, CGM and Settings are counted at
+        // their most
         parts.contains(.dailyCharts) || parts.contains(.goodBadDays) || parts.contains(.insulin) || parts.contains(.meals)
+            || parts.contains(.patches) || parts.contains(.cgm) || parts.contains(.settings)
             || (parts.contains(.daysTable) && daysTable.subtotals != .none)
     }
 
     /// Good & bad days at its most: the comparison, what was different and the days each on a page of their own (every
     /// factor row shown, the longest period); usually two, or one.
     static let goodBadDaysPages = 3
+
+    /// Patches at its most for a period: a change a day (and the one that began before the period), under the longest
+    /// table of wear days.
+    static func patchesPages(days: Int, paper: ReportPaper) -> Int {
+        ReportPatchesLayout.ranges(
+            rows: days + 1,
+            wearDays: ReportPatchesLayout.maximumWearDays,
+            hasPeriodNote: true,
+            paper: paper
+        ).count
+    }
+
+    /// CGM at its most: an Overview and a Sensors page for each CGM printed (`Stat.ReportCGM.maximumCGMs`).
+    static let cgmPages = Stat.ReportCGM.maximumCGMs * Stat.ReportCGM.pagesPerCGM
+    /// Settings at its most: the schedules, and the other values on a second page when the schedules are long.
+    static let settingsPages = 2
 
     static func pageCount(_ count: Int, perPage: Int) -> Int {
         guard count > 0 else { return 0 }
@@ -358,6 +385,12 @@ enum ReportPlan {
             return pageCount(days, perPage: dailyCharts.daysPerPage)
         case .goodBadDays:
             return goodBadDaysPages
+        case .patches:
+            return patchesPages(days: days, paper: paper)
+        case .cgm:
+            return cgmPages
+        case .settings:
+            return settingsPages
         // the overview, then the tables: the clock hours and a row a day
         case .insulin:
             return ReportTablesLayout.pageCount(days: days, paper: paper, hourRows: Stat.ReportInsulin.hourRows)

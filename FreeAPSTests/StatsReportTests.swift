@@ -245,15 +245,16 @@ final class StatsReportTests: XCTestCase {
         XCTAssertEqual(preferences.options(userUnits: .mmolL, locale: Locale(identifier: "en_GB")).units, .mmolL)
         XCTAssertEqual(preferences.options(userUnits: .mmolL, locale: Locale(identifier: "en_GB")).paper, .a4)
 
-        // a part that isn't implemented yet, an unknown one: left out; nothing selected stays nothing
-        defaults.set(["summary", "patches", "nonsense"], forKey: Key.parts)
+        // an unknown part: left out; nothing selected stays nothing
+        defaults.set(["summary", "nonsense"], forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [.summary])
         defaults.set([String](), forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [])
         defaults.set("summary", forKey: Key.parts)
         XCTAssertEqual(preferences.parts, ReportPart.defaultSelection)
-        preferences.parts = [.summary, .settings]
-        XCTAssertEqual(defaults.array(forKey: Key.parts) as? [String], ["summary"])
+        // stored in the report's order
+        preferences.parts = [.settings, .summary]
+        XCTAssertEqual(defaults.array(forKey: Key.parts) as? [String], ["summary", "settings"])
 
         defaults.set("yes", forKey: Key.summaryInsulinAndCarbs)
         defaults.set("no", forKey: Key.summaryGRI)
@@ -277,8 +278,13 @@ final class StatsReportTests: XCTestCase {
     func testImplementedPartsAndUnits() {
         XCTAssertEqual(
             ReportPart.implemented,
-            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals]
+            [
+                .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin,
+                .meals, .patches, .cgm, .settings
+            ]
         )
+        // every part of the catalogue can be printed
+        XCTAssertEqual(ReportPart.implemented, ReportPart.allCases)
         XCTAssertEqual(ReportPart.defaultSelection, [.summary, .percentileProfile])
         XCTAssertEqual(ReportPart.allCases.count, 13)
         XCTAssertFalse(ReportPlan.isLandscape(.summary, dailyCharts: .init()))
@@ -880,6 +886,18 @@ final class StatsReportTests: XCTestCase {
                 period: period
             )
         }
+
+        func reportPatches(
+            _: StatsPeriod,
+            bands _: StatsBands,
+            input _: ReportPatchesInput,
+            now _: Date,
+            calendar _: Calendar
+        ) throws -> Stat.PatchesResult {
+            throw CancellationError()
+        }
+
+        func reportCGM(_: StatsPeriod, now _: Date, calendar _: Calendar) throws -> Stat.CGMResult { throw CancellationError() }
 
         func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop _: Bool) -> Stat.GoodBadDaysData {
             let calendar = Calendar(identifier: .gregorian)

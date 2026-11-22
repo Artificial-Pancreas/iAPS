@@ -14,6 +14,12 @@ extension Stat {
         var allowOneMinuteLoop = false
         /// the metric By weekday's heat map shows on screen: its own "Export PDF" prints that one
         var weekdayMetric: WeekdayMetric?
+        /// what the Patches topic's read takes from the screen
+        var patchesInput = ReportPatchesInput()
+        /// the CGM the CGM topic shows: its own "Export PDF" prints that one
+        var cgmPick: CGMPick?
+        /// the settings as they are now (the Settings part); nil: not given
+        var settingsSnapshot: ReportSettingsSnapshot?
 
         /// - Parameter day: one day's chart alone (`ReportRequest.day`)
         /// - Parameter partPeriod: a view's own period for its part alone (`ReportRequest.partPeriod`)
@@ -21,7 +27,8 @@ extension Stat {
             _ options: ReportOptions,
             parts: [ReportPart]? = nil,
             day: Date? = nil,
-            partPeriod: StatsPeriod? = nil
+            partPeriod: StatsPeriod? = nil,
+            cgmPick: CGMPick? = nil
         ) -> ReportRequest {
             ReportRequest(
                 period: options.period,
@@ -35,6 +42,9 @@ extension Stat {
                 byHour: options.byHour,
                 byWeekday: options.byWeekday,
                 meals: options.meals,
+                patchesInput: patchesInput,
+                cgmPick: cgmPick,
+                settingsSnapshot: settingsSnapshot,
                 carbEquivalentFactor: carbEquivalentFactor,
                 allowOneMinuteLoop: allowOneMinuteLoop,
                 partPeriod: partPeriod,
@@ -131,7 +141,14 @@ extension Stat {
             if part == .meals {
                 options.meals.includeNutrients = true
             }
-            return context.request(options, parts: [part], day: day, partPeriod: context.screenPeriod)
+            // the CGM topic shows one CGM at a time: its own export prints that one
+            return context.request(
+                options,
+                parts: [part],
+                day: day,
+                partPeriod: context.screenPeriod,
+                cgmPick: part == .cgm ? context.cgmPick : nil
+            )
         }
 
         /// Stops the report being made (Cancel, the Reports screen popped, Statistics going down); a report shown
@@ -209,7 +226,8 @@ extension Stat {
             case let .success(output):
                 preview = (origin, output.url)
             case let .failure(error):
-                if error is CancellationError { return }
+                // a run the user cancelled never gets here (`start`'s guard); a cancellation that does came from
+                // inside a read, and is a failure like any other
                 if Self.isUnexpected(error) {
                     warning(.service, "Report: the PDF couldn't be created", error: error)
                 }
@@ -239,6 +257,12 @@ extension Stat {
                 return NSLocalizedString("The pump data couldn't be read.", comment: "")
             case .carbEntriesNotRead:
                 return NSLocalizedString("The carb entries couldn't be read.", comment: "")
+            case let .noPatches(text):
+                return text
+            case .patchesNotRead:
+                return NSLocalizedString("The pump data couldn't be read.", comment: "")
+            case .cgmNotRead:
+                return NSLocalizedString("The CGM readings couldn't be read.", comment: "")
             case .noDataOnDay:
                 return NSLocalizedString("No CGM data on this day", comment: "Day view, Export PDF: the day has no readings")
             case .nothingSelected:
@@ -255,6 +279,7 @@ extension Stat.StateModel {
     /// What a report takes from the screen as it is now.
     var reportContext: Stat.ReportContext {
         let appSettings = appCoordinator.settings.value
+        let pumpInfo = appCoordinator.pumpInfo.value
         return Stat.ReportContext(
             source: provider,
             userUnits: settings.units,
@@ -262,7 +287,23 @@ extension Stat.StateModel {
             carbEquivalentFactor: (appSettings.individualAdjustmentFactor as NSDecimalNumber).doubleValue,
             screenPeriod: period,
             allowOneMinuteLoop: appSettings.allowOneMinuteLoop,
-            weekdayMetric: weekdaySelection.metric
+            weekdayMetric: weekdaySelection.metric,
+            patchesInput: ReportPatchesInput(
+                allowOneMinuteLoop: appSettings.allowOneMinuteLoop,
+                deliveringPlugin: pumpInfo.flatMap { KnownPlugins.hasActiveDeliveryUnit($0) ? $0.identifier : nil },
+                currentPlugin: pumpInfo?.identifier
+            ),
+            cgmPick: cgmPick,
+            // the values the app publishes, read only: nothing of the settings is touched
+            settingsSnapshot: ReportSettingsSnapshot(
+                basal: appCoordinator.basalProfile.value,
+                sensitivities: appCoordinator.isfSchedule.value,
+                carbRatios: appCoordinator.crSchedule.value,
+                targets: appCoordinator.bgTargetsSchedule.value,
+                pump: appCoordinator.pumpSettings.value,
+                preferences: appCoordinator.preferences.value,
+                settings: appSettings
+            )
         )
     }
 }

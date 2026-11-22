@@ -855,10 +855,15 @@ extension Stat {
                                 CGMFormat.fine($0, units: units)
                             )
                         },
-                        String(
-                            format: NSLocalizedString("%d sensors", comment: "Statistics CGM Sensors: the sensors with a day 1"),
-                            shown?.sensorsBySensorDay[1] ?? 0
-                        )
+                        (shown?.sensorsBySensorDay[1] ?? 0) == 1
+                            ? NSLocalizedString("1 sensor", comment: "Statistics CGM Sensors: one sensor with a day 1")
+                            : String(
+                                format: NSLocalizedString(
+                                    "%d sensors",
+                                    comment: "Statistics CGM Sensors: the sensors with a day 1"
+                                ),
+                                shown?.sensorsBySensorDay[1] ?? 0
+                            )
                     ].compactMap { $0 }.joined(separator: " · ")
                 )
             }

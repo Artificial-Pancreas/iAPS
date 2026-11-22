@@ -280,7 +280,7 @@ final class StatsReportPatternsTests: XCTestCase {
         var options = ReportOptions(period: .days7, units: .mgdL, paper: .a4, parts: Set(ReportPart.implemented))
         XCTAssertEqual(
             options.orderedParts,
-            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .insulin, .meals]
+            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .insulin, .meals, .patches, .cgm, .settings]
         )
         options.period = .days14
         XCTAssertEqual(options.orderedParts.filter { $0.minimumDays != nil }, [.goodBadDays])
@@ -1079,6 +1079,18 @@ final class StatsReportPatternsTests: XCTestCase {
             self.bands.append(bands)
             return isEmpty ? Fixtures.emptyWeekday() : Fixtures.weekday(period)
         }
+
+        func reportPatches(
+            _: StatsPeriod,
+            bands _: StatsBands,
+            input _: ReportPatchesInput,
+            now _: Date,
+            calendar _: Calendar
+        ) throws -> Stat.PatchesResult {
+            throw CancellationError()
+        }
+
+        func reportCGM(_: StatsPeriod, now _: Date, calendar _: Calendar) throws -> Stat.CGMResult { throw CancellationError() }
 
         func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop: Bool) -> Stat.GoodBadDaysData {
             reads.append("goodBadDays \(period.rawValue) \(allowOneMinuteLoop)")

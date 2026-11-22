@@ -865,6 +865,18 @@ final class StatsReportInsulinMealsTests: XCTestCase {
             )
         }
 
+        func reportPatches(
+            _: StatsPeriod,
+            bands _: StatsBands,
+            input _: ReportPatchesInput,
+            now _: Date,
+            calendar _: Calendar
+        ) throws -> Stat.PatchesResult {
+            throw CancellationError()
+        }
+
+        func reportCGM(_: StatsPeriod, now _: Date, calendar _: Calendar) throws -> Stat.CGMResult { throw CancellationError() }
+
         func reportGoodBadDays(_ period: StatsPeriod, bands: StatsBands, allowOneMinuteLoop _: Bool) -> Stat.GoodBadDaysData {
             reads.append("goodBadDays")
             return Stat.GoodBadDaysData(

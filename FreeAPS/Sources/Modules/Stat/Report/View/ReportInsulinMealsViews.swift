@@ -193,7 +193,7 @@ struct ReportTableView: View {
 }
 
 /// A section's title over its rule, in `ReportTablesLayout.sectionHeight`.
-private struct ReportTableTitle: View {
+struct ReportTableTitle: View {
     let text: String
     let width: CGFloat
 
@@ -212,7 +212,7 @@ private struct ReportTableTitle: View {
 }
 
 /// The numbers of an overview page, side by side: the name over the value and its unit.
-private struct ReportFiguresRow: View {
+struct ReportFiguresRow: View {
     let figures: [Stat.ReportFigure]
     let width: CGFloat
 

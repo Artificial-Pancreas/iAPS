@@ -95,6 +95,12 @@ struct ReportPageView: View {
                     ReportInsulinContent(page: insulin, width: width)
                 case let .meals(meals):
                     ReportMealsContent(page: meals, width: width)
+                case let .patches(patches):
+                    ReportPatchesContent(page: patches, width: width)
+                case let .cgm(cgm):
+                    ReportCGMContent(page: cgm, width: width)
+                case let .settings(settings):
+                    ReportSettingsContent(page: settings, width: width)
                 }
             }
             .padding(.top, 12)
