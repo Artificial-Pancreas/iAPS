@@ -241,6 +241,16 @@ struct ReportsScreen: View {
                     label: { Stat.Weekday.title($0.metric) }
                 )
             }
+        } else if part == .meals {
+            Toggle(
+                "Include nutrients",
+                isOn: Binding(get: { options.meals.includeNutrients }, set: { isOn in
+                    options.meals.includeNutrients = isOn
+                    preferences.meals = options.meals
+                })
+            )
+            .font(.subheadline)
+            .frame(minHeight: 40)
         }
     }
 

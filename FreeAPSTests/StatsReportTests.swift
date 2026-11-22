@@ -246,7 +246,7 @@ final class StatsReportTests: XCTestCase {
         XCTAssertEqual(preferences.options(userUnits: .mmolL, locale: Locale(identifier: "en_GB")).paper, .a4)
 
         // a part that isn't implemented yet, an unknown one: left out; nothing selected stays nothing
-        defaults.set(["summary", "insulin", "nonsense"], forKey: Key.parts)
+        defaults.set(["summary", "patches", "nonsense"], forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [.summary])
         defaults.set([String](), forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [])
@@ -277,7 +277,7 @@ final class StatsReportTests: XCTestCase {
     func testImplementedPartsAndUnits() {
         XCTAssertEqual(
             ReportPart.implemented,
-            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays]
+            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals]
         )
         XCTAssertEqual(ReportPart.defaultSelection, [.summary, .percentileProfile])
         XCTAssertEqual(ReportPart.allCases.count, 13)

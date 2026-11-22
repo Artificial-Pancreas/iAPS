@@ -34,6 +34,7 @@ extension Stat {
                 dailyCharts: options.dailyCharts,
                 byHour: options.byHour,
                 byWeekday: options.byWeekday,
+                meals: options.meals,
                 carbEquivalentFactor: carbEquivalentFactor,
                 allowOneMinuteLoop: allowOneMinuteLoop,
                 partPeriod: partPeriod,
@@ -125,6 +126,11 @@ extension Stat {
             if part == .byWeekday, let metric = context.weekdayMetric {
                 options.byWeekday.heatMap = ReportOptions.ByWeekdaySettings.HeatMap(metric)
             }
+            // the Meals tab shows the fat and protein whenever they are logged: so does its own export, whatever the
+            // Reports screen's toggle (the page prints them only when logged)
+            if part == .meals {
+                options.meals.includeNutrients = true
+            }
             return context.request(options, parts: [part], day: day, partPeriod: context.screenPeriod)
         }
 
@@ -204,27 +210,42 @@ extension Stat {
                 preview = (origin, output.url)
             case let .failure(error):
                 if error is CancellationError { return }
-                switch error as? ReportError {
-                case .noData:
-                    failure = (origin, NSLocalizedString("No CGM data in this period", comment: ""))
-                case .noDataOnDay:
-                    failure = (
-                        origin,
-                        NSLocalizedString("No CGM data on this day", comment: "Day view, Export PDF: the day has no readings")
-                    )
-                case .nothingSelected:
-                    failure = (
-                        origin,
-                        NSLocalizedString("Select at least one part.", comment: "Reports screen: no part is selected")
-                    )
-                case nil,
-                     .notWritten:
+                if Self.isUnexpected(error) {
                     warning(.service, "Report: the PDF couldn't be created", error: error)
-                    failure = (
-                        origin,
-                        NSLocalizedString("The report couldn't be created.", comment: "Reports screen: making the PDF failed")
-                    )
                 }
+                failure = (origin, Self.failureText(error))
+            }
+        }
+
+        /// A failure that isn't one of the report's own reasons (no data, nothing selected, a read that failed).
+        nonisolated static func isUnexpected(_ error: Error) -> Bool {
+            switch error as? ReportError {
+            case nil,
+                 .notWritten: return true
+            default: return false
+            }
+        }
+
+        /// Why a report wasn't made, as said where it was asked for.
+        nonisolated static func failureText(_ error: Error) -> String {
+            switch error as? ReportError {
+            case .noData:
+                return NSLocalizedString("No CGM data in this period", comment: "")
+            case .noPumpData:
+                return NSLocalizedString("No pump data in this period", comment: "")
+            case .noCarbEntries:
+                return NSLocalizedString("No carb entries in this period", comment: "")
+            case .pumpDataNotRead:
+                return NSLocalizedString("The pump data couldn't be read.", comment: "")
+            case .carbEntriesNotRead:
+                return NSLocalizedString("The carb entries couldn't be read.", comment: "")
+            case .noDataOnDay:
+                return NSLocalizedString("No CGM data on this day", comment: "Day view, Export PDF: the day has no readings")
+            case .nothingSelected:
+                return NSLocalizedString("Select at least one part.", comment: "Reports screen: no part is selected")
+            case nil,
+                 .notWritten:
+                return NSLocalizedString("The report couldn't be created.", comment: "Reports screen: making the PDF failed")
             }
         }
     }

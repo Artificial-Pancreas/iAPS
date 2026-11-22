@@ -534,10 +534,13 @@
 		DFF5C73BDA5AA3FAB6442C74 /* ReportPDFWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56633D55FD34F9BE6133484A /* ReportPDFWriter.swift */; };
 		6CD6A33C2100E8C668E24539 /* ReportExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */; };
 		1939F0D2F63580EBBBF0CB1E /* StatsReportPatternsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EAAF5E862F9CC93C00379C9 /* StatsReportPatternsTests.swift */; };
+		3C37940EAFCDF234BD8A391F /* StatsReportInsulinMealsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F4388D9290400ADF43CE614 /* StatsReportInsulinMealsTests.swift */; };
 		22A85A91608DA998FA6D49E4 /* ReportGoodBadDaysViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAC157AD81D21F619B0BFF4 /* ReportGoodBadDaysViews.swift */; };
 		DB146A453E2E051A555A7124 /* ReportPatternViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA27B051A572A1F1A33FAF8 /* ReportPatternViews.swift */; };
+		683B779A0C199B6127A2178C /* ReportInsulinMealsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DD8CBA831CB44906D1B9B /* ReportInsulinMealsViews.swift */; };
 		09350B0E7237EEB0C8DB9206 /* ReportGoodBadDaysModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159C86B8C18C073E710A0AA /* ReportGoodBadDaysModels.swift */; };
 		E0D6CB93DB473049706F18DE /* ReportPatternModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DC98163FEDA28966D4DEC7B /* ReportPatternModels.swift */; };
+		FC2BA56D574353F15FCCD317 /* ReportInsulinMealsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1350E499F652D78752186D71 /* ReportInsulinMealsModels.swift */; };
 		17C677E2DDDC6FDDA11AA536 /* StatsReportDaysTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFE1634ACF75725A02B84037 /* StatsReportDaysTests.swift */; };
 		A5C3EA286B4096B9E0040BD7 /* ReportDailyChartsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF197B0B41A63E638D30A54C /* ReportDailyChartsViews.swift */; };
 		E6D453E927212EC237F37E34 /* ReportDaysViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033760C7998FC54937C3463B /* ReportDaysViews.swift */; };
@@ -1424,10 +1427,13 @@
 		56633D55FD34F9BE6133484A /* ReportPDFWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPDFWriter.swift; sourceTree = "<group>"; };
 		39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportExporter.swift; sourceTree = "<group>"; };
 		4EAAF5E862F9CC93C00379C9 /* StatsReportPatternsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsReportPatternsTests.swift; sourceTree = "<group>"; };
+		6F4388D9290400ADF43CE614 /* StatsReportInsulinMealsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsReportInsulinMealsTests.swift; sourceTree = "<group>"; };
 		FFAC157AD81D21F619B0BFF4 /* ReportGoodBadDaysViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportGoodBadDaysViews.swift; sourceTree = "<group>"; };
 		3EA27B051A572A1F1A33FAF8 /* ReportPatternViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPatternViews.swift; sourceTree = "<group>"; };
+		602DD8CBA831CB44906D1B9B /* ReportInsulinMealsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportInsulinMealsViews.swift; sourceTree = "<group>"; };
 		C159C86B8C18C073E710A0AA /* ReportGoodBadDaysModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportGoodBadDaysModels.swift; sourceTree = "<group>"; };
 		9DC98163FEDA28966D4DEC7B /* ReportPatternModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportPatternModels.swift; sourceTree = "<group>"; };
+		1350E499F652D78752186D71 /* ReportInsulinMealsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportInsulinMealsModels.swift; sourceTree = "<group>"; };
 		EFE1634ACF75725A02B84037 /* StatsReportDaysTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsReportDaysTests.swift; sourceTree = "<group>"; };
 		EF197B0B41A63E638D30A54C /* ReportDailyChartsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDailyChartsViews.swift; sourceTree = "<group>"; };
 		033760C7998FC54937C3463B /* ReportDaysViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportDaysViews.swift; sourceTree = "<group>"; };
@@ -2047,6 +2053,7 @@
 				39BA0DEBD33DE9D8C0E7C35F /* ReportExporter.swift */,
 				C159C86B8C18C073E710A0AA /* ReportGoodBadDaysModels.swift */,
 				9DC98163FEDA28966D4DEC7B /* ReportPatternModels.swift */,
+				1350E499F652D78752186D71 /* ReportInsulinMealsModels.swift */,
 				7326EAF4C4161A6A860496F4 /* ReportDailyChartsModels.swift */,
 				A1C5A7DDE2C09AD9D7F4F49E /* ReportDaysModels.swift */,
 				9E3656823E272857DFE37194 /* View */,
@@ -2061,6 +2068,7 @@
 				8E8E275E4049C7319C75577C /* ReportsScreen.swift */,
 				FFAC157AD81D21F619B0BFF4 /* ReportGoodBadDaysViews.swift */,
 				3EA27B051A572A1F1A33FAF8 /* ReportPatternViews.swift */,
+				602DD8CBA831CB44906D1B9B /* ReportInsulinMealsViews.swift */,
 				EF197B0B41A63E638D30A54C /* ReportDailyChartsViews.swift */,
 				033760C7998FC54937C3463B /* ReportDaysViews.swift */,
 			);
@@ -2915,6 +2923,7 @@
 				0714DF132A189761727B27B5 /* GoodBadDaysEngineTests.swift */,
 				BA27365B63292298FC5F027C /* StatsReportTests.swift */,
 				4EAAF5E862F9CC93C00379C9 /* StatsReportPatternsTests.swift */,
+				6F4388D9290400ADF43CE614 /* StatsReportInsulinMealsTests.swift */,
 				EFE1634ACF75725A02B84037 /* StatsReportDaysTests.swift */,
 				1C384DD124056181E952DBCF /* GoodBadDaysTabsTests.swift */,
 				EA6C0BC2688A88C4F4AE9C33 /* SmoothingReplayTests.swift */,
@@ -4373,8 +4382,10 @@
 				6CD6A33C2100E8C668E24539 /* ReportExporter.swift in Sources */,
 				22A85A91608DA998FA6D49E4 /* ReportGoodBadDaysViews.swift in Sources */,
 				DB146A453E2E051A555A7124 /* ReportPatternViews.swift in Sources */,
+				683B779A0C199B6127A2178C /* ReportInsulinMealsViews.swift in Sources */,
 				09350B0E7237EEB0C8DB9206 /* ReportGoodBadDaysModels.swift in Sources */,
 				E0D6CB93DB473049706F18DE /* ReportPatternModels.swift in Sources */,
+				FC2BA56D574353F15FCCD317 /* ReportInsulinMealsModels.swift in Sources */,
 				A5C3EA286B4096B9E0040BD7 /* ReportDailyChartsViews.swift in Sources */,
 				E6D453E927212EC237F37E34 /* ReportDaysViews.swift in Sources */,
 				F0C52B23D2A105BEB61C1D9D /* ReportDailyChartsModels.swift in Sources */,
@@ -4733,6 +4744,7 @@
 				19F8F5A5B4B86EE76A28F708 /* GoodBadDaysEngineTests.swift in Sources */,
 				114D4F01C846B7EE14F37B81 /* StatsReportTests.swift in Sources */,
 				1939F0D2F63580EBBBF0CB1E /* StatsReportPatternsTests.swift in Sources */,
+				3C37940EAFCDF234BD8A391F /* StatsReportInsulinMealsTests.swift in Sources */,
 				17C677E2DDDC6FDDA11AA536 /* StatsReportDaysTests.swift in Sources */,
 				5D96525BF47B6B79D8983BBC /* GoodBadDaysTabsTests.swift in Sources */,
 				9BF52A674C3807610702FDCF /* SmoothingReplayTests.swift in Sources */,

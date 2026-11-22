@@ -278,9 +278,12 @@ final class StatsReportPatternsTests: XCTestCase {
 
         // a selected part the period can't hold is kept selected, and left out of the report
         var options = ReportOptions(period: .days7, units: .mgdL, paper: .a4, parts: Set(ReportPart.implemented))
-        XCTAssertEqual(options.orderedParts, [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour])
+        XCTAssertEqual(
+            options.orderedParts,
+            [.summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .insulin, .meals]
+        )
         options.period = .days14
-        XCTAssertEqual(options.orderedParts.suffix(2), [.byHour, .goodBadDays])
+        XCTAssertEqual(options.orderedParts.filter { $0.minimumDays != nil }, [.goodBadDays])
         options.period = .days30
         XCTAssertEqual(options.orderedParts, ReportPart.implemented)
         XCTAssertEqual(options.parts, Set(ReportPart.implemented))

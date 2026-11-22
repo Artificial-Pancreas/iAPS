@@ -100,10 +100,12 @@ enum ReportDaysBuilder {
             hasReadings: aggregate.histogram.readingCount > 0
         )
         if let insulin, insulin.hasData {
+            // as the Insulin part prints the day: the parts rounded so that they add up to the total as printed
             let covered = insulin.coveredSeconds > 0
-            numbers.tdd = covered ? insulin.total : nil
-            numbers.basal = covered ? insulin.basal : nil
-            numbers.bolus = insulin.smb + insulin.bolus
+            let split = ReportAmounts.split([covered ? insulin.basal : 0, insulin.smb, insulin.bolus], decimals: 1)
+            numbers.tdd = covered ? split.total : nil
+            numbers.basal = covered ? split.parts[0] : nil
+            numbers.bolus = split.parts[1] + split.parts[2]
             numbers.insulinOutsideAverage = !insulin.isHeadline
         }
         if let meals, meals.hasEntries {
@@ -134,9 +136,12 @@ enum ReportDaysBuilder {
         var numbers = glucose(pooled, hasReadings: aggregates.contains { $0.histogram.readingCount > 0 })
         if insulin.isNotEmpty {
             let summary = InsulinStatsEngine.summary(insulin, period: nil)
-            numbers.tdd = summary.tdd
-            numbers.basal = summary.tdd == nil ? nil : summary.basal
-            numbers.bolus = summary.tdd == nil ? nil : (summary.smb ?? 0) + (summary.bolus ?? 0)
+            if summary.tdd != nil {
+                let split = ReportAmounts.split([summary.basal ?? 0, summary.smb ?? 0, summary.bolus ?? 0], decimals: 1)
+                numbers.tdd = split.total
+                numbers.basal = split.parts[0]
+                numbers.bolus = split.parts[1] + split.parts[2]
+            }
         }
         let averaged = meals.filter(\.isAveraged)
         if averaged.isNotEmpty {
@@ -269,6 +274,21 @@ extension Stat.ReportData {
             return weekly.isEmpty ? 0 : 1
         case .goodBadDays:
             return goodBadDays.map { ReportGoodBadDaysLayout.pageCount($0, paper: request.paper) } ?? 0
+        // the overview and the tables; one page saying so without data
+        case .insulin:
+            guard let period = insulinPeriod?.value, !period.summary.isEmpty else { return 1 }
+            return ReportTablesLayout.pageCount(
+                days: period.days.count,
+                paper: request.paper,
+                hourRows: Stat.ReportInsulin.hourRows
+            )
+        case .meals:
+            guard let period = mealPeriod?.value, !period.summary.isEmpty else { return 1 }
+            return ReportTablesLayout.pageCount(
+                days: period.days.count,
+                paper: request.paper,
+                hourRows: Stat.ReportMeals.hourRows
+            )
         default:
             return 1
         }
@@ -280,7 +300,9 @@ extension Stat.ReportData {
         let pages = request.parts.flatMap { part -> [ReportPage] in
             let count = pageCount(of: part, dayRows: dayRows)
             let size = request.size(of: part)
-            return request.units.flatMap { units in
+            // a part without glucose values is printed once, not once per unit
+            let printed = part.printsGlucose ? request.units : Array(request.units.prefix(1))
+            return printed.flatMap { units in
                 (0 ..< count).map { ReportPage(part: part, units: units, size: size, index: $0) }
             }
         }

@@ -217,6 +217,7 @@ extension Stat {
         let dailyCharts: ReportOptions.DailyChartsSettings
         let byHour: ReportOptions.ByHourSettings
         let byWeekday: ReportOptions.ByWeekdaySettings
+        let meals: ReportOptions.MealsSettings
         /// the current `individualAdjustmentFactor` (the Meals tab's read takes it)
         let carbEquivalentFactor: Double
         /// the current `allowOneMinuteLoop` (Good & bad days' loop row counts its slots by it)
@@ -239,6 +240,7 @@ extension Stat {
             dailyCharts: ReportOptions.DailyChartsSettings = .init(),
             byHour: ReportOptions.ByHourSettings = .init(),
             byWeekday: ReportOptions.ByWeekdaySettings = .init(),
+            meals: ReportOptions.MealsSettings = .init(),
             carbEquivalentFactor: Double = 0.5,
             allowOneMinuteLoop: Bool = false,
             partPeriod: StatsPeriod? = nil,
@@ -258,6 +260,7 @@ extension Stat {
             self.dailyCharts = charts
             self.byHour = byHour
             self.byWeekday = byWeekday
+            self.meals = meals
             self.carbEquivalentFactor = carbEquivalentFactor
             self.allowOneMinuteLoop = allowOneMinuteLoop
             self.partPeriod = partPeriod
@@ -288,10 +291,10 @@ extension Stat {
         }
 
         /// The one part of a view's own "Export PDF" that reads nothing but its own result: By hour, By weekday,
-        /// Weekly or Good & bad days alone. nil for a report and for the other parts.
+        /// Weekly, Good & bad days, Insulin or Meals alone. nil for a report and for the other parts.
         var ownPart: ReportPart? {
             guard parts.count == 1, let part = parts.first, day == nil else { return nil }
-            return [.byHour, .byWeekday, .weekly, .goodBadDays].contains(part) ? part : nil
+            return [.byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals].contains(part) ? part : nil
         }
 
         /// the period a single day's request carries (the Day view's days); its insulin and meals are read from the
@@ -303,14 +306,18 @@ extension Stat {
             parts.contains(.summary) && summary.insulinAndCarbs
         }
 
-        /// the Insulin tab's days are read: the Summary's block, the Days table's columns, Daily charts' TDD
+        /// the Insulin tab's days are read: the Summary's block, the Days table's columns, Daily charts' TDD, the
+        /// Insulin part
         var needsInsulin: Bool {
             needsInsulinAndCarbs || (parts.contains(.daysTable) && daysTable.insulin) || parts.contains(.dailyCharts)
+                || parts.contains(.insulin)
         }
 
-        /// the Meals tab's days are read: the Summary's block, the Days table's column, Daily charts' carbs
+        /// the Meals tab's days are read: the Summary's block, the Days table's column, Daily charts' carbs, the Meals
+        /// part
         var needsMeals: Bool {
             needsInsulinAndCarbs || (parts.contains(.daysTable) && daysTable.carbs) || parts.contains(.dailyCharts)
+                || parts.contains(.meals)
         }
 
         func size(of part: ReportPart) -> CGSize {
@@ -353,6 +360,12 @@ extension Stat {
         var weekly: [WeeklyResult] = []
         /// Good & bad days' result (`request.goodBadDaysPeriod`); nil without the part
         var goodBadDays: GoodBadDaysData?
+        /// the Insulin part's: the Insulin tab's period (its summary, days and clock hours), or that it couldn't be
+        /// read; nil without the part
+        var insulinPeriod: ReportRead<InsulinPeriod>?
+        /// the Meals part's: the Meals tab's period (its summary, days and clock hours), or that it couldn't be read;
+        /// nil without the part
+        var mealPeriod: ReportRead<MealPeriod>?
 
         /// The first and the last day printed (their starts): the period's, the last one today, also without readings
         /// yet; a single day's report: that day.
@@ -366,8 +379,14 @@ extension Stat {
             return (first, calendar.date(byAdding: .day, value: count - 1, to: first) ?? first)
         }
 
+        /// The first and the last day (their starts) of a window of whole days (`[start, end)`).
+        static func days(of window: DateInterval, calendar: Calendar) -> (first: Date, last: Date) {
+            (window.start, calendar.startOfDay(for: Swift.max(window.start, window.end.addingTimeInterval(-1))))
+        }
+
         /// The days the file is named by: a report of one part that states its own dates in its header (By weekday's
-        /// whole weeks, Weekly's 13 weeks, Good & bad days' complete days) those, else the period's (`days`).
+        /// whole weeks, Weekly's 13 weeks, Good & bad days' complete days, the Insulin and Meals tabs' days) those, else the
+        /// period's (`days`).
         func fileDays(calendar: Calendar) -> (first: Date, last: Date) {
             guard request.parts.count == 1, let part = request.parts.first else { return days(calendar: calendar) }
             switch part {
@@ -378,10 +397,11 @@ extension Stat {
                     return (first.days.start, last.lastDay)
                 }
             case .goodBadDays:
-                if let window = goodBadDays?.result.window {
-                    let last = calendar.startOfDay(for: Swift.max(window.start, window.end.addingTimeInterval(-1)))
-                    return (window.start, last)
-                }
+                if let window = goodBadDays?.result.window { return Self.days(of: window, calendar: calendar) }
+            case .insulin:
+                if let window = insulinPeriod?.value?.summary.window { return Self.days(of: window, calendar: calendar) }
+            case .meals:
+                if let window = mealPeriod?.value?.summary.window { return Self.days(of: window, calendar: calendar) }
             default: break
             }
             return days(calendar: calendar)
@@ -391,6 +411,14 @@ extension Stat {
     enum ReportError: Error, Equatable {
         /// no CGM data in the period: nothing to print
         case noData
+        /// the Insulin part alone: no pump data in the period
+        case noPumpData
+        /// the Meals part alone: no carb entry in the period
+        case noCarbEntries
+        /// the Insulin part alone: the pump data couldn't be read
+        case pumpDataNotRead
+        /// the Meals part alone: the carb entries couldn't be read
+        case carbEntriesNotRead
         /// a single day's report: the day has no CGM data
         case noDataOnDay
         /// no part selected
@@ -484,7 +512,11 @@ extension Stat {
             let bands = standardBands(units)
             try Task.checkCancellation()
             if let part = request.ownPart {
-                return try await readOwn(part, request: request, bands: bands, source: source, now: now)
+                return try await readOwn(part, request: request, bands: bands, source: source, now: now, calendar: calendar)
+            }
+            // no part with glucose values (Insulin and Meals together): the glucose isn't read, and isn't needed
+            guard request.parts.contains(where: \.printsGlucose) else {
+                return try await readWithoutGlucose(request, bands: bands, source: source, now: now, calendar: calendar)
             }
             let profile = await source.reportProfile(request.period, bands: bands)
             try Task.checkCancellation()
@@ -561,7 +593,64 @@ extension Stat {
                 failedReads: failed,
                 now: now
             )
+            if request.parts.contains(.insulin) {
+                data.insulinPeriod = insulin ?? .failed
+            }
+            if request.parts.contains(.meals) {
+                data.mealPeriod = meals ?? .failed
+            }
             try await readPatterns(request, into: &data, bands: bands, source: source)
+            return data
+        }
+
+        /// A report's data without anything of the glucose: an empty summary of the period's window (the period's days
+        /// are still its header's and its file's), for the parts' own results to be put in.
+        private static func withoutGlucose(
+            _ request: ReportRequest,
+            bands: StatsBands,
+            now: Date,
+            calendar: Calendar
+        ) -> ReportData {
+            ReportData(
+                request: request,
+                generatedAt: now,
+                summary: GlucoseStatsEngine.summary(
+                    GlucoseHistogram(),
+                    window: GlucoseStatsEngine.window(for: request.period, now: now, end: now, calendar: calendar),
+                    endRule: .stalled,
+                    calendarDays: request.period.calendarDayCount ?? 0,
+                    daysWithData: 0,
+                    bands: bands
+                ),
+                bins: [],
+                gri: nil,
+                insulin: nil,
+                meals: nil
+            )
+        }
+
+        /// A report of parts without glucose values only (Insulin and Meals): the tabs' periods and nothing of the
+        /// glucose, so it is made without CGM data too. A read that fails, or a period without data, is said on the
+        /// part's page.
+        private static func readWithoutGlucose(
+            _ request: ReportRequest,
+            bands: StatsBands,
+            source: any ReportDataSource,
+            now: Date,
+            calendar: Calendar
+        ) async throws -> ReportData {
+            var data = withoutGlucose(request, bands: bands, now: now, calendar: calendar)
+            if request.parts.contains(.insulin) {
+                try Task.checkCancellation()
+                data.insulinPeriod = try await tolerant("the insulin data") { try await source.reportInsulin(request.period) }
+            }
+            if request.parts.contains(.meals) {
+                try Task.checkCancellation()
+                data.mealPeriod = try await tolerant("the meals") {
+                    try await source.reportMeals(request.period, factor: request.carbEquivalentFactor)
+                }
+            }
+            try Task.checkCancellation()
             return data
         }
 
@@ -573,24 +662,30 @@ extension Stat {
             request: ReportRequest,
             bands: StatsBands,
             source: any ReportDataSource,
-            now: Date
+            now: Date,
+            calendar: Calendar
         ) async throws -> ReportData {
-            var data = ReportData(
-                request: request,
-                generatedAt: now,
-                summary: GlucoseStatsEngine.summary(
-                    GlucoseHistogram(),
-                    window: DateInterval(start: now, duration: 0),
-                    endRule: .stalled,
-                    calendarDays: 0,
-                    daysWithData: 0,
-                    bands: bands
-                ),
-                bins: [],
-                gri: nil,
-                insulin: nil,
-                meals: nil
-            )
+            var data = withoutGlucose(request, bands: bands, now: now, calendar: calendar)
+            // Insulin or Meals alone: the tab's period, and nothing of the glucose; a read that fails fails the report,
+            // saying which
+            if part == .insulin {
+                try Task.checkCancellation()
+                let read = try await tolerant("the insulin data") { try await source.reportInsulin(request.period) }
+                guard let period = read.value else { throw ReportError.pumpDataNotRead }
+                guard !period.summary.isEmpty else { throw ReportError.noPumpData }
+                data.insulinPeriod = .value(period)
+                return data
+            }
+            if part == .meals {
+                try Task.checkCancellation()
+                let read = try await tolerant("the meals") {
+                    try await source.reportMeals(request.period, factor: request.carbEquivalentFactor)
+                }
+                guard let period = read.value else { throw ReportError.carbEntriesNotRead }
+                guard !period.summary.isEmpty else { throw ReportError.noCarbEntries }
+                data.mealPeriod = .value(period)
+                return data
+            }
             try await readPatterns(request, into: &data, bands: bands, source: source)
             let summary: GlucoseSummary?
             switch part {

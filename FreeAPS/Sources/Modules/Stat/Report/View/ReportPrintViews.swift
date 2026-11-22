@@ -91,6 +91,10 @@ struct ReportPageView: View {
                     ReportWeeksContent(page: weeks, width: width)
                 case let .goodBadDays(days):
                     ReportGoodBadDaysContent(page: days, width: width)
+                case let .insulin(insulin):
+                    ReportInsulinContent(page: insulin, width: width)
+                case let .meals(meals):
+                    ReportMealsContent(page: meals, width: width)
                 }
             }
             .padding(.top, 12)
@@ -120,7 +124,8 @@ struct ReportPageView: View {
                 VStack(alignment: .trailing, spacing: 2) {
                     Text(chrome.dateRange)
                         .font(ReportStyle.font(11, .semibold))
-                    Text(chrome.days)
+                    // an empty line keeps its height: the header is the same on every page
+                    Text(chrome.days.isEmpty ? " " : chrome.days)
                         .font(ReportStyle.font(8.5))
                         .foregroundStyle(ReportStyle.secondary)
                 }
@@ -131,12 +136,14 @@ struct ReportPageView: View {
                 .fill(ReportStyle.text)
                 .frame(height: 1)
             // one line on the Days table (its rows are counted for the page's height): it shrinks rather than wrap
-            Text(chrome.ranges)
-                .font(ReportStyle.font(7.5))
-                .foregroundStyle(ReportStyle.secondary)
-                .lineLimit(rangesLines)
-                .minimumScaleFactor(rangesLines == 1 ? 0.5 : 1)
-                .fixedSize(horizontal: false, vertical: true)
+            if chrome.ranges.isNotEmpty {
+                Text(chrome.ranges)
+                    .font(ReportStyle.font(7.5))
+                    .foregroundStyle(ReportStyle.secondary)
+                    .lineLimit(rangesLines)
+                    .minimumScaleFactor(rangesLines == 1 ? 0.5 : 1)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
     }
 

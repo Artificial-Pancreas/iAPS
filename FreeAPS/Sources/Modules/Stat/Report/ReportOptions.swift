@@ -19,7 +19,7 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
 
     /// The parts that can be printed so far, in the report's order.
     static let implemented: [ReportPart] = [
-        .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays
+        .summary, .percentileProfile, .daysTable, .dailyCharts, .byHour, .byWeekday, .weekly, .goodBadDays, .insulin, .meals
     ]
     /// The parts selected until the user picks: the two one-page ones.
     static let defaultSelection: Set<ReportPart> = [.summary, .percentileProfile]
@@ -56,8 +56,19 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
              .byWeekday,
              .dailyCharts,
              .daysTable,
+             .meals,
              .summary: return true
         default: return false
+        }
+    }
+
+    /// The part prints glucose values, so a report in both units has its pages once per unit; Insulin and Meals have
+    /// none and are printed once.
+    var printsGlucose: Bool {
+        switch self {
+        case .insulin,
+             .meals: return false
+        default: return true
         }
     }
 
@@ -239,6 +250,12 @@ struct ReportOptions: Equatable, Sendable {
         var heatMap: HeatMap = .inRange
     }
 
+    /// The Meals part's own setting.
+    struct MealsSettings: Equatable, Sendable {
+        /// "Include nutrients": fat, protein and their carb equivalents beside the carbs, when they are logged
+        var includeNutrients = false
+    }
+
     /// the periods a report offers; they end today
     static let periods: [StatsPeriod] = [.days7, .days14, .days30, .days90]
     static let defaultPeriod: StatsPeriod = .days14
@@ -253,6 +270,7 @@ struct ReportOptions: Equatable, Sendable {
     var dailyCharts = DailyChartsSettings()
     var byHour = ByHourSettings()
     var byWeekday = ByWeekdaySettings()
+    var meals = MealsSettings()
 
     /// the selected parts the period can hold (`ReportPart.availability`), in the report's order
     var orderedParts: [ReportPart] {
@@ -264,10 +282,11 @@ struct ReportOptions: Equatable, Sendable {
     /// leaves out the days without any), the subtotal rows by the period's length.
     var estimatedPageCount: Int {
         let days = period.calendarDayCount ?? 1
-        let pages = orderedParts.reduce(0) { total, part in
-            total + ReportPlan.estimatedPages(part, days: days, paper: paper, daysTable: daysTable, dailyCharts: dailyCharts)
+        return orderedParts.reduce(0) { total, part in
+            let pages = ReportPlan.estimatedPages(part, days: days, paper: paper, daysTable: daysTable, dailyCharts: dailyCharts)
+            // a part without glucose values is printed once
+            return total + pages * (units == .both && part.printsGlucose ? 2 : 1)
         }
-        return pages * (units == .both ? 2 : 1)
     }
 
     /// `estimatedPageCount` is an upper bound ("up to N pages"), not the exact count.
@@ -299,7 +318,8 @@ enum ReportPlan {
     /// The estimate can be more than the report has: Daily charts leaves out the days without anything to draw, and
     /// the subtotal rows are counted at their most.
     static func isUpperBound(_ parts: [ReportPart], daysTable: ReportOptions.DaysTableSettings) -> Bool {
-        parts.contains(.dailyCharts) || parts.contains(.goodBadDays)
+        // Insulin and Meals are one page each without data (or unread)
+        parts.contains(.dailyCharts) || parts.contains(.goodBadDays) || parts.contains(.insulin) || parts.contains(.meals)
             || (parts.contains(.daysTable) && daysTable.subtotals != .none)
     }
 
@@ -338,6 +358,11 @@ enum ReportPlan {
             return pageCount(days, perPage: dailyCharts.daysPerPage)
         case .goodBadDays:
             return goodBadDaysPages
+        // the overview, then the tables: the clock hours and a row a day
+        case .insulin:
+            return ReportTablesLayout.pageCount(days: days, paper: paper, hourRows: Stat.ReportInsulin.hourRows)
+        case .meals:
+            return ReportTablesLayout.pageCount(days: days, paper: paper, hourRows: Stat.ReportMeals.hourRows)
         default:
             return part.isImplemented ? 1 : 0
         }
@@ -379,6 +404,7 @@ struct ReportPreferences {
         static let chartsNewestFirst = "iAPS.reports.charts.newestFirst"
         static let hourContent = "iAPS.reports.hour.content"
         static let weekdayHeatMap = "iAPS.reports.weekday.heatMap"
+        static let mealsNutrients = "iAPS.reports.meals.nutrients"
     }
 
     let defaults: UserDefaults
@@ -513,6 +539,12 @@ struct ReportPreferences {
         nonmutating set { defaults.set(newValue.heatMap.rawValue, forKey: Key.weekdayHeatMap) }
     }
 
+    /// The Meals part's setting: off until switched on.
+    var meals: ReportOptions.MealsSettings {
+        get { ReportOptions.MealsSettings(includeNutrients: bool(Key.mealsNutrients, false)) }
+        nonmutating set { defaults.set(newValue.includeNutrients, forKey: Key.mealsNutrients) }
+    }
+
     /// A stored whole number; nil for anything else, a stored Bool too (it would read as 0 or 1).
     private func integer(_ key: String) -> Int? {
         guard let number = defaults.object(forKey: key) as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
@@ -536,7 +568,8 @@ struct ReportPreferences {
             daysTable: daysTable,
             dailyCharts: dailyCharts,
             byHour: byHour,
-            byWeekday: byWeekday
+            byWeekday: byWeekday,
+            meals: meals
         )
     }
 
