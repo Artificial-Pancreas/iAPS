@@ -183,6 +183,12 @@ extension Stat {
             Self.weeklyResult(await statistics.periodDays(period), period: period, bands: bands, units: units)
         }
 
+        /// The period's day aggregates with their window and the rule that gave its end, as `daily` reads them: the PDF
+        /// report's Days table sums them on its own bands and by week or month.
+        func periodDays(_ period: StatsPeriod) async -> PeriodDays {
+            await statistics.periodDays(period)
+        }
+
         func beginSession() async {
             await statistics.beginSession()
         }

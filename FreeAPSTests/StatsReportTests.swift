@@ -130,7 +130,7 @@ final class StatsReportTests: XCTestCase {
 
     private func reportRequest(
         period: StatsPeriod = .days14,
-        parts: [ReportPart] = ReportPart.implemented,
+        parts: [ReportPart] = [.summary, .percentileProfile],
         units: [GlucoseUnits] = [.mgdL],
         paper: ReportPaper = .a4,
         summary: ReportOptions.SummarySettings = .init()
@@ -169,7 +169,7 @@ final class StatsReportTests: XCTestCase {
         XCTAssertEqual(options.period, .days14)
         XCTAssertEqual(options.units, .mmolL)
         XCTAssertEqual(options.paper, .letter)
-        XCTAssertEqual(options.parts, Set(ReportPart.implemented))
+        XCTAssertEqual(options.parts, ReportPart.defaultSelection)
         XCTAssertEqual(options.orderedParts, [.summary, .percentileProfile])
         XCTAssertTrue(options.summary.insulinAndCarbs)
         XCTAssertTrue(options.summary.gri)
@@ -246,12 +246,12 @@ final class StatsReportTests: XCTestCase {
         XCTAssertEqual(preferences.options(userUnits: .mmolL, locale: Locale(identifier: "en_GB")).paper, .a4)
 
         // a part that isn't implemented yet, an unknown one: left out; nothing selected stays nothing
-        defaults.set(["summary", "daysTable", "nonsense"], forKey: Key.parts)
+        defaults.set(["summary", "byHour", "nonsense"], forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [.summary])
         defaults.set([String](), forKey: Key.parts)
         XCTAssertEqual(preferences.parts, [])
         defaults.set("summary", forKey: Key.parts)
-        XCTAssertEqual(preferences.parts, Set(ReportPart.implemented))
+        XCTAssertEqual(preferences.parts, ReportPart.defaultSelection)
         preferences.parts = [.summary, .settings]
         XCTAssertEqual(defaults.array(forKey: Key.parts) as? [String], ["summary"])
 
@@ -275,10 +275,11 @@ final class StatsReportTests: XCTestCase {
     }
 
     func testImplementedPartsAndUnits() {
-        XCTAssertEqual(ReportPart.implemented, [.summary, .percentileProfile])
+        XCTAssertEqual(ReportPart.implemented, [.summary, .percentileProfile, .daysTable, .dailyCharts])
+        XCTAssertEqual(ReportPart.defaultSelection, [.summary, .percentileProfile])
         XCTAssertEqual(ReportPart.allCases.count, 13)
-        XCTAssertFalse(ReportPart.summary.isLandscape)
-        XCTAssertTrue(ReportPart.percentileProfile.isLandscape)
+        XCTAssertFalse(ReportPlan.isLandscape(.summary, dailyCharts: .init()))
+        XCTAssertTrue(ReportPlan.isLandscape(.percentileProfile, dailyCharts: .init()))
         XCTAssertTrue(ReportPart.summary.hasSettings)
         XCTAssertFalse(ReportPart.percentileProfile.hasSettings)
         XCTAssertEqual(ReportPart.percentileProfile.title, "Percentile profile")
@@ -298,8 +299,8 @@ final class StatsReportTests: XCTestCase {
     // MARK: - Pages
 
     /// The estimate is the plan's count: a page per part, once per unit.
-    func testPageCountEstimate() {
-        var options = ReportOptions(period: .days14, units: .mgdL, paper: .a4, parts: Set(ReportPart.implemented))
+    func testPageCountEstimate() throws {
+        var options = ReportOptions(period: .days14, units: .mgdL, paper: .a4, parts: [.summary, .percentileProfile])
         XCTAssertEqual(options.estimatedPageCount, 2)
         options.units = .both
         XCTAssertEqual(options.estimatedPageCount, 4)
@@ -311,16 +312,16 @@ final class StatsReportTests: XCTestCase {
         XCTAssertEqual(options.estimatedPageCount, 0)
 
         for units in ReportUnits.allCases {
-            for parts in [[ReportPart.summary], [.percentileProfile], ReportPart.implemented] {
+            for parts in [[ReportPart.summary], [.percentileProfile], [.summary, .percentileProfile]] {
                 let options = ReportOptions(period: .days14, units: units, paper: .letter, parts: Set(parts))
                 let request = reportRequest(parts: options.orderedParts, units: units.printed(userUnits: .mgdL), paper: .letter)
-                XCTAssertEqual(request.pages.count, options.estimatedPageCount)
+                XCTAssertEqual(try reportData(request).pages(calendar: Self.calendar).count, options.estimatedPageCount)
             }
         }
     }
 
-    func testPagesOrderAndSizes() {
-        let pages = reportRequest(units: [.mmolL, .mgdL], paper: .letter).pages
+    func testPagesOrderAndSizes() throws {
+        let pages = try reportData(reportRequest(units: [.mmolL, .mgdL], paper: .letter)).pages(calendar: Self.calendar)
         XCTAssertEqual(pages.map(\.part), [.summary, .summary, .percentileProfile, .percentileProfile])
         XCTAssertEqual(pages.map(\.units), [.mmolL, .mgdL, .mmolL, .mgdL])
         XCTAssertEqual(pages[0].size, CGSize(width: 612, height: 792))
@@ -496,7 +497,7 @@ final class StatsReportTests: XCTestCase {
         let data = try reportData(reportRequest(units: [.mgdL, .mmolL]))
         XCTAssertEqual(data.summary.bands, Stat.ReportBuilder.standardBands(.mgdL))
         XCTAssertNotNil(data.gri)
-        XCTAssertEqual(data.pages.count, 4)
+        XCTAssertEqual(data.pages(calendar: Self.calendar).count, 4)
         let days = data.days(calendar: Self.calendar)
         XCTAssertEqual(days.first, Self.day0)
         // across the end of summer time: the 14th day's start, not 13 × 24 h on
@@ -756,7 +757,14 @@ final class StatsReportTests: XCTestCase {
     @MainActor func testPageChrome() throws {
         let data = try reportData(reportRequest(units: [.mgdL, .mmolL]))
         let calendar = Self.calendar
-        let chrome = Stat.ReportPageChrome(data, page: data.pages[2], index: 2, count: 4, version: "9.9.9", calendar: calendar)
+        let chrome = Stat.ReportPageChrome(
+            data,
+            page: data.pages(calendar: Self.calendar)[2],
+            index: 2,
+            count: 4,
+            version: "9.9.9",
+            calendar: calendar
+        )
         XCTAssertEqual(chrome.title, "Percentile profile")
         XCTAssertEqual(chrome.days, "14 of 14 days with data")
         XCTAssertEqual(chrome.pageNumber, "Page 3 of 4")
@@ -776,7 +784,7 @@ final class StatsReportTests: XCTestCase {
         // the same data for a phone in Los Angeles: its days
         let west = Stat.ReportPageChrome(
             data,
-            page: data.pages[0],
+            page: data.pages(calendar: Self.calendar)[0],
             index: 0,
             count: 4,
             version: "9.9.9",
@@ -787,7 +795,14 @@ final class StatsReportTests: XCTestCase {
         XCTAssertTrue(west.dateRange.hasPrefix(Self.day0.formatted(westStyle)))
 
         // the other unit's page: its labels
-        let mmol = Stat.ReportPageChrome(data, page: data.pages[1], index: 1, count: 4, version: "9.9.9", calendar: calendar)
+        let mmol = Stat.ReportPageChrome(
+            data,
+            page: data.pages(calendar: Self.calendar)[1],
+            index: 1,
+            count: 4,
+            version: "9.9.9",
+            calendar: calendar
+        )
         XCTAssertTrue(mmol.ranges.hasPrefix("Ranges (mmol/L): "))
         XCTAssertEqual(mmol.dateRange, chrome.dateRange)
     }
@@ -827,16 +842,28 @@ final class StatsReportTests: XCTestCase {
             )
         }
 
-        func reportInsulin(_: StatsPeriod) throws -> InsulinSummary {
+        func reportInsulin(_: StatsPeriod) throws -> InsulinPeriod {
             reads.append("insulin")
             guard let insulin else { throw Failure() }
-            return insulin
+            return InsulinPeriod(summary: insulin, days: [], hours: [])
         }
 
-        func reportMeals(_: StatsPeriod, factor _: Double) throws -> MealSummary {
+        func reportMeals(_: StatsPeriod, factor _: Double) throws -> MealPeriod {
             reads.append("meals")
             guard let meals else { throw Failure() }
-            return meals
+            return MealPeriod(summary: meals, days: [], hours: [], topHours: [])
+        }
+
+        func reportDays(_: StatsPeriod) -> PeriodDays {
+            PeriodDays(window: summary.window, endRule: .stalled, days: [])
+        }
+
+        func reportTrace(day _: Date, bands _: StatsBands) -> ReportDayTrace {
+            ReportDayTrace(points: [], summary: summary)
+        }
+
+        func reportInsulinInput(_: DateInterval, now _: Date) -> InsulinInput {
+            InsulinInput()
         }
     }
 

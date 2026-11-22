@@ -18,7 +18,9 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
     case settings
 
     /// The parts that can be printed so far, in the report's order.
-    static let implemented: [ReportPart] = [.summary, .percentileProfile]
+    static let implemented: [ReportPart] = [.summary, .percentileProfile, .daysTable, .dailyCharts]
+    /// The parts selected until the user picks: the two one-page ones.
+    static let defaultSelection: Set<ReportPart> = [.summary, .percentileProfile]
 
     var id: String { rawValue }
 
@@ -45,17 +47,9 @@ enum ReportPart: String, CaseIterable, Identifiable, Sendable, Hashable {
         }
     }
 
-    /// printed on a landscape page
-    var isLandscape: Bool {
-        self == .percentileProfile
-    }
-
-    /// The pages the part takes in one unit (every part of this slice is one page).
-    var pageCount: Int { 1 }
-
     /// the part has settings of its own (shown under it when it is selected)
     var hasSettings: Bool {
-        self == .summary
+        self == .summary || self == .daysTable || self == .dailyCharts
     }
 }
 
@@ -118,6 +112,47 @@ struct ReportOptions: Equatable, Sendable {
         var gri = true
     }
 
+    /// The Days table's own settings: the columns after the glucose ones, the subtotal rows and the order.
+    struct DaysTableSettings: Equatable, Sendable {
+        enum Subtotals: String, CaseIterable, Sendable, Hashable {
+            case none
+            /// after each calendar week (it starts on the calendar's first weekday)
+            case week
+            case month
+        }
+
+        var insulin = true
+        var carbs = true
+        /// "SD and CV"
+        var sdAndCV = true
+        /// "Lowest and highest"
+        var lowestAndHighest = false
+        /// "CGM coverage"
+        var cgmCoverage = false
+        var subtotals: Subtotals = .none
+        var newestFirst = false
+    }
+
+    /// The Daily charts' own settings.
+    struct DailyChartsSettings: Equatable, Sendable {
+        /// the layouts: 1 a landscape page, 2 and 4 stacked on a portrait page, 8 in two columns
+        static let daysPerPageChoices = [1, 2, 4, 8]
+        static let defaultDaysPerPage = 4
+
+        /// one of `daysPerPageChoices`
+        var daysPerPage = DailyChartsSettings.defaultDaysPerPage
+        /// "Boluses and SMBs"
+        var boluses = true
+        var carbs = true
+        var basal = true
+        var newestFirst = false
+
+        /// two columns of panels
+        var columns: Int { daysPerPage == 8 ? 2 : 1 }
+        var rows: Int { daysPerPage / columns }
+        var isLandscape: Bool { daysPerPage == 1 }
+    }
+
     /// the periods a report offers; they end today
     static let periods: [StatsPeriod] = [.days7, .days14, .days30, .days90]
     static let defaultPeriod: StatsPeriod = .days14
@@ -128,6 +163,8 @@ struct ReportOptions: Equatable, Sendable {
     /// the parts selected, of the implemented ones
     var parts: Set<ReportPart>
     var summary = SummarySettings()
+    var daysTable = DaysTableSettings()
+    var dailyCharts = DailyChartsSettings()
 
     /// the selected parts in the report's order
     var orderedParts: [ReportPart] {
@@ -135,17 +172,90 @@ struct ReportOptions: Equatable, Sendable {
     }
 
     /// The pages the report will have.
+    /// The pages the report will have, about: every day of the period counted as a day with data (Daily charts
+    /// leaves out the days without any), the subtotal rows by the period's length.
     var estimatedPageCount: Int {
-        Self.pageCount(parts: orderedParts, unitCount: units == .both ? 2 : 1)
+        let days = period.calendarDayCount ?? 1
+        let pages = orderedParts.reduce(0) { total, part in
+            total + ReportPlan.estimatedPages(part, days: days, paper: paper, daysTable: daysTable, dailyCharts: dailyCharts)
+        }
+        return pages * (units == .both ? 2 : 1)
     }
 
-    static func pageCount(parts: [ReportPart], unitCount: Int) -> Int {
-        parts.reduce(0) { $0 + $1.pageCount } * Swift.max(unitCount, 0)
+    /// `estimatedPageCount` is an upper bound ("up to N pages"), not the exact count.
+    var estimateIsUpperBound: Bool {
+        ReportPlan.isUpperBound(orderedParts, daysTable: daysTable)
     }
 
     /// The period a report is made for from the period on screen: the nearest one offered (Today and 24 h: 7 d).
     static func period(nearest period: StatsPeriod) -> StatsPeriod {
         Stat.StateModel.nearest(period, in: periods)
+    }
+}
+
+/// How a report's parts are laid out on pages: what the estimate and the real plan (`Stat.ReportData.pages`) share.
+enum ReportPlan {
+    /// a row of the Days table, points
+    static let daysTableRowHeight: CGFloat = 15
+    /// what a Days table page holds besides its rows: the margins, the page's header and footer, the column titles and
+    /// the footnote
+    static let daysTableChrome: CGFloat = 212
+
+    /// The rows a Days table page holds (landscape), by the paper's height.
+    static func daysTableRowsPerPage(_ paper: ReportPaper) -> Int {
+        let height = paper.size(landscape: true).height
+        return Swift.max(Int((height - daysTableChrome) / daysTableRowHeight), 8)
+    }
+
+    /// The pages `count` items take at `perPage` each.
+    /// The estimate can be more than the report has: Daily charts leaves out the days without anything to draw, and
+    /// the subtotal rows are counted at their most.
+    static func isUpperBound(_ parts: [ReportPart], daysTable: ReportOptions.DaysTableSettings) -> Bool {
+        parts.contains(.dailyCharts) || (parts.contains(.daysTable) && daysTable.subtotals != .none)
+    }
+
+    static func pageCount(_ count: Int, perPage: Int) -> Int {
+        guard count > 0 else { return 0 }
+        return (count + Swift.max(perPage, 1) - 1) / Swift.max(perPage, 1)
+    }
+
+    /// The subtotal rows of a period of `days` days, at most: a part of a week or a month at either end.
+    static func estimatedSubtotals(days: Int, _ subtotals: ReportOptions.DaysTableSettings.Subtotals) -> Int {
+        switch subtotals {
+        case .none: return 0
+        case .week: return (days + 6) / 7 + 1
+        case .month: return days / 28 + 1
+        }
+    }
+
+    /// The pages a part takes in one unit, about (see `ReportOptions.estimatedPageCount`).
+    static func estimatedPages(
+        _ part: ReportPart,
+        days: Int,
+        paper: ReportPaper,
+        daysTable: ReportOptions.DaysTableSettings,
+        dailyCharts: ReportOptions.DailyChartsSettings
+    ) -> Int {
+        switch part {
+        case .daysTable:
+            // the days, the subtotals and the Average row
+            let rows = days + estimatedSubtotals(days: days, daysTable.subtotals) + 1
+            return pageCount(rows, perPage: daysTableRowsPerPage(paper))
+        case .dailyCharts:
+            return pageCount(days, perPage: dailyCharts.daysPerPage)
+        default:
+            return part.isImplemented ? 1 : 0
+        }
+    }
+
+    /// A part's pages are landscape: the Percentile profile, the Days table, Daily charts one a page.
+    static func isLandscape(_ part: ReportPart, dailyCharts: ReportOptions.DailyChartsSettings) -> Bool {
+        switch part {
+        case .daysTable,
+             .percentileProfile: return true
+        case .dailyCharts: return dailyCharts.isLandscape
+        default: return false
+        }
     }
 }
 
@@ -160,6 +270,18 @@ struct ReportPreferences {
         static let parts = "iAPS.reports.parts"
         static let summaryInsulinAndCarbs = "iAPS.reports.summary.insulinAndCarbs"
         static let summaryGRI = "iAPS.reports.summary.gri"
+        static let daysInsulin = "iAPS.reports.days.insulin"
+        static let daysCarbs = "iAPS.reports.days.carbs"
+        static let daysSDAndCV = "iAPS.reports.days.sdAndCV"
+        static let daysLowestAndHighest = "iAPS.reports.days.lowestAndHighest"
+        static let daysCGMCoverage = "iAPS.reports.days.cgmCoverage"
+        static let daysSubtotals = "iAPS.reports.days.subtotals"
+        static let daysNewestFirst = "iAPS.reports.days.newestFirst"
+        static let chartsDaysPerPage = "iAPS.reports.charts.daysPerPage"
+        static let chartsBoluses = "iAPS.reports.charts.boluses"
+        static let chartsCarbs = "iAPS.reports.charts.carbs"
+        static let chartsBasal = "iAPS.reports.charts.basal"
+        static let chartsNewestFirst = "iAPS.reports.charts.newestFirst"
     }
 
     let defaults: UserDefaults
@@ -194,10 +316,10 @@ struct ReportPreferences {
         nonmutating set { set(newValue?.rawValue, Key.paper) }
     }
 
-    /// The parts selected: every implemented one until picked; a stored part that isn't implemented is left out.
+    /// The parts selected: `ReportPart.defaultSelection` until picked; a stored part that isn't implemented is left out.
     var parts: Set<ReportPart> {
         get {
-            guard let raw = defaults.array(forKey: Key.parts) as? [String] else { return Set(ReportPart.implemented) }
+            guard let raw = defaults.array(forKey: Key.parts) as? [String] else { return ReportPart.defaultSelection }
             return Set(raw.compactMap { ReportPart(rawValue: $0) }.filter(\.isImplemented))
         }
         nonmutating set {
@@ -221,6 +343,71 @@ struct ReportPreferences {
         ReportOptions.SummarySettings(insulinAndCarbs: summaryInsulinAndCarbs, gri: summaryGRI)
     }
 
+    /// The Days table's settings: a missing value, or one of another type, is the default; an unknown subtotal none.
+    var daysTable: ReportOptions.DaysTableSettings {
+        get {
+            typealias Settings = ReportOptions.DaysTableSettings
+            let standard = Settings()
+            return Settings(
+                insulin: bool(Key.daysInsulin, standard.insulin),
+                carbs: bool(Key.daysCarbs, standard.carbs),
+                sdAndCV: bool(Key.daysSDAndCV, standard.sdAndCV),
+                lowestAndHighest: bool(Key.daysLowestAndHighest, standard.lowestAndHighest),
+                cgmCoverage: bool(Key.daysCGMCoverage, standard.cgmCoverage),
+                subtotals: defaults.string(forKey: Key.daysSubtotals).flatMap { Settings.Subtotals(rawValue: $0) }
+                    ?? standard.subtotals,
+                newestFirst: bool(Key.daysNewestFirst, standard.newestFirst)
+            )
+        }
+        nonmutating set {
+            defaults.set(newValue.insulin, forKey: Key.daysInsulin)
+            defaults.set(newValue.carbs, forKey: Key.daysCarbs)
+            defaults.set(newValue.sdAndCV, forKey: Key.daysSDAndCV)
+            defaults.set(newValue.lowestAndHighest, forKey: Key.daysLowestAndHighest)
+            defaults.set(newValue.cgmCoverage, forKey: Key.daysCGMCoverage)
+            defaults.set(newValue.subtotals.rawValue, forKey: Key.daysSubtotals)
+            defaults.set(newValue.newestFirst, forKey: Key.daysNewestFirst)
+        }
+    }
+
+    /// The Daily charts' settings: a missing value, or one of another type, is the default; days per page that isn't a
+    /// layout reads as 4 and is never written.
+    var dailyCharts: ReportOptions.DailyChartsSettings {
+        get {
+            typealias Settings = ReportOptions.DailyChartsSettings
+            let standard = Settings()
+            let stored = integer(Key.chartsDaysPerPage)
+            return Settings(
+                daysPerPage: stored.flatMap { Settings.daysPerPageChoices.contains($0) ? $0 : nil } ?? standard.daysPerPage,
+                boluses: bool(Key.chartsBoluses, standard.boluses),
+                carbs: bool(Key.chartsCarbs, standard.carbs),
+                basal: bool(Key.chartsBasal, standard.basal),
+                newestFirst: bool(Key.chartsNewestFirst, standard.newestFirst)
+            )
+        }
+        nonmutating set {
+            if ReportOptions.DailyChartsSettings.daysPerPageChoices.contains(newValue.daysPerPage) {
+                defaults.set(newValue.daysPerPage, forKey: Key.chartsDaysPerPage)
+            }
+            defaults.set(newValue.boluses, forKey: Key.chartsBoluses)
+            defaults.set(newValue.carbs, forKey: Key.chartsCarbs)
+            defaults.set(newValue.basal, forKey: Key.chartsBasal)
+            defaults.set(newValue.newestFirst, forKey: Key.chartsNewestFirst)
+        }
+    }
+
+    /// A stored whole number; nil for anything else, a stored Bool too (it would read as 0 or 1).
+    private func integer(_ key: String) -> Int? {
+        guard let number = defaults.object(forKey: key) as? NSNumber, CFGetTypeID(number) != CFBooleanGetTypeID(),
+              Double(number.intValue) == number.doubleValue
+        else { return nil }
+        return number.intValue
+    }
+
+    private func bool(_ key: String, _ standard: Bool) -> Bool {
+        defaults.object(forKey: key) as? Bool ?? standard
+    }
+
     /// The choices as stored, the ones never picked from the user's unit and the region.
     func options(userUnits: GlucoseUnits, locale: Locale = .current) -> ReportOptions {
         ReportOptions(
@@ -228,7 +415,9 @@ struct ReportPreferences {
             units: units ?? ReportUnits(userUnits),
             paper: paper ?? ReportPaper.regional(locale),
             parts: parts,
-            summary: summary
+            summary: summary,
+            daysTable: daysTable,
+            dailyCharts: dailyCharts
         )
     }
 

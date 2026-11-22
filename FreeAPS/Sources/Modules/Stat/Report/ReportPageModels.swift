@@ -594,12 +594,23 @@ extension Stat {
     enum ReportPageContent: Equatable {
         case summary(ReportSummary)
         case percentile(ReportPercentile)
+        case days(ReportDaysPage)
+        case charts(ReportChartsPage)
 
-        /// nil for a part that isn't implemented
-        @MainActor init?(_ data: ReportData, page: ReportPage) {
+        /// Built when the page is drawn, one page at a time; nil for a part that isn't implemented.
+        /// - Parameter calendar: the days' (the Days table's weeks and months, the charts' clock)
+        ///   - dayRows: the Days table's rows page by page, when built for the report (`ReportData.Layout`)
+        @MainActor init?(
+            _ data: ReportData,
+            page: ReportPage,
+            dayRows: [[ReportDaysRow]]? = nil,
+            calendar: Calendar = .current
+        ) {
             switch page.part {
             case .summary: self = .summary(ReportSummary(data, units: page.units))
             case .percentileProfile: self = .percentile(ReportPercentile(data, units: page.units))
+            case .daysTable: self = .days(ReportDaysPage(data, page: page, rows: dayRows, calendar: calendar))
+            case .dailyCharts: self = .charts(ReportChartsPage(data, page: page, calendar: calendar))
             default: return nil
             }
         }

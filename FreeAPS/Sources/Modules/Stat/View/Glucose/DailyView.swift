@@ -147,6 +147,7 @@ struct DailyView: View {
             if let index, let card {
                 StatsCard { dayCard(card, index: index) }
             }
+            ReportExportButton(part: .daysTable)
         }
     }
 

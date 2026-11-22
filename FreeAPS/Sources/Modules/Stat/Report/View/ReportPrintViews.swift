@@ -21,6 +21,15 @@ enum ReportStyle {
     /// the 25–75% band
     static var innerBand: Color { blended(.statsAGP, opacity: 0.45) }
     static var median: Color { Color(.statsAGPMedian) }
+    /// a subtotal row's background
+    static let shade = Color(white: 0.94)
+    /// Daily charts: the glucose trace (dark, for black and white print), the in-range band, the insulin marks, the
+    /// carbs' markers and the delivered basal
+    static let trace = Color(white: 0.1)
+    static var rangeBand: Color { blended(.statsInRange, opacity: 0.16) }
+    static var insulin: Color { Color(.insulin) }
+    static let carbs = Color(white: 0.25)
+    static var basalFill: Color { blended(.insulin, opacity: 0.38) }
 
     /// A colour at an opacity over white, as one opaque colour (its light appearance).
     static func blended(_ resource: ColorResource, opacity: CGFloat) -> Color {
@@ -56,6 +65,10 @@ struct ReportPageView: View {
                     ReportSummaryContent(summary: summary, width: width, pageHeight: size.height)
                 case let .percentile(percentile):
                     ReportPercentileContent(percentile: percentile, width: width, pageHeight: size.height)
+                case let .days(days):
+                    ReportDaysContent(page: days, width: width)
+                case let .charts(charts):
+                    ReportChartsContent(page: charts, width: width)
                 }
             }
             .padding(.top, 12)
@@ -67,6 +80,11 @@ struct ReportPageView: View {
         .frame(width: size.width, height: size.height, alignment: .topLeading)
         .background(Color.white)
         .foregroundStyle(ReportStyle.text)
+    }
+
+    private var rangesLines: Int {
+        if case .days = content { return 1 }
+        return 2
     }
 
     private var header: some View {
@@ -90,10 +108,12 @@ struct ReportPageView: View {
             Rectangle()
                 .fill(ReportStyle.text)
                 .frame(height: 1)
+            // one line on the Days table (its rows are counted for the page's height): it shrinks rather than wrap
             Text(chrome.ranges)
                 .font(ReportStyle.font(7.5))
                 .foregroundStyle(ReportStyle.secondary)
-                .lineLimit(2)
+                .lineLimit(rangesLines)
+                .minimumScaleFactor(rangesLines == 1 ? 0.5 : 1)
                 .fixedSize(horizontal: false, vertical: true)
         }
     }

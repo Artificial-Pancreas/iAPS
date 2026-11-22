@@ -11,7 +11,8 @@ extension Stat {
         /// the period the view on screen shows
         let screenPeriod: StatsPeriod
 
-        func request(_ options: ReportOptions, parts: [ReportPart]? = nil) -> ReportRequest {
+        /// - Parameter day: one day's chart alone (`ReportRequest.day`)
+        func request(_ options: ReportOptions, parts: [ReportPart]? = nil, day: Date? = nil) -> ReportRequest {
             ReportRequest(
                 period: options.period,
                 parts: parts ?? options.orderedParts,
@@ -19,7 +20,10 @@ extension Stat {
                 hbA1cUnit: hbA1cUnit,
                 paper: options.paper,
                 summary: options.summary,
-                carbEquivalentFactor: carbEquivalentFactor
+                daysTable: options.daysTable,
+                dailyCharts: options.dailyCharts,
+                carbEquivalentFactor: carbEquivalentFactor,
+                day: day
             )
         }
     }
@@ -92,11 +96,12 @@ extension Stat {
 
         /// One part alone, for the period on screen (the nearest one a report offers), with the saved units, paper and
         /// the part's saved settings.
-        func export(part: ReportPart) {
+        /// - Parameter day: Daily charts of that day alone (the Day view's), on one landscape page
+        func export(part: ReportPart, day: Date? = nil) {
             guard let context = context?() else { return }
             var options = preferences.options(userUnits: context.userUnits)
             options.period = ReportOptions.period(nearest: context.screenPeriod)
-            start(context.request(options, parts: [part]), source: context.source, origin: .part(part))
+            start(context.request(options, parts: [part], day: day), source: context.source, origin: .part(part))
         }
 
         /// Stops the report being made (Cancel, the Reports screen popped, Statistics going down); a report shown
@@ -144,7 +149,7 @@ extension Stat {
             task = Task { [weak self] in
                 let result: Result<ReportPDFWriter.Output, Error>
                 do {
-                    let data = try await ReportBuilder.build(request, source: source)
+                    let data = try await ReportBuilder.build(request, source: source, calendar: calendar)
                     try Task.checkCancellation()
                     let output = try await ReportPDFWriter.write(data, parent: parent, calendar: calendar) { done, total in
                         guard let self, self.run == run else { return }
@@ -178,6 +183,11 @@ extension Stat {
                 switch error as? ReportError {
                 case .noData:
                     failure = (origin, NSLocalizedString("No CGM data in this period", comment: ""))
+                case .noDataOnDay:
+                    failure = (
+                        origin,
+                        NSLocalizedString("No CGM data on this day", comment: "Day view, Export PDF: the day has no readings")
+                    )
                 case .nothingSelected:
                     failure = (
                         origin,

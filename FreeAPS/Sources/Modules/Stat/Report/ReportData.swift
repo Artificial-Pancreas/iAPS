@@ -13,12 +13,14 @@ enum ReportRead<Value: Sendable & Equatable>: Sendable, Equatable {
     }
 }
 
-/// A page of a report: a part in one unit.
+/// A page of a report: a page of a part in one unit.
 struct ReportPage: Sendable, Equatable {
     let part: ReportPart
     let units: GlucoseUnits
     /// points
     let size: CGSize
+    /// the page of the part's pages (in this unit), from 0
+    var index = 0
 }
 
 /// A consensus goal for CGM data (Battelino et al. 2019, adults), judged on the exact value: the fraction of the time,
@@ -112,16 +114,40 @@ enum ReportGoal: CaseIterable, Sendable, Hashable {
     }
 }
 
+/// A day's readings as Daily charts draw them (`Stat.Provider.trace` of the day), with the day's summary.
+struct ReportDayTrace: Sendable, Equatable {
+    /// oldest -> newest
+    let points: [GlucosePoint]
+    let summary: GlucoseSummary
+}
+
+/// A read of a report that failed without failing the report: the pages it feeds say so.
+enum ReportReadFailure: String, Sendable, Hashable {
+    /// the Insulin tab's days
+    case insulin
+    /// the Meals tab's days
+    case meals
+    /// the window's pump events (Daily charts' boluses and basal)
+    case pumpEvents
+}
+
 /// The provider calls a report makes (`Stat.Provider`'s; tests pass a fake).
 protocol ReportDataSource: Sendable {
     func beginSession() async
     func endSession() async
     /// the period's profile and summary (`Stat.Provider.agp`)
     func reportProfile(_ period: StatsPeriod, bands: StatsBands) async -> Stat.AGPResult
-    /// the Insulin tab's summary of the period
-    func reportInsulin(_ period: StatsPeriod) async throws -> InsulinSummary
-    /// the Meals tab's summary of the period
-    func reportMeals(_ period: StatsPeriod, factor: Double) async throws -> MealSummary
+    /// the Insulin tab's period: its summary and its days
+    func reportInsulin(_ period: StatsPeriod) async throws -> InsulinPeriod
+    /// the Meals tab's period: its summary and its days
+    func reportMeals(_ period: StatsPeriod, factor: Double) async throws -> MealPeriod
+    /// the period's day aggregates, as "In range by day" reads them (`GlucoseStatistics.periodDays`)
+    func reportDays(_ period: StatsPeriod) async -> PeriodDays
+    /// a day's readings, as the Day view reads them (`Stat.Provider.trace`)
+    func reportTrace(day: Date, bands: StatsBands) async -> ReportDayTrace
+    /// the pump events, coverage and basal schedules of a window, read once (what `InsulinStatsEngine.timeline` takes)
+    /// - Parameter now: the report's clock: nothing after it is read
+    func reportInsulinInput(_ window: DateInterval, now: Date) async throws -> InsulinInput
 }
 
 extension Stat.Provider: ReportDataSource {
@@ -129,12 +155,28 @@ extension Stat.Provider: ReportDataSource {
         await agp(period, bands: bands)
     }
 
-    func reportInsulin(_ period: StatsPeriod) async throws -> InsulinSummary {
-        try await insulin(period).insulin.summary
+    func reportInsulin(_ period: StatsPeriod) async throws -> InsulinPeriod {
+        try await insulin(period).insulin
     }
 
-    func reportMeals(_ period: StatsPeriod, factor: Double) async throws -> MealSummary {
-        try await meals(period, factor: factor).meals.summary
+    func reportMeals(_ period: StatsPeriod, factor: Double) async throws -> MealPeriod {
+        try await meals(period, factor: factor).meals
+    }
+
+    func reportDays(_ period: StatsPeriod) async -> PeriodDays {
+        await periodDays(period)
+    }
+
+    func reportTrace(day: Date, bands: StatsBands) async -> ReportDayTrace {
+        let result = await trace(.day(day), bands: bands)
+        return ReportDayTrace(
+            points: result.points.map { GlucosePoint(time: $0.time, mgdl: Int16(clamping: $0.mgdl)) },
+            summary: result.summary
+        )
+    }
+
+    func reportInsulinInput(_ window: DateInterval, now: Date) async throws -> InsulinInput {
+        try await Stat.ReportBuilder.insulinInput(window, now: now, source: CoreDataStorage())
     }
 }
 
@@ -152,8 +194,13 @@ extension Stat {
         let hbA1cUnit: HbA1cUnit
         let paper: ReportPaper
         let summary: ReportOptions.SummarySettings
+        let daysTable: ReportOptions.DaysTableSettings
+        let dailyCharts: ReportOptions.DailyChartsSettings
         /// the current `individualAdjustmentFactor` (the Meals tab's read takes it)
         let carbEquivalentFactor: Double
+        /// One day alone (the Day view's "Export PDF"): its chart on a single landscape page, whatever the period and
+        /// the days per page; nil for a period's report.
+        let day: Date?
 
         init(
             period: StatsPeriod,
@@ -162,29 +209,48 @@ extension Stat {
             hbA1cUnit: HbA1cUnit,
             paper: ReportPaper,
             summary: ReportOptions.SummarySettings = .init(),
-            carbEquivalentFactor: Double = 0.5
+            daysTable: ReportOptions.DaysTableSettings = .init(),
+            dailyCharts: ReportOptions.DailyChartsSettings = .init(),
+            carbEquivalentFactor: Double = 0.5,
+            day: Date? = nil
         ) {
-            self.period = period
-            self.parts = parts
+            self.period = day == nil ? period : Self.dayPeriod
+            self.parts = day == nil ? parts : [.dailyCharts]
             self.units = units
             self.hbA1cUnit = hbA1cUnit
             self.paper = paper
             self.summary = summary
+            self.daysTable = daysTable
+            var charts = dailyCharts
+            if day != nil {
+                charts.daysPerPage = 1
+            }
+            self.dailyCharts = charts
             self.carbEquivalentFactor = carbEquivalentFactor
+            self.day = day
         }
 
-        /// The report's pages: part by part, each once per unit.
-        var pages: [ReportPage] {
-            parts.flatMap { part in
-                (0 ..< part.pageCount).flatMap { _ in
-                    units.map { ReportPage(part: part, units: $0, size: paper.size(landscape: part.isLandscape)) }
-                }
-            }
-        }
+        /// the period a single day's request carries (the Day view's days); its insulin and meals are read from the
+        /// smallest period that holds the day (`ReportBuilder.period(containing:)`)
+        static let dayPeriod: StatsPeriod = .days90
 
         /// the Summary part's insulin and carbs block is asked for
         var needsInsulinAndCarbs: Bool {
             parts.contains(.summary) && summary.insulinAndCarbs
+        }
+
+        /// the Insulin tab's days are read: the Summary's block, the Days table's columns, Daily charts' TDD
+        var needsInsulin: Bool {
+            needsInsulinAndCarbs || (parts.contains(.daysTable) && daysTable.insulin) || parts.contains(.dailyCharts)
+        }
+
+        /// the Meals tab's days are read: the Summary's block, the Days table's column, Daily charts' carbs
+        var needsMeals: Bool {
+            needsInsulinAndCarbs || (parts.contains(.daysTable) && daysTable.carbs) || parts.contains(.dailyCharts)
+        }
+
+        func size(of part: ReportPart) -> CGSize {
+            paper.size(landscape: ReportPlan.isLandscape(part, dailyCharts: dailyCharts))
         }
     }
 
@@ -194,7 +260,7 @@ extension Stat {
     struct ReportData: Sendable, Equatable {
         let request: ReportRequest
         let generatedAt: Date
-        /// the period's, on the standard bands of the first unit printed
+        /// the period's (a single day's report: the day's), on the standard bands of the first unit printed
         let summary: GlucoseSummary
         /// the period's profile (`GlucoseStatsEngine.agpBinMinutes` each, from 00:00)
         let bins: [AGPBin?]
@@ -204,11 +270,24 @@ extension Stat {
         let insulin: ReportRead<InsulinSummary>?
         /// the Meals tab's summary of the period (complete days with entries); nil when not asked for
         let meals: ReportRead<MealSummary>?
+        /// the Days table's glucose: the period's day aggregates, oldest -> newest; nil without the part
+        var glucoseDays: PeriodDays?
+        /// the Insulin tab's days of the period, oldest -> newest; none when not read
+        var insulinDays: [DayInsulin] = []
+        /// the Meals tab's days of the period, oldest -> newest; none when not read
+        var mealDays: [DayMeals] = []
+        /// Daily charts' days with data, oldest -> newest; none without the part
+        var chartDays: [ReportChartDay] = []
+        /// the reads that failed: the Days table and Daily charts say so under them
+        var failedReads: Set<ReportReadFailure> = []
 
-        var pages: [ReportPage] { request.pages }
-
-        /// The period's first and last day (their starts): the last one today, also without readings yet.
+        /// The first and the last day printed (their starts): the period's, the last one today, also without readings
+        /// yet; a single day's report: that day.
         func days(calendar: Calendar) -> (first: Date, last: Date) {
+            if let day = request.day {
+                let start = calendar.startOfDay(for: day)
+                return (start, start)
+            }
             let first = summary.window.start
             let count = request.period.calendarDayCount ?? 1
             return (first, calendar.date(byAdding: .day, value: count - 1, to: first) ?? first)
@@ -218,6 +297,8 @@ extension Stat {
     enum ReportError: Error, Equatable {
         /// no CGM data in the period: nothing to print
         case noData
+        /// a single day's report: the day has no CGM data
+        case noDataOnDay
         /// no part selected
         case nothingSelected
         /// the PDF file couldn't be created
@@ -236,18 +317,25 @@ extension Stat {
             )
         }
 
-        /// The report's data. One profile read gives the period's summary too (as the AGP tab's); the readings are held
-        /// by a statistics session meanwhile (it nests in the screen's own). Throws `CancellationError` when cancelled
+        /// The report's data. The profile read first holds the period's readings for a statistics session (it nests in
+        /// the screen's own), so the days' reads after it come from them. Throws `CancellationError` when cancelled
         /// between the reads, `ReportError.noData` without CGM data.
+        /// - Parameter calendar: the days' (Daily charts' days, the timeline's clock)
         static func build(
             _ request: ReportRequest,
             source: any ReportDataSource,
-            now: Date = Date()
+            now: Date = Date(),
+            calendar: Calendar = .current
         ) async throws -> ReportData {
             guard request.parts.isNotEmpty, let units = request.units.first else { throw ReportError.nothingSelected }
             await source.beginSession()
             do {
-                let data = try await read(request, units: units, source: source, now: now)
+                let data: ReportData
+                if request.day == nil {
+                    data = try await read(request, units: units, source: source, now: now, calendar: calendar)
+                } else {
+                    data = try await readDay(request, units: units, source: source, now: now, calendar: calendar)
+                }
                 await source.endSession()
                 return data
             } catch {
@@ -256,47 +344,243 @@ extension Stat {
             }
         }
 
+        /// A read that may fail without failing the report (`ReportRead.failed`, logged); a cancellation is thrown on.
+        private static func tolerant<Value>(
+            _ what: String,
+            _ body: () async throws -> Value
+        ) async throws -> ReportRead<Value> where Value: Sendable & Equatable {
+            do {
+                return .value(try await body())
+            } catch is CancellationError {
+                throw CancellationError()
+            } catch {
+                warning(.service, "Report: \(what) couldn't be read", error: error)
+                return .failed
+            }
+        }
+
+        /// The pump events, coverage and basal schedules of a window, as the Patches topic reads a run of sessions
+        /// (`Stat.Provider.patchInput`): the events with the state running into the window, up to an hour after it but
+        /// never after `now`, the coverage from that state on, the schedule records. No IOB rows: the charts draw none.
+        static func insulinInput(_ window: DateInterval, now: Date, source: InsulinDataSource) async throws -> InsulinInput {
+            let start = window.start
+            let to = Swift.max(start, Swift.min(window.end.addingTimeInterval(.hours(1)), now))
+            async let events = source.fetchPumpEvents(from: start, to: to)
+            let runningInto = try await source.fetchPumpEventsRunningInto(start)
+            let coverage = try await source.fetchCoverage(from: Swift.min(runningInto.first?.date ?? start, start), to: to)
+            let schedules = try await source.fetchBasalSchedules(from: start, to: to)
+            return try await InsulinInput(events: runningInto + events, coverage: coverage, schedules: schedules)
+        }
+
+        /// The smallest period a report offers that holds `day` (it ends today); nil for a day before the longest one.
+        static func period(containing day: Date, now: Date, calendar: Calendar) -> StatsPeriod? {
+            let from = calendar.startOfDay(for: day)
+            let back = calendar.dateComponents([.day], from: from, to: calendar.startOfDay(for: now)).day ?? 0
+            let days = Swift.max(back, 0) + 1
+            return ReportOptions.periods.first { ($0.calendarDayCount ?? 0) >= days }
+        }
+
         private static func read(
             _ request: ReportRequest,
             units: GlucoseUnits,
             source: any ReportDataSource,
-            now: Date
+            now: Date,
+            calendar: Calendar
         ) async throws -> ReportData {
+            let bands = standardBands(units)
             try Task.checkCancellation()
-            let profile = await source.reportProfile(request.period, bands: standardBands(units))
+            let profile = await source.reportProfile(request.period, bands: bands)
             try Task.checkCancellation()
             guard !profile.summary.isEmpty else { throw ReportError.noData }
 
-            var insulin: ReportRead<InsulinSummary>?
-            var meals: ReportRead<MealSummary>?
-            if request.needsInsulinAndCarbs {
-                do {
-                    insulin = .value(try await source.reportInsulin(request.period))
-                } catch is CancellationError {
-                    throw CancellationError()
-                } catch {
-                    warning(.service, "Report: the insulin data couldn't be read", error: error)
-                    insulin = .failed
+            var failed: Set<ReportReadFailure> = []
+            var insulin: ReportRead<InsulinPeriod>?
+            var meals: ReportRead<MealPeriod>?
+            if request.needsInsulin {
+                let read = try await tolerant("the insulin data") { try await source.reportInsulin(request.period) }
+                if read == .failed {
+                    failed.insert(.insulin)
                 }
+                insulin = read
                 try Task.checkCancellation()
-                do {
-                    meals = .value(try await source.reportMeals(request.period, factor: request.carbEquivalentFactor))
-                } catch is CancellationError {
-                    throw CancellationError()
-                } catch {
-                    warning(.service, "Report: the meals couldn't be read", error: error)
-                    meals = .failed
+            }
+            if request.needsMeals {
+                let read = try await tolerant("the meals") {
+                    try await source.reportMeals(request.period, factor: request.carbEquivalentFactor)
                 }
+                if read == .failed {
+                    failed.insert(.meals)
+                }
+                meals = read
                 try Task.checkCancellation()
+            }
+            var summary = profile.summary
+            var glucoseDays: PeriodDays?
+            if request.parts.contains(.daysTable) {
+                let days = await source.reportDays(request.period)
+                try Task.checkCancellation()
+                glucoseDays = days
+                // one read for the table's days, its Average row and the Summary's numbers: a reading that came in after
+                // the profile's read can't make them differ
+                let pooled = GlucoseStatsEngine.summary(
+                    days: days.days,
+                    window: days.window,
+                    endRule: days.endRule,
+                    period: request.period,
+                    bands: bands
+                )
+                if !pooled.isEmpty {
+                    summary = pooled
+                }
+            }
+            var chartDays: [ReportChartDay] = []
+            if request.parts.contains(.dailyCharts) {
+                let charts = try await readCharts(
+                    request,
+                    days: InsulinStatsEngine.periodDays(request.period, now: now, calendar: calendar),
+                    traces: nil,
+                    bands: bands,
+                    source: source,
+                    insulinDays: insulin?.value?.days ?? [],
+                    mealDays: meals?.value?.days ?? [],
+                    now: now,
+                    calendar: calendar
+                )
+                chartDays = charts.days
+                if charts.eventsFailed {
+                    failed.insert(.pumpEvents)
+                }
             }
             return try assemble(
                 request,
-                summary: profile.summary,
+                summary: summary,
                 bins: profile.bins,
-                insulin: insulin,
-                meals: meals,
+                insulin: request.needsInsulinAndCarbs ? insulin.map { mapped($0, \.summary) } : nil,
+                meals: request.needsInsulinAndCarbs ? meals.map { mapped($0, \.summary) } : nil,
+                glucoseDays: glucoseDays,
+                insulinDays: insulin?.value?.days ?? [],
+                mealDays: meals?.value?.days ?? [],
+                chartDays: chartDays,
+                failedReads: failed,
                 now: now
             )
+        }
+
+        /// One day's chart. Its readings first: without any there is no chart (`noDataOnDay`), whatever else the day
+        /// has, and nothing else is read. Then its insulin and meals out of the smallest period that holds the day; a
+        /// day with readings alone is drawn too.
+        private static func readDay(
+            _ request: ReportRequest,
+            units: GlucoseUnits,
+            source: any ReportDataSource,
+            now: Date,
+            calendar: Calendar
+        ) async throws -> ReportData {
+            guard let date = request.day else { throw ReportError.nothingSelected }
+            let day = StatsClock.wholeDay(of: date, calendar: calendar)
+            let bands = standardBands(units)
+            try Task.checkCancellation()
+            let trace = await source.reportTrace(day: day.start, bands: bands)
+            guard trace.points.isNotEmpty else { throw ReportError.noDataOnDay }
+
+            var failed: Set<ReportReadFailure> = []
+            var insulinDays: [DayInsulin] = []
+            var mealDays: [DayMeals] = []
+            if let period = period(containing: day.start, now: now, calendar: calendar) {
+                try Task.checkCancellation()
+                let insulin = try await tolerant("the insulin data") { try await source.reportInsulin(period) }
+                if insulin == .failed {
+                    failed.insert(.insulin)
+                }
+                insulinDays = insulin.value?.days ?? []
+                try Task.checkCancellation()
+                let meals = try await tolerant("the meals") {
+                    try await source.reportMeals(period, factor: request.carbEquivalentFactor)
+                }
+                if meals == .failed {
+                    failed.insert(.meals)
+                }
+                mealDays = meals.value?.days ?? []
+            }
+            let charts = try await readCharts(
+                request,
+                days: [day],
+                traces: [trace],
+                bands: bands,
+                source: source,
+                insulinDays: insulinDays,
+                mealDays: mealDays,
+                now: now,
+                calendar: calendar
+            )
+            if charts.eventsFailed {
+                failed.insert(.pumpEvents)
+            }
+            return ReportData(
+                request: request,
+                generatedAt: now,
+                summary: trace.summary,
+                bins: [],
+                gri: nil,
+                insulin: nil,
+                meals: nil,
+                chartDays: charts.days,
+                failedReads: failed
+            )
+        }
+
+        /// Daily charts' days: each day's readings (from the readings the session holds; `traces` when already read),
+        /// then the window's pump events read once and cut by day.
+        private static func readCharts(
+            _ request: ReportRequest,
+            days: [DateInterval],
+            traces read: [ReportDayTrace]?,
+            bands: StatsBands,
+            source: any ReportDataSource,
+            insulinDays: [DayInsulin],
+            mealDays: [DayMeals],
+            now: Date,
+            calendar: Calendar
+        ) async throws -> (days: [ReportChartDay], eventsFailed: Bool) {
+            var traces = read ?? []
+            if read == nil {
+                for day in days {
+                    try Task.checkCancellation()
+                    traces.append(await source.reportTrace(day: day.start, bands: bands))
+                }
+            }
+            var input: InsulinInput?
+            var eventsFailed = false
+            let settings = request.dailyCharts
+            if settings.boluses || settings.basal, let first = days.first, let last = days.last {
+                try Task.checkCancellation()
+                let window = DateInterval(start: first.start, end: Swift.max(first.start, last.end))
+                let events = try await tolerant("the pump events") { try await source.reportInsulinInput(window, now: now) }
+                input = events.value
+                eventsFailed = events == .failed
+            }
+            try Task.checkCancellation()
+            let chartDays = ReportChartsBuilder.days(
+                days,
+                traces: traces,
+                insulinDays: insulinDays,
+                mealDays: mealDays,
+                input: input,
+                settings: settings,
+                now: now,
+                calendar: calendar
+            )
+            return (chartDays, eventsFailed)
+        }
+
+        private static func mapped<Period, Summary>(
+            _ read: ReportRead<Period>,
+            _ summary: KeyPath<Period, Summary>
+        ) -> ReportRead<Summary> {
+            switch read {
+            case let .value(period): return .value(period[keyPath: summary])
+            case .failed: return .failed
+            }
         }
 
         /// The report's data from what was read: the summary on the first unit's standard bands, the GRI on the same
@@ -308,6 +592,11 @@ extension Stat {
             bins: [AGPBin?],
             insulin: ReportRead<InsulinSummary>? = nil,
             meals: ReportRead<MealSummary>? = nil,
+            glucoseDays: PeriodDays? = nil,
+            insulinDays: [DayInsulin] = [],
+            mealDays: [DayMeals] = [],
+            chartDays: [ReportChartDay] = [],
+            failedReads: Set<ReportReadFailure> = [],
             now: Date
         ) throws -> ReportData {
             guard request.parts.isNotEmpty, let units = request.units.first else { throw ReportError.nothingSelected }
@@ -321,7 +610,12 @@ extension Stat {
                 bins: bins,
                 gri: wantsGRI ? gri(summary) : nil,
                 insulin: insulin,
-                meals: meals
+                meals: meals,
+                glucoseDays: glucoseDays,
+                insulinDays: insulinDays,
+                mealDays: mealDays,
+                chartDays: chartDays,
+                failedReads: failedReads
             )
         }
 
@@ -332,7 +626,7 @@ extension Stat {
         }
 
         /// A summary on other bands: the same histogram and window.
-        private static func summary(_ summary: GlucoseSummary, bands: StatsBands) -> GlucoseSummary {
+        static func summary(_ summary: GlucoseSummary, bands: StatsBands) -> GlucoseSummary {
             guard summary.bands != bands else { return summary }
             return GlucoseStatsEngine.summary(
                 summary.histogram,

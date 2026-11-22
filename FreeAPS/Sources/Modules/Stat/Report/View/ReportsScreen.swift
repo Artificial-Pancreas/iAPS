@@ -169,13 +169,86 @@ struct ReportsScreen: View {
             )
             .font(.subheadline)
             .frame(minHeight: 40)
+        } else if part == .daysTable {
+            daysToggle("Insulin", \.insulin)
+            daysToggle("Carbs", \.carbs)
+            daysToggle("SD and CV", \.sdAndCV)
+            daysToggle("Lowest and highest", \.lowestAndHighest)
+            daysToggle("CGM coverage", \.cgmCoverage)
+            daysToggle("Newest first", \.newestFirst)
+            VStack(alignment: .leading, spacing: 6) {
+                title("Subtotals")
+                StatsSegmentedControl(
+                    items: ReportOptions.DaysTableSettings.Subtotals.allCases,
+                    selection: Binding(get: { options.daysTable.subtotals }, set: { subtotals in
+                        options.daysTable.subtotals = subtotals
+                        preferences.daysTable = options.daysTable
+                    }),
+                    label: { Self.label($0) }
+                )
+            }
+            .padding(.top, 4)
+        } else if part == .dailyCharts {
+            VStack(alignment: .leading, spacing: 6) {
+                title("Days per page")
+                StatsSegmentedControl(
+                    items: ReportOptions.DailyChartsSettings.daysPerPageChoices,
+                    selection: Binding(get: { options.dailyCharts.daysPerPage }, set: { days in
+                        options.dailyCharts.daysPerPage = days
+                        preferences.dailyCharts = options.dailyCharts
+                    }),
+                    label: { "\($0)" }
+                )
+            }
+            chartsToggle("Boluses and SMBs", \.boluses)
+            chartsToggle("Carbs", \.carbs)
+            chartsToggle("Basal", \.basal)
+            chartsToggle("Newest first", \.newestFirst)
+        }
+    }
+
+    private func daysToggle(
+        _ title: LocalizedStringKey,
+        _ setting: WritableKeyPath<ReportOptions.DaysTableSettings, Bool>
+    ) -> some View {
+        Toggle(
+            title,
+            isOn: Binding(get: { options.daysTable[keyPath: setting] }, set: { isOn in
+                options.daysTable[keyPath: setting] = isOn
+                preferences.daysTable = options.daysTable
+            })
+        )
+        .font(.subheadline)
+        .frame(minHeight: 40)
+    }
+
+    private func chartsToggle(
+        _ title: LocalizedStringKey,
+        _ setting: WritableKeyPath<ReportOptions.DailyChartsSettings, Bool>
+    ) -> some View {
+        Toggle(
+            title,
+            isOn: Binding(get: { options.dailyCharts[keyPath: setting] }, set: { isOn in
+                options.dailyCharts[keyPath: setting] = isOn
+                preferences.dailyCharts = options.dailyCharts
+            })
+        )
+        .font(.subheadline)
+        .frame(minHeight: 40)
+    }
+
+    static func label(_ subtotals: ReportOptions.DaysTableSettings.Subtotals) -> String {
+        switch subtotals {
+        case .none: return NSLocalizedString("None", comment: "")
+        case .week: return NSLocalizedString("Week", comment: "")
+        case .month: return NSLocalizedString("Month", comment: "")
         }
     }
 
     // MARK: - Create
 
     @ViewBuilder private var create: some View {
-        Text(Self.pages(options.estimatedPageCount))
+        Text(Self.pages(options.estimatedPageCount, upTo: options.estimateIsUpperBound))
             .font(.subheadline)
         Text("The report contains glucose and insulin data.")
             .statsNote()
@@ -206,13 +279,16 @@ struct ReportsScreen: View {
         }
     }
 
-    /// "2 pages", "1 page", "Nothing selected"
-    static func pages(_ count: Int) -> String {
+    /// "2 pages", "1 page", "Nothing selected"; "Up to 7 pages" when the count is an upper bound
+    /// (`ReportOptions.estimateIsUpperBound`)
+    static func pages(_ count: Int, upTo: Bool = false) -> String {
         switch count {
         case 0: return NSLocalizedString("Nothing selected", comment: "Reports screen: no part is selected")
         case 1: return NSLocalizedString("1 page", comment: "Reports screen: the report's estimated pages")
         default: return String(
-                format: NSLocalizedString("%d pages", comment: "Reports screen: the report's estimated pages"),
+                format: upTo
+                    ? NSLocalizedString("Up to %d pages", comment: "Reports screen: the most pages the report can have")
+                    : NSLocalizedString("%d pages", comment: "Reports screen: the report's estimated pages"),
                 count
             )
         }
@@ -236,24 +312,27 @@ struct ReportPreviewHost: View {
 /// straight to the preview. Outside Statistics (no exporter in the environment) it shows nothing.
 struct ReportExportButton: View {
     let part: ReportPart
+    /// Daily charts of this day alone (the Day view's); nil: the period on screen
+    var day: Date?
 
     @Environment(\.reportExporter) private var exporter
 
     var body: some View {
         if let exporter {
-            Content(part: part, exporter: exporter)
+            Content(part: part, day: day, exporter: exporter)
         }
     }
 
     private struct Content: View {
         let part: ReportPart
+        let day: Date?
         @ObservedObject var exporter: Stat.ReportExporter
 
         var body: some View {
             let origin = Stat.ReportOrigin.part(part)
             VStack(spacing: 6) {
                 Button {
-                    exporter.export(part: part)
+                    exporter.export(part: part, day: day)
                 } label: {
                     HStack(spacing: 8) {
                         if exporter.running == origin {

@@ -5770,3 +5770,34 @@ Enact a temp Basal or a temp target */
 "%d pages" = "%d pages";
 "Select at least one part." = "Select at least one part.";
 "The report couldn't be created." = "The report couldn't be created.";
+
+/* Statistics: PDF reports, the Days table and Daily charts ("Insulin", "Carbs", "Basal", "SMB", "CGM coverage", "None", "Week", "Month", "Date" and "U" reuse existing keys) */
+"Bolus + SMB" = "Bolus + SMB";
+"Below" = "Below";
+"Above" = "Above";
+"Low–high" = "Low–high";
+"Average of %d days" = "Average of %d days";
+"Averages: glucose is time-weighted over the days." = "Averages: glucose is time-weighted over the days.";
+"Insulin is averaged over complete days, the basal scaled to the whole day; * a day outside them (today, or pump data for less than half of it), as delivered." = "Insulin is averaged over complete days, the basal scaled to the whole day; * a day outside them (today, or pump data for less than half of it), as delivered.";
+"Carbs are averaged over complete days with entries." = "Carbs are averaged over complete days with entries.";
+"In range %@" = "In range %@";
+"Mean %@" = "Mean %@";
+"Insulin %@" = "Insulin %@";
+"Carbs %@" = "Carbs %@";
+"Glucose (%@)" = "Glucose (%@)";
+"Bolus (U)" = "Bolus (U)";
+"Carbs (g)" = "Carbs (g)";
+"Basal (0–%@ U/h)" = "Basal (0–%@ U/h)";
+"No data in this period" = "No data in this period";
+"Subtotals" = "Subtotals";
+"Days per page" = "Days per page";
+"SD and CV" = "SD and CV";
+"Lowest and highest" = "Lowest and highest";
+"Newest first" = "Newest first";
+"Boluses and SMBs" = "Boluses and SMBs";
+"No CGM data on this day" = "No CGM data on this day";
+"Insulin data could not be read." = "Insulin data could not be read.";
+"Carb entries could not be read." = "Carb entries could not be read.";
+"Pump events could not be read: no boluses or basal are drawn." = "Pump events could not be read: no boluses or basal are drawn.";
+"* Insulin as delivered on a day outside the averages: today, or pump data for less than half of the day." = "* Insulin as delivered on a day outside the averages: today, or pump data for less than half of the day.";
+"Up to %d pages" = "Up to %d pages";

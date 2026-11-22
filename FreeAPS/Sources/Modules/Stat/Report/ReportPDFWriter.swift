@@ -56,7 +56,9 @@ import SwiftUI
         calendar: Calendar = .current,
         progress: (@MainActor(Int, Int) -> Void)? = nil
     ) async throws -> Output {
-        let pages = data.pages
+        // laid out once: the Days table's rows aren't built again for every page of it
+        let layout = data.layout(calendar: calendar)
+        let pages = layout.pages
         guard let firstPage = pages.first else { throw Stat.ReportError.nothingSelected }
         let days = data.days(calendar: calendar)
         let fileName = Self.fileName(first: days.first, last: days.last, calendar: calendar)
@@ -83,7 +85,7 @@ import SwiftUI
         do {
             for (index, page) in pages.enumerated() {
                 try Task.checkCancellation()
-                if let content = Stat.ReportPageContent(data, page: page) {
+                if let content = Stat.ReportPageContent(data, page: page, dayRows: layout.dayRows, calendar: calendar) {
                     let chrome = Stat.ReportPageChrome(
                         data,
                         page: page,
