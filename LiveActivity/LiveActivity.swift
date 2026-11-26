@@ -252,7 +252,12 @@ private struct DynamicIslandCompactGlucoseView: View {
 }
 
 @available(iOS 27.0, *) private struct DynamicIslandCompactLeadingViewIOS27: View {
-    @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    // The key is new in the iOS 27 SDK; @available does not hide it from the Xcode 26 compiler.
+    #if compiler(>=6.4)
+        @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    #else
+        private let isLimitedInWidth = false
+    #endif
     let context: ActivityViewContext<LiveActivityAttributes>
 
     var body: some View {
@@ -272,7 +277,12 @@ private struct DynamicIslandCompactGlucoseView: View {
 }
 
 @available(iOS 27.0, *) private struct DynamicIslandCompactTrailingViewIOS27: View {
-    @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    // The key is new in the iOS 27 SDK; @available does not hide it from the Xcode 26 compiler.
+    #if compiler(>=6.4)
+        @Environment(\.isDynamicIslandLimitedInWidth) private var isLimitedInWidth
+    #else
+        private let isLimitedInWidth = false
+    #endif
     let context: ActivityViewContext<LiveActivityAttributes>
 
     var body: some View {

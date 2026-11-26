@@ -49,7 +49,9 @@ extension Main {
                 .sheet(isPresented: $state.isModalPresented) {
                     // a stack: Add Meal pushes Bolus with the meal
                     NavigationStack {
-                        self.state.modal!.view
+                        if let modal = state.modal {
+                            modal.view
+                        }
                     }
                     // outside the stack, so that pushed views get it too
                     .environmentObject(state)

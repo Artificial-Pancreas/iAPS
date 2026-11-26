@@ -66,7 +66,9 @@ extension Main {
             shouldPreventModalDismiss = false
             bolusMealPending = nil
             let modal = screen?.modal(resolver: resolver)
-            self.modal = modal
+            // Keep the last modal on dismissal: the sheet content can be evaluated
+            // again while the sheet is going away.
+            if let modal { self.modal = modal }
             isModalPresented = modal != nil
         }
 
