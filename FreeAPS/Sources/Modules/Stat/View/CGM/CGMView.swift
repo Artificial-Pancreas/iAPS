@@ -17,6 +17,7 @@ struct CGMView: View {
             } else {
                 overview
             }
+            ReportExportButton(part: .cgm)
         }
     }
 

@@ -237,6 +237,7 @@ struct AGPView: View {
         VStack(spacing: 16) {
             StatsCard { profile }
             StatsCard { keyNumbers }
+            ReportExportButton(part: .percentileProfile)
         }
     }
 

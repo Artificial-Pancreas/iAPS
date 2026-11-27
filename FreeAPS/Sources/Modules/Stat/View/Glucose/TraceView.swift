@@ -285,9 +285,17 @@ struct TraceView: View {
         VStack(spacing: 16) {
             StatsCard { chartCard }
             StatsCard { summaryCard }
+            // the day shown alone, on one page (the 24 hours: today)
+            ReportExportButton(part: .dailyCharts, day: exportDay)
         }
         // a new day or range starts at its newest reading (`date(on:)` already ignores the old pick; this drops it)
         .onChange(of: trace.range) { selection.clear() }
+    }
+
+    /// The day the report's chart is of: the one shown; today for Today and the 24 hours.
+    private var exportDay: Date {
+        if case let .day(day) = selectedDay { return day }
+        return Date()
     }
 
     // MARK: - Chart

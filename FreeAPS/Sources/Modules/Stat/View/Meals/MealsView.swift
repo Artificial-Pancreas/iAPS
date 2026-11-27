@@ -242,7 +242,7 @@ extension Stat {
         }
 
         /// The hours with the most carbs.
-        @MainActor private static func topHours(_ topHours: [HourMeals], averagedDays: Int) -> [TopHour] {
+        @MainActor static func topHours(_ topHours: [HourMeals], averagedDays: Int) -> [TopHour] {
             typealias Format = StatsFormatting
             return topHours.map { hour in
                 TopHour(
@@ -321,10 +321,21 @@ extension Stat {
         /// Entries and per entry; fat, protein and carb equivalents only for someone who logs fat or protein (D6), "0 g"
         /// then for a period without; then `fiber` (`Nutrients.fiberTile`: for someone who logs nutrient data).
         static func tiles(_ summary: MealSummary, fiber: Tile? = nil) -> [Tile] {
+            var tiles = entryTiles(summary)
+            if summary.logsFatOrProtein {
+                tiles += nutrientTiles(summary)
+            }
+            if let fiber {
+                tiles.append(fiber)
+            }
+            return tiles
+        }
+
+        /// The entries per day and the carbs per entry.
+        static func entryTiles(_ summary: MealSummary) -> [Tile] {
             let perDay = NSLocalizedString("per day", comment: "Statistics: the unit of a daily time or count")
-            let gramsPerDay = NSLocalizedString("g per day", comment: "Statistics Meals: the unit of a daily amount")
             let grams = NSLocalizedString("g", comment: "Statistics Meals: grams")
-            var tiles = [
+            return [
                 Tile(
                     id: 0,
                     title: NSLocalizedString("Entries", comment: "Statistics Meals: the carb entries"),
@@ -338,32 +349,31 @@ extension Stat {
                     unit: grams
                 )
             ]
-            if summary.logsFatOrProtein {
-                tiles += [
-                    Tile(
-                        id: 2,
-                        title: NSLocalizedString("Fat", comment: ""),
-                        value: summary.fatPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
-                        unit: gramsPerDay
-                    ),
-                    Tile(
-                        id: 3,
-                        title: NSLocalizedString("Protein", comment: ""),
-                        value: summary.proteinPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
-                        unit: gramsPerDay
-                    ),
-                    Tile(
-                        id: 4,
-                        title: Part.carbEquivalents.name,
-                        value: summary.carbEquivalentsPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
-                        unit: gramsPerDay
-                    )
-                ]
-            }
-            if let fiber {
-                tiles.append(fiber)
-            }
-            return tiles
+        }
+
+        /// The fat, the protein and their carb equivalents per day.
+        static func nutrientTiles(_ summary: MealSummary) -> [Tile] {
+            let gramsPerDay = NSLocalizedString("g per day", comment: "Statistics Meals: the unit of a daily amount")
+            return [
+                Tile(
+                    id: 2,
+                    title: NSLocalizedString("Fat", comment: ""),
+                    value: summary.fatPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
+                    unit: gramsPerDay
+                ),
+                Tile(
+                    id: 3,
+                    title: NSLocalizedString("Protein", comment: ""),
+                    value: summary.proteinPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
+                    unit: gramsPerDay
+                ),
+                Tile(
+                    id: 4,
+                    title: Part.carbEquivalents.name,
+                    value: summary.carbEquivalentsPerDay.map { StatsAmount.number($0, digits: 0) } ?? "–",
+                    unit: gramsPerDay
+                )
+            ]
         }
 
         // MARK: - Formatting
@@ -490,6 +500,7 @@ struct MealsView: View {
                 if meals.topHours.isNotEmpty {
                     StatsCard { topHours }
                 }
+                ReportExportButton(part: .meals)
             }
         }
     }

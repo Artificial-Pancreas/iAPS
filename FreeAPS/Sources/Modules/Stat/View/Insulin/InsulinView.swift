@@ -47,6 +47,7 @@ struct InsulinView: View {
                 StatsCard { hourChart }
                 StatsCard { InsulinHourReadout(readouts: insulin.hourReadouts, selection: hourSelection) }
                 StatsCard { vsChart }
+                ReportExportButton(part: .insulin)
             }
         }
     }

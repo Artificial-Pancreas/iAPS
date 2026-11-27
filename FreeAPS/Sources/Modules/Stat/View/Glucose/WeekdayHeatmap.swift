@@ -112,7 +112,7 @@ struct WeekdayHeatmapCard: View {
 /// (`StatsHigh` and a pale one) and three greens above (a pale yellowish one, a muted one, `StatsInRange`), each apart
 /// from the others' dimmed shades too; low and mean a single hue (more ink for more of it). A few-readings cell dimmed
 /// towards the card and hatched, an empty one outlined.
-private enum WeekdayCellStyle {
+enum WeekdayCellStyle {
     typealias RGB = (red: Double, green: Double, blue: Double)
 
     private static func rgb(_ hex: UInt32) -> RGB {

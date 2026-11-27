@@ -706,7 +706,7 @@ extension Stat {
         }
 
         /// The cell's number as the metric shows it: "62%", "<1%", "6.3", "–".
-        @MainActor private static func metricValue(_ pool: WeekdayPool, metric: WeekdayMetric, units: GlucoseUnits) -> String {
+        @MainActor static func metricValue(_ pool: WeekdayPool, metric: WeekdayMetric, units: GlucoseUnits) -> String {
             switch metric {
             case .inRange: return inRangeText(pool)
             case .low: return lowText(pool)

@@ -84,6 +84,7 @@ struct OverviewView: View {
             StatsCard { timeInRanges }
             StatsCard { standardRanges }
             StatsCard { glucose }
+            ReportExportButton(part: .summary)
         }
     }
 

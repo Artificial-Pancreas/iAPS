@@ -155,16 +155,24 @@ extension Stat {
         // MARK: - The init's parts
 
         /// "Profile assumed before 22 Oct: …"; nil when no time is before the oldest basal schedule.
-        @MainActor private static func profileAssumedNote(_ summary: InsulinSummary) -> String? {
+        /// - Parameter calendar: the date's time zone (a report's injected one)
+        @MainActor static func profileAssumedNote(_ summary: InsulinSummary, calendar: Calendar = .current) -> String? {
             summary.profileAssumedBefore.map { date in
-                String(
+                var style = Date.FormatStyle.dateTime.day().month(.abbreviated)
+                style.timeZone = calendar.timeZone
+                return String(
                     format: NSLocalizedString(
                         "Profile assumed before %@: the oldest known basal schedule is used",
                         comment: "Statistics Insulin: the date of the oldest basal schedule known"
                     ),
-                    date.formatted(.dateTime.day().month(.abbreviated))
+                    date.formatted(style)
                 )
             }
+        }
+
+        /// A clock hour has something to total: covered time, or an SMB or a bolus in it.
+        static func hasData(_ hour: InsulinHourSummary) -> Bool {
+            hour.coveredHours > 0 || hour.smb > 0 || hour.bolus > 0
         }
 
         /// The day chart: the parts stacked by day, the TDD dashed, a dot above a partial day.
@@ -419,7 +427,7 @@ extension Stat {
             let scheduled = hour.scheduled.map { StatsAmount.units($0, digits: 2) } ?? "–"
             let smb = StatsAmount.units(hour.smb, digits: 2)
             let bolus = StatsAmount.units(hour.bolus, digits: 2)
-            let hasData = hour.coveredHours > 0 || hour.smb > 0 || hour.bolus > 0
+            let hasData = Self.hasData(hour)
             let vsScheduled = hour.basalVsScheduled.map { Format.percent(fraction: $0) }
             return HourReadout(
                 time: time,

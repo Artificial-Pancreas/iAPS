@@ -17,6 +17,7 @@ struct PatchesView: View {
                 StatsCard { PatchesSummaryCard(patches: patches) }
                 StatsCard { PatchesWearDaysCard(patches: patches) }
                 StatsCard { list }
+                ReportExportButton(part: .patches)
             }
         }
     }

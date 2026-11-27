@@ -30,6 +30,7 @@ struct WeekdayView: View {
             if let workdays = weekday.workdays, let weekend = weekday.weekend {
                 StatsCard { summaryCard(workdays, weekend) }
             }
+            ReportExportButton(part: .byWeekday)
         }
     }
 

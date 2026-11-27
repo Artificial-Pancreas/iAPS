@@ -112,6 +112,8 @@ extension Stat {
         let cgmSmoothing = CGMSmoothingRuns()
         /// the "Which CGM was this?" sheet's input and its writes (`CGMUnknownSheet`), reached through the report
         let cgmUnknownEditor = CGMUnknownEditor()
+        /// makes the PDF reports (the Reports screen's, the views' "Export PDF"); Statistics going down cancels it
+        let reportExporter: ReportExporter
         /// the CGM topic's last result: a CGM picked is formatted from it, nothing is read
         private var cgmResult: CGMResult?
         /// the CGM topic's data generation (`CGMCacheKey.generation`): bumped by a readings change before the newest
@@ -169,7 +171,9 @@ extension Stat {
             self.displayPreferences = displayPreferences
             usualDayShown = displayPreferences.usualDayShown
             usualDayPeriod = displayPreferences.usualDayPeriod
+            reportExporter = ReportExporter()
             super.init(resolver: resolver)
+            reportExporter.context = { [weak self] in self?.reportContext }
             // opened on a tab: what entering it selects (`select(tab:)`; the onPick hooks below aren't wired yet, so
             // nothing reads); on the Day tab with 24 h (Home's On board card) the 24 hours instead of today
             selectEntering(tab)
@@ -565,12 +569,13 @@ extension Stat {
         // MARK: - Session
 
         /// A page of Statistics: the root, or one pushed over it (the Meals tab's Nutrients, and one nutrient's; a pod or
-        /// patch of the Patches topic).
+        /// patch of the Patches topic; the Reports screen).
         enum Page: Hashable, Sendable {
             case root
             case nutrients
             case nutrient
             case patch
+            case reports
         }
 
         /// Statistics opened: the service keeps the readings the Day tab, AGP and By hour read until it closes. Every
@@ -612,8 +617,9 @@ extension Stat {
 
         private func tearDown() {
             wentDown = true
-            // an analysis in flight stops with the screen
+            // an analysis in flight stops with the screen, and a report being made
             cgmSmoothing.cancel()
+            reportExporter.cancel()
             guard let provider = sessionProvider else { return }
             sessionProvider = nil
             sessionTask = Task { [previous = self.sessionTask] in
