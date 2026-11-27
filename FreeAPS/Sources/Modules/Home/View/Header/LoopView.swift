@@ -49,6 +49,8 @@ struct LoopView: View {
                                 if !isLooping, actualSuggestion?.timestamp != nil {
                                     if lastLoopMinutesAgo > 999 {
                                         Text("--").font(.caption).padding(.leading, 5).foregroundColor(.secondary)
+                                    } else if lastLoopMinutesAgo < 1 {
+                                        Image(systemName: "checkmark").font(.caption.weight(.semibold))
                                     } else {
                                         let timeString = NSLocalizedString("m", comment: "Minutes ago since last loop")
                                         HStack(spacing: 0) {
@@ -70,8 +72,12 @@ struct LoopView: View {
     }
 
     private func minutesAgo(_ lastLoopDate: Date?) -> Int {
-        let minAgo = Int((timerDate.timeIntervalSince(lastLoopDate ?? .distantPast) - Config.lag) / 60) + 1
-        return minAgo
+        Self.wholeMinutes(timerDate.timeIntervalSince(lastLoopDate ?? .distantPast))
+    }
+
+    /// Whole minutes since the last loop; 0 (shown as a checkmark) during its first minute.
+    static func wholeMinutes(_ interval: TimeInterval) -> Int {
+        max(0, Int(interval / 60))
     }
 
     private func color(manualTempBasal: Bool, lastLoopDate: Date?) -> Color {
