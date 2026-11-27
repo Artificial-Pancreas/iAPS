@@ -135,7 +135,7 @@ struct LiveActivityChart: View {
         let zt: [Int16] = predictions?.zt?.values ?? []
         let uam: [Int16] = predictions?.uam?.values ?? []
 
-        // Prepare for domain range
+        // Prepare for domain range; the in-range edges (`chartLow/HighThreshold`, mg/dL) are the app's Statistics bands
         let lowThreshold = Double(state.chartLowThreshold) * conversionConstant
         let highThreshold = Double(state.chartHighThreshold) * conversionConstant
 
@@ -191,8 +191,11 @@ struct LiveActivityChart: View {
         let predictionsSymbolSize = CGFloat(10)
         let inRangeRectOpacity = 0.1
 
+        // coloured by the mg/dL reading against the edges, as Home does (not by the converted value)
         let bgPoints = state.readings.map({
-            makePoints($0.dates, $0.values, conversion: conversionConstant)
+            zip($0.dates, $0.values).map { date, mgdl in
+                (date: date, value: Double(mgdl) * conversionConstant, range: state.readingRange(mgdl))
+            }
         })
         let iobPoints = predictions?.iob.map({ makePoints($0.dates, $0.values, conversion: conversionConstant) })
         let ztPoints = predictions?.zt.map({ makePoints($0.dates, $0.values, conversion: conversionConstant) })
@@ -205,21 +208,22 @@ struct LiveActivityChart: View {
         return Chart {
             if let bg = bgPoints {
                 ForEach(bg, id: \.date) {
-                    if $0.value < lowThreshold {
+                    switch $0.range {
+                    case .below:
                         PointMark(
                             x: .value("Time", $0.date),
                             y: .value("GlucoseLow", $0.value)
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.red)
-                    } else if $0.value > highThreshold {
+                    case .above:
                         PointMark(
                             x: .value("Time", $0.date),
                             y: .value("GlucoseHigh", $0.value)
                         )
                         .symbolSize(readingsSymbolSize)
                         .foregroundStyle(.orange)
-                    } else {
+                    case .inRange:
                         PointMark(
                             x: .value("Time", $0.date),
                             y: .value("Glucose", $0.value)

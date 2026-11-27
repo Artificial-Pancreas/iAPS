@@ -527,8 +527,8 @@ private extension BaseWatchManager {
            let protein = message.protein,
            carbs > 0 || fat > 0 || protein > 0
         {
-            await carbsStorage.storeCarbs(
-                [CarbsEntry(
+            await carbsStorage.storeMeal(
+                CarbsEntry(
                     id: UUID().uuidString,
                     createdAt: Date(),
                     actualDate: nil,
@@ -539,7 +539,7 @@ private extension BaseWatchManager {
                     note: nil,
                     enteredBy: CarbsEntry.watch,
                     isFPU: false
-                )]
+                )
             )
 
             if settings.skipBolusScreenAfterCarbs {

@@ -8,6 +8,8 @@ struct PumpDisplayInfo: Equatable, @unchecked Sendable {
     let image: UIImage?
     let expiresAt: Date?
     let podActivatedAt: Date?
+    /// the pod or patch can deliver (`KnownPlugins.isDeliveryUnitActive`); true for pumps without one
+    let deliveryUnitActive: Bool
 }
 
 struct PumpDisplayStatus: Equatable, Sendable {

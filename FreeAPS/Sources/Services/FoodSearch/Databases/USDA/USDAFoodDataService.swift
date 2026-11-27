@@ -93,87 +93,17 @@ final class USDAFoodDataService {
     private func convertUSDAFoodToProduct(
         _ foodData: USDAFood
     ) -> OpenFoodFactsProduct? {
-        var carbs: Decimal = 0
-        var protein: Decimal = 0
-        var fat: Decimal = 0
-        var fiber: Decimal = 0
-        var sugars: Decimal = 0
-        var energy: Decimal = 0
+        // energy in kcal whatever the row's unit, sugars the total (`USDAMacronutrients`)
+        let macros = USDAMacronutrients(foodData.foodNutrients ?? [])
+        let carbs = macros.carbs
+        let protein = macros.protein
+        let fat = macros.fat
+        let fiber = macros.fiber
+        let sugars = macros.sugars
+        let energy = macros.energy
 
-        var micronutrients: [MicronutrientValue] = []
-
-        if let foodNutrients = foodData.foodNutrients {
-            for nutrient in foodNutrients {
-                guard let value = nutrient.value else {
-                    continue
-                }
-
-                let decimalValue = Decimal(value)
-
-                // MARK: Macronutrients
-
-                if let nutrientCode = nutrient.nutrientCode {
-                    switch nutrientCode.category {
-                    case .carbohydrate:
-                        if carbs == 0 {
-                            carbs = decimalValue
-                        }
-
-                    case .protein:
-                        if protein == 0 {
-                            protein = decimalValue
-                        }
-
-                    case .fat:
-                        if fat == 0 {
-                            fat = decimalValue
-                        }
-
-                    case .fiber:
-                        if fiber == 0 {
-                            fiber = decimalValue
-                        }
-
-                    case .sugar:
-                        if sugars == 0 {
-                            sugars = decimalValue
-                        }
-
-                    case .energy:
-                        if energy == 0 {
-                            energy = decimalValue
-                        }
-
-                    case .mineral,
-                         .vitamin:
-                        break
-                    }
-                }
-
-                // MARK: Micronutrients
-
-                guard let micro = nutrient.resolvedMicroNutrient,
-                      let normalized = nutrient.normalizedValue(for: micro)
-                else {
-                    continue
-                }
-
-                print(
-                    "USDA MICRO:",
-                    micro.rawValue,
-                    normalized,
-                    nutrient.unitName ?? ""
-                )
-
-                micronutrients.append(
-                    MicronutrientValue(
-                        substance: micro,
-                        amount: normalized,
-                        amountPer100: normalized
-                    )
-                )
-            }
-        }
+        // one per substance (vitamin A and folate are listed twice)
+        let micronutrients = USDAFoodNutrient.micronutrients(foodData.foodNutrients ?? [])
 
         print("USDA FINAL MICROS:", micronutrients)
 
@@ -284,13 +214,17 @@ extension USDAFoodNutrient {
         case "vitamin c, total ascorbic acid":
             return .vitaminC
 
-        case "vitamin a, iu",
-             "vitamin a, rae":
+        // not "vitamin a, iu": no factor turns it into µg RAE (`USDANutrientCode.microNutrient`)
+        case "vitamin a, rae":
             return .vitaminA
 
-        case "vitamin d (d2 + d3)":
+        // the IU only without the µg (`substancePriority`)
+        case "vitamin d (d2 + d3)",
+             "vitamin d (d2 + d3), international units":
             return .vitaminD
 
+        // as FoodData Central names it (SR Legacy, Foundation, Survey; mg). Not "vitamin e, added" (a part of it),
+        // nor Foundation's plain "vitamin e" (id 2068, mg), the alpha-tocopherol row is read
         case "vitamin e (alpha-tocopherol)":
             return .vitaminE
 
@@ -351,6 +285,7 @@ extension USDAFoodNutrient {
         case "iodine, i":
             return .iodine
 
+        // as salt (`normalizedValue(for:)` converts it)
         case "sodium, na":
             return .salt
 

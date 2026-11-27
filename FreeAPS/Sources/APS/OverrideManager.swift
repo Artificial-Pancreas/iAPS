@@ -26,6 +26,7 @@ extension OverrideManager {
 actor BaseOverrideManager: OverrideManager, LifetimeOwner, AppService {
     private let overrideStorage: OverrideStorage
     private let nightscoutManager: NightscoutManager
+    private let appCoordinator: AppCoordinator
 
     private let coreDataStorage = CoreDataStorage()
 
@@ -37,10 +38,12 @@ actor BaseOverrideManager: OverrideManager, LifetimeOwner, AppService {
 
     init(
         overrideStorage: OverrideStorage,
-        nightscoutManager: NightscoutManager
+        nightscoutManager: NightscoutManager,
+        appCoordinator: AppCoordinator
     ) {
         self.overrideStorage = overrideStorage
         self.nightscoutManager = nightscoutManager
+        self.appCoordinator = appCoordinator
     }
 
     // this is called at the app start
@@ -219,18 +222,28 @@ actor BaseOverrideManager: OverrideManager, LifetimeOwner, AppService {
 
     private func cancelOverrideAfterCarbsIfApplicable(_ activeOverride: OverrideSnapshot) async -> Bool {
         guard activeOverride.endWIthNewCarbs, let overrideStarted = activeOverride.date else { return false }
-        // TODO: should we cancel on ANY meal (as before) or only when carbs are announced?
-        guard let recent = await coreDataStorage.recentMeal(), !recent.isEmpty,
-              let mealDate = recent.actualDate else { return false }
-        guard mealDate > overrideStarted else { return false }
+        // any meal dated after the start, of any source: the carbs dosing sees
+        guard let meal = Self.meal(after: overrideStarted, in: appCoordinator.carbHistory.value) else { return false }
 
         guard await cancelOverride(expected: activeOverride) else { return false }
 
         debug(
             .apsManager,
-            "Override ended, because of new meal: \(recent.carbs ?? 0) g carbs"
+            "Override ended, because of new meal: \(meal.carbs) g carbs"
         )
         return true
+    }
+
+    /// The latest meal (not a carb equivalent, not empty) dated after `date`
+    static func meal(after date: Date, in carbs: [CarbsEntry]) -> CarbsEntry? {
+        carbs
+            .filter { $0.isFPU != true && hasNutrients($0) && ($0.actualDate ?? $0.createdAt) > date }
+            .max { ($0.actualDate ?? $0.createdAt) < ($1.actualDate ?? $1.createdAt) }
+    }
+
+    private static func hasNutrients(_ entry: CarbsEntry) -> Bool {
+        entry.carbs > 0 || (entry.fat ?? 0) > 0 || (entry.protein ?? 0) > 0 || (entry.fiber ?? 0) > 0
+            || (entry.micronutrient ?? []).contains { $0.amount > 0 }
     }
 
     private func cancelOverrideWhenTrendingUpIfApplicable(_ activeOverride: OverrideSnapshot) async -> Bool {

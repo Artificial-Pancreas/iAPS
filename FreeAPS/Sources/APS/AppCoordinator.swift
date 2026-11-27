@@ -5,6 +5,7 @@ import UIKit
 
 // @unchecked Sendable - this class only contains immutable `let`s holding Combine subjects,
 // which are internally thread-safe for concurrent send/value/subscribe.
+// (and one lock-guarded counter, `mealsChangeCount`)
 // TODO: values flow across isolation domains via these subjects, so Output types should be Sendable (Combine won't enforce this).
 // * `Error` is not Sendable; we need to either replace it with something that is Sendable, or accepted as is - since those values are effectively immutable.
 
@@ -58,6 +59,19 @@ final class AppCoordinator: @unchecked Sendable {
 
     let pumpHistoryDeletions = PassthroughSubject<[PumpHistoryEvent], Never>()
 
+    // the pump driver's change events (a pod or patch, an infusion set, a reservoir) of one hasNewPumpEvents call, as
+    // they came; sent from DeviceDataManager only, before it stores the events. Statistics only (PumpEventStore)
+    let pumpLifecycleEvents = PassthroughSubject<[PumpLifecycleEvent], Never>()
+
+    // the stored insulin data (PumpEvent / BasalScheduleRecord rows, the Reasons IOB) changed; sent after the save,
+    // by the writers only (PumpEventStore, CoreDataManager's Reasons save, the Settings wipe of Reasons)
+    let insulinDataChanged = PassthroughSubject<InsulinDataChange, Never>()
+
+    // InsulinStatsService dropped what an insulin data change (or a time zone change) touched: recompute the Insulin tab.
+    // Sent from the InsulinStatsService actor only (one sender, so seq grows by one per change); the glucoseStatsChanged
+    // contract: subscribe with observe / observeUI (they hop), cancel the refresh in flight and drop a cancelled result.
+    let insulinStatsChanged = CurrentValueSubject<StatsChange, Never>(StatsChange(seq: 0, interval: nil))
+
     // newest -> oldest
     let glucoseRaw = CurrentValueSubject<[BloodGlucose], Never>([])
 
@@ -71,6 +85,15 @@ final class AppCoordinator: @unchecked Sendable {
     let glucoseFrequencyFiltered = CurrentValueSubject<[BloodGlucose], Never>([])
 
     let glucoseDeletions = PassthroughSubject<[BloodGlucose], Never>()
+
+    // the stored Readings (Core Data) were inserted, deleted or changed; sent after the save
+    let readingsChanged = PassthroughSubject<ReadingsChange, Never>()
+
+    // GlucoseStatistics dropped what a readings change (or a time zone change) touched: recompute the statistics.
+    // The only refresh trigger for them (not glucoseSmoothed, which comes before the Core Data save). Sent from the
+    // GlucoseStatistics actor, so Combine runs a subscriber inline on it: subscribe with observe / observeUI (they hop),
+    // never do synchronous work in a sink. On every change cancel the refresh in flight and drop a cancelled result.
+    let glucoseStatsChanged = CurrentValueSubject<StatsChange, Never>(StatsChange(seq: 0, interval: nil))
 
     // periods without readings, derived from the glucose history, newest -> oldest
     let glucoseGaps = CurrentValueSubject<[GlucoseGap], Never>([])
@@ -90,6 +113,13 @@ final class AppCoordinator: @unchecked Sendable {
     let carbHistory = CurrentValueSubject<[CarbsEntry], Never>([])
 
     let carbDeletions = PassthroughSubject<[CarbsEntry], Never>()
+
+    // the Meals rows or the carbs file changed (CarbsStorage, only when something did; the Settings wipe of Meals): the
+    // Meals tab refreshes on it. A counter, bumped and sent under one lock (`sendMealsChanged`), so every subscriber gets
+    // the values in order, one more per change, across senders. Subscribe with observe / observeUI (they hop): a plain
+    // sink runs inside the lock, so it must not wait on another sender, and must not call sendMealsChanged itself (the
+    // lock is recursive, so that doesn't deadlock, but its nested value then reaches the later subscribers first).
+    let mealsChanged = CurrentValueSubject<Int, Never>(0)
 
     // current temp targets, newest -> oldest
     let tempTargets = CurrentValueSubject<[TempTarget], Never>([])
@@ -160,6 +190,12 @@ final class AppCoordinator: @unchecked Sendable {
     // --------------
 
     private let loopPendingBackgroundTask = TaskIDBox()
+
+    /// `mealsChanged`'s lock: the increment and the send happen together. Recursive: a send from a subscriber (a misuse)
+    /// nests instead of deadlocking
+    private let mealsChangeLock = NSRecursiveLock()
+    /// guarded by `mealsChangeLock` (the class's one var: @unchecked Sendable through the lock)
+    private var mealsChangeCount = 0
 
     // --------------
 
@@ -296,6 +332,27 @@ final class AppCoordinator: @unchecked Sendable {
         pumpHistoryDeletions.send(value)
     }
 
+    func sendPumpLifecycleEvents(_ value: [PumpLifecycleEvent]) {
+        pumpLifecycleEvents.send(value)
+    }
+
+    func sendInsulinDataChanged(_ value: InsulinDataChange) {
+        insulinDataChanged.send(value)
+    }
+
+    func setInsulinStatsChanged(_ value: StatsChange) {
+        insulinStatsChanged.send(value)
+    }
+
+    /// One more change of the meals: the counter goes up by one and is sent, both under the lock, so two senders never
+    /// send the same value or send out of order.
+    func sendMealsChanged() {
+        mealsChangeLock.withLock {
+            mealsChangeCount += 1
+            mealsChanged.send(mealsChangeCount)
+        }
+    }
+
     /// MUST BE newest -> oldest
     func setCarbHistory(_ value: [CarbsEntry]) {
         carbHistory.send(value)
@@ -333,6 +390,14 @@ final class AppCoordinator: @unchecked Sendable {
 
     func sendGlucoseDeleted(_ value: [BloodGlucose]) {
         glucoseDeletions.send(value)
+    }
+
+    func sendReadingsChanged(_ value: ReadingsChange) {
+        readingsChanged.send(value)
+    }
+
+    func setGlucoseStatsChanged(_ value: StatsChange) {
+        glucoseStatsChanged.send(value)
     }
 
     func setGlucoseAlarm(_ value: GlucoseAlarm?) {
@@ -440,6 +505,37 @@ final class AppCoordinator: @unchecked Sendable {
     func sendNightscoutConfigChanged() {
         nightscoutConfigChanged.send()
     }
+}
+
+/// What changed in the stored Readings, for the statistics cache.
+enum ReadingsChange: Sendable, Equatable {
+    /// readings dated within the interval were inserted, deleted or changed. `newest`: all of them are inserted
+    /// readings newer than every reading stored before (a CGM reading coming in), so only the readings just before
+    /// them can be affected
+    case interval(DateInterval, newest: Bool)
+    /// any reading may have changed (the Settings wipe)
+    case all
+
+    /// The change of readings at these dates; nil for none.
+    static func readings(at dates: [Date], newest: Bool) -> ReadingsChange? {
+        guard let first = dates.min(), let last = dates.max() else { return nil }
+        return .interval(DateInterval(start: first, end: last), newest: newest)
+    }
+}
+
+/// What changed in the stored insulin data, for the insulin statistics.
+enum InsulinDataChange: Sendable, Equatable {
+    /// rows touching the interval were inserted, deleted or changed
+    case interval(DateInterval)
+    /// any of them may have changed (a wipe)
+    case all
+}
+
+/// The statistics changed: `seq` grows with every change.
+struct StatsChange: Equatable, Sendable {
+    let seq: Int
+    /// the time whose statistics changed; nil for all of it
+    let interval: DateInterval?
 }
 
 /// a bolus cancel that didn't go through, shown on the bolus bar until a new cancel, another bolus or the bar's clear

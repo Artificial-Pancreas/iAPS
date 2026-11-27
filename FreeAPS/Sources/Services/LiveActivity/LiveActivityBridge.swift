@@ -328,7 +328,8 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
                 newSettings.liveActivityChartShowPredictions != oldSettings.liveActivityChartShowPredictions ||
                 newSettings.liveActivityWatchChart != oldSettings.liveActivityWatchChart ||
                 newSettings.liveActivityWatchPredictions != oldSettings.liveActivityWatchPredictions ||
-                newSettings.liveActivityWatchDelta != oldSettings.liveActivityWatchDelta
+                newSettings.liveActivityWatchDelta != oldSettings.liveActivityWatchDelta ||
+                StatsBands(settings: newSettings) != StatsBands(settings: oldSettings) // the chart's in-range edges
             {
                 print("live activity settings changed")
                 await forceActivityUpdate(force: true)
@@ -447,6 +448,7 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
             }
         } else {
             do {
+                let bands = StatsBands(settings: settings)
                 // always push a non-stale content as the first update
                 // pushing a stale content as the first content results in the activity not being shown at all
                 // we want it shown though even if it is initially stale, as we expect new BG readings to become available soon, which should then be displayed
@@ -466,8 +468,8 @@ actor LiveActivityBridge: Sendable, LifetimeOwner, AppService {
                         watchPredictions: settings.liveActivityWatchPredictions,
                         watchDelta: settings.liveActivityWatchDelta,
                         watchEventual: settings.liveActivityWatchEventual,
-                        chartLowThreshold: Int16(clamping: (settings.low as NSDecimalNumber).intValue),
-                        chartHighThreshold: Int16(clamping: (settings.high as NSDecimalNumber).intValue)
+                        chartLowThreshold: Int16(clamping: bands.low),
+                        chartHighThreshold: Int16(clamping: bands.high)
                     ),
                     staleDate: Date.now.addingTimeInterval(60)
                 )
@@ -512,6 +514,8 @@ extension LiveActivityBridge {
         glucose: [BloodGlucose]
     ) -> LiveActivityAttributes.ContentState? {
         let previousGlucose = glucose.count > 1 ? glucose[1] : glucose.first
+        // the chart colours by the Statistics bands, as Home does
+        let bands = StatsBands(settings: settings)
 
         return LiveActivityAttributes.ContentState(
             new: glucose.first,
@@ -527,8 +531,8 @@ extension LiveActivityBridge {
             watchPredictions: settings.liveActivityWatchPredictions,
             watchDelta: settings.liveActivityWatchDelta,
             watchEventual: settings.liveActivityWatchEventual,
-            chartLowThreshold: Int(settings.low),
-            chartHighThreshold: Int(settings.high)
+            chartLowThreshold: bands.low,
+            chartHighThreshold: bands.high
         )
     }
 }

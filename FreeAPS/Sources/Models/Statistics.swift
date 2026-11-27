@@ -92,6 +92,8 @@ struct Durations: JSON, Equatable {
 struct Units: JSON, Equatable {
     var Glucose: String
     var HbA1c: String
+    /// the unit of `Stats.GMI`, the same as `HbA1c`'s
+    var GMI: String
 }
 
 struct Threshold: JSON, Equatable {
@@ -123,7 +125,10 @@ struct Variance: JSON, Equatable {
 struct Stats: JSON, Equatable {
     var Distribution: TIRs
     var Glucose: Averages
+    /// ADAG estimated A1c, the eA1c the app shows
     var HbA1c: Durations
+    /// Glucose Management Indicator, in the unit of `HbA1c`
+    var GMI: Durations
     var Units: Units
     var LoopCycles: LoopCycles
     var Insulin: Ins
@@ -188,6 +193,7 @@ extension Stats {
         case Distribution
         case Glucose
         case HbA1c
+        case GMI
         case Units
         case LoopCycles
         case Insulin

@@ -8,6 +8,8 @@ struct ReadingsSnapshot: Sendable {
     let date: Date?
     let direction: String?
     let glucose: Int16
+    /// sgv (CGM), Manual, mbg (a meter reading from Nightscout); nil: CGM, stored before the type was
+    let type: String?
 }
 
 extension ReadingsSnapshot {
@@ -16,7 +18,8 @@ extension ReadingsSnapshot {
             id: readings.id,
             date: readings.date,
             direction: readings.direction,
-            glucose: readings.glucose
+            glucose: readings.glucose,
+            type: readings.type
         )
     }
 }
